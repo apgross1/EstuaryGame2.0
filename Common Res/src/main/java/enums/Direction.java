@@ -1,4 +1,3 @@
-//Test
 package enums;
 
 public enum Direction {
