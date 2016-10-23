@@ -1,10 +1,10 @@
 package models;
 
-public abstract class BarModel {
+public abstract class BarModelAbstract {
 	public int status;
 	int maxLevel;
 	
-	public BarModel() {
+	public BarModelAbstract() {
 		
 	}
 	

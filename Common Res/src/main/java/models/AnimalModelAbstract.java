@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import enums.Direction;
 
-public abstract class AnimalModel {
+public abstract class AnimalModelAbstract {
 	public int locX;
 	public int locY;
 	public int health;
