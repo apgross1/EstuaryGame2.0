@@ -1,7 +1,7 @@
 package models;
 
-public abstract class WallModel {
-	public WallModel() {
+public abstract class WallModelAbstract {
+	public WallModelAbstract() {
 		
 	}
 	
