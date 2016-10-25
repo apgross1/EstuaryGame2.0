@@ -9,7 +9,7 @@ import org.junit.Test;
  *	void rotateFish() - This is not needed as the circle is stationary, the rotation is simply animation. Need to update UML.
  *	void healthUp()
  *	void healthDown()
- *	void incrEatSpeed() - This needed? Cant just be read from crab?
+ *	void incrEatSpeed() - This needed? Can't just be read from crab?
  *	void perish() - This should now be in view as this is strictly animation?
  *
  *Animal Model:
@@ -24,7 +24,8 @@ import org.junit.Test;
  *
  *Water Model:
  *	void incConcentration()
- *	
+ *	void incOxyg()
+ *	void decOxyg()
  *	
  */
 public class gameTwoTests {
