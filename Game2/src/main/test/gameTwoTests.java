@@ -5,7 +5,7 @@ import org.junit.Test;
 
 //Functions to test:
 /*
- * Algea Eater Model:
+ * Algae Eater Model:
  *	void rotateFish() - This is not needed as the circle is stationary, the rotation is simply animation. Need to update UML.
  *	void healthUp()
  *	void healthDown()
@@ -24,7 +24,6 @@ import org.junit.Test;
  *
  *Water Model:
  *	void incConcentration()
- *	void incOxyg()
  *	void decOxyg()
  *	
  */
@@ -38,6 +37,14 @@ public class gameTwoTests {
 		//Pretending initial health is.... 90?
 		eater.healthUp(); // Increase 10.
 		assertEquals(eater.health, 100);
+	}
+	
+	public void testincConcentration(){
+		//if algae gets through, inc concentration
+	}
+	
+	public void decOxyg(){
+		//if algae gets through
 	}
 
 }
