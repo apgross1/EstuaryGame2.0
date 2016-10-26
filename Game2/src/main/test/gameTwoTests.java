@@ -22,7 +22,7 @@ import org.junit.Test;
  *	void increase()
  *	void decrease()
  *	bool isEmpty()
- * are we even having a bar in this game?
+ * 
  *
  *Water Model:
  *	void incConcentration()
@@ -33,7 +33,7 @@ public class gameTwoTests {
 	
 	//First model
 	@Test
-	public void testHealthUp() {
+	public void testAEHealthUp() {
 		animal a = new animal(); //Default crab.
 		algeaEater eater = new algeaEater(a.xloc, a.yloc);
 		//Pretending initial health is.... 90?
@@ -41,7 +41,7 @@ public class gameTwoTests {
 		assertEquals(eater.health, 100);
 	}
 	@Test
-	public void testHealthDown(){
+	public void testAEHealthDown(){
 		animal a = new animal();
 		algaeEater eater = new algaeEater(a.xloc, a.yloc);
 		//initial health is 100
@@ -54,8 +54,8 @@ public class gameTwoTests {
 		//if algae gets through, incConcentration
 		algae al = new algae();
 		water w = new water();
-		al.setLocX(water location);
-		al.setLocY(water location);
+		al.setLocX(10);
+		al.setLocY(10);
 		water.incConcentration();
 		assertEquals(w.algaeConcentration, 25);
 		
@@ -71,6 +71,8 @@ public class gameTwoTests {
 		if(al.location_x < 50){
 			w.decOxyg();
 		}
+		assertEqulas(w.health, 75); //starts at 100, decrements by 25?
+		
 	}
 	
 	@Test
@@ -83,10 +85,26 @@ public class gameTwoTests {
 	
 	@Test
 	public void testInrecaseBar(){
-		//if algae gets through decreaseBar will be called
+		//if algae gets through increaseBar will be called
 		bar b = new bar(49);// 49 is initial health
 		b.increase();//Assume increase by one.(status++)
 		assertEquals(b.status = 50);
+	}
+	
+	
+	
+	//Controller Methods
+	@Test
+	public void testdecreaseSpeed(){
+		algae al = new algae();
+		water w = new water();
+		Animal a = new Animal();
+		al.setLocX(10);
+		al.setLocY(10);
+		if(al.algaeLocX < 30){
+			a.decreaseSpeed();
+		}
+		assertEquals(a.speed, 75);
 	}
 	
 	
@@ -147,3 +165,4 @@ public class gameTwoTests {
 		assertTrue("X should be 0 and y should be 1...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 1));
 	}
 }
+
