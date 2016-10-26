@@ -46,31 +46,48 @@ public class gameTwoTests {
 		algaeEater eater = new algaeEater(a.xloc, a.yloc);
 		//initial health is 100
 		eater.healthDown(); //decrease 10
-		assertEquals(eater.health, 100);
+		assertEquals(eater.health, 90);
 	}
 	
 	@Test
 	public void testincConcentration(){
 		//if algae gets through, incConcentration
 		algae al = new algae();
-		al.setLocX(//where water is)
-				)
-		al.setLocY(//where water is
-				)
+		water w = new water();
+		al.setLocX(water location);
+		al.setLocY(water location);
 		water.incConcentration();
-		assertEquals(water.algaeConcentration, 25);
+		assertEquals(w.algaeConcentration, 25);
 		
 	}
+	
 	@Test
 	public void testdecOxyg(){
 		//if algae gets through, decrease Oxygen
+		algea al = new algae();
+		water w = new water();
+		al.location_x = 10; //Should be passed the barior of causing a problem.
+		al.locayion_y = 10;
+		if(al.location_x < 50){
+			w.decOxyg();
+		}
 	}
+	
 	@Test
 	public void testDecreaseBar(){
-		//if algae gets through, decrease bar?
+		//if algae gets through decreaseBar will be called
+		bar b = new bar(50);// 50 is initial health
+		b.decrease();//Assume decreases by one.(status--)
+		assertEquals(b.status = 49);
 	}
+	
 	@Test
-	public void 
+	public void testInrecaseBar(){
+		//if algae gets through decreaseBar will be called
+		bar b = new bar(49);// 49 is initial health
+		b.increase();//Assume increase by one.(status++)
+		assertEquals(b.status = 50);
+	}
 	
 	
 	@Test
@@ -129,8 +146,4 @@ public class gameTwoTests {
 		myAnimal.move();
 		assertTrue("X should be 0 and y should be 1...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 1));
 	}
-
-	
-	
-
 }
