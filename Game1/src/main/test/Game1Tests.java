@@ -5,13 +5,13 @@ import org.junit.Test;
 import model.AnimalModel;
 
 public class Game1Tests {
+	//My tests
 	//Low level tests (within-class) (All methods in AnimalModel and GabionWallModel:
 	//Movement
 	//calculateDamageGabion
 	//calculateDamageConcrete
 	//
 	//High level tests (Between-class):
-	
 	//Random spawning
 	//Pickup
 	
