@@ -51,11 +51,9 @@ public class gameTwoTests {
 	@Test
 	public void testincConcentration(){
 		//if algae gets through, incConcentration
-		algae al = new algae();
 		water w = new water();
-		al.setLocX(10);
-		al.setLocY(10);
-		water.incConcentration();
+		w.algaeConcentration = 0;
+		w.incConcentration();
 		assertEquals(w.algaeConcentration, 25);
 		
 	}
@@ -63,14 +61,10 @@ public class gameTwoTests {
 	@Test
 	public void testdecOxyg(){
 		//if algae gets through, decrease Oxygen
-		algea al = new algae();
 		water w = new water();
-		al.location_x = 10; //Should be passed the barior of causing a problem.
-		al.locayion_y = 10;
-		if(al.location_x < 50){
-			w.decOxyg();
-		}
-		assertEqulas(w.health, 75); //starts at 100, decrements by 25?
+		w.health = 100;
+		w.decOxyg();
+		assertEqulas(w.oxygen, 75); //starts at 100, decrements by 25?
 		
 	}
 	
@@ -91,36 +85,46 @@ public class gameTwoTests {
 	}
 	
 	@Test
-	public void testBarFull(){
+	public void testisEmpty(){
 		bar b = new bar(0);
-		assertEquals();
-		assertEquals(b.status, 0);
+		assertEquals(b.isEmpty(), 0);
 	}
 	
 	@Test
+	public void testisEmpty2(){
+		bar b = new bar(100);
+		assertEquals(b.isEmpty(), 1);
+	}
+	
+	
+	@Test
 	public void testdecreaseSpeed(){
-		algae al = new algae();
-		water w = new water();
 		Animal a = new Animal();
-		al.setLocX(10);
-		al.setLocY(10);
 		a.speed = 100;
-		if(al.algaeLocX < 30){
-			a.decreaseSpeed();
-		}
+		a.decreaseSpeed();
 		assertEquals(a.speed, 75);
 	}
 	
 	@Test
 	public void testincreaseSpeed(){
 		Animal a = new Animal();
-		a.speed = 100;
-		if(timer > 60 && w.health <= 50){
-			a.increaseSpeed();
-		}
-		assertEquals(a.speed, 75);
+		a.speed = 75;
+		a.increaseSpeed();
+		assertEquals(a.speed, 100);
 	}
 	
+	@Test
+	public void testeaten(){
+		algae a = new algae();
+		a.eaten();
+		assertEquals(a.active, 0);
+	}
+	
+	@Test
+	public void testeaten2(){
+		algae a = new algae();
+		assertEquals(a.active, 1);
+	}
 	
 	@Test
 	public void testAnimalMovement() {
@@ -139,44 +143,6 @@ public class gameTwoTests {
 		myAnimal.move();
 		assertTrue("Y should be 0...", myAnimal.getLocY() == 0);
 		
-		//East from origin
-		myAnimal.setCurrDir(enums.Direction.EAST);
-		myAnimal.move();
-		assertTrue("X should be 1...", myAnimal.getLocX() == 1);
-		
-		//West from origin+1
-		myAnimal.setCurrDir(enums.Direction.WEST);
-		myAnimal.move();
-		assertTrue("X should be 0...", myAnimal.getLocX() == 0);
-		
-		//Combinations (NE,NW,SE,SW)
-		//NE from (0,1)
-		myAnimal.setLocX(0);
-		myAnimal.setLocY(1);
-		myAnimal.setCurrDir(enums.Direction.NORTH_EAST);
-		myAnimal.move();
-		assertTrue("X should be 1 and y should be 0...", (myAnimal.getLocX() == 1) && (myAnimal.getLocY() == 0));
-	
-		//NW from (1,1)
-		myAnimal.setLocX(1);
-		myAnimal.setLocY(1);
-		myAnimal.setCurrDir(enums.Direction.NORTH_WEST);
-		myAnimal.move();
-		assertTrue("X should be 0 and y should be 0...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 0));
-		
-		//SE from (0,0)
-		myAnimal.setLocX(0);
-		myAnimal.setLocY(0);
-		myAnimal.setCurrDir(enums.Direction.SOUTH_EAST);
-		myAnimal.move();
-		assertTrue("X should be 1 and y should be 1...", (myAnimal.getLocX() == 1) && (myAnimal.getLocY() == 1));
-		
-		//SW from (1,0)
-		myAnimal.setLocX(1);
-		myAnimal.setLocY(0);
-		myAnimal.setCurrDir(enums.Direction.SOUTH_WEST);
-		myAnimal.move();
-		assertTrue("X should be 0 and y should be 1...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 1));
 	}
 }
 
