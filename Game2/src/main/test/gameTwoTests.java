@@ -6,17 +6,14 @@ import org.junit.Test;
 //Functions to test:
 /*
  * Algae Eater Model:
- *	void rotateFish() - This is not needed as the circle is stationary, the rotation is simply animation. Need to update UML.
  *	void healthUp()
  *	void healthDown()
- *	void incrEatSpeed() - This needed? Can't just be read from crab?
- *	void perish() - This should now be in view as this is strictly animation?
+ *	
  *
  *Animal Model:
- *	void healthUP()
- *	void healthDown()
- *	void pickUp()
- * shouldnt this be speed down? no heath
+ *	void speedUP()
+ *	void speedDown()
+ * 
  *
  *Bar Model:
  *	void increase()
@@ -28,6 +25,8 @@ import org.junit.Test;
  *	void incConcentration()
  *	void decOxyg()
  *	
+ *Algae Model:
+ *	void eaten();
  */
 public class gameTwoTests {
 	
@@ -36,7 +35,7 @@ public class gameTwoTests {
 	public void testAEHealthUp() {
 		animal a = new animal(); //Default crab.
 		algeaEater eater = new algeaEater(a.xloc, a.yloc);
-		//Pretending initial health is.... 90?
+		eater.health = 90;
 		eater.healthUp(); // Increase 10.
 		assertEquals(eater.health, 100);
 	}
@@ -44,7 +43,7 @@ public class gameTwoTests {
 	public void testAEHealthDown(){
 		animal a = new animal();
 		algaeEater eater = new algaeEater(a.xloc, a.yloc);
-		//initial health is 100
+		eater.health = 100;
 		eater.healthDown(); //decrease 10
 		assertEquals(eater.health, 90);
 	}
@@ -80,7 +79,7 @@ public class gameTwoTests {
 		//if algae gets through decreaseBar will be called
 		bar b = new bar(50);// 50 is initial health
 		b.decrease();//Assume decreases by one.(status--)
-		assertEquals(b.status = 49);
+		assertEquals(b.status, 49);
 	}
 	
 	@Test
@@ -88,12 +87,16 @@ public class gameTwoTests {
 		//if algae gets through increaseBar will be called
 		bar b = new bar(49);// 49 is initial health
 		b.increase();//Assume increase by one.(status++)
-		assertEquals(b.status = 50);
+		assertEquals(b.status, 50);
 	}
 	
+	@Test
+	public void testBarFull(){
+		bar b = new bar(0);
+		assertEquals();
+		assertEquals(b.status, 0);
+	}
 	
-	
-	//Controller Methods
 	@Test
 	public void testdecreaseSpeed(){
 		algae al = new algae();
@@ -101,8 +104,19 @@ public class gameTwoTests {
 		Animal a = new Animal();
 		al.setLocX(10);
 		al.setLocY(10);
+		a.speed = 100;
 		if(al.algaeLocX < 30){
 			a.decreaseSpeed();
+		}
+		assertEquals(a.speed, 75);
+	}
+	
+	@Test
+	public void testincreaseSpeed(){
+		Animal a = new Animal();
+		a.speed = 100;
+		if(timer > 60 && w.health <= 50){
+			a.increaseSpeed();
 		}
 		assertEquals(a.speed, 75);
 	}
