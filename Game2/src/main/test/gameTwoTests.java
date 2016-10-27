@@ -163,7 +163,7 @@ public class gameTwoTests {
  * 	- Remove isDead because its just a getter and not needed in the controller.
  * 	- Remove barFull and barEmpty as they are just getters..
  * 	- Remove decrease speed as that is taken care of by the collision detection ie the waters health goes down as does speed.
- * 	- Update start / end game to listener so we know what they are.
+ * 	- Update start / end game to listener to one gameStateListener
  * 
  * 
  * - Isnt it redundant to have a addObject(obj j) function because arraylist has its own library?
@@ -243,9 +243,8 @@ public class gameTwoTests {
 		//Not even going to write this test, see above function and comments at the top.
 	}
 	
-	//This is a listener to check if the timer = 0 not listening for any action events.
 	@Test
-	public void testEndGameListener(){
+	public void testGameStateListener(){
 		Timer t = new Timer(0); // Pretend this is our games timer
 		
 		endGameListener(); //In a constant loop?
@@ -253,12 +252,6 @@ public class gameTwoTests {
 		
 		//1) Ends timer / stops loops
 		//2) Triggers end animation?
-	}
-	
-	@Test
-	public void testStartGameListener(){
-		//1)Intro animation call in the view?
-		//2) Start timer / loops 
 	}
 }
 
