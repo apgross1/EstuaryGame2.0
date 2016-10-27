@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 
@@ -34,7 +36,7 @@ public class gameTwoTests {
 	@Test
 	public void testAEHealthUp() {
 		animal a = new animal(); //Default crab.
-		algeaEater eater = new algeaEater(a.xloc, a.yloc);
+		algaeEater eater = new algaeEater(a.xloc, a.yloc);
 		eater.health = 90;
 		eater.healthUp(); // Increase 10.
 		assertEquals(eater.health, 100);
@@ -152,78 +154,71 @@ public class gameTwoTests {
  */
 /*
  * Update in UML:
- * 	- Change touchEater and touchAlgae to one void collisionDetected(obj a, obj b)
+ * 	- Change touchEater and touchAlgae to one void detectCollision(obj a, obj b)
  * 	- Move create storm in controller to view.
  * 	- Remove pickedUp() as nothing is ever being picked up in game 2
- * 	- Remove duplicate createStorm()
- * 	- If we decide to combine the gone() functions, remove them and make a int pctGone() function.
+ * 	- Remove duplicate createStorm()(both of them) and remove activateStorm().
+ * 	- Remove all the getters for quarter, half, full etc.
+ * 	- Remove takeDamadge because it will be handeled in the collision detection.
+ * 	- Remove isDead because its just a getter and not needed in the controller.
+ * 	- Remove barFull and barEmpty as they are just getters..
+ * 	- Remove decrease speed as that is taken care of by the collision detection ie the waters health goes down as does speed.
+ * 	- Update start / end game to listener so we know what they are.
+ * 
+ * 
+ * - Isnt it redundant to have a addObject(obj j) function because arraylist has its own library?
+ * 		- We left it in the UML and tests below but I dont think its necessary
  */
+	
+	//Case when algae hits algae eater
 	@Test
-	public void testcollisionDetected(){
+	public void testdetectCollisionSuccess(){
 		//Is this function called once a collision is already detected.... or 
 		//does it listen for action event. and then update something in the model.
 		//Either way, this one function consolidates the two functions in the UML
 		//touchEater() and touchAlgae()
+		algaeeater eater = new eater(50, 30);
+		algae alg = new algae(50, 30);
 		
+		
+		detectCollision(eater, alg); //Listener should see they are touching
+		//Should update alg.active in model
+		assertEquals(alg.active, 0); //Now dead.
 	}
 	
+	//Case when algae is not touching either the eater or the sanctuary
 	@Test
-	public void testcreateStorm(){
-		//This too is in the controller but I think belongs in view because its an animation?
-		//or does this actually call activate storm which triggers runoff(an animation that also affects controller for algea quantity)?
-		//can the two functions be consolidated (createStorm(), activateStorm())
+	public void testdetectCollisionFail(){
+		algaeeater eater = new eater(20, 70);
+		algae alg = new algae(50, 30);
+		
+		
+		detectCollision(eater, alg); //Listener should see they are touching
+		//Should not update alg.active in model
+		assertEquals(alg.active, 1); //Alg should still be alive.
 	}
 	
-	@Test
-	public void testtakeDamage(){
-		//Action or listener?
-	}
 	
+	//This will 1) kill the algae, 2) it will decrease the health of the water (which is also the speed attribute).
 	@Test
-	public void testisDead(){
-		//Why is this in the controller? / what purpose does this serve.
-	}
-	
-	@Test
-	public void testactivateStorm(){
-		//Can this be consolidated with createStorm?
+	public void testdetectCollisionWithSanctuary(){
+		algae alg = new algae(1, 1);
+		water w = new water();
+		
+		detectCollison(w, algae); // Should kill the algae, and decrease the sanctuary (water) health.
+		assertEquals(alg.active, 0);
+		assertEquals(w.health, 90); // Assuming that perfect health is 100 and that a collision deducts 10
 	}
 	
 	@Test
 	public void testincLvl(){
-		//Action event when algea collides?
+		//Action event when algae collides?
 		//not sure what this function does.
 	}
 	
 	@Test
 	public void testdecLvl(){
 		//Same as above, don't understand its purpose
-	}
-	
-	@Test
-	public void pctGone(){
-		//I think we should make a function that returns an integer that tells us what percent is gone 
-		//rather than having 4 functions (quartergone, halfgone, threequartergone etc.)
-		
-		//Either way, aren't these just getters?
-	}
-	
-	@Test
-	public void testbarFull(){
-		//Not sure of the purpose of this as its just a getter of sorts as it just returns a bool.
-		
-	}
-	
-	@Test
-	public void testbarEmpty(){
-		//Same as barFull()
-		
-	}
-	
-	@Test
-	public void testdecSpeed(){
-		//Is this called when a collision is detected from one of the listeners above?
-		//If so... why do we even have this, we can have the listener talk to the model directly.
 	}
 	
 	@Test
@@ -234,21 +229,34 @@ public class gameTwoTests {
 	@Test
 	public void testAddObj(){
 		//Is this when an object is added to the arraylist of objects?
+		ArrayList<Object> objArr = new ArrayList<Object>();
+		algae a = new algae(10, 10);
+		water w = new water();
+		
+		objArr.add(w);
+		
+		//addObject(a);
 	}
 	
 	@Test
 	public void testRemObj(){
-		//If yes to above, I assume this is when we remove individual algeas when collisions occur.
+		//Not even going to write this test, see above function and comments at the top.
 	}
 	
+	//This is a listener to check if the timer = 0 not listening for any action events.
 	@Test
-	public void testEndGame(){
+	public void testEndGameListener(){
+		Timer t = new Timer(0); // Pretend this is our games timer
+		
+		endGameListener(); //In a constant loop?
+		
+		
 		//1) Ends timer / stops loops
 		//2) Triggers end animation?
 	}
 	
 	@Test
-	public void testStartGame(){
+	public void testStartGameListener(){
 		//1)Intro animation call in the view?
 		//2) Start timer / loops 
 	}
