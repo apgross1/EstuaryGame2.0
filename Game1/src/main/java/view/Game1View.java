@@ -2,11 +2,14 @@ package view;
 
 import java.awt.Graphics;
 
+import javax.swing.JFrame;
+
 import controller.Game1Controller;
 
 public class Game1View {
 	private int damageLevel;
 	private Game1Controller controller;
+	private JFrame frame;
 	
 	
 	public void paint(Graphics g) {
@@ -68,6 +71,14 @@ public class Game1View {
 	}
 	public void setController(Game1Controller controller) {
 		this.controller = controller;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 	
 }

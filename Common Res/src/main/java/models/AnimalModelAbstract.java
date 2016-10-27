@@ -10,6 +10,7 @@ public abstract class AnimalModelAbstract {
 	private int locX;
 	private int locY;
 	private int health;
+	private int maxHealth;
 	private boolean emptyHanded;
 	private HashMap<Direction, ArrayList<BufferedImage>> animations;
 	private Direction currDir;
@@ -17,7 +18,7 @@ public abstract class AnimalModelAbstract {
 	
 	public abstract void healthUp();
 	public abstract void healthDown();
-	public abstract void pickUp(int x, int y);
+	public abstract void pickUp();
 	public abstract void move();
 	
 	public int getLocX() {
@@ -49,6 +50,12 @@ public abstract class AnimalModelAbstract {
 	}
 	public void setCurrDir(Direction currDir) {
 		this.currDir = currDir;
+	}
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
 	}
 	
 	

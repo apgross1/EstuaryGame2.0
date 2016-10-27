@@ -2,12 +2,14 @@ package controller;
 
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import view.Game1View;
 
-public class Game1Controller {
+public class Game1Controller implements KeyListener {
 	private ArrayList<Object> objects;
 	private Game1View gameView;
 	private boolean gameStart;
@@ -18,7 +20,17 @@ public class Game1Controller {
 	private boolean gabHit;
 	private boolean concrHit;
 	private ArrayList<BufferedImage> landSeqs;
+	private KeyListener e;
 	
+	
+	public Game1Controller() {
+		
+	}
+	
+	public Game1Controller(Game1View view) {
+		this.gameView = view;
+		view.getFrame().addKeyListener(this);
+	}
 	public void reset() {
 		
 	}
@@ -39,6 +51,24 @@ public class Game1Controller {
 		
 	}
 
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	//By level I mean bar level
 	public void increaseLevel() {
 		
@@ -149,5 +179,14 @@ public class Game1Controller {
 	public void setLandSeqs(ArrayList<BufferedImage> landSeqs) {
 		this.landSeqs = landSeqs;
 	}
+
+	public KeyListener getE() {
+		return e;
+	}
+
+	public void setE(KeyListener e) {
+		this.e = e;
+	}
+
 	
 }

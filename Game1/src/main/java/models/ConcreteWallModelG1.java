@@ -1,13 +1,19 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class ConcreteWallModelG1 extends WallModelAbstract {
 	private int maxBlocks;
 	private int currentBlocks;
 	private int BlockOnBeach;
+	private Collection<ConcreteChunk> chunks;
 	
 	public void addPiece() {
 		
 	}
+	
+	
 	
 	@Override
 	public void breakDown() {
@@ -15,7 +21,7 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	}
 	
 	@Override
-	public void spawn(boolean gameStart) {
+	public void spawn(boolean gameStart, int numChunksRemoved) {
 		
 	}
 	
@@ -54,7 +60,9 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	public void setCurrentBlocks(int currentBlocks) {
 		this.currentBlocks = currentBlocks;
 	}
+	
 
+	
 	public int getBlockOnBeach() {
 		return BlockOnBeach;
 	}
@@ -63,5 +71,27 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 		BlockOnBeach = blockOnBeach;
 	}
 
-
+	public class ConcreteChunk {
+		private int locX;
+		private int locY;
+		
+		public ConcreteChunk() {
+			locX = -1;
+			locY = -1;
+		}
+		
+		public int getLocX() {
+			return locX;
+		}
+		public void setLocX(int locX) {
+			this.locX = locX;
+		}
+		public int getLocY() {
+			return locY;
+		}
+		public void setLocY(int locY) {
+			this.locY = locY;
+		}
+		
+	}
 }

@@ -2,6 +2,10 @@ package models;
 
 public class AnimalModel extends AnimalModelAbstract {
 	
+	public AnimalModel() {
+		this.setEmptyHanded(true);
+	}
+	
 	@Override
 	public void healthUp() {
 		
@@ -15,7 +19,7 @@ public class AnimalModel extends AnimalModelAbstract {
 	}
 
 	@Override
-	public void pickUp(int x, int y) {
+	public void pickUp() {
 		
 		
 	}
