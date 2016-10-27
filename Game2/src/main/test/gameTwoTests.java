@@ -164,6 +164,7 @@ public class gameTwoTests {
  * 	- Remove barFull and barEmpty as they are just getters..
  * 	- Remove decrease speed as that is taken care of by the collision detection ie the waters health goes down as does speed.
  * 	- Update start / end game to listener to one gameStateListener
+ * 	- Remove addobj and removobj functions
  * 
  * 
  * - Isnt it redundant to have a addObject(obj j) function because arraylist has its own library?
@@ -225,24 +226,7 @@ public class gameTwoTests {
 	public void testRenderGraphics(){
 		//This is likely not testable as this communicates the picture to the view.
 	}
-	
-	@Test
-	public void testAddObj(){
-		//Is this when an object is added to the arraylist of objects?
-		ArrayList<Object> objArr = new ArrayList<Object>();
-		algae a = new algae(10, 10);
-		water w = new water();
-		
-		objArr.add(w);
-		
-		//addObject(a);
-	}
-	
-	@Test
-	public void testRemObj(){
-		//Not even going to write this test, see above function and comments at the top.
-	}
-	
+
 	@Test
 	public void testGameStateListener(){
 		Timer t = new Timer(0); // Pretend this is our games timer
