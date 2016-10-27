@@ -7,5 +7,5 @@ public abstract class WallModelAbstract {
 	
 	public abstract void breakDown();
 	
-	public abstract void spawn();
+	public abstract void spawn(boolean gameStart);
 }

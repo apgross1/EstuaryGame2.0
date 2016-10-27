@@ -2,7 +2,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import model.AnimalModel;
+import models.AnimalModel;
 
 public class Game1Tests {
 	//My tests
@@ -27,7 +27,7 @@ public class Game1Tests {
 	//Low-level testing
 	@Test
 	public void testAnimalMovement() {
-		AnimalModel myAnimal = new AnimalModel();
+		models.AnimalModel myAnimal = new models.AnimalModel();
 		myAnimal.setLocX(0);
 		myAnimal.setLocY(0);
 		

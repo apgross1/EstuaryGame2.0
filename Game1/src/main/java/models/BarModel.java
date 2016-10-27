@@ -8,13 +8,13 @@ public class BarModel extends BarModelAbstract {
 	}
 	@Override
 	public void increase() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void decrease() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
