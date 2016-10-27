@@ -57,8 +57,4 @@ public abstract class AnimalModelAbstract {
 	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
 	}
-	
-	
-	
-
 }
