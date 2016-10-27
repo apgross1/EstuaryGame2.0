@@ -4,7 +4,7 @@ public class BarModelG2 extends BarModelAbstract{
 	private int status;
 	private int maxLevel;
 	
-	public BarModel(){
+	public BarModelG2(){
 		
 	}
 	@Override
@@ -13,7 +13,11 @@ public class BarModelG2 extends BarModelAbstract{
 	}
 	@Override
 	public boolean isEmpty(){
-		if(status == 0){return true}
-		else{return false}
+		return false;
+	}
+	@Override
+	public void increase() {
+		// TODO Auto-generated method stub
+		
 	}
 }

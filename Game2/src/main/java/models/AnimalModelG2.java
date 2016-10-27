@@ -3,7 +3,7 @@ package models;
 public class AnimalModelG2 extends AnimalModelAbstract {
 	
 	public AnimalModelG2() {
-		this.setSpeed(100);
+		
 	}
 	
 	public void decreaseSpeed(){
