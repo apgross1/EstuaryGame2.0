@@ -14,9 +14,11 @@ public abstract class AnimalModelAbstract {
 	public HashMap<Direction, ArrayList<BufferedImage>> animations;
 	public Direction currDir;
 	
+	
 	public abstract void healthUp();
 	public abstract void healthDown();
 	public abstract void pickUp();
+	public abstract void move();
 	
 
 }
