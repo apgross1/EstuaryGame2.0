@@ -3,6 +3,8 @@ package models;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import models.GabionWallModelG1.GabionChunk;
+
 public class ConcreteWallModelG1 extends WallModelAbstract {
 	private int maxBlocks;
 	private int currentBlocks;
@@ -69,6 +71,13 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 
 	public void setBlockOnBeach(int blockOnBeach) {
 		BlockOnBeach = blockOnBeach;
+	}
+	public Collection<ConcreteChunk> getChunks() {
+		return chunks;
+	}
+
+	public void setChunks(Collection<ConcreteChunk> chunks) {
+		this.chunks = chunks;
 	}
 
 	public class ConcreteChunk {

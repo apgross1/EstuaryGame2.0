@@ -10,6 +10,10 @@ import org.junit.Test;
 
 import models.AnimalModel;
 import models.GabionWallModelG1.GabionChunk;
+import models.ConcreteWallModelG1;
+import models.ConcreteWallModelG1.ConcreteChunk;
+import models.BarModel;
+import controller.Game1Controller;
 
 public class Game1Tests {
 	//My tests
@@ -316,6 +320,37 @@ public class Game1Tests {
 		assertTrue("Should be no less than 0...", remove3 >= 0);
 	}
 	
+	// random spawning
+	@Test
+	public void testConcreteSpawn() {
+
+		ConcreteWallModelG1 Wall = new ConcreteWallModelG1();
+
+		Wall.setMaxBlocks(20);
+		Wall.setBlockOnBeach(0);
+
+		int BeforeSpawn = Wall.getBlockOnBeach();
+
+		Wall.spawn(true, 10);
+		assertTrue("Should be 10", Wall.getChunks().size() == 15);
+
+		boolean allHaveCoords = true;
+
+		java.util.Iterator<ConcreteChunk> it = Wall.getChunks().iterator();
+		ConcreteChunk chunk = it.next();
+
+		while (it.hasNext()) {
+			if ((chunk.getLocY() < 0) && (chunk.getLocX() < 0)) {
+				allHaveCoords = false;
+				break;
+			}
+
+		}
+
+		assertTrue("Should be true", allHaveCoords);
+
+	}
+	
 	//High Level Tests (Involving multiple classes)
 	@Test
 	public void testPickUpEvent() {
@@ -330,4 +365,50 @@ public class Game1Tests {
 		assertTrue("None should be on beach...", myGabWall.getOystersOnBeach() == 0);
 		assertTrue("All should be in wall...", myGabWall.getCurrentOysters() == 100);
 	}
+	
+	//wave hit
+			@Test
+			public void testTakeDamage(){
+				Game1Controller process = new Game1Controller();
+				Game1Controller clock = new Game1Controller();
+				ConcreteWallModelG1 wall = new ConcreteWallModelG1();
+				wall.setMaxBlocks(25);
+				wall.setCurrentBlocks(25);
+				BarModel bar =  new BarModel();
+				bar.setMaxLevel(100);
+				bar.setStatus(100);
+				
+				process.takeDamage();
+				//tests to see if collision occurred
+				assertTrue("Should be true", process.isConcrHit() == true);
+				assertTrue("Should be true", process.isConcrHit() == true);
+				
+				//time should stop after round
+				float time1 = clock.getCurrTime();
+				float time2 = clock.getCurrTime();
+				assertTrue("Should be equal", time1 == time2);
+				
+				//removing from wall
+				wall.calculateAmountRemoved();
+				assertTrue("Should be 12", wall.amountRemoved(50) == 12);
+				wall.removeChunk(wall.amountRemoved(50));
+				assertTrue("Should be 13", wall.getCurrentBlocks() == 13);
+				
+				//tests if bar is updated
+				assertTrue("Should be less than 100", bar.getStatus() < 100);
+				
+				//tests if time is reset
+				assertTrue("Should be 0.0", clock.getCurrTime() == 0.0 );
+				
+				//time should restart
+				assertTrue("Should be true", clock.getCurrTime() > 0.0);
+				
+				//tests game over
+				bar.setStatus(0);
+				assertTrue("Should be true", process.isGameEnd() == true);
+				
+			}
+			
+			
+
 }

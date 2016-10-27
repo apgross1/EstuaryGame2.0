@@ -20,4 +20,20 @@ public abstract class BarModelAbstract {
 			return false;
 		}
 	}
+	
+	public void setMaxLevel(int maxLevel){
+		this.maxLevel = maxLevel;
+	}
+	
+	public int getMaxLevel(){
+		return maxLevel;
+	}
+	
+	public void setStatus(int status){
+		this.status = status;
+	}
+	
+	public int getStatus(){
+		return status;
+	}
 }
