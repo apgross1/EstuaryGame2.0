@@ -45,21 +45,25 @@ public class Game3Tests {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				concWall.setIsActive(false);
+				Object time = e.getSource();
+				Timer myTime = (Timer) time;
+			
+				System.out.println("Print 1: " + concWall.getIsActive());
+				myTime.stop();
+				
 			}
 		};
-	    
-		Timer time = new Timer(2000, actionListener);
 		
-		time.setRepeats(false);
-	    time.start();
-	    try {
-			Thread.sleep(2600);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
+	    
+		Timer time = new Timer(1000, actionListener);
+		time.setRepeats(true);
+		time.start();
+		while(time.isRunning()) {
+
 		}
-	    finally {
-	    	assertFalse("Should be false...", concWall.getIsActive());
-	    }
+	    
+	    System.out.println("Print 2: " + concWall.getIsActive());
+	    assertFalse("Should be false...", concWall.getIsActive());
 	}
 	
 	//Breakdown of concrete wall power-up
