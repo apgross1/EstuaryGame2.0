@@ -6,16 +6,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import enums.Direction;
 import models.AnimalModel;
 import models.BarModel;
 import models.ConcreteWallModelG1;
+import models.ConcreteWallModelG1.ConcreteChunk;
 import models.GabionWallModelG1;
+import models.GabionWallModelG1.GabionChunk;
 import view.Game1View;
 
 public class Game1Controller implements KeyListener {
-	private ArrayList<Object> objects;
+	private ArrayList<Object> gameObjects;
 	private Game1View gameView;
 	private boolean gameActive; // Added this instead of 2 bools blow
 	//private boolean gameStart;
@@ -30,8 +33,8 @@ public class Game1Controller implements KeyListener {
 	
 	//Models
 	AnimalModel animal = new AnimalModel();
-	ConcreteWallModelG1 wall = new ConcreteWallModelG1();
-	GabionWallModelG1 gabion = new GabionWallModelG1();
+	ConcreteWallModelG1 wallModel = new ConcreteWallModelG1();
+	GabionWallModelG1 gabionModel = new GabionWallModelG1();
 	BarModel bar = new BarModel();
 	//View
 	Game1View g1view = new Game1View();
@@ -62,8 +65,29 @@ public class Game1Controller implements KeyListener {
 		
 	}
 	
+	boolean collisionOccured(Object a, Object b){
+		//Logic for seing if a collision has occurred (swift has this built in so I've been told?)
+		return false;
+	}
+	
 	public void collisionDetectionLoop(){
-		//In this loop collision detection for (crab +gabion), and (crab + wall) will be handeled.
+		//In this loop collision detection for (crab +gabion), and (crab + wall) will be handled.
+		Collection<GabionChunk> gabionChunkTemp = gabionModel.getChunks();
+		Collection<ConcreteChunk> concreteChunkTemp = wallModel.getChunks();
+		
+		for(GabionChunk gc: gabionChunkTemp){
+			if(collisionOccured(animal, gc)){
+				gabionModel.addPiece();
+				//We also have to figure out how to remove that specific chunk from the gabionModel.
+				}
+			}
+		
+		for(ConcreteChunk cc: concreteChunkTemp){
+			if(collisionOccured(animal, cc)){
+				wallModel.addPiece();
+				//Same here we have to figure out how to remove that chunk from wallModel
+				}
+			}
 	}
 	
 	
@@ -82,12 +106,13 @@ public class Game1Controller implements KeyListener {
 		//Each brick you collect will only stop 1%.
 	}
 	
-	
+	/*
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+	*/
 	
 	//Not sure how to handle multiple keys pressed at once ie change dir to northeast southeast northwest and southwest.
 	@Override
@@ -100,16 +125,27 @@ public class Game1Controller implements KeyListener {
 	        		animal.setCurrDir(Direction.NORTH);
 	        	}
 	        	animal.move();
-	        	
 	            break;
 	        case KeyEvent.VK_DOWN:
 	            // handle down 
+	        	if(animal.getCurrDir() != Direction.SOUTH){
+	        		animal.setCurrDir(Direction.SOUTH);
+	        	}
+	        	animal.move();
 	            break;
 	        case KeyEvent.VK_LEFT:
 	            // handle left
+	        	if(animal.getCurrDir() != Direction.WEST){
+	        		animal.setCurrDir(Direction.WEST);
+	        	}
+	        	animal.move();
 	            break;
 	        case KeyEvent.VK_RIGHT :
 	            // handle right
+	        	if(animal.getCurrDir() != Direction.EAST){
+	        		animal.setCurrDir(Direction.EAST);
+	        	}
+	        	animal.move();
 	            break;
 	     }
 	} 
@@ -154,7 +190,7 @@ public class Game1Controller implements KeyListener {
 	}
 	
 	public void addObject(Object object) {
-		objects.add(object);
+		gameObjects.add(object);
 	}
 	
 	public void removeObject(Object object) {
@@ -162,10 +198,10 @@ public class Game1Controller implements KeyListener {
 	}	
 	
 	public ArrayList<Object> getObjects() {
-		return objects;
+		return gameObjects;
 	}
 	public void setObjects(ArrayList<Object> objects) {
-		this.objects = objects;
+		this.gameObjects = objects;
 	}
 	public Game1View getGameView() {
 		return gameView;
@@ -228,6 +264,12 @@ public class Game1Controller implements KeyListener {
 
 	public void setE(KeyListener e) {
 		this.e = e;
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

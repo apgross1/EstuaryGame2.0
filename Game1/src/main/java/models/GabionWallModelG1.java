@@ -15,7 +15,7 @@ public class GabionWallModelG1 extends WallModelAbstract{
 	}
 	
 	public void addPiece() {
-		
+		//This function is called when the controller detected a collision.
 	}
 
 	public void breakDown() {
