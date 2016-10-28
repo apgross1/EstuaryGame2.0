@@ -16,7 +16,7 @@ import models.BarModel;
 import controller.Game1Controller;
 
 public class Game1Tests {
-	/*
+	
 	//My tests
 	//Low level tests (within-class) (All methods in AnimalModel and GabionWallModel:
 	//Movement
@@ -410,6 +410,6 @@ public class Game1Tests {
 				
 			}
 			
-			*/
+			
 
 }
