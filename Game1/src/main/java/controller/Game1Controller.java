@@ -17,6 +17,8 @@ import models.GabionWallModelG1;
 import models.GabionWallModelG1.GabionChunk;
 import view.Game1View;
 
+import java.awt.Rectangle;
+
 public class Game1Controller implements KeyListener {
 	private ArrayList<Object> gameObjects;
 	private Game1View gameView;
@@ -65,8 +67,29 @@ public class Game1Controller implements KeyListener {
 		
 	}
 	
-	boolean collisionOccured(Object a, Object b){
+	boolean collisionOccured(AnimalModel a, Object chunk){
 		//Logic for seing if a collision has occurred (swift has this built in so I've been told?)
+		
+		Rectangle chunk_rect = null;
+		Rectangle animal_rect = new Rectangle(a.getLocX(), a.getLocY(), a.getWidth(), a.getHeight());
+		
+		int chunk_x = a.getLocX();
+		int chunk_y = a.getLocY();
+		
+		if(chunk instanceof GabionChunk){
+			chunk_x = ((GabionChunk) chunk).getLocX();
+			chunk_y = ((GabionChunk) chunk).getLocY();
+			chunk_rect = new Rectangle(chunk_x, chunk_y, ((GabionChunk) chunk).getWidth(), ((GabionChunk) chunk).getHeight());
+			
+		}else if(chunk instanceof ConcreteChunk){
+			chunk_x = ((ConcreteChunk) chunk).getLocX();
+			chunk_y = ((ConcreteChunk) chunk).getLocY();
+			chunk_rect = new Rectangle(chunk_x, chunk_y, ((ConcreteChunk) chunk).getWidth(), ((ConcreteChunk) chunk).getHeight());
+		}
+		
+		if(animal_rect.getBounds().intersects(chunk_rect)){
+			return true;
+		}
 		return false;
 	}
 	
@@ -76,24 +99,20 @@ public class Game1Controller implements KeyListener {
 		Collection<ConcreteChunk> concreteChunkTemp = wallModel.getChunks();
 		
 		for(GabionChunk gc: gabionChunkTemp){
-			if(collisionOccured(animal, gc)){
-				gabionModel.addPiece();
-				//We also have to figure out how to remove that specific chunk from the gabionModel.
+			if(gc.isActive()){
+				if(collisionOccured(animal, gc)){
+					gabionModel.addPiece(gc);
+					}
 				}
 			}
 		
 		for(ConcreteChunk cc: concreteChunkTemp){
-			if(collisionOccured(animal, cc)){
-				wallModel.addPiece();
-				//Same here we have to figure out how to remove that chunk from wallModel
+			if(cc.isActive()){
+				if(collisionOccured(animal, cc)){
+					wallModel.addPiece(cc);
+					}
 				}
 			}
-	}
-	
-	
-	//Dont need this as we take care of collision detection
-	public void pickedUp(ActionEvent evt) {
-		
 	}
 	
 	//This is called at the end of the round to determine mathamatically what damage is done to the health of the estuary.
@@ -105,14 +124,7 @@ public class Game1Controller implements KeyListener {
 		//Each gabion you collect can stop 5%(adjustable if need be) of the damage from that 100%
 		//Each brick you collect will only stop 1%.
 	}
-	
-	/*
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	*/
+
 	
 	//Not sure how to handle multiple keys pressed at once ie change dir to northeast southeast northwest and southwest.
 	@Override

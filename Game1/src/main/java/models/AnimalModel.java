@@ -4,29 +4,19 @@ import enums.Direction;
 
 public class AnimalModel extends AnimalModelAbstract {
 	
+	private int height = 100;
+	private int width = 100;
+	
 	public AnimalModel() {
 		//this.setEmptyHanded(true);//I dont think we need this?
 	}
 	
-	@Override
-	public void healthUp() {
-		if(getHealth() < 100){
-			setHealth(getHealth()+1); //Do we want to change the increase and make it more siginificant?
-		}
+	public int getHeight(){
+		return height;
 	}
-
-	@Override
-	public void healthDown() {
-		if(getHealth() >= 1){
-			setHealth(getHealth()-1);
-		}
-	}
-
-
-	@Override
-	public void pickUp() {
-		//This function is not needed as we're not actually picking anything up.. Collision will be taken care of in the controller which will tell
-		//the model for each type of wall / gabion to update.
+	
+	public int getWidth(){
+		return width;
 	}
 
 	
@@ -67,5 +57,48 @@ public class AnimalModel extends AnimalModelAbstract {
 		else{
 			System.out.println("Directional data out of bounds: " + this.getCurrDir());
 		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * Dont think we need stuff below this line
+	 */
+	
+	
+	
+	
+	@Override
+	public void healthUp() {
+		if(getHealth() < 100){
+			setHealth(getHealth()+1); //Do we want to change the increase and make it more siginificant?
+		}
+	}
+
+	@Override
+	public void healthDown() {
+		if(getHealth() >= 1){
+			setHealth(getHealth()-1);
+		}
+	}
+
+
+	@Override
+	public void pickUp() {
+		//This function is not needed as we're not actually picking anything up.. Collision will be taken care of in the controller which will tell
+		//the model for each type of wall / gabion to update.
 	}
 }

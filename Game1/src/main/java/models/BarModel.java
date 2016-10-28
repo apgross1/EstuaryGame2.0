@@ -8,11 +8,6 @@ public class BarModel extends BarModelAbstract {
 	}
 
 	@Override
-	public void increase(int i) {
-		//Never used but has to be implemented because abstract class
-	}
-
-	@Override
 	public void decrease(int damage) {
 		if(getStatus() > 0){
 			if(getStatus() >= damage){
@@ -22,5 +17,17 @@ public class BarModel extends BarModelAbstract {
 			}
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 
+	@Override
+	public void increase(int i) {
+		//Never used but has to be implemented because abstract class
+	}
 }

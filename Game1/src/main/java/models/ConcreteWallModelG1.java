@@ -11,21 +11,119 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	private int BlockOnBeach;
 	private Collection<ConcreteChunk> chunks;
 	
-	public void addPiece() {
-		
+	
+	public ConcreteWallModelG1(){
+		maxBlocks = 30;
 	}
 	
-	
+	public void addPiece(ConcreteChunk c) {
+		currentBlocks++;
+		c.toggleActive();
+	}
 	
 	@Override
 	public void breakDown() {
+		currentBlocks = (int) (.1*currentBlocks);
+	}
+	
+
+	public void spawnChunk(int x_loc, int y_loc) {
+		ConcreteChunk c = new ConcreteChunk();
+		c.setLocX(x_loc);
+		c.setLocY(y_loc);
+		c.toggleActive();
 		
 	}
 	
-	@Override
-	public void spawn(boolean gameStart, int numChunksRemoved) {
+	public class ConcreteChunk {
+		private int locX;
+		private int locY;
+		private int height = 10;
+		private int width = 10;
+		
+		private boolean active;
+		
+		public ConcreteChunk() {
+			locX = -1;
+			locY = -1;
+			active = false;
+		}
+		
+		public boolean isActive(){
+			return active;
+		}
+		public int getHeight(){
+			return height;
+		}
+		public int getWidth(){
+			return width;
+		}
+		
+		public void toggleActive(){
+			if(active){
+				active = false;
+			}else{
+				active = true;
+			}
+		}
+		
+		public int getLocX() {
+			return locX;
+		}
+		public void setLocX(int locX) {
+			this.locX = locX;
+		}
+		public int getLocY() {
+			return locY;
+		}
+		public void setLocY(int locY) {
+			this.locY = locY;
+		}
 		
 	}
+	
+	public int getMaxBlocks() {
+		return maxBlocks;
+	}
+	
+	public int getCurrentBlocks() {
+		return currentBlocks;
+	}
+	
+	public Collection<ConcreteChunk> getChunks() {
+		return chunks;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * Dont think we need stuff below this line
+	 */
+	
+	
+	
+	
+	
+	
+	
 	
 	public boolean isFull() {
 		return false;
@@ -47,16 +145,8 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 		return 0;
 	}
 
-	public int getMaxBlocks() {
-		return maxBlocks;
-	}
-
 	public void setMaxBlocks(int maxBlocks) {
 		this.maxBlocks = maxBlocks;
-	}
-
-	public int getCurrentBlocks() {
-		return currentBlocks;
 	}
 
 	public void setCurrentBlocks(int currentBlocks) {
@@ -72,35 +162,14 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	public void setBlockOnBeach(int blockOnBeach) {
 		BlockOnBeach = blockOnBeach;
 	}
-	public Collection<ConcreteChunk> getChunks() {
-		return chunks;
-	}
 
 	public void setChunks(Collection<ConcreteChunk> chunks) {
 		this.chunks = chunks;
 	}
 
-	public class ConcreteChunk {
-		private int locX;
-		private int locY;
-		
-		public ConcreteChunk() {
-			locX = -1;
-			locY = -1;
-		}
-		
-		public int getLocX() {
-			return locX;
-		}
-		public void setLocX(int locX) {
-			this.locX = locX;
-		}
-		public int getLocY() {
-			return locY;
-		}
-		public void setLocY(int locY) {
-			this.locY = locY;
-		}
+	@Override
+	public void spawn(boolean gameStart, int numChunksRemoved) {
+		// TODO Auto-generated method stub
 		
 	}
 }
