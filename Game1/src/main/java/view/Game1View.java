@@ -35,7 +35,7 @@ public class Game1View extends JPanel{
 	//No matter what I do I cannot get repaint to call paint.....
 	public void repaintFrame(){
 		frame.getContentPane().repaint();
-		//repaint();
+		repaint();
 		System.out.println("This called?");
 	}
 	

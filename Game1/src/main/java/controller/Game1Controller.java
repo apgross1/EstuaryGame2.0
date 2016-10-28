@@ -48,11 +48,14 @@ public class Game1Controller implements KeyListener {
 		gameActive = true;
 		//Add intro animation here....
 		
+		g1view.repaintFrame();
+		
 		//Then start the game loop.
-		for(int i=0; i <10; i++){
+		/*for(int i=0; i <10; i++){
 			g1view.repaintFrame();
 			System.out.println(i);
 		}
+		*/
 	}
 	
 	public void reset() {
