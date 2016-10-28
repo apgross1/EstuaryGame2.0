@@ -4,32 +4,80 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Random;
+
+import enums.Walls;
+import enums.Waves;
 
 public class BeachModel {
 	private int squareCount;
 	private int landSize;
 	private Collection<BufferedImage> beachStates;
 	private HashMap<Pair, Object> beachGrid;
-	private int[] positionGrid;
+	private int[][] positionGrid;
+	private GabionPUModel gabPU;
+	private ConcretePUModel concrPU;
 	
 	public BeachModel() {
+		beachGrid = new HashMap<Pair,Object>();
+		positionGrid = new int[10][10];
+		gabPU = new GabionPUModel();
+		concrPU = new ConcretePUModel();
 		
 	}
 	
-	public void spawnGabPU() {
+	public void spawnGabPU(ArrayList<Pair> ppul) {
+		Random randLoc = new Random();
+		Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
+		beachGrid.put(pair, gabPU);
+		gabPU.setLocation(pair);
+		positionGrid[pair.getX()][pair.getY()] = Walls.GABION_GAME3.getValue();
 		
 	}
 	
-	public void spawnConcrPU() {
+	public void spawnConcrPU(ArrayList<Pair> ppul) {
+		Random randLoc = new Random();
+		Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
+		beachGrid.put(pair, concrPU);
+		concrPU.setLocation(pair);
+		positionGrid[pair.getX()][pair.getY()] = Walls.CONCRETE_GAME3.getValue();
+		concrPU.setIsActive(false);
+	}
+	
+	public void removeConcrPU(Pair pair) {
+		beachGrid.remove(pair);
+		concrPU.setLocation(null);
+		positionGrid[pair.getX()][pair.getY()] = 0;
+		concrPU.setIsActive(false);
+		
+	}
+	
+	public void removeGabPU(Pair pair) {
+		beachGrid.remove(pair);
+		gabPU.setLocation(null);
+		positionGrid[pair.getX()][pair.getY()] = 0;
+		gabPU.setIsActive(false);
 		
 	}
 	
 	public ArrayList<Pair> generatePPUL() {
-		return null;
+		ArrayList<Pair> ppulPair = new ArrayList<Pair>();
+		for(int i = 0; i < positionGrid.length; i++) {
+			for(int j = 0; j < positionGrid[i].length; j++) {
+				if (positionGrid[i][j] == 0) {
+					ppulPair.add(new Pair(i,j));
+				}
+				else {
+					continue;
+				}
+			}
+		}
+		return ppulPair;
 	}
 	
-	public void removeSquare() {
-		
+	public void removeSquare(Pair waterLoc) {
+		beachGrid.put(waterLoc, new WaterModel());
+		positionGrid[waterLoc.getX()][waterLoc.getY()] = Waves.WAVE_GAME3.getValue();
 	}
 	
 	public int getSquareCount(){
@@ -56,11 +104,11 @@ public class BeachModel {
 		this.beachStates = beachStates;
 	}
 
-	public int[] getPositionGrid() {
+	public int[][] getPositionGrid() {
 		return positionGrid;
 	}
 
-	public void setPositionGrid(int[] beachGrid) {
+	public void setPositionGrid(int[][] beachGrid) {
 		this.positionGrid = beachGrid;
 	}
 	
@@ -71,14 +119,30 @@ public class BeachModel {
 	public void setBeachGrid(HashMap<Pair, Object> beachGrid) {
 		this.beachGrid = beachGrid;
 	}
+	
+	public GabionPUModel getGabPU() {
+		return gabPU;
+	}
+
+	public void setGabPU(GabionPUModel gabPU) {
+		this.gabPU = gabPU;
+	}
+
+	public ConcretePUModel getConcrPU() {
+		return concrPU;
+	}
+
+	public void setConcrPU(ConcretePUModel concrPU) {
+		this.concrPU = concrPU;
+	}
 
 	public class Pair {
 		private int a;
 		private int b;
 		
 		public Pair(int num1, int num2) {
-			setX(num1);
-			setY(num2);
+			setY(num1);
+			setX(num2);
 		}
 
 		public int getX() {

@@ -2,6 +2,8 @@ package models;
 
 import java.awt.image.BufferedImage;
 
+import models.BeachModel.Pair;
+
 public class ConcretePUModel extends WallModelAbstract {
 	public enum ConcPUState {
 		POWER_UP,WALL;
@@ -10,10 +12,16 @@ public class ConcretePUModel extends WallModelAbstract {
 	private ConcPUState wallState;
 	private BufferedImage powerUp;
 	private BufferedImage wall;
-	private int ConcretePUonbeach;
+	private Pair location;
 
+	
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 	public ConcretePUModel() {
 		setWallState(ConcPUState.POWER_UP);
+		this.setIsActive(true);
+		
 	}
 	public boolean getIsActive() {
 		return isActive;
@@ -22,16 +30,10 @@ public class ConcretePUModel extends WallModelAbstract {
 	public void setIsActive(boolean active) {
 		isActive = active;
 	}
-	private int getConcretePUonbeach(){
-		return ConcretePUonbeach;
-	}
-	public void setConcretePUonbeach(int powerup){
-		ConcretePUonbeach = powerup;
-	}
 	
 	@Override
 	public void breakDown() {
-		
+		this.setIsActive(false);
 	}
 	
 	public BufferedImage getPowerUp() {
@@ -55,9 +57,16 @@ public class ConcretePUModel extends WallModelAbstract {
 	public void setWallState(ConcPUState gameState) {
 		this.wallState = gameState;
 	}
+	
+	public Pair getLocation() {
+		return location;
+	}
+	public void setLocation(Pair location) {
+		this.location = location;
+	}
+	
 	@Override
 	public void spawn(boolean gameStart, int numChunksRemoved) {
-		// TODO Auto-generated method stub
 		
 	}
 }

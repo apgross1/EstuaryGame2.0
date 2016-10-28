@@ -31,49 +31,6 @@ import controller.Game3Controller;
 	 * remove render(Graphics g) from controller, move to view
 	 * added counter to beach model for squares
 	 */
-
-
-
-
-
-//Functions to test
-	
-	
-	
-	/* Beach model: -Andrew
-	 * void spawnGab(GabionPUModel)
-	 * void spawnConc(ConcretePUModel)
-	 * ArrayList<Pair> generatePPUL()
-	 * void removeSquare()
-	 */
-
-	/*GabionPUModel: -Daniel
-	 * void breakdown()
-	 * void spawn()
-	 */
-	
-	/*ConcretePUModel: -Andrew
-	 * void breakdown()
-	 * void spawn()
-	 */
-	
-	/*AnimalModelG3: - Daniel
-	 * void healthUp()
-	 * void healthDown()
-	 * void pickUp()
-	 */
-	
-	/*High-level tests: -Tim
-	 *  void waveHit()
-	 *  void start()
-	 *  void stop()
-	 *  void pickedUp() //For powerup
-	 *  void endGame()
-	 *  void startGame()
-	 */
-
-
-
 public class Game3Tests {
 	//ConcretePUModel
 	//Spawn power-up
@@ -119,7 +76,7 @@ public class Game3Tests {
 	public void testSpawnGab() {
 		BeachModel beach = new BeachModel();
 		int count1 = beach.getSquareCount();
-		beach.spawnGabPU();
+		beach.spawnGabPU(beach.generatePPUL());
 		int count2 = beach.getSquareCount();
 		assertTrue("Should be 1 less...", (count1 == count2+1));
 	}
@@ -129,7 +86,7 @@ public class Game3Tests {
 	public void testSpawnConcrete() {
 		BeachModel beach = new BeachModel();
 		int count1 = beach.getSquareCount();
-		beach.spawnConcrPU();
+		beach.spawnConcrPU(beach.generatePPUL());
 		int count2 = beach.getSquareCount();
 		assertTrue("Should be 1 less...", (count1 == count2+1));
 	}
@@ -138,23 +95,29 @@ public class Game3Tests {
 	public void testGeneratePPUL() {
 		BeachModel beach = new BeachModel();
 		Collection<Pair> origList = beach.generatePPUL();
-		beach.removeSquare(); //Low-level
+		beach.removeSquare((beach.new Pair(3,5))); //Low-level
 		Collection<Pair> modifiedList = beach.generatePPUL();
 		assertTrue("New list should have less combos...", origList.size() > modifiedList.size());
 		
 		//Test if after spawning PU Pair combos decreases (it should, PUs shouldn't be stacked on each other)
-		beach.spawnGabPU();
+		beach.spawnGabPU(beach.generatePPUL());
 		Collection<Pair> listPostGabSpawn = beach.generatePPUL();
 		assertTrue("New list should have less combos than modified list...", listPostGabSpawn.size() < modifiedList.size());
 		
-		beach.spawnConcrPU();
+		beach.spawnConcrPU(beach.generatePPUL());
 		Collection<Pair> listPostConcrSpawn = beach.generatePPUL();
 		assertTrue("New list should have less combos than modified list...", listPostConcrSpawn.size() < listPostGabSpawn.size());
+		beach.removeConcrPU(beach.getConcrPU().getLocation());
+		
+		Collection<Pair> listPostRemovePU = beach.generatePPUL();
+
+		assertTrue("New list should be one less", listPostRemovePU.size() == listPostConcrSpawn.size()+1);
 	}
 	
 	//Testing removal of square/position on grid
 	//Spot filled by wave or power up
-	@Test
+	//Rewrite this test!
+	/*@Test
 	public void testRemoveSquare() {
 		BeachModel beach = new BeachModel();
 		ConcretePUModel concWall = new ConcretePUModel();
@@ -166,7 +129,7 @@ public class Game3Tests {
 		int size2 = grid.size();
 		assertTrue("size 1 should be greater than 2...", size1 > size2);
 		
-	}
+	}*/
 	
 	
 	//need to add attributtes for concwallPUonbeach and gabionPUonbeach
@@ -179,7 +142,7 @@ public class Game3Tests {
 		models.AnimalModelG3 animal = new models.AnimalModelG3();
 		animal.pickUp();
 		assertTrue("True", gabby.getWallState().equals(GabPUState.WALL));
-		conc.setConcretePUonbeach(1);
+		
 	}
 	
 	@Test
@@ -223,8 +186,8 @@ public class Game3Tests {
 		
 		gabWall.spawn();
 		assertEquals("Should be 1",gabWall.getGabionPUonBeach(), 1);
-		assertTrue("Should be greater than 0", gabWall.getXloc() > 0);
-		assertTrue("Should be greater than 0", gabWall.getYloc() > 0);
+		assertTrue("Should be greater than 0", gabWall.getLocation().getX() > 0);
+		assertTrue("Should be greater than 0", gabWall.getLocation().getY() > 0);
 		
 		clock.startTime();
 		assertEquals("Should be true",gabWall.getIsActive(), true);

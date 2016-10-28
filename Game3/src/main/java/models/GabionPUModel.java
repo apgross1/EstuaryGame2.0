@@ -3,11 +3,12 @@ package models;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import models.BeachModel.Pair;
+
 public class GabionPUModel extends WallModelAbstract {
 	private boolean isActive;
 	private int PUonBeach;
-	private int xloc;
-	private int yloc;
+	private Pair location;
 	private BufferedImage powerUp;
 	private BufferedImage wall;
 	private int GabionPUonbeach;
@@ -49,21 +50,6 @@ public class GabionPUModel extends WallModelAbstract {
 		return PUonBeach;
 	}
 	
-	public void setXloc(int Xloc){
-		this.xloc = Xloc;
-	}
-	
-	public int getXloc(){
-		return xloc;
-	}
-	
-	public void setYloc(int yloc){
-		this.yloc = yloc;
-	}
-	
-	public int getYloc(){
-		return yloc;
-	}
 	
 	public enum GabPUState{
 		POWER_UP, WALL;
@@ -79,6 +65,14 @@ public class GabionPUModel extends WallModelAbstract {
 	public void spawn(boolean gameStart, int numChunksRemoved) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Pair getLocation() {
+		return location;
+	}
+
+	public void setLocation(Pair location) {
+		this.location = location;
 	}
 
 }
