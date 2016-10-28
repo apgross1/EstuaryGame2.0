@@ -274,5 +274,10 @@ public class Game1Controller implements KeyListener {
 		
 	}
 
+	public boolean isGameEnd() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	
 }
