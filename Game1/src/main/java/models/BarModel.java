@@ -7,13 +7,13 @@ public class BarModel extends BarModelAbstract {
 		
 	}
 	@Override
-	public void increase() {
+	public void increase(int i) {
 		
 		
 	}
 
 	@Override
-	public void decrease() {
+	public void decrease(int i) {
 		
 		
 	}
