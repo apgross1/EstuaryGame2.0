@@ -31,31 +31,36 @@ public class Game1Controller implements KeyListener {
 	private boolean gabHit;
 	private boolean concrHit;
 	private ArrayList<BufferedImage> landSeqs;
-	private KeyListener e;
+	//private KeyListener e;
 	
 	//Models
-	AnimalModel animal = new AnimalModel();
+	private AnimalModel animal = new AnimalModel();
 	ConcreteWallModelG1 wallModel = new ConcreteWallModelG1();
 	GabionWallModelG1 gabionModel = new GabionWallModelG1();
 	BarModel bar = new BarModel();
 	//View
 	Game1View g1view = new Game1View(this);
 	
-	public Game1Controller() {	
+	public Game1Controller() {
 	}
+	
 	
 	public void startGame() {
 		gameActive = true;
 		//Add intro animation here....
 		
-		g1view.repaintFrame();
 		
-		//Then start the game loop.
-		/*for(int i=0; i <10; i++){
+		while(gameActive){
+			
+			
+			
 			g1view.repaintFrame();
-			System.out.println(i);
 		}
-		*/
+
+	}
+	
+	public AnimalModel getAnimalModel(){
+		return animal;
 	}
 	
 	public void reset() {
@@ -132,6 +137,7 @@ public class Game1Controller implements KeyListener {
 	//Not sure how to handle multiple keys pressed at once ie change dir to northeast southeast northwest and southwest.
 	@Override
 	public void keyPressed(KeyEvent e) {
+		System.out.println("Key Event occured");
 	    int keyCode = e.getKeyCode();
 	    switch( keyCode ) { 
 	        case KeyEvent.VK_UP:
@@ -274,7 +280,7 @@ public class Game1Controller implements KeyListener {
 	public void setLandSeqs(ArrayList<BufferedImage> landSeqs) {
 		this.landSeqs = landSeqs;
 	}
-
+/*
 	public KeyListener getE() {
 		return e;
 	}
@@ -283,6 +289,7 @@ public class Game1Controller implements KeyListener {
 		this.e = e;
 	}
 
+*/
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub

@@ -8,7 +8,10 @@ public class AnimalModel extends AnimalModelAbstract {
 	private int width = 100;
 	
 	public AnimalModel() {
-		//this.setEmptyHanded(true);//I dont think we need this?
+		//Set initial location and direction
+		setLocX(500);
+		setLocY(500);
+		setCurrDir(Direction.NORTH);
 	}
 	
 	public int getHeight(){
@@ -18,7 +21,6 @@ public class AnimalModel extends AnimalModelAbstract {
 	public int getWidth(){
 		return width;
 	}
-
 	
 	//Have to add boarder controls to keep within bounds (we first have to determine the size of the screen.
 	@Override
