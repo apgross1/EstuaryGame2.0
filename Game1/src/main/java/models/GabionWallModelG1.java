@@ -82,10 +82,23 @@ public class GabionWallModelG1 extends WallModelAbstract{
 	public class GabionChunk {
 		private int locX;
 		private int locY;
+		boolean active = false;
 		
 		public GabionChunk() {
 			locX = -1;
 			locY = -1;
+		}
+		
+		public boolean isActive(){
+			return active;
+		}
+		
+		public void toggleActive(){
+			if(active){
+				active = false;
+			}else{
+				active = true;
+			}
 		}
 		
 		public int getLocY() {

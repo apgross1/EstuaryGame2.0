@@ -158,11 +158,11 @@ public class Game1Controller implements KeyListener {
 	
 	//By level I mean bar level
 	public void increaseLevel() {
-		
+		bar.increase();
 	}
 	
 	public void decreaseLevel() {
-		
+		bar.decrease();
 	}
 	
 	public boolean quarterGone() {
