@@ -20,6 +20,7 @@ public abstract class AnimalModelAbstract {
 	public abstract void healthDown();
 	public abstract void pickUp();
 	public abstract void move();
+	
 	public int getLocX() {
 		return locX;
 	}
@@ -38,20 +39,19 @@ public abstract class AnimalModelAbstract {
 	public void setHealth(int health) {
 		this.health = health;
 	}
-	public Direction getCurrDir() {
-		return currDir;
-	}
-	public void setCurrDir(Direction currDir) {
-		this.currDir = currDir;
-	}
-
 	public boolean isEmptyHanded() {
 		return emptyHanded;
 	}
 	public void setEmptyHanded(boolean emptyHanded) {
 		this.emptyHanded = emptyHanded;
 	}
-	
+	public Direction getCurrDir() {
+		return currDir;
+	}
+
+	public void setCurrDir(Direction d) {
+		this.currDir = d;
+	}
 	public int getMaxHealth() {
 		return maxHealth;
 	}
