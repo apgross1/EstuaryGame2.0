@@ -7,6 +7,9 @@ public class BarModelG2 extends BarModelAbstract{
 	public BarModelG2(){
 		
 	}
+	public BarModelG2(int maxLevel) {
+		this.maxLevel = maxLevel;
+	}
 	@Override
 	public void decrease(){
 		
@@ -17,7 +20,18 @@ public class BarModelG2 extends BarModelAbstract{
 	}
 	@Override
 	public void increase() {
-		// TODO Auto-generated method stub
-		
 	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public int getMaxLevel() {
+		return maxLevel;
+	}
+	public void setMaxLevel(int maxLevel) {
+		this.maxLevel = maxLevel;
+	}
+
 }
