@@ -5,9 +5,10 @@ import enums.Direction;
 public class AnimalModel extends AnimalModelAbstract {
 	
 	public AnimalModel() {
-		this.setEmptyHanded(true);//I dont think we need this?
+		//this.setEmptyHanded(true);//I dont think we need this?
 	}
 	
+	/*
 	@Override
 	public void healthUp() {
 		if(getHealth() < 100){
@@ -22,11 +23,14 @@ public class AnimalModel extends AnimalModelAbstract {
 		}
 	}
 
+
 	@Override
 	public void pickUp() {
 		//This function is not needed as we're not actually picking anything up.. Collision will be taken care of in the controller which will tell
 		//the model for each type of wall / gabion to update.
 	}
+	
+		*/
 
 	
 	//Have to add boarder controls to keep within bounds (we first have to determine the size of the screen.
@@ -44,6 +48,8 @@ public class AnimalModel extends AnimalModelAbstract {
 		else if(this.getCurrDir() == Direction.WEST){
 			this.setLocX(this.getLocX() - 1);
 		}
+		/*
+		 *DECIDED FOR NOW WE'RE ONLY USING 4 DIRECTIONS BECAUSE OF KEY LISENER
 		else if(this.getCurrDir() == Direction.NORTH_EAST){
 			this.setLocX(this.getLocX() + 1);
 			this.setLocY(this.getLocY() + 1);
@@ -60,6 +66,7 @@ public class AnimalModel extends AnimalModelAbstract {
 			this.setLocX(this.getLocX() - 1);
 			this.setLocY(this.getLocY() + 1);
 		}
+		*/
 		else{
 			System.out.println("Directional data out of bounds: " + this.getCurrDir());
 		}
