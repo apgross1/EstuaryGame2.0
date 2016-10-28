@@ -8,7 +8,6 @@ public class AnimalModel extends AnimalModelAbstract {
 		//this.setEmptyHanded(true);//I dont think we need this?
 	}
 	
-	/*
 	@Override
 	public void healthUp() {
 		if(getHealth() < 100){
@@ -29,8 +28,6 @@ public class AnimalModel extends AnimalModelAbstract {
 		//This function is not needed as we're not actually picking anything up.. Collision will be taken care of in the controller which will tell
 		//the model for each type of wall / gabion to update.
 	}
-	
-		*/
 
 	
 	//Have to add boarder controls to keep within bounds (we first have to determine the size of the screen.
