@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -12,8 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Game1Controller;
+import enums.Direction;
 
-public class Game1View extends JPanel{
+public class Game1View extends JPanel implements KeyListener{
 	private int damageLevel;
 	private Game1Controller controller;
 	private JFrame frame = new JFrame();
@@ -31,27 +34,61 @@ public class Game1View extends JPanel{
     	frame.setSize(frameWidth, frameHeight);
     	frame.setVisible(true);
     	
-    	addKeyListener(ctl);
+    	//addKeyListener
+    	frame.addKeyListener(this);
 	}
+ 
 	
-	
-	//No matter what I do I cannot get repaint to call paint.....
 	public void repaintFrame(){
-		//frame.getContentPane().repaint();
-		//repaint();
-		//frame.repaint();
+		frame.repaint();
 	}
 	
-	 public class Animation extends JComponent
-	    {
+	 public class Animation extends JComponent {
 			@Override
 			public void paint(Graphics g) {
-				
 				g.drawRect(controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(),controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight());
 				//g.drawRect(x,y,w,h);
 
+
 			}
 	    }
+	 
+	 @Override
+		public void keyPressed(KeyEvent e) {
+			System.out.println("Key Event occured");
+		    int keyCode = e.getKeyCode();
+		    switch( keyCode ) {
+		        case KeyEvent.VK_UP:
+		            // handle up 
+		        	if(controller.getAnimalModel().getCurrDir() != Direction.NORTH){
+		        		controller.getAnimalModel().setCurrDir(Direction.NORTH);
+		        	}
+		        	controller.getAnimalModel().move();
+		            break;
+		        case KeyEvent.VK_DOWN:
+		            // handle down 
+		        	if(controller.getAnimalModel().getCurrDir() != Direction.SOUTH){
+		        		controller.getAnimalModel().setCurrDir(Direction.SOUTH);
+		        	}
+		        	controller.getAnimalModel().move();
+		            break;
+		        case KeyEvent.VK_LEFT:
+		            // handle left
+		        	if(controller.getAnimalModel().getCurrDir() != Direction.WEST){
+		        		controller.getAnimalModel().setCurrDir(Direction.WEST);
+		        	}
+		        	controller.getAnimalModel().move();
+		            break;
+		        case KeyEvent.VK_RIGHT :
+		            // handle right
+		        	if(controller.getAnimalModel().getCurrDir() != Direction.EAST){
+		        		controller.getAnimalModel().setCurrDir(Direction.EAST);
+		        	}
+		        	controller.getAnimalModel().move();
+		            break;
+		    }
+		}
+
 
 	 
 	 
@@ -134,6 +171,23 @@ public class Game1View extends JPanel{
 	public void setController(Game1Controller controller) {
 		this.controller = controller;
 	}
+
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	/*
 	public JFrame getFrame() {

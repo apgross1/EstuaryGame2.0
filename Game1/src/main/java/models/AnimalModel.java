@@ -26,16 +26,16 @@ public class AnimalModel extends AnimalModelAbstract {
 	@Override
 	public void move() {
 		if(this.getCurrDir() == Direction.NORTH){
-			this.setLocY(this.getLocY() + 1);
+			this.setLocY(this.getLocY() - 5);
 		}
 		else if(this.getCurrDir() == Direction.EAST){
-			this.setLocX(this.getLocX() + 1);
+			this.setLocX(this.getLocX() + 5);
 		}
 		else if(this.getCurrDir() == Direction.SOUTH){
-			this.setLocY(this.getLocY() - 1);
+			this.setLocY(this.getLocY() + 5);
 		}
 		else if(this.getCurrDir() == Direction.WEST){
-			this.setLocX(this.getLocX() - 1);
+			this.setLocX(this.getLocX() - 5);
 		}
 		/*
 		 *DECIDED FOR NOW WE'RE ONLY USING 4 DIRECTIONS BECAUSE OF KEY LISENER

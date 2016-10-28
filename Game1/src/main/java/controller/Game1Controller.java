@@ -19,7 +19,7 @@ import view.Game1View;
 
 import java.awt.Rectangle;
 
-public class Game1Controller implements KeyListener {
+public class Game1Controller{
 	private ArrayList<Object> gameObjects;
 	private Game1View gameView;
 	private boolean gameActive; // Added this instead of 2 bools blow
@@ -31,7 +31,6 @@ public class Game1Controller implements KeyListener {
 	private boolean gabHit;
 	private boolean concrHit;
 	private ArrayList<BufferedImage> landSeqs;
-	//private KeyListener e;
 	
 	//Models
 	private AnimalModel animal = new AnimalModel();
@@ -133,49 +132,6 @@ public class Game1Controller implements KeyListener {
 		//Each brick you collect will only stop 1%.
 	}
 
-	
-	//Not sure how to handle multiple keys pressed at once ie change dir to northeast southeast northwest and southwest.
-	@Override
-	public void keyPressed(KeyEvent e) {
-		System.out.println("Key Event occured");
-	    int keyCode = e.getKeyCode();
-	    switch( keyCode ) { 
-	        case KeyEvent.VK_UP:
-	            // handle up 
-	        	if(animal.getCurrDir() != Direction.NORTH){
-	        		animal.setCurrDir(Direction.NORTH);
-	        	}
-	        	animal.move();
-	            break;
-	        case KeyEvent.VK_DOWN:
-	            // handle down 
-	        	if(animal.getCurrDir() != Direction.SOUTH){
-	        		animal.setCurrDir(Direction.SOUTH);
-	        	}
-	        	animal.move();
-	            break;
-	        case KeyEvent.VK_LEFT:
-	            // handle left
-	        	if(animal.getCurrDir() != Direction.WEST){
-	        		animal.setCurrDir(Direction.WEST);
-	        	}
-	        	animal.move();
-	            break;
-	        case KeyEvent.VK_RIGHT :
-	            // handle right
-	        	if(animal.getCurrDir() != Direction.EAST){
-	        		animal.setCurrDir(Direction.EAST);
-	        	}
-	        	animal.move();
-	            break;
-	     }
-	} 
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	//By level I mean bar level
 	public void increaseLevel(int i) {
@@ -280,26 +236,9 @@ public class Game1Controller implements KeyListener {
 	public void setLandSeqs(ArrayList<BufferedImage> landSeqs) {
 		this.landSeqs = landSeqs;
 	}
-/*
-	public KeyListener getE() {
-		return e;
-	}
-
-	public void setE(KeyListener e) {
-		this.e = e;
-	}
-
-*/
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public boolean isGameEnd() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	
+	}	
 }
