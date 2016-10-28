@@ -37,10 +37,9 @@ public class Game1Controller implements KeyListener {
 	GabionWallModelG1 gabionModel = new GabionWallModelG1();
 	BarModel bar = new BarModel();
 	//View
-	Game1View g1view = new Game1View();
+	Game1View g1view = new Game1View(this);
 	
-	public Game1Controller() {
-		
+	public Game1Controller() {	
 	}
 	
 	public void startGame() {
@@ -48,8 +47,9 @@ public class Game1Controller implements KeyListener {
 		//Add intro animation here....
 		
 		//Then start the game loop.
-		while(gameActive){
-			
+		for(int i=0; i <10; i++){
+			g1view.repaintFrame();
+			System.out.println(i);
 		}
 	}
 	
@@ -209,6 +209,7 @@ public class Game1Controller implements KeyListener {
 	public void setGameView(Game1View gameView) {
 		this.gameView = gameView;
 	}
+	/*
 	public boolean isGameStart() {
 		return gameStart;
 	}
@@ -221,6 +222,7 @@ public class Game1Controller implements KeyListener {
 	public void setGameEnd(boolean gameEnd) {
 		this.gameEnd = gameEnd;
 	}
+	*/
 	public Object getTempObject() {
 		return tempObject;
 	}

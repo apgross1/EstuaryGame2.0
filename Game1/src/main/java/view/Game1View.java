@@ -1,18 +1,50 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import controller.Game1Controller;
 
-public class Game1View {
+public class Game1View extends JPanel{
 	private int damageLevel;
 	private Game1Controller controller;
-	private JFrame frame;
+	private JFrame frame = new JFrame();
+    final static int frameWidth = 1000;
+    final static int frameHeight = 1000;
+	
+	public Game1View(Game1Controller ctl){
+		controller = ctl;
+		//JLabel emptyLabel = new JLabel("Text-Only Label");
+		//frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
+    	frame.setBackground(Color.gray);
+    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	frame.setSize(frameWidth, frameHeight);
+    	frame.setVisible(true);
+    	
+    	//System.out.println("Yep");
+	}
 	
 	
+	//No matter what I do I cannot get repaint to call paint.....
+	public void repaintFrame(){
+		frame.getContentPane().repaint();
+		//repaint();
+		System.out.println("This called?");
+	}
+	
+	@Override
 	public void paint(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		//super.paint(g);
+		System.out.println("This should get called by repaint but isnt");
+		g2d.drawOval(0,0,50,50);
 		
 	}
 	
