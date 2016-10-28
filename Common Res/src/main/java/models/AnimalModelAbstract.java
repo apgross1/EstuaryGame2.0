@@ -7,16 +7,41 @@ import java.util.HashMap;
 import enums.Direction;
 
 public abstract class AnimalModelAbstract {
-	public int locX;
-	public int locY;
-	public int health;
+	private int locX;
+	private int locY;
+	private int health;
 	public boolean emptyHanded;
 	public HashMap<Direction, ArrayList<BufferedImage>> animations;
-	public Direction currDir;
+	private Direction currDir;
+	
 	
 	public abstract void healthUp();
 	public abstract void healthDown();
 	public abstract void pickUp();
+	public int getLocX() {
+		return locX;
+	}
+	public void setLocX(int locX) {
+		this.locX = locX;
+	}
+	public int getLocY() {
+		return locY;
+	}
+	public void setLocY(int locY) {
+		this.locY = locY;
+	}
+	public int getHealth() {
+		return health;
+	}
+	public void setHealth(int health) {
+		this.health = health;
+	}
+	public Direction getCurrDir() {
+		return currDir;
+	}
+	public void setCurrDir(Direction currDir) {
+		this.currDir = currDir;
+	}
 	
 
 }
