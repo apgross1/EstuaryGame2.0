@@ -85,7 +85,7 @@ public class gameTwoTests {
 	public void testDecreaseBarModelG2(){
 		//if AlgaeModel gets through decreaseBarModelG2 will be called
 		BarModelG2 b = new BarModelG2(50);// 50 is initial health
-		b.decrease();//Assume decreases by one.(status--)
+		b.decrease(1);//Assume decreases by one.(status--)
 		assertEquals(b.getStatus(), 49);
 	}
 	
@@ -93,7 +93,7 @@ public class gameTwoTests {
 	public void testInrecaseBarModelG2(){
 		//if AlgaeModel gets through increaseBarModelG2 will be called
 		BarModelG2 b = new BarModelG2(49);// 49 is initial health
-		b.increase();//Assume increase by one.(status++)
+		b.increase(1);//Assume increase by one.(status++)
 		assertEquals(b.getStatus(), 50);
 	}
 	
