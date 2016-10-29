@@ -32,6 +32,7 @@ public class BeachModel {
 		beachGrid.put(pair, gabPU);
 		gabPU.setLocation(pair);
 		positionGrid[pair.getX()][pair.getY()] = Walls.GABION_GAME3.getValue();
+		gabPU.setIsActive(true);
 		
 	}
 	
@@ -41,7 +42,7 @@ public class BeachModel {
 		beachGrid.put(pair, concrPU);
 		concrPU.setLocation(pair);
 		positionGrid[pair.getX()][pair.getY()] = Walls.CONCRETE_GAME3.getValue();
-		concrPU.setIsActive(false);
+		concrPU.setIsActive(true);
 	}
 	
 	public void removeConcrPU(Pair pair) {
@@ -49,7 +50,6 @@ public class BeachModel {
 		concrPU.setLocation(null);
 		positionGrid[pair.getX()][pair.getY()] = 0;
 		concrPU.setIsActive(false);
-		
 	}
 	
 	public void removeGabPU(Pair pair) {
@@ -76,7 +76,9 @@ public class BeachModel {
 	}
 	
 	public void removeSquare(Pair waterLoc) {
-		beachGrid.put(waterLoc, new WaterModel());
+		beachGrid.replace(waterLoc, new WaterModel());
+		
+		
 		positionGrid[waterLoc.getX()][waterLoc.getY()] = Waves.WAVE_GAME3.getValue();
 	}
 	

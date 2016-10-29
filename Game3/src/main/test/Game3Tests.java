@@ -4,12 +4,13 @@ import models.BeachModel.Pair;
 import models.ConcretePUModel;
 import models.ConcretePUModel.ConcPUState;
 import models.GabionPUModel.GabPUState;
-
+import models.WaterModel;
 import models.GabionPUModel;
 import static org.junit.Assert.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -18,6 +19,8 @@ import javax.swing.Timer;
 import org.junit.Test;
 
 import controller.Game3Controller;
+import enums.Walls;
+import enums.Waves;
 
 /**
  * @author Jacob
@@ -47,8 +50,6 @@ public class Game3Tests {
 				concWall.setIsActive(false);
 				Object time = e.getSource();
 				Timer myTime = (Timer) time;
-			
-				System.out.println("Print 1: " + concWall.getIsActive());
 				myTime.stop();
 				
 			}
@@ -61,39 +62,40 @@ public class Game3Tests {
 		while(time.isRunning()) {
 
 		}
-	    
-	    System.out.println("Print 2: " + concWall.getIsActive());
 	    assertFalse("Should be false...", concWall.getIsActive());
-	}
-	
-	//Breakdown of concrete wall power-up
-	@Test
-	public void testBreakdown() {
-		ConcretePUModel concWall = new ConcretePUModel();
-		concWall.breakDown();
-		assertFalse("Should pass...", concWall.getIsActive());
 	}
 	
 	//BeachModel
 	//Testing spawnGab (adding gab wall to board)
 	@Test
-	public void testSpawnGab() {
+	public void testSpawnGab(){
 		BeachModel beach = new BeachModel();
-		int count1 = beach.getSquareCount();
+		GabionPUModel gabWall = beach.getGabPU();
 		beach.spawnGabPU(beach.generatePPUL());
-		int count2 = beach.getSquareCount();
-		assertTrue("Should be 1 less...", (count1 == count2+1));
+		assertTrue("Should be true...", gabWall.getIsActive());
+		assertTrue("Should still be in PU form...", gabWall.getWallState().equals(GabPUState.POWER_UP));
+		
+		ActionListener actionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gabWall.setIsActive(false);
+				Object time = e.getSource();
+				Timer myTime = (Timer) time;
+				myTime.stop();
+				
+			}
+		};
+		
+	    
+		Timer time = new Timer(1000, actionListener);
+		time.setRepeats(true);
+		time.start();
+		while(time.isRunning()) {
+
+		}
+	    assertFalse("Should be false...", gabWall.getIsActive());
 	}
 	
-	//Testing spawnConcr (adding concrete to board)
-	@Test
-	public void testSpawnConcrete() {
-		BeachModel beach = new BeachModel();
-		int count1 = beach.getSquareCount();
-		beach.spawnConcrPU(beach.generatePPUL());
-		int count2 = beach.getSquareCount();
-		assertTrue("Should be 1 less...", (count1 == count2+1));
-	}
 	//Testing PPUL generator (Possible Power-Up Location)
 	@Test
 	public void testGeneratePPUL() {
@@ -119,24 +121,30 @@ public class Game3Tests {
 	}
 	
 	//Testing removal of square/position on grid
-	//Spot filled by wave or power up
-	//Rewrite this test!
-	/*@Test
+	//Spot filled by wave
+	@Test
 	public void testRemoveSquare() {
 		BeachModel beach = new BeachModel();
-		ConcretePUModel concWall = new ConcretePUModel();
-		HashMap<Pair, Object> grid = new HashMap<Pair,Object>();
-		grid.put(beach.new Pair(3,5), concWall);
+		ConcretePUModel concrPU = new ConcretePUModel();
+		concrPU.setLocation(beach.new Pair(4,5));
+		beach.getBeachGrid().put(concrPU.getLocation(), concrPU);
+		beach.getPositionGrid()[concrPU.getLocation().getX()][concrPU.getLocation().getY()] = Walls.CONCRETE_GAME3.getValue();
+		//Adding concrete PU to beach
+		assertTrue("Should be true", beach.getBeachGrid().containsKey(concrPU.getLocation()));
+		assertTrue("Should be true...", beach.getPositionGrid()[concrPU.getLocation().getX()][concrPU.getLocation().getY()] == Walls.CONCRETE_GAME3.getValue()); 
 		
-		int size1 = grid.size();
-		beach.removeSquare();
-		int size2 = grid.size();
-		assertTrue("size 1 should be greater than 2...", size1 > size2);
-		
-	}*/
+		//Removing the tile...
+		beach.removeSquare(concrPU.getLocation());
+	
+		assertFalse("Should be false...", (beach.getBeachGrid().get(concrPU.getLocation())) instanceof ConcretePUModel);
+		assertTrue("Should be true...", (beach.getBeachGrid().get(concrPU.getLocation())) instanceof WaterModel);
+		//Replaced with wave?
+		assertTrue("Should be true...", beach.getPositionGrid()[concrPU.getLocation().getX()][concrPU.getLocation().getY()] == Waves.WAVE_GAME3.getValue());
+	
+	}
 	
 	
-	//need to add attributtes for concwallPUonbeach and gabionPUonbeach
+	//need to add attributes for concwallPUonbeach and gabionPUonbeach
 	@Test
 	public void testpickedUp() {
 		models.GabionPUModel gabby = new models.GabionPUModel();

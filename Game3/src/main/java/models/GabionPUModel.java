@@ -14,6 +14,10 @@ public class GabionPUModel extends WallModelAbstract {
 	private int GabionPUonbeach;
 	private GabPUState wallState;
 
+	public GabionPUModel() {
+		this.setWallState(GabPUState.POWER_UP);
+		this.setIsActive(false);
+	}
 
 	public boolean getIsActive() {
 		return isActive;
@@ -26,7 +30,6 @@ public class GabionPUModel extends WallModelAbstract {
 
 	@Override
 	public void breakDown() {
-		// TODO Auto-generated method stub
 		
 	}
 	public BufferedImage getWall() {

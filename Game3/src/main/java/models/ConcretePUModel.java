@@ -33,7 +33,6 @@ public class ConcretePUModel extends WallModelAbstract {
 	
 	@Override
 	public void breakDown() {
-		this.setIsActive(false);
 	}
 	
 	public BufferedImage getPowerUp() {
