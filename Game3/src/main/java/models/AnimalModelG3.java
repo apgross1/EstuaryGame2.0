@@ -9,9 +9,10 @@ import enums.Direction;
 public class AnimalModelG3 extends AnimalModelAbstract{
 	private HashMap<Direction,ArrayList<BufferedImage>> animations;
 	private int health;
-	private int xloc;
-	private int yloc;
-	private int emptyHanded;
+	private int xloc; //exists in abstract model not needed?
+	private int yloc; //exists in abstract model not needed?
+	//Exists in abstract model;
+	//private boolean emptyHanded;
 
 	@Override
 	public void healthUp() {
@@ -22,12 +23,13 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	@Override
 	public void healthDown() {
 		// TODO Auto-generated method stub
-		
+		// this.health = 0;
 	}
 
 	@Override
 	public void pickUp() {
 		// TODO Auto-generated method stub
+		this.setEmptyHanded(false);
 		
 	}
 
@@ -39,14 +41,15 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.animations = animations;
 	}
 	
-	public void setXloc(int Xloc){
+	//exists in abstract model not needed?
+	/*public void setXloc(int Xloc){
 		this.xloc = Xloc;
 	}
 	
 	public int getXloc(){
 		return xloc;
 	}
-	
+
 	public void setYloc(int yloc){
 		this.yloc = yloc;
 	}
@@ -54,7 +57,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	public int getYloc(){
 		return yloc;
 	}
-
+*/
 	public void setHealth(int health){
 		this.health = health;
 	}
@@ -63,16 +66,48 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		return health;
 	}
 	
-	public void setEmptyHanded(int emptyHanded){
+	/* Exists in abstract model
+	public void setEmptyHanded(boolean emptyHanded){
 		this.emptyHanded = emptyHanded;
 	}
 	
-	public int getEmptyHanded(){
+	public boolean getEmptyHanded(){
 		return emptyHanded;
-	}
+	}*/
+	
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
+		switch(this.getCurrDir()){
+			case NORTH:
+				this.setLocY(this.getLocY() - 1);
+				break;
+			case SOUTH:
+				this.setLocY(this.getLocY() + 1);
+				break;
+			case EAST:
+				this.setLocX(this.getLocX() + 1);
+				break;
+			case WEST:
+				this.setLocX(this.getLocX() - 1);
+				break;
+			case NORTH_EAST:
+				this.setLocX(this.getLocX() + 1);
+				this.setLocY(this.getLocY() - 1);
+				break;
+			case NORTH_WEST:
+				this.setLocX(this.getLocX() - 1);
+				this.setLocY(this.getLocY() - 1);
+				break;
+			case SOUTH_EAST:
+				this.setLocX(this.getLocX() + 1);
+				this.setLocY(this.getLocY() + 1);
+				break;
+			case SOUTH_WEST:
+				this.setLocX(this.getLocX() - 1);
+				this.setLocY(this.getLocY() + 1);
+				break;
+		}
 		
 	}
 }

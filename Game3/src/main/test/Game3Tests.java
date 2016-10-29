@@ -227,6 +227,8 @@ public class Game3Tests {
 
 	}
 	
+	
+	/*
 	@Test
 	public void testPickup(){
 		AnimalModelG3 animal = new AnimalModelG3();
@@ -242,5 +244,5 @@ public class Game3Tests {
 		animal.setEmptyHanded(2);
 		assertTrue("Should be 2", animal.getEmptyHanded() == 2);
 	}
-	
+	*/
 }
