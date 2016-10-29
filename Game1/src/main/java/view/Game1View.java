@@ -22,8 +22,8 @@ public class Game1View extends JPanel implements KeyListener{
 	private JFrame frame = new JFrame();
 	//private JPanel action_pannel = new JPanel();
 
-    final static int frameWidth = 1000;
-    final static int frameHeight = 1000;
+    final static int frameWidth = 800;
+    final static int frameHeight = 800;
 	
 	public Game1View(Game1Controller ctl){
 		controller = ctl;
@@ -33,6 +33,7 @@ public class Game1View extends JPanel implements KeyListener{
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	frame.setSize(frameWidth, frameHeight);
     	frame.setVisible(true);
+    	frame.setResizable(false);
     	
     	//addKeyListener
     	frame.addKeyListener(this);
@@ -55,7 +56,7 @@ public class Game1View extends JPanel implements KeyListener{
 	 
 	 @Override
 		public void keyPressed(KeyEvent e) {
-			System.out.println("Key Event occured");
+			System.out.println(controller.getAnimalModel().getLocY());
 		    int keyCode = e.getKeyCode();
 		    switch( keyCode ) {
 		        case KeyEvent.VK_UP:

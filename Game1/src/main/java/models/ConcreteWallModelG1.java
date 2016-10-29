@@ -9,6 +9,7 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	private int maxBlocks;
 	private int currentBlocks;
 	private int BlockOnBeach;
+	private int activeBlocksOnBoard;
 	private Collection<ConcreteChunk> chunks;
 	
 	
@@ -19,6 +20,7 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	public void addPiece(ConcreteChunk c) {
 		currentBlocks++;
 		c.toggleActive();
+		activeBlocksOnBoard--;
 	}
 	
 	@Override
@@ -32,7 +34,11 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 		c.setLocX(x_loc);
 		c.setLocY(y_loc);
 		c.toggleActive();
+		activeBlocksOnBoard++;
 		
+	}
+	public int getActiveBlocks(){
+		return activeBlocksOnBoard;
 	}
 	
 	public class ConcreteChunk {

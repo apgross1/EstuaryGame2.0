@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import enums.Direction;
 import models.AnimalModel;
@@ -46,11 +47,22 @@ public class Game1Controller{
 	
 	public void startGame() {
 		gameActive = true;
+		
 		//Add intro animation here....
 		
 		
 		while(gameActive){
 			
+			Random r = new Random();
+			if(wallModel.getCurrentBlocks() < wallModel.getMaxBlocks() & wallModel.getActiveBlocks() < 5){//Max concrete that can be on the screen at once.
+				/*
+				//Spawn a concrete block at a random location within the bounds of the board.
+				//int Result = r.nextInt(High-Low) + Low;
+				int randx = r.nextInt(1000);
+				int randy = r.nextInt(1000-500) + 500;
+				wallModel.spawnChunk(randx, randy);
+				*/
+			}
 			
 			
 			g1view.repaintFrame();
