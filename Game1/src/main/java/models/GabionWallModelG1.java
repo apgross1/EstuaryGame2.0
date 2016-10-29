@@ -25,7 +25,7 @@ public class GabionWallModelG1 extends WallModelAbstract{
 	}
 
 	public void breakDown() {
-		currentOysters = (int) (.75*currentOysters);
+		currentOysters = (int) (.85*currentOysters);
 	}
 	
 	public void spawnChunk(int x_loc, int y_loc) {

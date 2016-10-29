@@ -82,7 +82,7 @@ public class Game1View extends JPanel implements KeyListener{
 				//Draw animal at current position
 				g.fillRect(controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(),controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight());
 				
-				//Draw score data and timer
+				//Draw score data and timer and health
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
 				g.setColor(Color.WHITE);
 				g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), 20, 25);
@@ -90,6 +90,13 @@ public class Game1View extends JPanel implements KeyListener{
 				g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), 200, 25);
 				g.setColor(Color.GREEN);
 				g.drawString("TIME LEFT: null", 700, 25);
+				
+				g.drawRect(400, 20, 200, 20); //Behind health bar doesnt change
+				
+				
+				g.setColor(Color.RED);
+				int health = (controller.getBarModel().getStatus()*2);
+				g.fillRect(400, 20, health, 20);
 				
 				
 				//Draw all the chunks that are active.

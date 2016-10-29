@@ -4,7 +4,7 @@ package models;
 public class BarModel extends BarModelAbstract {
 	
 	public BarModel() {
-		super.setMaxLevel(100); //Health we decided for the estuary in game1
+		super.setStatus(100); //Health we decided for the estuary in game1
 	}
 
 	@Override

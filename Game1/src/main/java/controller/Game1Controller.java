@@ -82,7 +82,9 @@ public class Game1Controller{
 		}
 		//Caclulate score and then reset for round 2
 		//math fn
+		takeDamage();
 		//one more paint
+		g1view.repaintFrame();
 		//set game round to 2/3
 		//reset vars
 		//restart game
@@ -91,6 +93,9 @@ public class Game1Controller{
 	
 	public AnimalModel getAnimalModel(){
 		return animal;
+	}
+	public BarModel getBarModel(){
+		return bar;
 	}
 	public ConcreteWallModelG1 getWallModel(){
 		return wallModel;
@@ -166,12 +171,18 @@ public class Game1Controller{
 	
 	//This is called at the end of the round to determine mathamatically what damage is done to the health of the estuary.
 	public void takeDamage() {
-		//First determine what percent of the gabions + bricks are left. I say we make it that 75% of the gabions you collected remain
-		//while only 10% of the bricks you collected remain. This will be standard and not have to do with the health of the sanctuary, just for visual.
+		//Get Vars
+		int bar_health = bar.getStatus();
+		int gabbionsCollected = gabionModel.getCurrentOysters();
+		int concreteCollected = wallModel.getCurrentBlocks();
 		
-		//Mathematically we can say the health of the estuary is initially 100.
-		//Each gabion you collect can stop 5%(adjustable if need be) of the damage from that 100%
-		//Each brick you collect will only stop 1%.
+		int protection = (gabbionsCollected * 5) + (concreteCollected * 1);
+		bar.setStatus(bar_health-protection);
+		
+		
+		//Break down the walls
+		wallModel.breakDown();
+		gabionModel.breakDown();
 	}
 
 	
