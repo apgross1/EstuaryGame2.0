@@ -74,10 +74,18 @@ public class Game1Controller{
 				gabionModel.spawnChunk(randx, randy);
 			}
 			
+			collisionDetectionLoop();
+			
 			
 			
 			g1view.repaintFrame();
 		}
+		//Caclulate score and then reset for round 2
+		//math fn
+		//one more paint
+		//set game round to 2/3
+		//reset vars
+		//restart game
 
 	}
 	
@@ -94,6 +102,10 @@ public class Game1Controller{
 	
 	public void reset() {
 		//This should reset all variables, timer and all as we're going to have 3 sub rounds in game 1
+	}
+	
+	public void setGameState(boolean b){
+		gameActive = b;
 	}
 	
 	public void startTime() {
@@ -229,7 +241,6 @@ public class Game1Controller{
 	public void setGameEnd(boolean gameEnd) {
 		this.gameEnd = gameEnd;
 	}
-	*/
 	public Object getTempObject() {
 		return tempObject;
 	}
@@ -266,9 +277,5 @@ public class Game1Controller{
 	public void setLandSeqs(ArrayList<BufferedImage> landSeqs) {
 		this.landSeqs = landSeqs;
 	}
-
-	public boolean isGameEnd() {
-		// TODO Auto-generated method stub
-		return false;
-	}	
+		*/
 }

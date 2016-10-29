@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -79,7 +80,17 @@ public class Game1View extends JPanel implements KeyListener{
 			@Override
 			public void paint(Graphics g) {
 				//Draw animal at current position
-				g.drawRect(controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(),controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight());
+				g.fillRect(controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(),controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight());
+				
+				//Draw score data and timer
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
+				g.setColor(Color.WHITE);
+				g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), 20, 25);
+				g.setColor(Color.RED);
+				g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), 200, 25);
+				g.setColor(Color.GREEN);
+				g.drawString("TIME LEFT: null", 700, 25);
+				
 				
 				//Draw all the chunks that are active.
 				Collection<ConcreteChunk> concreteChunkTemp = controller.getWallModel().getChunks();
@@ -89,16 +100,18 @@ public class Game1View extends JPanel implements KeyListener{
 				while(it.hasNext()){
 					//
 					ConcreteChunk tmp = it.next();
-					g.drawRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
-					
-					
+					if(tmp.isActive()){
+						g.setColor(Color.RED);
+						g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
+					}
 				}
 				while (git.hasNext()){
-					GabionChunk temp = git.next();
-					g.drawRect(temp.getLocX(), temp.getLocY(), 20, 10);
+					GabionChunk tmp = git.next();
+					if(tmp.isActive()){
+						g.setColor(Color.WHITE);
+						g.fillRect(tmp.getLocX(), tmp.getLocY(), 20, 10);
+					}
 				}
-					//
-					//g.setColor(Color.orange);
 			}
 	    }
 	 
@@ -143,6 +156,10 @@ public class Game1View extends JPanel implements KeyListener{
 		        	if(controller.getAnimalModel().getLocX() < 885){
 		        		controller.getAnimalModel().move();
 		        	}
+		            break;
+		        case KeyEvent.VK_SPACE :
+		        	System.out.println("This is a temp key event to end the game (set bool gameActive in controller to false)");
+		        	controller.setGameState(false);
 		            break;
 		    }
 		}
