@@ -1,5 +1,7 @@
 package models;
 
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,22 +14,28 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private int xloc;
 	private int yloc;
 	private int emptyHanded;
+	private boolean isDead;
+	private Graphics2D boundary;
 
+	
+	public AnimalModelG3() {
+		
+	}
 	@Override
 	public void healthUp() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void healthDown() {
-		// TODO Auto-generated method stub
+		this.setHealth(0);
 		
 	}
 
 	@Override
 	public void pickUp() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -75,4 +83,17 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public boolean isDead() {
+		return isDead;
+	}
+
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
+	}
+
+	public Graphics2D getBoundary() {
+		return boundary;
+	}
+
 }

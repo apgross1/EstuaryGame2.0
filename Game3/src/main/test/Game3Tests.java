@@ -147,13 +147,12 @@ public class Game3Tests {
 	//need to add attributes for concwallPUonbeach and gabionPUonbeach
 	@Test
 	public void testpickedUp() {
-		models.GabionPUModel gabby = new models.GabionPUModel();
-		models.ConcretePUModel conc = new models.ConcretePUModel();
-		gabby.setGabionPUonBeach(1);
+		BeachModel beach = new BeachModel();
+		beach.spawnGabPU(beach.generatePPUL());
 		//check this out
 		models.AnimalModelG3 animal = new models.AnimalModelG3();
 		animal.pickUp();
-		assertTrue("True", gabby.getWallState().equals(GabPUState.WALL));
+		assertTrue("Should be true", beach.getGabPU().getWallState().equals(GabPUState.WALL));
 		
 	}
 	
@@ -189,33 +188,7 @@ public class Game3Tests {
 	
 	
 	//Gabion Power UP tests
-	@Test
-	public void testGabionSpawnPU(){
-		GabionPUModel gabWall = new GabionPUModel();
-		Game3Controller clock = new Game3Controller();
-		gabWall.setGabionPUonBeach(0);
-		assertEquals("Should be 0",gabWall.getGabionPUonBeach(), 0);
-		
-		gabWall.spawn();
-		assertEquals("Should be 1",gabWall.getGabionPUonBeach(), 1);
-		assertTrue("Should be greater than 0", gabWall.getLocation().getX() > 0);
-		assertTrue("Should be greater than 0", gabWall.getLocation().getY() > 0);
-		
-		clock.startTime();
-		assertEquals("Should be true",gabWall.getIsActive(), true);
-		clock.stopTime();
-		assertEquals("Should be false",gabWall.getIsActive(), false);
-	}
-	
-	@Test
-	public void testGabionBreakdownPU(){
-		GabionPUModel gabWall = new GabionPUModel();
-		gabWall.setGabionPUonBeach(0);
-		gabWall.spawn();
-		gabWall.breakDown();
-		assertEquals("Should be 0",gabWall.getGabionPUonBeach(), 0);
-		assertEquals(gabWall.getIsActive(), false);
-	}
+
 	
 	//AnimalModel
 	@Test
