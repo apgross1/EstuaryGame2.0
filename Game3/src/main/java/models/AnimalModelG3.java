@@ -12,7 +12,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private int xloc; //exists in abstract model not needed?
 	private int yloc; //exists in abstract model not needed?
 	//Exists in abstract model;
-	//private boolean emptyHanded;
+	//private int emptyHanded;
 
 	@Override
 	public void healthUp() {
@@ -29,7 +29,8 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	@Override
 	public void pickUp() {
 		// TODO Auto-generated method stub
-		this.setEmptyHanded(false);
+		// Need to address abstract class as EmptyHanded is boolean
+		//this.setEmptyHanded(false);
 		
 	}
 
@@ -67,11 +68,11 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	}
 	
 	/* Exists in abstract model
-	public void setEmptyHanded(boolean emptyHanded){
+	public void setEmptyHanded(int emptyHanded){
 		this.emptyHanded = emptyHanded;
 	}
 	
-	public boolean getEmptyHanded(){
+	public int getEmptyHanded(){
 		return emptyHanded;
 	}*/
 	
