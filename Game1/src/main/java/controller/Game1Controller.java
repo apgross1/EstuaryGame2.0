@@ -55,13 +55,12 @@ public class Game1Controller{
 			
 			Random r = new Random();
 			if(wallModel.getCurrentBlocks() < wallModel.getMaxBlocks() & wallModel.getActiveBlocks() < 5){//Max concrete that can be on the screen at once.
-				/*
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
 				int randx = r.nextInt(1000);
-				int randy = r.nextInt(1000-500) + 500;
+				int randy = r.nextInt(700-50) + 50;
+				//Need a condition here to make sure that there is not already a chunk at that location.
 				wallModel.spawnChunk(randx, randy);
-				*/
 			}
 			
 			
@@ -73,6 +72,13 @@ public class Game1Controller{
 	public AnimalModel getAnimalModel(){
 		return animal;
 	}
+	public ConcreteWallModelG1 getWallModel(){
+		return wallModel;
+	}
+	public GabionWallModelG1 getGabionWallModel(){
+		return gabionModel;
+	}
+	
 	
 	public void reset() {
 		//This should reset all variables, timer and all as we're going to have 3 sub rounds in game 1

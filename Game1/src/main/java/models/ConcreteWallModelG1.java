@@ -34,6 +34,7 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 		c.setLocX(x_loc);
 		c.setLocY(y_loc);
 		c.toggleActive();
+		chunks.add(c);
 		activeBlocksOnBoard++;
 		
 	}

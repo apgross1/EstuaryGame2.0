@@ -26,12 +26,9 @@ public class AnimalModel extends AnimalModelAbstract {
 	@Override
 	public void move() {
 		if(this.getCurrDir() == Direction.NORTH){
-			if(this.getLocY() > 0){
-				this.setLocY(this.getLocY() - 5);
-			}
+			this.setLocY(this.getLocY() - 5);
 		}
 		else if(this.getCurrDir() == Direction.EAST){
-			System.out.println("x var " + getLocX());
 			this.setLocX(this.getLocX() + 5);
 		}
 		else if(this.getCurrDir() == Direction.SOUTH){
