@@ -10,7 +10,7 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	private int currentBlocks;
 	private int BlockOnBeach;
 	private int activeBlocksOnBoard;
-	private Collection<ConcreteChunk> chunks;
+	private Collection<ConcreteChunk> chunks = new ArrayList<ConcreteChunk>();
 	
 	
 	public ConcreteWallModelG1(){
@@ -28,6 +28,10 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 		currentBlocks = (int) (.1*currentBlocks);
 	}
 	
+	@Override
+	public String toString(){
+		return "Eh";
+	}
 
 	public void spawnChunk(int x_loc, int y_loc) {
 		ConcreteChunk c = new ConcreteChunk();

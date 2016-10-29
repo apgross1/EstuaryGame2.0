@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -81,10 +82,15 @@ public class Game1View extends JPanel implements KeyListener{
 				
 				//Draw all the chunks that are active.
 				Collection<ConcreteChunk> concreteChunkTemp = controller.getWallModel().getChunks();
-				for(ConcreteChunk cc: concreteChunkTemp){
-					//g.drawRect(c.getLocX(), c.getLocY(), 10, 10);
-					//g.setColor(Color.orange);
+				Iterator<ConcreteChunk> it = concreteChunkTemp.iterator();
+				while(it.hasNext()){
+					//
+					ConcreteChunk tmp = it.next();
+					g.drawRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
+					
 				}
+					//
+					//g.setColor(Color.orange);
 			}
 	    }
 	 

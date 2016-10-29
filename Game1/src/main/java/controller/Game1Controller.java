@@ -50,10 +50,12 @@ public class Game1Controller{
 		
 		//Add intro animation here....
 		
+		//wallModel.spawnChunk(200, 200);
 		
 		while(gameActive){
 			
 			Random r = new Random();
+			
 			if(wallModel.getCurrentBlocks() < wallModel.getMaxBlocks() & wallModel.getActiveBlocks() < 5){//Max concrete that can be on the screen at once.
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
@@ -62,6 +64,7 @@ public class Game1Controller{
 				//Need a condition here to make sure that there is not already a chunk at that location.
 				wallModel.spawnChunk(randx, randy);
 			}
+			
 			
 			
 			g1view.repaintFrame();
