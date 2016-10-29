@@ -19,6 +19,7 @@ import javax.swing.JSplitPane;
 import controller.Game1Controller;
 import enums.Direction;
 import models.ConcreteWallModelG1.ConcreteChunk;
+import models.GabionWallModelG1.GabionChunk;
 
 public class Game1View extends JPanel implements KeyListener{
 	private int damageLevel;
@@ -82,12 +83,19 @@ public class Game1View extends JPanel implements KeyListener{
 				
 				//Draw all the chunks that are active.
 				Collection<ConcreteChunk> concreteChunkTemp = controller.getWallModel().getChunks();
+				Collection<GabionChunk> GabionChunkTemp = controller.getGabionWallModel().getChunks();
+				Iterator<GabionChunk> git = GabionChunkTemp.iterator();
 				Iterator<ConcreteChunk> it = concreteChunkTemp.iterator();
 				while(it.hasNext()){
 					//
 					ConcreteChunk tmp = it.next();
 					g.drawRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
 					
+					
+				}
+				while (git.hasNext()){
+					GabionChunk temp = git.next();
+					g.drawRect(temp.getLocX(), temp.getLocY(), 20, 10);
 				}
 					//
 					//g.setColor(Color.orange);

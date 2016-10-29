@@ -3,11 +3,14 @@ package models;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import models.ConcreteWallModelG1.ConcreteChunk;
+
 public class GabionWallModelG1 extends WallModelAbstract{
 	private int maxOysters;
 	private int currentOysters;
 	private int oystersOnBeach;
-	private Collection<GabionChunk> chunks;
+	private int activeClamsOnBoard;
+	private Collection<GabionChunk> chunks = new ArrayList<GabionChunk>();
 	
 	
 	public GabionWallModelG1() {
@@ -18,11 +21,24 @@ public class GabionWallModelG1 extends WallModelAbstract{
 		//This function is called when the controller detected a collision.
 		currentOysters++;
 		gc.toggleActive();
-		
+		activeClamsOnBoard--;
 	}
 
 	public void breakDown() {
 		currentOysters = (int) (.75*currentOysters);
+	}
+	
+	public void spawnChunk(int x_loc, int y_loc) {
+		GabionChunk gc = new GabionChunk();
+		gc.setLocX(x_loc);
+		gc.setLocY(y_loc);
+		gc.toggleActive();
+		chunks.add(gc);
+		activeClamsOnBoard++;
+		
+	}
+	public int getActiveClams(){
+		return activeClamsOnBoard;
 	}
 	
 	public class GabionChunk {
@@ -30,11 +46,12 @@ public class GabionWallModelG1 extends WallModelAbstract{
 		private int locY;
 		private int height = 10;
 		private int width = 10;
-		boolean active = false;
+		private boolean active;
 		
 		public GabionChunk() {
 			locX = -1;
 			locY = -1;
+			active = false;
 		}
 		
 		public boolean isActive(){

@@ -65,6 +65,15 @@ public class Game1Controller{
 				wallModel.spawnChunk(randx, randy);
 			}
 			
+			if(gabionModel.getCurrentOysters() < gabionModel.getMaxOysters() & gabionModel.getActiveClams() < 5){//Max concrete that can be on the screen at once.
+				//Spawn a concrete block at a random location within the bounds of the board.
+				//int Result = r.nextInt(High-Low) + Low;
+				int randx = r.nextInt(1000);
+				int randy = r.nextInt(700-50) + 50;
+				//Need a condition here to make sure that there is not already a chunk at that location.
+				gabionModel.spawnChunk(randx, randy);
+			}
+			
 			
 			
 			g1view.repaintFrame();
