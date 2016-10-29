@@ -1,7 +1,21 @@
 package controller;
+import models.AnimalModelG3;
+import models.BeachModel;
+import models.BeachModel.Pair;
+import models.ConcretePUModel;
+import models.ConcretePUModel.ConcPUState;
+import models.GabionPUModel.GabPUState;
+import models.WaterModel;
+import models.GabionPUModel;
+import view.Game3View;
 
 public class Game3Controller {
 	private boolean gameisActive;
+	
+	public Game3Controller() {
+		
+	}
+	
 	public void startTime() {
 		
 	}
