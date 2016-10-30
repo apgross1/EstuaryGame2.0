@@ -10,6 +10,7 @@ public class ConcretePUModel extends WallModelAbstract {
 		POWER_UP,WALL;
 	}
 	private boolean isActive;
+	private boolean isPickedUp;
 	private ConcPUState wallState;
 	private BufferedImage powerUp;
 	private BufferedImage wall;
@@ -28,6 +29,9 @@ public class ConcretePUModel extends WallModelAbstract {
 		this.height = 10;
 		this.width = 10;
 		
+	}
+	public ConcretePUModel(Pair loc) {
+		location = loc;
 	}
 	public boolean getIsActive() {
 		return isActive;
@@ -96,5 +100,11 @@ public class ConcretePUModel extends WallModelAbstract {
 	public void setWidth(int width) {
 		this.width = width;
 	}
-
+	
+	public boolean isPickedUp() {
+		return isPickedUp;
+	}
+	public void setPickedUp(boolean isPickedUp) {
+		this.isPickedUp = isPickedUp;
+	}
 }

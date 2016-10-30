@@ -9,6 +9,7 @@ import models.BeachModel.Pair;
 
 public class GabionPUModel extends WallModelAbstract {
 	private boolean isActive;
+	private boolean isPickedUp;
 	private int PUonBeach;
 	private Pair location;
 	private BufferedImage powerUp;
@@ -109,5 +110,14 @@ public class GabionPUModel extends WallModelAbstract {
 	public void setWidth(int width) {
 		this.width = width;
 	}
+	
+	public boolean isPickedUp() {
+		return isPickedUp;
+	}
+
+	public void setPickedUp(boolean isPickedUp) {
+		this.isPickedUp = isPickedUp;
+	}
+
 
 }

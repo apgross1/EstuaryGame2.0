@@ -1,4 +1,5 @@
 package controller;
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -42,19 +43,25 @@ public class Game3Controller implements KeyListener {
 		Random die = new Random();
 		int trigger = 4;
 		while(getgameActive()) {
-			if(trigger == die.nextInt(20)) {
-				getBeach().spawnConcrPU(getBeach().generatePPUL());
-				getBeach().spawnGabPU(getBeach().generatePPUL());
+			if(trigger == die.nextInt(6000000)) {
+				if(beach.getConcrPU().getIsActive() == false && beach.getGabPU().getIsActive() == false) {
+					getBeach().spawnConcrPU(getBeach().generatePPUL());
+					getBeach().spawnGabPU(getBeach().generatePPUL());
+					this.powerUpSpawned();
+				}	
 			}
+			this.view.repaintAll();
+			
 		}
 	}
 
 	ActionListener powerUpSpawnTimerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			beach.removeGabPU(beach.getGabPU().getLocation());
-			beach.removeConcrPU(beach.getConcrPU().getLocation());
-			
+			beach.removeGabPU(beach.findPairInGrid(beach.getGabPU().getLocation()));
+			beach.removeConcrPU(beach.findPairInGrid(beach.getConcrPU().getLocation()));
+			beach.getConcrPU().setActive(false);
+			beach.getGabPU().setIsActive(false);
 			Object time = e.getSource();
 			Timer myTime = (Timer) time;
 			myTime.stop();
@@ -78,11 +85,12 @@ public class Game3Controller implements KeyListener {
 	
 	//Duration for which power-up is available to be picked up
 	public void powerUpSpawned() {
-		Timer timer = new Timer(3000, powerUpSpawnTimerListener);
+		Timer timer = new Timer(10000, powerUpSpawnTimerListener);
 		timer.setRepeats(true);
 		timer.start();
+		System.out.println("Timer started");
 		while(timer.isRunning()) {
-			if (beach.getGabPU().getIsActive() || beach.getConcrPU().getIsActive()) {
+			if (beach.getGabPU().isPickedUp() || beach.getConcrPU().isPickedUp()) {
 				timer.stop();
 			}
 		}

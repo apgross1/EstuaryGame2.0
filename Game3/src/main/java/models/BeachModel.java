@@ -24,6 +24,7 @@ public class BeachModel {
 	private ConcretePUModel concrPU;
 	private Timer puTimer;
 	
+	
 	public BeachModel() {
 		beachGrid = new HashMap<Pair,GridBlock>();
 		positionGrid = new int[10][8];
@@ -33,11 +34,12 @@ public class BeachModel {
 	}
 	
 	public void initializeBeach() {
+		
 		ArrayList<Pair> pairList = this.generatePPUL();
 		Iterator<Pair> it = pairList.iterator();
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			beachGrid.put(tempPair, new GridBlock(tempPair));
+			beachGrid.put(tempPair, (new GridBlock(tempPair)));
 		}
 	}
 	
@@ -50,7 +52,8 @@ public class BeachModel {
 			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
 			gabPU.setLocation(pair);
 			gabPU.setIsActive(true);
-			beachGrid.get(this.findPairInGrid(pair)).setGabPU(gabPU);
+			GabionPUModel tempGab = gabPU;
+			beachGrid.get(this.findPairInGrid(pair)).setGabPU(tempGab);
 			positionGrid[pair.getX()][pair.getY()] = Walls.GABION_GAME3.getValue();
 		}
 	}
@@ -64,7 +67,8 @@ public class BeachModel {
 			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
 			concrPU.setIsActive(true);
 			concrPU.setLocation(pair);
-			beachGrid.get(this.findPairInGrid(pair)).setConcrPU(concrPU);
+			ConcretePUModel tempConcr = concrPU;
+			beachGrid.get(this.findPairInGrid(pair)).setConcrPU(tempConcr);
 			positionGrid[pair.getX()][pair.getY()] = Walls.CONCRETE_GAME3.getValue();
 		}
 	}
@@ -75,6 +79,7 @@ public class BeachModel {
 		concrPU.setLocation(null);
 		positionGrid[pair.getX()][pair.getY()] = 0;
 		concrPU.setIsActive(false);
+		System.out.println("concrPU is now: " + concrPU.getIsActive());
 	}
 	
 	public void removeGabPU(Pair pair) {
@@ -82,6 +87,7 @@ public class BeachModel {
 		gabPU.setLocation(null);
 		positionGrid[pair.getX()][pair.getY()] = 0;
 		gabPU.setIsActive(false);
+		System.out.println("gabPU is now: " + gabPU.getIsActive());
 	}
 	
 	
@@ -113,6 +119,8 @@ public class BeachModel {
 		}
 		return null;
 	}
+	
+	
 	
 	public int getSquareCount(){
 		return squareCount;

@@ -51,14 +51,28 @@ public class Game3View extends JPanel implements KeyListener{
     	
 		play_ground.setSize(1000, 500);
 		play_ground.setBackground(Color.WHITE);
-		play_ground.setVisible(true);
 		
 		
     	
     	//Panes
 		play_ground.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
 		JPanel beachGrid = new JPanel(new GridLayout(10,10));
-		for (int i =0; i<(controller.getBeach().getBeachGrid().size()); i++){
+		Collection<GridBlock> blocks = controller.getBeach().getBeachGrid().values();
+		Iterator<GridBlock> it = blocks.iterator();
+		while(it.hasNext()) {
+			GridBlock currBlock = it.next();
+			JPanel beachOverlay = new JPanel();
+			beachOverlay.setLayout(new OverlayLayout(beachOverlay));
+			
+			SandWater gridBlock = new SandWater(currBlock);
+			GridTile powerUp = new GridTile(currBlock);
+		    beachOverlay.add(powerUp);
+		    beachOverlay.add(gridBlock);
+		    
+		    beachGrid.add(beachOverlay);
+		}
+		/*for (int i =0; i<(controller.getBeach().getBeachGrid().size()); i++){
+			
 			JPanel beachOverlay = new JPanel();
 			beachOverlay.setLayout(new OverlayLayout(beachOverlay));
 			
@@ -68,7 +82,7 @@ public class Game3View extends JPanel implements KeyListener{
 		    beachOverlay.add(gridBlock);
 		    
 		    beachGrid.add(beachOverlay);
-		}
+		}*/
 		
 		ShoreLine water = new ShoreLine();
 		water.setPreferredSize(new Dimension(100,frame.getHeight()));
@@ -77,7 +91,9 @@ public class Game3View extends JPanel implements KeyListener{
 		play_ground.add(water, BorderLayout.EAST);
 		play_ground.add(beachGrid, BorderLayout.CENTER);
 		frame.add(play_ground);
+		play_ground.setVisible(true);
 		frame.setVisible(true);
+		
 		
 		
     	//frame.add();
@@ -87,8 +103,13 @@ public class Game3View extends JPanel implements KeyListener{
 	}
  
 	
-	public void repaintFrame(){
+	public void repaintAll(){
 		frame.repaint();
+		frame.getContentPane().repaint();
+		int numComps = frame.getContentPane().getComponentCount();
+		for(int i = 0; i < numComps; i++) {
+			frame.getContentPane().getComponent(i).repaint();
+		}
 	}
 	
 	
@@ -101,37 +122,44 @@ public class Game3View extends JPanel implements KeyListener{
 	}
 	
 	public class SandWater extends JComponent {
+		private GridBlock grid;
+		public SandWater(GridBlock g) {
+			this.grid = g;
+		}
 		@Override
 		public void paint(Graphics g) {
-			
-			Collection<GridBlock> blocks = controller.getBeach().getBeachGrid().values();
-			
-			for(GridBlock block : blocks) {
-				if(block.getWater() == null) {
-					g.setColor(Color.YELLOW);
-					g.fillRect(block.getLocation().getX(), block.getLocation().getY(), block.getWidth(), block.getHeight());
-				}
-				else{
-					g.setColor(Color.BLUE);
-					g.fillRect(block.getWater().getLocation().getX(), block.getWater().getLocation().getY(), block.getWater().getWidth(), block.getWater().getHeight());
-				}
+			if(grid.getWater() == null) {
+				g.setColor(Color.YELLOW);
+				g.fillRect(grid.getLocation().getX(), grid.getLocation().getY(), grid.getWidth(), grid.getHeight());
+			}
+			else{
+			g.setColor(Color.BLUE);
+			g.fillRect(grid.getWater().getLocation().getX(), grid.getWater().getLocation().getY(), grid.getWater().getWidth(), grid.getWater().getHeight());
 			}
 		}
 	}
 	
 	public class GridTile extends JComponent {
+		private GridBlock gridBlock;
+		public GridTile(GridBlock g) {
+			gridBlock = g;
+		}
 		@Override
 		public void paint(Graphics g) {
-			Collection<GridBlock> blocks = controller.getBeach().getBeachGrid().values();
-			for(GridBlock block : blocks) {
-				if(block.getConcrPU() != null) {
+			if(gridBlock.getConcrPU() != null) {
+				if(gridBlock.getConcrPU().getIsActive()) {
 					g.setColor(Color.RED);
-					g.fillRect(block.getConcrPU().getLocation().getX(), block.getConcrPU().getLocation().getX(), block.getConcrPU().getWidth(), block.getConcrPU().getHeight());
+					g.fillRect(gridBlock.getConcrPU().getLocation().getX(), gridBlock.getConcrPU().getLocation().getX(), gridBlock.getConcrPU().getWidth(), gridBlock.getConcrPU().getHeight());
 				}
-				else if(block.getGabPU() != null) {
+			}
+			else if(gridBlock.getGabPU() != null) {
+				if(gridBlock.getGabPU().getIsActive()) {
 					g.setColor(Color.GREEN);
-					g.fillRect(block.getGabPU().getLocation().getX(), block.getGabPU().getLocation().getX(), block.getGabPU().getWidth(), block.getGabPU().getHeight());
+					g.fillRect(gridBlock.getGabPU().getLocation().getX(), gridBlock.getGabPU().getLocation().getX(), gridBlock.getGabPU().getWidth(), gridBlock.getGabPU().getHeight());
 				}
+			}
+			else {
+				
 			}
 		}
 	}
