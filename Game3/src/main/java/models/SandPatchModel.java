@@ -1,5 +1,6 @@
 package models;
 
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import models.BeachModel.Pair;
@@ -9,9 +10,18 @@ public class SandPatchModel {
 	private GabionPUModel gabPU;
 	private ConcretePUModel concrPU;
 	private boolean vacant;
+	private int height;
+	private int width;
 	
 	public SandPatchModel() {
-		
+		height = 200;
+		width = 200;
+	}
+	
+	public SandPatchModel(Pair loc) {
+		location = loc;
+		height = 200;
+		width = 200;
 	}
 	
 	public SandPatchModel(WallModelAbstract powerUp) {
@@ -57,6 +67,22 @@ public class SandPatchModel {
 	}
 	
 	public Rectangle getBounds() {
-		return (new Rectangle(this.getLocation().getX(),this.getLocation().getY(),30,30));
+		return (new Rectangle(this.getLocation().getX(),this.getLocation().getY(),this.getWidth(),this.getHeight()));
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
 	}
 }

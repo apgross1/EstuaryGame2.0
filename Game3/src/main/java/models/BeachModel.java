@@ -37,7 +37,7 @@ public class BeachModel {
 		Iterator<Pair> it = pairList.iterator();
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			beachGrid.put(tempPair, new SandPatchModel());
+			beachGrid.put(tempPair, new SandPatchModel(tempPair));
 		}
 	}
 	

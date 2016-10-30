@@ -23,8 +23,10 @@ import javax.swing.JSplitPane;
 
 import controller.Game3Controller;
 import enums.Direction;
+import models.BeachModel;
 import models.ConcretePUModel;
 import models.GabionPUModel;
+import models.SandPatchModel;
 
 public class Game3View extends JPanel implements KeyListener{
 	private Game3Controller controller;
@@ -58,16 +60,20 @@ public class Game3View extends JPanel implements KeyListener{
 		JPanel beachGrid = new JPanel(new GridLayout(10,10));
 		JPanel waterGrid = new JPanel(new GridLayout(10,1));
 		for (int i =0; i<(100); i++){
+			JPanel inGridPanel = new JPanel();
 		    final JLabel label = new JLabel();
+		    inGridPanel.repaint();
 		    label.setText("Beach");
 		    label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		    beachGrid.add(label);
+		    beachGrid.add(inGridPanel);
 		}
 		for (int i =0; i<(10); i++){
+			JPanel inGridPanel = new JPanel();
 		    final JLabel label = new JLabel();
+		    inGridPanel.repaint();
 		    label.setText("Water");
 		    label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		    waterGrid.add(label);
+		    waterGrid.add(inGridPanel);
 		}
 		play_ground.add(waterGrid, BorderLayout.EAST);
 		play_ground.add(beachGrid, BorderLayout.CENTER);
@@ -89,8 +95,13 @@ public class Game3View extends JPanel implements KeyListener{
 	 public class Animation extends JComponent {
 			@Override
 			public void paint(Graphics g) {
-				g.drawRect(50, 100, 30, 20);
-				
+				Collection<Object> sprites = controller.getBeach().getBeachGrid().values();
+				for(Object obj : sprites) {
+					if(obj instanceof SandPatchModel) {
+						SandPatchModel sand = (SandPatchModel)obj;
+						g.fillRect(sand.getLocation().getX(), sand.getLocation().getY(), sand.getWidth(), sand.getHeight());
+					}
+				}
 			}
 	 }
 	 
