@@ -26,7 +26,7 @@ public class BeachModel {
 	
 	public BeachModel() {
 		beachGrid = new HashMap<Pair,Object>();
-		positionGrid = new int[10][10];
+		positionGrid = new int[10][8];
 		gabPU = new GabionPUModel();
 		concrPU = new ConcretePUModel();
 		this.initializeBeach();

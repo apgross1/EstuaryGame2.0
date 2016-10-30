@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -41,12 +42,10 @@ public class Game3View extends JPanel implements KeyListener{
 		controller = ctl;
 
     	frame = new JFrame();
-    	frame.getContentPane().add(new Animation());
     	frame.setBackground(Color.gray);
 
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	frame.setSize(1000, 700);
-    	frame.setVisible(true);
     	frame.setResizable(false);
     	
 		play_ground.setSize(1000, 500);
@@ -58,27 +57,24 @@ public class Game3View extends JPanel implements KeyListener{
     	//Panes
 		play_ground.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
 		JPanel beachGrid = new JPanel(new GridLayout(10,10));
-		JPanel waterGrid = new JPanel(new GridLayout(10,1));
-		for (int i =0; i<(100); i++){
-			JPanel inGridPanel = new JPanel();
+		for (int i =0; i<(controller.getBeach().getBeachGrid().size()); i++){
+			GridTile inGridPanel = new GridTile();
 		    final JLabel label = new JLabel();
-		    inGridPanel.repaint();
+		    //inGridPanel.repaint();
 		    label.setText("Beach");
 		    label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		    //beachGrid.add(label);
 		    beachGrid.add(inGridPanel);
 		}
-		for (int i =0; i<(10); i++){
-			JPanel inGridPanel = new JPanel();
-		    final JLabel label = new JLabel();
-		    inGridPanel.repaint();
-		    label.setText("Water");
-		    label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		    waterGrid.add(inGridPanel);
-		}
-		play_ground.add(waterGrid, BorderLayout.EAST);
+		
+		ShoreLine water = new ShoreLine();
+		water.setPreferredSize(new Dimension(100,frame.getHeight()));
+		water.setVisible(true);
+		beachGrid.setVisible(true);
+		play_ground.add(water, BorderLayout.EAST);
 		play_ground.add(beachGrid, BorderLayout.CENTER);
 		frame.add(play_ground);
-		
+		frame.setVisible(true);
 		
 		
     	//frame.add();
@@ -92,13 +88,22 @@ public class Game3View extends JPanel implements KeyListener{
 		frame.repaint();
 	}
 	
-	 public class Animation extends JComponent {
+	
+	public class ShoreLine extends JComponent {
+		@Override
+		public void paint(Graphics g) {
+			g.setColor(Color.BLUE);
+			g.fillRect(0, 0, 1000, 700);
+		}
+	}
+	public class GridTile extends JComponent {
 			@Override
 			public void paint(Graphics g) {
 				Collection<Object> sprites = controller.getBeach().getBeachGrid().values();
 				for(Object obj : sprites) {
 					if(obj instanceof SandPatchModel) {
 						SandPatchModel sand = (SandPatchModel)obj;
+						g.setColor(Color.YELLOW);
 						g.fillRect(sand.getLocation().getX(), sand.getLocation().getY(), sand.getWidth(), sand.getHeight());
 					}
 				}
