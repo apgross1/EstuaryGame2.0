@@ -134,8 +134,7 @@ public class Game3Tests {
 		BeachModel beach = new BeachModel();
 		ConcretePUModel concrPU = new ConcretePUModel();
 		concrPU.setLocation(beach.new Pair(4,5));
-		beach.getBeachGrid().put(concrPU.getLocation(), concrPU);
-		beach.getPositionGrid()[concrPU.getLocation().getX()][concrPU.getLocation().getY()] = Walls.CONCRETE_GAME3.getValue();
+
 		//Adding concrete PU to beach
 		assertTrue("Should be true", beach.getBeachGrid().containsKey(concrPU.getLocation()));
 		assertTrue("Should be true...", beach.getPositionGrid()[concrPU.getLocation().getX()][concrPU.getLocation().getY()] == Walls.CONCRETE_GAME3.getValue()); 

@@ -18,14 +18,14 @@ public class BeachModel {
 	private int squareCount;
 	private int landSize;
 	private Collection<BufferedImage> beachStates;
-	private HashMap<Pair, Object> beachGrid;
+	private HashMap<Pair, GridBlock> beachGrid;
 	private int[][] positionGrid;
 	private GabionPUModel gabPU;
 	private ConcretePUModel concrPU;
 	private Timer puTimer;
 	
 	public BeachModel() {
-		beachGrid = new HashMap<Pair,Object>();
+		beachGrid = new HashMap<Pair,GridBlock>();
 		positionGrid = new int[10][8];
 		gabPU = new GabionPUModel();
 		concrPU = new ConcretePUModel();
@@ -37,61 +37,59 @@ public class BeachModel {
 		Iterator<Pair> it = pairList.iterator();
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			beachGrid.put(tempPair, new SandPatchModel(tempPair));
+			beachGrid.put(tempPair, new GridBlock(tempPair));
 		}
 	}
 	
 	public void spawnGabPU(ArrayList<Pair> ppul) {
-		System.out.println("Gabion spawned");
-		Random randLoc = new Random();
-		Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
-		gabPU.setLocation(pair);
-		gabPU.setIsActive(true);
-		beachGrid.put(pair, new SandPatchModel(gabPU));
-		positionGrid[pair.getX()][pair.getY()] = Walls.GABION_GAME3.getValue();
-		
-		
+		if(ppul.size() == 0) {
+			return;
+		}
+		else{
+			Random randLoc = new Random();
+			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
+			gabPU.setLocation(pair);
+			gabPU.setIsActive(true);
+			beachGrid.get(this.findPairInGrid(pair)).setGabPU(gabPU);
+			positionGrid[pair.getX()][pair.getY()] = Walls.GABION_GAME3.getValue();
+		}
 	}
 	
 	public void spawnConcrPU(ArrayList<Pair> ppul) {
-		System.out.println("Concrete spawned");
-		Random randLoc = new Random();
-		
-		Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
-		concrPU.setIsActive(true);
-		concrPU.setLocation(pair);
-		beachGrid.put(pair, new SandPatchModel(concrPU));
-		positionGrid[pair.getX()][pair.getY()] = Walls.CONCRETE_GAME3.getValue();
-		
-		
+		if(ppul.size() == 0) {
+			return;
+		}
+		else{
+			Random randLoc = new Random();
+			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
+			concrPU.setIsActive(true);
+			concrPU.setLocation(pair);
+			beachGrid.get(this.findPairInGrid(pair)).setConcrPU(concrPU);
+			positionGrid[pair.getX()][pair.getY()] = Walls.CONCRETE_GAME3.getValue();
+		}
 	}
 	
 	public void removeConcrPU(Pair pair) {
-		SandPatchModel sp = (SandPatchModel)beachGrid.get(pair);
+		GridBlock sp = beachGrid.get(pair);
 		sp.setVacant(true);
-		beachGrid.replace(pair, sp);
-		beachGrid.remove(pair);
 		concrPU.setLocation(null);
 		positionGrid[pair.getX()][pair.getY()] = 0;
 		concrPU.setIsActive(false);
 	}
 	
 	public void removeGabPU(Pair pair) {
-		SandPatchModel sp = (SandPatchModel)beachGrid.get(pair);
-		sp.setVacant(true);
-		beachGrid.replace(pair, sp);
+		beachGrid.get(pair).setVacant(true);
 		gabPU.setLocation(null);
 		positionGrid[pair.getX()][pair.getY()] = 0;
 		gabPU.setIsActive(false);
-		
 	}
+	
 	
 	public ArrayList<Pair> generatePPUL() {
 		ArrayList<Pair> ppulPair = new ArrayList<Pair>();
 		for(int i = 0; i < positionGrid.length; i++) {
 			for(int j = 0; j < positionGrid[i].length; j++) {
 				if (positionGrid[i][j] == 0) {
-					System.out.println("Making new pair");
 					ppulPair.add(new Pair(j,i)); //NOTE!!!!! IT MAY BE PAIR(i,j) NOT (j,i)
 				}
 				else {
@@ -103,8 +101,17 @@ public class BeachModel {
 	}
 	
 	public void removeSquare(Pair waterLoc) {
-		beachGrid.replace(waterLoc, new WaterModel());
+		beachGrid.get(this.findPairInGrid(waterLoc)).setWater(new WaterModel(waterLoc));
 		positionGrid[waterLoc.getX()][waterLoc.getY()] = Waves.WAVE_GAME3.getValue();
+	}
+	
+	public Pair findPairInGrid(Pair pair) {
+		for(Pair p : this.getBeachGrid().keySet()) {
+			if(pair.getX() == p.getX() && pair.getY()==p.getY()) {
+				return p;
+			}
+		}
+		return null;
 	}
 	
 	public int getSquareCount(){
@@ -139,11 +146,11 @@ public class BeachModel {
 		this.positionGrid = beachGrid;
 	}
 	
-	public HashMap<Pair, Object> getBeachGrid() {
+	public HashMap<Pair, GridBlock> getBeachGrid() {
 		return beachGrid;
 	}
 
-	public void setBeachGrid(HashMap<Pair, Object> beachGrid) {
+	public void setBeachGrid(HashMap<Pair, GridBlock> beachGrid) {
 		this.beachGrid = beachGrid;
 	}
 	

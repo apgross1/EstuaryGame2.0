@@ -5,35 +5,48 @@ import java.awt.Rectangle;
 
 import models.BeachModel.Pair;
 
-public class SandPatchModel {
+public class GridBlock {
 	private Pair location;
 	private GabionPUModel gabPU;
 	private ConcretePUModel concrPU;
+	private WaterModel water;
 	private boolean vacant;
 	private int height;
 	private int width;
 	
-	public SandPatchModel() {
+	public GridBlock() {
 		height = 200;
 		width = 200;
+		vacant = true;
 	}
 	
-	public SandPatchModel(Pair loc) {
+	public GridBlock(Pair loc) {
 		location = loc;
 		height = 200;
 		width = 200;
+		vacant = true;
 	}
 	
-	public SandPatchModel(WallModelAbstract powerUp) {
+	public GridBlock(WallModelAbstract powerUp, Pair loc) {
 		if (powerUp instanceof ConcretePUModel) {
-			concrPU = (ConcretePUModel)powerUp;
+			this.setConcrPU((ConcretePUModel)powerUp);
 		}
 		else {
-			gabPU = (GabionPUModel) powerUp;
+			this.setGabPU((GabionPUModel) powerUp);
 		}
+		this.location = loc;
 		this.setVacant(false);
 	}
-
+	
+	
+	public void setWater(WaterModel water) {
+		gabPU = null;
+		concrPU = null;
+		this.water = water;
+		this.setVacant(false);
+		
+	}
+	
 	public Pair getLocation() {
 		return location;
 	}
@@ -47,6 +60,8 @@ public class SandPatchModel {
 	}
 
 	public void setGabPU(GabionPUModel gabPU) {
+		concrPU = null;
+		water = null;
 		this.gabPU = gabPU;
 	}
 
@@ -56,6 +71,8 @@ public class SandPatchModel {
 
 	public void setConcrPU(ConcretePUModel concrPU) {
 		this.concrPU = concrPU;
+		gabPU = null;
+		water = null;
 	}
 
 	public boolean isVacant() {
@@ -64,6 +81,9 @@ public class SandPatchModel {
 
 	public void setVacant(boolean vacant) {
 		this.vacant = vacant;
+		this.water = null;
+		this.gabPU = null;
+		this.concrPU = null;
 	}
 	
 	public Rectangle getBounds() {
@@ -85,4 +105,10 @@ public class SandPatchModel {
 	public void setWidth(int width) {
 		this.width = width;
 	}
+
+	public WaterModel getWater() {
+		return water;
+	}
+
+	
 }

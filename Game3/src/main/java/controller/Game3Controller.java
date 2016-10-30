@@ -13,7 +13,7 @@ import models.AnimalModelG3;
 import models.BeachModel;
 import models.BeachModel.Pair;
 import models.ConcretePUModel.ConcPUState;
-import models.SandPatchModel;
+import models.GridBlock;
 import models.WallModelAbstract;
 import models.WaterModel;
 import models.GabionPUModel.GabPUState;
@@ -24,13 +24,13 @@ public class Game3Controller implements KeyListener {
 	private Game3View view;
 	private AnimalModelG3 animal;
 	private BeachModel beach;
-	private SandPatchModel sandPatch;
+	private GridBlock sandPatch;
 	private WaterModel water;
 	
 	public Game3Controller() {
 		setAnimal(new AnimalModelG3());
 		setBeach(new BeachModel());
-		setSandPatch(new SandPatchModel());
+		setSandPatch(new GridBlock());
 		setWater(new WaterModel());
 		view = new Game3View(this);
 		this.gameActive = true;
@@ -40,9 +40,9 @@ public class Game3Controller implements KeyListener {
 	
 	public void gameLoop()  {
 		Random die = new Random();
-		int trigger = die.nextInt(10);
+		int trigger = 4;
 		while(getgameActive()) {
-			if(trigger == die.nextInt(10)) {
+			if(trigger == die.nextInt(20)) {
 				getBeach().spawnConcrPU(getBeach().generatePPUL());
 				getBeach().spawnGabPU(getBeach().generatePPUL());
 			}
@@ -192,11 +192,11 @@ public class Game3Controller implements KeyListener {
 		this.beach = beach;
 	}
 	
-	public SandPatchModel getSandPatch() {
+	public GridBlock getSandPatch() {
 		return sandPatch;
 	}
 
-	public void setSandPatch(SandPatchModel sandPatch) {
+	public void setSandPatch(GridBlock sandPatch) {
 		this.sandPatch = sandPatch;
 	}
 }

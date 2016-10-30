@@ -21,13 +21,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.OverlayLayout;
 
 import controller.Game3Controller;
 import enums.Direction;
 import models.BeachModel;
 import models.ConcretePUModel;
 import models.GabionPUModel;
-import models.SandPatchModel;
+import models.GridBlock;
 
 public class Game3View extends JPanel implements KeyListener{
 	private Game3Controller controller;
@@ -58,17 +59,15 @@ public class Game3View extends JPanel implements KeyListener{
 		play_ground.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
 		JPanel beachGrid = new JPanel(new GridLayout(10,10));
 		for (int i =0; i<(controller.getBeach().getBeachGrid().size()); i++){
-			GridTile inGridPanel = new GridTile();
-			inGridPanel.setLayout(new BorderLayout());
+			JPanel beachOverlay = new JPanel();
+			beachOverlay.setLayout(new OverlayLayout(beachOverlay));
 			
-			PowerUp powerUp = new PowerUp();
-			inGridPanel.add(powerUp, BorderLayout.CENTER);
-		    final JLabel label = new JLabel();
-		    //inGridPanel.repaint();
-		    label.setText("Beach");
-		    label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		    //beachGrid.add(label);
-		    beachGrid.add(inGridPanel);
+			SandWater gridBlock = new SandWater();
+			GridTile powerUp = new GridTile();
+		    beachOverlay.add(powerUp);
+		    beachOverlay.add(gridBlock);
+		    
+		    beachGrid.add(beachOverlay);
 		}
 		
 		ShoreLine water = new ShoreLine();
@@ -101,38 +100,41 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 	}
 	
-	public class PowerUp extends JComponent {
+	public class SandWater extends JComponent {
 		@Override
 		public void paint(Graphics g) {
-			Collection<Object> sprites = controller.getBeach().getBeachGrid().values();
-			for(Object obj : sprites) {
-				if(obj instanceof SandPatchModel) {
-					SandPatchModel sand = (SandPatchModel)obj;
-					if(sand.getConcrPU().getIsActive()) {
-						g.setColor(Color.RED);
-						g.fillRect(sand.getConcrPU().getLocation().getX(), sand.getConcrPU().getLocation().getX(), sand.getConcrPU().getWidth(), sand.getConcrPU().getHeight());
-					}
-					else if (sand.getGabPU().getIsActive()) {
-						g.setColor(Color.GREEN);
-						g.fillRect(sand.getGabPU().getLocation().getX(), sand.getGabPU().getLocation().getX(), sand.getGabPU().getWidth(), sand.getGabPU().getHeight());
-					}
+			
+			Collection<GridBlock> blocks = controller.getBeach().getBeachGrid().values();
+			
+			for(GridBlock block : blocks) {
+				if(block.getWater() == null) {
+					g.setColor(Color.YELLOW);
+					g.fillRect(block.getLocation().getX(), block.getLocation().getY(), block.getWidth(), block.getHeight());
+				}
+				else{
+					g.setColor(Color.BLUE);
+					g.fillRect(block.getWater().getLocation().getX(), block.getWater().getLocation().getY(), block.getWater().getWidth(), block.getWater().getHeight());
 				}
 			}
 		}
 	}
+	
 	public class GridTile extends JComponent {
-			@Override
-			public void paint(Graphics g) {
-				Collection<Object> sprites = controller.getBeach().getBeachGrid().values();
-				for(Object obj : sprites) {
-					if(obj instanceof SandPatchModel) {
-						SandPatchModel sand = (SandPatchModel)obj;
-						g.setColor(Color.YELLOW);
-						g.fillRect(sand.getLocation().getX(), sand.getLocation().getY(), sand.getWidth(), sand.getHeight());
-					}
+		@Override
+		public void paint(Graphics g) {
+			Collection<GridBlock> blocks = controller.getBeach().getBeachGrid().values();
+			for(GridBlock block : blocks) {
+				if(block.getConcrPU() != null) {
+					g.setColor(Color.RED);
+					g.fillRect(block.getConcrPU().getLocation().getX(), block.getConcrPU().getLocation().getX(), block.getConcrPU().getWidth(), block.getConcrPU().getHeight());
+				}
+				else if(block.getGabPU() != null) {
+					g.setColor(Color.GREEN);
+					g.fillRect(block.getGabPU().getLocation().getX(), block.getGabPU().getLocation().getX(), block.getGabPU().getWidth(), block.getGabPU().getHeight());
 				}
 			}
-	 }
+		}
+	}
 	 
 	 
 	/* @Override
