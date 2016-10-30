@@ -27,11 +27,6 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	public void breakDown() {
 		currentBlocks = (int) (.1*currentBlocks);
 	}
-	
-	@Override
-	public String toString(){
-		return "Eh";
-	}
 
 	public void spawnChunk(int x_loc, int y_loc) {
 		ConcreteChunk c = new ConcreteChunk();
@@ -104,80 +99,11 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	public Collection<ConcreteChunk> getChunks() {
 		return chunks;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	/*
 	 * Dont think we need stuff below this line
 	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	public boolean isFull() {
-		return false;
-	}
-	
-	public boolean isEmpty() {
-		return false;
-	}
-	
-	public void removeChunk(int amount) {
-		
-	}
-	
-	public int amountRemoved(int damage) {
-		return 0;
-	}
-	
-	public int calculateAmountRemoved() {
-		return 0;
-	}
-
-	public void setMaxBlocks(int maxBlocks) {
-		this.maxBlocks = maxBlocks;
-	}
-
-	public void setCurrentBlocks(int currentBlocks) {
-		this.currentBlocks = currentBlocks;
-	}
-	
-
-	
-	public int getBlockOnBeach() {
-		return BlockOnBeach;
-	}
-
-	public void setBlockOnBeach(int blockOnBeach) {
-		BlockOnBeach = blockOnBeach;
-	}
-
-	public void setChunks(Collection<ConcreteChunk> chunks) {
-		this.chunks = chunks;
-	}
-
 	@Override
 	public void spawn(boolean gameStart, int numChunksRemoved) {
 		// TODO Auto-generated method stub

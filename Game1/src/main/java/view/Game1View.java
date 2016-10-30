@@ -26,13 +26,9 @@ public class Game1View extends JPanel implements KeyListener{
 	private int damageLevel;
 	private Game1Controller controller;
 	private JFrame frame = new JFrame();
-	//private JPanel action_pannel = new JPanel();
 	private JPanel bar_pannel = new JPanel();
 	private JPanel play_ground = new JPanel();
 
-    //final static int frameWidth = 800;
-    //final static int frameHeight = 800;
-	
 	public Game1View(Game1Controller ctl){
 		controller = ctl;
 
@@ -89,9 +85,11 @@ public class Game1View extends JPanel implements KeyListener{
 				g.setColor(Color.RED);
 				g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), 200, 25);
 				g.setColor(Color.GREEN);
-				g.drawString("TIME LEFT: null", 700, 25);
+				g.drawString("TIME LEFT: null", 775, 25);
 				
-				g.drawRect(400, 20, 200, 20); //Behind health bar doesnt change
+				g.drawString("Health: " + controller.getBarModel().getStatus(), 625, 30);
+				
+				g.drawRect(400, 20, 200, 20); //Behind health bar doesn't change
 				
 				
 				g.setColor(Color.RED);
@@ -171,88 +169,11 @@ public class Game1View extends JPanel implements KeyListener{
 		    }
 		}
 
-
 	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	
-	public void sway(boolean gameStart) {
-		
-	}
-	
-	public void waveCrash(boolean timeUp) {
-		
-	}
-	
-	public void remove() {
-		
-	}
-	
-	public void wallState() {
-		
-	}
-	
-	public void destroyWall(int newCurrBlocks) {
-		
-	}
-	
-	public void buildWall(int newCurrBlocks) {
-		
-	}
-	
-	public void raiseLevel(int newStatus) {
-		
-	}
-	
-	public void lowerLevel(int newStatus) {
-		
-	}
-	
-	public void warningSign() {
-		
-	}
-	
-	public void pickUp(int newXLoc, int newYLoc) {
-		
-	}
-	
-	public void perish() {
-		
-	}
-	
-	public int getDamageLevel() {
-		return damageLevel;
-	}
-	public void setDamageLevel(int damageLevel) {
-		this.damageLevel = damageLevel;
-	}
-	public Game1Controller getController() {
-		return controller;
-	}
-	public void setController(Game1Controller controller) {
-		this.controller = controller;
-	}
+	 /*
+	  * Stuff we need to remove from abstract below.
+	  * 
+	  */
 
 
 
@@ -262,23 +183,9 @@ public class Game1View extends JPanel implements KeyListener{
 		
 	}
 
-
-
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-	/*
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
-	*/
-	
 }

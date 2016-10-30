@@ -4,7 +4,8 @@ package models;
 public class BarModel extends BarModelAbstract {
 	
 	public BarModel() {
-		super.setStatus(100); //Health we decided for the estuary in game1
+		setMaxLevel(100);
+		setStatus(getMaxLevel());
 	}
 
 	@Override
@@ -19,12 +20,10 @@ public class BarModel extends BarModelAbstract {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
+	/*
+	 * Dont think we need stuff below this line
+	 */
+
 
 	@Override
 	public void increase(int i) {

@@ -64,24 +64,9 @@ public class AnimalModel extends AnimalModelAbstract {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/*
-	 * Dont think we need stuff below this line
+	 * Don't think we need stuff below this line
 	 */
-	
-	
-	
 	
 	@Override
 	public void healthUp() {
@@ -89,15 +74,12 @@ public class AnimalModel extends AnimalModelAbstract {
 			setHealth(getHealth()+1); //Do we want to change the increase and make it more siginificant?
 		}
 	}
-
 	@Override
 	public void healthDown() {
 		if(getHealth() >= 1){
 			setHealth(getHealth()-1);
 		}
 	}
-
-
 	@Override
 	public void pickUp() {
 		//This function is not needed as we're not actually picking anything up.. Collision will be taken care of in the controller which will tell

@@ -103,72 +103,9 @@ public class GabionWallModelG1 extends WallModelAbstract{
 	/*
 	 * Dont think we need stuff below this line
 	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public boolean isFull() {
-		return false;
-	}
-	
-	public boolean isEmpty() {
-		return false;
-	}
-	
-	public void removeChunk(int amount) {
-	
-	}
-	
-	public int amountRemoved(int damage) {
-		return 0;
-	}
-	
-	public int calculateDamage() {
-		return 0;
-	}
 
-	public void setMaxOysters(int maxOysters) {
-		this.maxOysters = maxOysters;
-	}
-	public void setCurrentOysters(int currentOysters) {
-		this.currentOysters = currentOysters;
-	}
-	public int getOystersOnBeach() {
-		return oystersOnBeach;
-	}
-	public void setOystersOnBeach(int oystersOnBeach) {
-		this.oystersOnBeach = oystersOnBeach;
-	}
-
-
-	public void setChunks(Collection<GabionChunk> chunks) {
-		this.chunks = chunks;
-	}
-
-	
-	//Upon looking at this function (spawn), it seems like the functional flow should be:
-	//Calculate damage determines damage inflicted-->amountDamage determines # pieces removed --> spawn takes in # pieces removed
-	//and randomly places them on the beach
-	//So maybe have gameStart as an argument (maybe...) but definitely have it take in # pieces removed. 
 	@Override
 	public void spawn(boolean gameStart, int numChunksRemoved) {
-		
 	}
 	
 }

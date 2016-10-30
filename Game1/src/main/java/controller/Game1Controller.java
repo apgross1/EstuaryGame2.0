@@ -21,18 +21,6 @@ import view.Game1View;
 import java.awt.Rectangle;
 
 public class Game1Controller{
-	private ArrayList<Object> gameObjects;
-	private Game1View gameView;
-	private boolean gameActive; // Added this instead of 2 bools blow
-	//private boolean gameStart;
-	//private boolean gameEnd;
-	private Object tempObject;
-	private boolean timeUp;
-	private float currTime;
-	private boolean gabHit;
-	private boolean concrHit;
-	private ArrayList<BufferedImage> landSeqs;
-	
 	//Models
 	private AnimalModel animal = new AnimalModel();
 	ConcreteWallModelG1 wallModel = new ConcreteWallModelG1();
@@ -41,56 +29,14 @@ public class Game1Controller{
 	//View
 	Game1View g1view = new Game1View(this);
 	
+	//Vars
+	private boolean gameActive;
+	private ArrayList<BufferedImage> landSeqs;
+	
 	public Game1Controller() {
 	}
 	
-	
-	public void startGame() {
-		gameActive = true;
-		
-		//Add intro animation here....
-		
-		//wallModel.spawnChunk(200, 200);
-		
-		while(gameActive){
-			
-			Random r = new Random();
-			
-			if(wallModel.getCurrentBlocks() < wallModel.getMaxBlocks() & wallModel.getActiveBlocks() < 5){//Max concrete that can be on the screen at once.
-				//Spawn a concrete block at a random location within the bounds of the board.
-				//int Result = r.nextInt(High-Low) + Low;
-				int randx = r.nextInt(1000);
-				int randy = r.nextInt(700-50) + 50;
-				//Need a condition here to make sure that there is not already a chunk at that location.
-				wallModel.spawnChunk(randx, randy);
-			}
-			
-			if(gabionModel.getCurrentOysters() < gabionModel.getMaxOysters() & gabionModel.getActiveClams() < 5){//Max concrete that can be on the screen at once.
-				//Spawn a concrete block at a random location within the bounds of the board.
-				//int Result = r.nextInt(High-Low) + Low;
-				int randx = r.nextInt(1000);
-				int randy = r.nextInt(700-50) + 50;
-				//Need a condition here to make sure that there is not already a chunk at that location.
-				gabionModel.spawnChunk(randx, randy);
-			}
-			
-			collisionDetectionLoop();
-			
-			
-			
-			g1view.repaintFrame();
-		}
-		//Caclulate score and then reset for round 2
-		//math fn
-		takeDamage();
-		//one more paint
-		g1view.repaintFrame();
-		//set game round to 2/3
-		//reset vars
-		//restart game
-
-	}
-	
+	//Getters
 	public AnimalModel getAnimalModel(){
 		return animal;
 	}
@@ -103,22 +49,54 @@ public class Game1Controller{
 	public GabionWallModelG1 getGabionWallModel(){
 		return gabionModel;
 	}
-	
-	
-	public void reset() {
-		//This should reset all variables, timer and all as we're going to have 3 sub rounds in game 1
-	}
-	
+	//Setters
 	public void setGameState(boolean b){
 		gameActive = b;
 	}
-	
-	public void startTime() {
-		
+	public void reset() {
+		//This should reset all variables (except the bar), timer and all as we're going to have 3 sub rounds in game 1
 	}
 	
-	public void stopTime() {
+	
+	public void startGame() {
+		gameActive = true;
 		
+		//Add intro animation here....
+		
+		while(gameActive){
+			
+			Random r = new Random();
+			
+			if(wallModel.getCurrentBlocks() < (wallModel.getMaxBlocks()-5) & wallModel.getActiveBlocks() < 5){//Max concrete that can be on the screen at once.
+				//Spawn a concrete block at a random location within the bounds of the board.
+				//int Result = r.nextInt(High-Low) + Low;
+				int randx = r.nextInt(1000);
+				int randy = r.nextInt(560-50) + 50;
+				//Need a condition here to make sure that there is not already a chunk at that location.
+				wallModel.spawnChunk(randx, randy);
+			}
+			
+			if(gabionModel.getCurrentOysters() < (gabionModel.getMaxOysters()-5) & gabionModel.getActiveClams() < 5){//Max concrete that can be on the screen at once.
+				//Spawn a concrete block at a random location within the bounds of the board.
+				//int Result = r.nextInt(High-Low) + Low;
+				int randx = r.nextInt(1000);
+				int randy = r.nextInt(650-50) + 50;
+				//Need a condition here to make sure that there is not already a chunk at that location.
+				gabionModel.spawnChunk(randx, randy);
+			}
+			
+			collisionDetectionLoop();
+			g1view.repaintFrame();
+		}
+		//Caclulate score and then reset for round 2
+		//math fn
+		takeDamage();
+		//one more paint
+		g1view.repaintFrame();
+		//set game round to 2/3
+		//reset vars
+		//restart game
+
 	}
 	
 	boolean collisionOccured(AnimalModel a, Object chunk){
@@ -172,121 +150,17 @@ public class Game1Controller{
 	//This is called at the end of the round to determine mathamatically what damage is done to the health of the estuary.
 	public void takeDamage() {
 		//Get Vars
-		int bar_health = bar.getStatus();
 		int gabbionsCollected = gabionModel.getCurrentOysters();
 		int concreteCollected = wallModel.getCurrentBlocks();
 		
 		int protection = (gabbionsCollected * 5) + (concreteCollected * 1);
-		bar.setStatus(bar_health-protection);
+		int new_status = (bar.getStatus() - (bar.getMaxLevel() - protection));
+		
+		bar.setStatus(new_status);
 		
 		
 		//Break down the walls
 		wallModel.breakDown();
 		gabionModel.breakDown();
 	}
-
-	
-	//By level I mean bar level
-	public void increaseLevel(int i) {
-		bar.increase(i);
-	}
-	
-	public void decreaseLevel(int i) {
-		bar.decrease(i);
-	}
-	
-	public boolean quarterGone() {
-		return false;
-	}
-	
-	public boolean halfGone() {
-		return false;
-	}
-	
-	public boolean threeQuarterGone() {
-		return false;
-	}
-	
-	public boolean barFull() {
-		return false;
-	}
-	
-	public boolean barEmpty() {
-		return false;
-	}
-	
-	public void render(Graphics g) {
-		
-	}
-	
-	public void addObject(Object object) {
-		gameObjects.add(object);
-	}
-	
-	public void removeObject(Object object) {
-		
-	}	
-	
-	public ArrayList<Object> getObjects() {
-		return gameObjects;
-	}
-	public void setObjects(ArrayList<Object> objects) {
-		this.gameObjects = objects;
-	}
-	public Game1View getGameView() {
-		return gameView;
-	}
-	public void setGameView(Game1View gameView) {
-		this.gameView = gameView;
-	}
-	/*
-	public boolean isGameStart() {
-		return gameStart;
-	}
-	public void setGameStart(boolean gameStart) {
-		this.gameStart = gameStart;
-	}
-	public boolean isGameEnd() {
-		return gameEnd;
-	}
-	public void setGameEnd(boolean gameEnd) {
-		this.gameEnd = gameEnd;
-	}
-	public Object getTempObject() {
-		return tempObject;
-	}
-	public void setTempObject(Object tempObject) {
-		this.tempObject = tempObject;
-	}
-	public boolean isTimeUp() {
-		return timeUp;
-	}
-	public void setTimeUp(boolean timeUp) {
-		this.timeUp = timeUp;
-	}
-	public float getCurrTime() {
-		return currTime;
-	}
-	public void setCurrTime(float currTime) {
-		this.currTime = currTime;
-	}
-	public boolean isGabHit() {
-		return gabHit;
-	}
-	public void setGabHit(boolean gabHit) {
-		this.gabHit = gabHit;
-	}
-	public boolean isConcrHit() {
-		return concrHit;
-	}
-	public void setConcrHit(boolean concrHit) {
-		this.concrHit = concrHit;
-	}
-	public ArrayList<BufferedImage> getLandSeqs() {
-		return landSeqs;
-	}
-	public void setLandSeqs(ArrayList<BufferedImage> landSeqs) {
-		this.landSeqs = landSeqs;
-	}
-		*/
 }
