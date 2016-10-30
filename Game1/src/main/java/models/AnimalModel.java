@@ -63,7 +63,6 @@ public class AnimalModel extends AnimalModelAbstract {
 	
 	
 	
-	
 	/*
 	 * Don't think we need stuff below this line
 	 */
