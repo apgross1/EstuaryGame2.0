@@ -16,10 +16,14 @@ public class GabionPUModel extends WallModelAbstract {
 	private int GabionPUonbeach;
 	private GabPUState wallState;
 	private Rectangle bounds;
+	private int height;
+	private int width;
 	
 	public GabionPUModel() {
 		this.setWallState(GabPUState.POWER_UP);
 		this.setIsActive(false);
+		this.height = 10;
+		this.width = 10;
 	}
 
 	public boolean getIsActive() {
@@ -88,6 +92,22 @@ public class GabionPUModel extends WallModelAbstract {
 	public Rectangle getBounds() {
 		return this.bounds;
 		
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
 	}
 
 }

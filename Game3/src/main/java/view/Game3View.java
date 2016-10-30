@@ -59,6 +59,10 @@ public class Game3View extends JPanel implements KeyListener{
 		JPanel beachGrid = new JPanel(new GridLayout(10,10));
 		for (int i =0; i<(controller.getBeach().getBeachGrid().size()); i++){
 			GridTile inGridPanel = new GridTile();
+			inGridPanel.setLayout(new BorderLayout());
+			
+			PowerUp powerUp = new PowerUp();
+			inGridPanel.add(powerUp, BorderLayout.CENTER);
 		    final JLabel label = new JLabel();
 		    //inGridPanel.repaint();
 		    label.setText("Beach");
@@ -94,6 +98,26 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			g.setColor(Color.BLUE);
 			g.fillRect(0, 0, 1000, 700);
+		}
+	}
+	
+	public class PowerUp extends JComponent {
+		@Override
+		public void paint(Graphics g) {
+			Collection<Object> sprites = controller.getBeach().getBeachGrid().values();
+			for(Object obj : sprites) {
+				if(obj instanceof SandPatchModel) {
+					SandPatchModel sand = (SandPatchModel)obj;
+					if(sand.getConcrPU().getIsActive()) {
+						g.setColor(Color.RED);
+						g.fillRect(sand.getConcrPU().getLocation().getX(), sand.getConcrPU().getLocation().getX(), sand.getConcrPU().getWidth(), sand.getConcrPU().getHeight());
+					}
+					else if (sand.getGabPU().getIsActive()) {
+						g.setColor(Color.GREEN);
+						g.fillRect(sand.getGabPU().getLocation().getX(), sand.getGabPU().getLocation().getX(), sand.getGabPU().getWidth(), sand.getGabPU().getHeight());
+					}
+				}
+			}
 		}
 	}
 	public class GridTile extends JComponent {

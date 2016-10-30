@@ -15,6 +15,8 @@ public class ConcretePUModel extends WallModelAbstract {
 	private BufferedImage wall;
 	private Pair location;
 	private Rectangle bounds;
+	private int height;
+	private int width;
 
 	
 	public void setActive(boolean isActive) {
@@ -22,7 +24,9 @@ public class ConcretePUModel extends WallModelAbstract {
 	}
 	public ConcretePUModel() {
 		setWallState(ConcPUState.POWER_UP);
-		this.setIsActive(true);
+		this.setIsActive(false);
+		this.height = 10;
+		this.width = 10;
 		
 	}
 	public boolean getIsActive() {
@@ -80,4 +84,17 @@ public class ConcretePUModel extends WallModelAbstract {
 		
 	}
 	
+	public int getHeight() {
+		return height;
+	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	public int getWidth() {
+		return width;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
 }

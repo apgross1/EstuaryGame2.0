@@ -42,6 +42,7 @@ public class BeachModel {
 	}
 	
 	public void spawnGabPU(ArrayList<Pair> ppul) {
+		System.out.println("Gabion spawned");
 		Random randLoc = new Random();
 		Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
 		gabPU.setLocation(pair);
@@ -53,7 +54,9 @@ public class BeachModel {
 	}
 	
 	public void spawnConcrPU(ArrayList<Pair> ppul) {
+		System.out.println("Concrete spawned");
 		Random randLoc = new Random();
+		
 		Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
 		concrPU.setIsActive(true);
 		concrPU.setLocation(pair);
@@ -88,7 +91,8 @@ public class BeachModel {
 		for(int i = 0; i < positionGrid.length; i++) {
 			for(int j = 0; j < positionGrid[i].length; j++) {
 				if (positionGrid[i][j] == 0) {
-					ppulPair.add(new Pair(i,j));
+					System.out.println("Making new pair");
+					ppulPair.add(new Pair(j,i)); //NOTE!!!!! IT MAY BE PAIR(i,j) NOT (j,i)
 				}
 				else {
 					continue;

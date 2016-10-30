@@ -221,4 +221,14 @@ public class Game3Tests {
 		assertFalse("Should be false", controller.getBeach().getGabPU().getIsActive());
 		
 	}
+	
+	//View tests
+	@Test
+	public void testGabPlacement() {
+		Game3Controller controller = new Game3Controller();
+		while(controller.getgameActive()) {
+			
+		}
+		
+	}
 }

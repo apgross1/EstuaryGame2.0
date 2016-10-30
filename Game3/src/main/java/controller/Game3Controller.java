@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 import javax.swing.Timer;
 
@@ -32,9 +33,21 @@ public class Game3Controller implements KeyListener {
 		setSandPatch(new SandPatchModel());
 		setWater(new WaterModel());
 		view = new Game3View(this);
+		this.gameActive = true;
+		gameLoop();
 		
 	}
 	
+	public void gameLoop()  {
+		Random die = new Random();
+		int trigger = die.nextInt(10);
+		while(getgameActive()) {
+			if(trigger == die.nextInt(10)) {
+				getBeach().spawnConcrPU(getBeach().generatePPUL());
+				getBeach().spawnGabPU(getBeach().generatePPUL());
+			}
+		}
+	}
 
 	ActionListener powerUpSpawnTimerListener = new ActionListener() {
 		@Override
