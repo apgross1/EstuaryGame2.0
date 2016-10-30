@@ -1,5 +1,6 @@
 package models;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import models.BeachModel.Pair;
@@ -13,6 +14,7 @@ public class ConcretePUModel extends WallModelAbstract {
 	private BufferedImage powerUp;
 	private BufferedImage wall;
 	private Pair location;
+	private Rectangle bounds;
 
 	
 	public void setActive(boolean isActive) {
@@ -68,4 +70,14 @@ public class ConcretePUModel extends WallModelAbstract {
 	public void spawn(boolean gameStart, int numChunksRemoved) {
 		
 	}
+	
+	public void setBounds(int x, int y, int width, int height) {
+		this.bounds = new Rectangle(x,y,width,height);
+	}
+	
+	public Rectangle getBounds() {
+		return this.bounds;
+		
+	}
+	
 }

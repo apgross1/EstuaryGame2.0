@@ -14,12 +14,9 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 
 	private int emptyHanded;
 	private boolean isDead;
-	private Graphics2D boundary;
 
 	private int xloc; //exists in abstract model not needed?
 	private int yloc; //exists in abstract model not needed?
-	//Exists in abstract model;
-	//private int emptyHanded;
 
 
 	
@@ -35,13 +32,11 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	@Override
 	public void healthDown() {
 		this.setHealth(0);
-		// this.health = 0;
 	}
 
 	@Override
 	public void pickUp() {
-		// Need to address abstract class as EmptyHanded is boolean
-		//this.setEmptyHanded(false);
+		
 	}
 
 	public HashMap<Direction,ArrayList<BufferedImage>> getAnimations() {
@@ -76,15 +71,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	public int getHealth(){
 		return health;
 	}
-	
-	/* Exists in abstract model
-	public void setEmptyHanded(int emptyHanded){
-		this.emptyHanded = emptyHanded;
-	}
-	
-	public int getEmptyHanded(){
-		return emptyHanded;
-	}*/
 	
 	@Override
 	public void move() {
@@ -130,8 +116,8 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.isDead = isDead;
 	}
 
-	public Graphics2D getBoundary() {
-		return boundary;
+	public Rectangle getBounds() {
+		return (new Rectangle(this.getLocX(),this.getLocY(),20,20));
 	}
 
 }

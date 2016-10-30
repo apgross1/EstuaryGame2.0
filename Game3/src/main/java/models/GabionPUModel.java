@@ -1,5 +1,7 @@
 package models;
 
+import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -13,7 +15,8 @@ public class GabionPUModel extends WallModelAbstract {
 	private BufferedImage wall;
 	private int GabionPUonbeach;
 	private GabPUState wallState;
-
+	private Rectangle bounds;
+	
 	public GabionPUModel() {
 		this.setWallState(GabPUState.POWER_UP);
 		this.setIsActive(false);
@@ -76,6 +79,15 @@ public class GabionPUModel extends WallModelAbstract {
 
 	public void setLocation(Pair location) {
 		this.location = location;
+	}
+	
+	public void setBounds(int x, int y, int width, int height) {
+		this.bounds = new Rectangle(x,y,width,height);
+	}
+	
+	public Rectangle getBounds() {
+		return this.bounds;
+		
 	}
 
 }

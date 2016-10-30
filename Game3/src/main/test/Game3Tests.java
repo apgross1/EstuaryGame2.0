@@ -50,8 +50,7 @@ public class Game3Tests {
 				concWall.setIsActive(false);
 				Object time = e.getSource();
 				Timer myTime = (Timer) time;
-				myTime.stop();
-				
+				myTime.stop();	
 			}
 		};
 		
@@ -94,6 +93,14 @@ public class Game3Tests {
 
 		}
 	    assertFalse("Should be false...", gabWall.getIsActive());
+	}
+	
+	//Testing intialization
+	@Test
+	public void testInitBeach() {
+		BeachModel beach = new BeachModel();
+		Collection<Object> sandBlocks = beach.getBeachGrid().values();
+		assertTrue("Should be true", sandBlocks.size() == 100); //100 is the size of the grid
 	}
 	
 	//Testing PPUL generator (Possible Power-Up Location)
@@ -144,18 +151,6 @@ public class Game3Tests {
 	}
 	
 	
-	//need to add attributes for concwallPUonbeach and gabionPUonbeach
-	@Test
-	public void testpickedUp() {
-		BeachModel beach = new BeachModel();
-		beach.spawnGabPU(beach.generatePPUL());
-		//check this out
-		models.AnimalModelG3 animal = new models.AnimalModelG3();
-		animal.pickUp();
-		assertTrue("Should be true", beach.getGabPU().getWallState().equals(GabPUState.WALL));
-		
-	}
-	
 	@Test
 	public void testWaveHit(){
 		Game3Controller walldamage = new Game3Controller();
@@ -172,23 +167,6 @@ public class Game3Tests {
 		
 	}
 	
-	@Test
-	public void voidstartTimer(){
-		Game3Controller g3clock = new Game3Controller();
-		g3clock.setTime(180);
-		assertTrue("True", g3clock.getgameActive() == true);
-		
-	}
-	
-	public void voidendTimer(){
-		Game3Controller g3clock = new Game3Controller();
-		g3clock.setTime(0);
-		assertTrue("False", g3clock.getgameActive() == false);
-		}
-	
-	
-	//Gabion Power UP tests
-
 	
 	//AnimalModel
 	@Test
@@ -197,25 +175,50 @@ public class Game3Tests {
 		animal.setHealth(100);
 		animal.healthDown();
 		assertTrue("Should be 0", animal.getHealth() == 0);
-
 	}
 	
-	
-	/*
 	@Test
 	public void testPickup(){
 		AnimalModelG3 animal = new AnimalModelG3();
-		//nothing touched
-		animal.setEmptyHanded(0);
-		assertTrue("Should be 0", animal.getEmptyHanded() == 0);
-		
-		//Has GabionPU
-		animal.setEmptyHanded(1);
-		assertTrue("Should be 1", animal.getEmptyHanded() == 1);
-
-		//Has ConcreteWallPU
-		animal.setEmptyHanded(2);
-		assertTrue("Should be 2", animal.getEmptyHanded() == 2);
+		assertFalse("", true);
 	}
-	*/
+	
+	@Test
+	public void voidstartTimer(){
+		Game3Controller g3clock = new Game3Controller();
+		g3clock.setTime(180);
+		assertTrue("True", g3clock.getgameActive());
+	}
+	
+	@Test
+	public void voidEndTimer(){
+		Game3Controller g3clock = new Game3Controller();
+		g3clock.setTime(0);
+		assertFalse("False", g3clock.getgameActive());
+	}
+	
+	@Test
+	public void testSpawnTimer() {
+		Game3Controller controller = new Game3Controller();
+		ArrayList<Pair> pairs = new ArrayList<Pair>();
+		pairs.add(controller.getBeach().new Pair(2,1));
+		controller.getBeach().spawnConcrPU(pairs);
+		controller.getBeach().spawnGabPU(pairs);
+		assertTrue("Should be true", controller.getBeach().getConcrPU().getIsActive());
+		assertTrue("Should be true", controller.getBeach().getGabPU().getIsActive());
+		controller.powerUpSpawned();
+		assertFalse("Should be false", controller.getBeach().getConcrPU().getIsActive());
+		assertFalse("Should be false", controller.getBeach().getGabPU().getIsActive());
+		
+		ArrayList<Pair> pairs2 = new ArrayList<Pair>();
+		pairs2.add(controller.getBeach().new Pair(2,1));
+		controller.getBeach().spawnConcrPU(pairs2);
+		controller.getBeach().spawnGabPU(pairs2);
+		assertTrue("Should be true", controller.getBeach().getConcrPU().getIsActive());
+		assertTrue("Should be true", controller.getBeach().getGabPU().getIsActive());
+		controller.powerUpPickedUp();
+		assertFalse("Should be false", controller.getBeach().getConcrPU().getIsActive());
+		assertFalse("Should be false", controller.getBeach().getGabPU().getIsActive());
+		
+	}
 }
