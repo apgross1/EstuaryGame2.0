@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class WaterModelG2 {
 	private int algaeConcentration;
-	private int Oxygen;
 	private ArrayList waterStateAnim;
 	private int health;
 	private int oxLevel;
@@ -17,24 +16,27 @@ public class WaterModelG2 {
 		
 	}
 	
-	public void incConcentration(){
-		
+	public void algaeCollide(){
+		this.decOxygen();
+		this.incrAlgConcentration();
+		this.decreaseHealth();
 	}
 	
 	public void decOxygen(){
-		
+		this.setOxLevel(getOxLevel()-1);
 	}
 	
 	public void incrOxygen() {
-		
+		this.setOxLevel(getOxLevel()+1);
 	}
 	
 
 	public void incrAlgConcentration() {
-		
+		this.setAlgConcentration(getAlgConcentration()+1);
 	}
 	
 	public void decrAlgConcentration() {
+		this.setAlgConcentration(getAlgConcentration()-1);
 		
 	}
  
@@ -44,6 +46,12 @@ public class WaterModelG2 {
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+	public void decreaseHealth(){
+		this.setHealth(getHealth()-1);
+	}
+	public void increaseHealth(){
+		this.setHealth(getHealth()+1);
 	}
 
 	public ArrayList<BufferedImage> getWaterState() {

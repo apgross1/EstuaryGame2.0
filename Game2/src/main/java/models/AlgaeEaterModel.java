@@ -1,5 +1,6 @@
 package models;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class AlgaeEaterModel {
@@ -7,39 +8,33 @@ public class AlgaeEaterModel {
 	private int locY;
 	private boolean active;
 	private int health;
-	private ArrayList fishAnim;
-	
+	private ArrayList <BufferedImage> fishAnimation;
+	private AnimalModelG2 animalModel ;
 	
 	public AlgaeEaterModel() {
-		
+		animalModel = new AnimalModelG2();
+		this.setLocX(animalModel.getLocX());
+		this.setLocY(animalModel.getLocY());
+		this.setHealth(100);
+		this.setActive(true);
 	}
 	
 	public AlgaeEaterModel(int x, int y) {
 		
 	}
 	
-	public void AEHealthUp(){
-		
-	}
-	
-	public void AEHealthDown(){
-		
-	}
 	
 	public void move(){
+		this.setLocY(animalModel.getLocY());
+	}
 		
-	}
-	
-	public void eaten(){
-	}
-
 		
 	public void healthDown() {
-		
+		this.setHealth(getHealth()-1);
 	}
 	
 	public void healthUp() {
-	
+		this.setHealth(getHealth()+1);
 	}
 	
 	public int getLocY() {
@@ -66,7 +61,7 @@ public class AlgaeEaterModel {
 		this.health = health;
 	}
 
-	public boolean isActive() {
+	public boolean getIsActive() {
 		return active;
 	}
 
@@ -75,10 +70,10 @@ public class AlgaeEaterModel {
 	}
 
 	public ArrayList getFishAnim() {
-		return fishAnim;
+		return fishAnimation;
 	}
 
 	public void setFishAnim(ArrayList fishAnim) {
-		this.fishAnim = fishAnim;
+		this.fishAnimation = fishAnim;
 	}
 }

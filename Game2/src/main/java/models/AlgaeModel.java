@@ -1,17 +1,20 @@
 package models;
 
+import java.util.Collection;
+
 public class AlgaeModel {
 	private int locX;
 	private int locY;
 	private int health;
 	private boolean isActive;
 	
+	
 	public AlgaeModel() {
 		
 	}
 	
 	public void eaten() {
-		
+		this.setActive(false);
 	}
 	
 	public AlgaeModel(int x, int y) {
