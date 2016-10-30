@@ -2,19 +2,29 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import models.ConcreteWallModelG1.ConcreteChunk;
 
 public class GabionWallModelG1 extends WallModelAbstract{
 	private int maxOysters;
 	private int currentOysters;
-	private int oystersOnBeach;
 	private int activeClamsOnBoard;
 	private Collection<GabionChunk> chunks = new ArrayList<GabionChunk>();
 	
 	
 	public GabionWallModelG1() {
 		maxOysters = 30;
+	}
+	
+	public void reset(){
+		Iterator<GabionChunk> tmp = chunks.iterator();
+		while(tmp.hasNext()){
+			tmp.next();
+			tmp.remove();
+		}
+		currentOysters = 0;
+		activeClamsOnBoard = 0;
 	}
 	
 	public void addPiece(GabionChunk gc) {

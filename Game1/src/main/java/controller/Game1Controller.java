@@ -19,6 +19,7 @@ import models.GabionWallModelG1.GabionChunk;
 import view.Game1View;
 
 import java.awt.Rectangle;
+import javax.swing.Timer;
 
 public class Game1Controller{
 	//Models
@@ -30,8 +31,11 @@ public class Game1Controller{
 	Game1View g1view = new Game1View(this);
 	
 	//Vars
-	private boolean gameActive;
+	private boolean gameState;
 	private ArrayList<BufferedImage> landSeqs;
+	int overallRound = 0;
+	long gameTime;
+	
 	
 	public Game1Controller() {
 	}
@@ -49,28 +53,39 @@ public class Game1Controller{
 	public GabionWallModelG1 getGabionWallModel(){
 		return gabionModel;
 	}
-	//Setters
-	public void setGameState(boolean b){
-		gameActive = b;
+	public long getTime(){
+		return (30 -(gameTime/1000));
 	}
+	
+	//Setters
 	public void reset() {
 		//This should reset all variables (except the bar), timer and all as we're going to have 3 sub rounds in game 1
+		wallModel.reset();
+		gabionModel.reset();
+	}
+	
+	public void startGame(){
+		gameState = true;
+		while(overallRound < 3 & gameState == true){
+			round();
+		}
+		gameState = false;
 	}
 	
 	
-	public void startGame() {
-		gameActive = true;
+	public void round() {
 		
 		//Add intro animation here....
 		
-		while(gameActive){
-			
+		long startTime = System.currentTimeMillis(); //fetch starting time
+		while((System.currentTimeMillis()-startTime)<30000){
+			gameTime = (System.currentTimeMillis() - startTime);
 			Random r = new Random();
 			
 			if(wallModel.getCurrentBlocks() < (wallModel.getMaxBlocks()-5) & wallModel.getActiveBlocks() < 5){//Max concrete that can be on the screen at once.
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
-				int randx = r.nextInt(1000);
+				int randx = r.nextInt(975);
 				int randy = r.nextInt(560-50) + 50;
 				//Need a condition here to make sure that there is not already a chunk at that location.
 				wallModel.spawnChunk(randx, randy);
@@ -79,7 +94,7 @@ public class Game1Controller{
 			if(gabionModel.getCurrentOysters() < (gabionModel.getMaxOysters()-5) & gabionModel.getActiveClams() < 5){//Max concrete that can be on the screen at once.
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
-				int randx = r.nextInt(1000);
+				int randx = r.nextInt(975);
 				int randy = r.nextInt(650-50) + 50;
 				//Need a condition here to make sure that there is not already a chunk at that location.
 				gabionModel.spawnChunk(randx, randy);
@@ -93,10 +108,10 @@ public class Game1Controller{
 		takeDamage();
 		//one more paint
 		g1view.repaintFrame();
-		//set game round to 2/3
 		//reset vars
-		//restart game
-
+		reset();
+		//set game round to 2/3
+		overallRound++;
 	}
 	
 	boolean collisionOccured(AnimalModel a, Object chunk){
@@ -154,10 +169,23 @@ public class Game1Controller{
 		int concreteCollected = wallModel.getCurrentBlocks();
 		
 		int protection = (gabbionsCollected * 5) + (concreteCollected * 1);
-		int new_status = (bar.getStatus() - (bar.getMaxLevel() - protection));
+		int new_status;
 		
-		bar.setStatus(new_status);
+		//Prevent health going up
+		if(protection <= 100){
+			new_status = (bar.getStatus() - (bar.getMaxLevel() - protection));
+		}else{
+			new_status = (bar.getStatus() - (bar.getMaxLevel() - 100));
+		}
 		
+		if(new_status > 0){
+			bar.setStatus(new_status);
+		}else{
+			//Set to 0 and don't allow another round because the user lost game 1 overall.
+			bar.setStatus(0);
+			gameState = false;
+			
+		}
 		
 		//Break down the walls
 		wallModel.breakDown();

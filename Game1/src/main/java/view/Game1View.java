@@ -81,11 +81,11 @@ public class Game1View extends JPanel implements KeyListener{
 				//Draw score data and timer and health
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
 				g.setColor(Color.WHITE);
-				g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), 20, 25);
+				g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), 20, 30);
 				g.setColor(Color.RED);
-				g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), 200, 25);
+				g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), 200, 30);
 				g.setColor(Color.GREEN);
-				g.drawString("TIME LEFT: null", 775, 25);
+				g.drawString("Time Left: "+ controller.getTime(), 775, 30);
 				
 				g.drawString("Health: " + controller.getBarModel().getStatus(), 625, 30);
 				
@@ -122,8 +122,8 @@ public class Game1View extends JPanel implements KeyListener{
 	 
 	 @Override
 		public void keyPressed(KeyEvent e) {
-			System.out.println("y: "+ controller.getAnimalModel().getLocY());
-			System.out.println("x: "+ controller.getAnimalModel().getLocX());
+			//System.out.println("y: "+ controller.getAnimalModel().getLocY());
+			//System.out.println("x: "+ controller.getAnimalModel().getLocX());
 		    int keyCode = e.getKeyCode();
 		    switch( keyCode ) {
 		        case KeyEvent.VK_UP:
@@ -161,10 +161,6 @@ public class Game1View extends JPanel implements KeyListener{
 		        	if(controller.getAnimalModel().getLocX() < 885){
 		        		controller.getAnimalModel().move();
 		        	}
-		            break;
-		        case KeyEvent.VK_SPACE :
-		        	System.out.println("This is a temp key event to end the game (set bool gameActive in controller to false)");
-		        	controller.setGameState(false);
 		            break;
 		    }
 		}
