@@ -26,8 +26,8 @@ public class ConcretePUModel extends WallModelAbstract {
 	public ConcretePUModel() {
 		setWallState(ConcPUState.POWER_UP);
 		this.isActive = false;
-		this.height = 10;
-		this.width = 10;
+		this.height = 30;
+		this.width = 30;
 		this.isPickedUp = false;
 		this.location = new Pair(0,0);
 		this.viewLocation = new Pair(0,0);
@@ -116,14 +116,14 @@ public class ConcretePUModel extends WallModelAbstract {
 	public void setPickedUp(boolean isPickedUp) {
 		if(isPickedUp) {
 			this.setWallState(ConcPUState.WALL);
-			this.width = 20;
-			this.height = 50;
+			this.width = 70;
+			this.height = 150;
 			this.setBounds(this.getViewLocation().getX(), this.getViewLocation().getY(), this.width, this.height);
 		}
 		else {
 			this.setWallState(ConcPUState.POWER_UP);
-			this.width = 10;
-			this.height = 10;
+			this.width = 30;
+			this.height = 30;
 			this.setBounds(this.getViewLocation().getX(), this.getViewLocation().getY(), this.width, this.height);
 		}
 		this.isPickedUp = isPickedUp;
@@ -133,8 +133,9 @@ public class ConcretePUModel extends WallModelAbstract {
 	}
 	public void setViewLocation(Pair viewLocation) {
 		Random rand = new Random();
-		this.viewLocation.setX(this.location.getX()*100);
-		this.viewLocation.setY(this.location.getY()*(700/8));
+		this.viewLocation.setX((int)((this.location.getX()*100)/1.107));
+		this.viewLocation.setY((int)(this.location.getY()*(700/8)/1.208));
+		
 		
 	}
 }
