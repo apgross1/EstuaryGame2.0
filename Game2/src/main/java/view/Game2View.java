@@ -1,5 +1,4 @@
 package view;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -12,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import models.AlgaeModel;
+import models.BarModelG2;
 import controller.Game2Controller;
 import enums.Direction;
 
@@ -25,11 +25,12 @@ public class Game2View extends JPanel implements KeyListener{
 	private JPanel algaeWater = new JPanel();
 	private JPanel shallowWater = new JPanel();
 	AlgaeModel algae = new AlgaeModel();
-
+	BarModelG2 oxyBar;
     //final static int frameWidth = 800;
     //final static int frameHeight = 800;
 	
 	public Game2View(Game2Controller ctl){
+		oxyBar = new BarModelG2(200);
 		controller = ctl;
 
     	frame = new JFrame();
@@ -97,15 +98,15 @@ public class Game2View extends JPanel implements KeyListener{
 			g.setColor(Color.WHITE);
 			
 			//temp condition
-			g.drawString("TIME LEFT: null", 700, 25);
+			g.drawString("Time: " +controller.getGameTime(), 700, 25);
 			
 			 if(controller.getNumMissed()*10 ==200){
 				 controller.setGameActive(false);
 			 }
-			g.fillRect(400, 18, 200-(controller.getNumMissed()*10), 20);
+			g.fillRect(400, 18, oxyBar.getMaxLevel()-(controller.getNumMissed()*oxyBar.getDamage()), oxyBar.getWidth());
 			g.setColor(Color.BLACK);
-			g.drawString("Oxygen Level:", 250, 35);
-			g.drawString("Algae Missed:"+ controller.getNumMissed(), 250, 100);
+			g.drawString("Oxygen Level: ", 250, 35);
+			g.drawString("Algae Missed : "+ controller.getNumMissed(), 250, 65);
 			Collection<AlgaeModel> algaeTemp = controller.getAlgaeList();
 			Iterator<AlgaeModel> it = algaeTemp.iterator();
 			

@@ -19,10 +19,6 @@ public class AlgaeEaterModel {
 		this.setActive(true);
 	}
 	
-	public AlgaeEaterModel(int x, int y) {
-		
-	}
-	
 	
 	public void move(){
 		this.setLocY(animalModel.getLocY());
