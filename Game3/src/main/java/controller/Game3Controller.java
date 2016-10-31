@@ -27,6 +27,7 @@ public class Game3Controller implements KeyListener {
 	private BeachModel beach;
 	private GridBlock sandPatch;
 	private WaterModel water;
+	private Timer timer;
 	
 	public Game3Controller() {
 		setAnimal(new AnimalModelG3());
@@ -50,6 +51,11 @@ public class Game3Controller implements KeyListener {
 					this.powerUpSpawned();
 				}	
 			}
+			if((beach.getConcrPU().getIsActive()) && beach.getGabPU().getIsActive()) {
+				System.out.println("Should exist:");
+				beach.getConcrPU().getBounds();
+				this.collisionPowerUps();
+			}
 			this.view.repaintAll();
 			
 		}
@@ -61,7 +67,10 @@ public class Game3Controller implements KeyListener {
 			beach.removeGabPU(beach.findPairInGrid(beach.getGabPU().getLocation()));
 			beach.removeConcrPU(beach.findPairInGrid(beach.getConcrPU().getLocation()));
 			beach.getConcrPU().setActive(false);
+			beach.getGabPU().setPickedUp(false);
 			beach.getGabPU().setIsActive(false);
+			beach.getConcrPU().setPickedUp(false);
+			
 			Object time = e.getSource();
 			Timer myTime = (Timer) time;
 			myTime.stop();
@@ -72,10 +81,14 @@ public class Game3Controller implements KeyListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (beach.getGabPU().getWallState() == GabPUState.WALL) {
-				beach.removeGabPU(beach.getGabPU().getLocation());
+				beach.removeGabPU(beach.findPairInGrid(beach.getGabPU().getLocation()));
+				beach.getGabPU().setPickedUp(false);
+				beach.getGabPU().setIsActive(false);
 			}
 			else {
-				beach.removeConcrPU(beach.getConcrPU().getLocation());
+				beach.removeConcrPU(beach.findPairInGrid(beach.getConcrPU().getLocation()));
+				beach.getConcrPU().setActive(false);
+				beach.getConcrPU().setPickedUp(false);
 			}
 			Object time = e.getSource();
 			Timer myTime = (Timer) time;
@@ -85,15 +98,10 @@ public class Game3Controller implements KeyListener {
 	
 	//Duration for which power-up is available to be picked up
 	public void powerUpSpawned() {
-		Timer timer = new Timer(10000, powerUpSpawnTimerListener);
+		timer = new Timer(4000, powerUpSpawnTimerListener);
 		timer.setRepeats(true);
 		timer.start();
-		System.out.println("Timer started");
-		while(timer.isRunning()) {
-			if (beach.getGabPU().isPickedUp() || beach.getConcrPU().isPickedUp()) {
-				timer.stop();
-			}
-		}
+		System.out.println("Spawn timer started");
 	}
 	
 	
@@ -104,9 +112,7 @@ public class Game3Controller implements KeyListener {
 		Timer timer = new Timer(6000, powerUpWallTimerListener);
 		timer.setRepeats(true);
 		timer.start();
-		while(timer.isRunning()) {
-			
-		}
+		System.out.println("Wall timer started");
 	}
 	
 	public void startGame() {
@@ -119,16 +125,25 @@ public class Game3Controller implements KeyListener {
 	}
 	
 	public void collisionPowerUps(){
-		if(animal.getBounds().intersects(beach.getGabPU().getBounds())) {
-			beach.getGabPU().setWallState(GabPUState.WALL);
-			beach.getGabPU().setBounds(beach.getGabPU().getLocation().getX(), beach.getGabPU().getLocation().getY(), 15 , 10);
-			
-			this.powerUpPickedUp();
+		if((beach.getGabPU().getIsActive())) {
+			if (animal.getBounds().intersects(beach.getGabPU().getBounds())) {
+				System.out.println("Intersection between gab and animal");
+				timer.stop();
+				beach.getGabPU().setPickedUp(true);
+				beach.removeConcrPU(beach.findPairInGrid(beach.getConcrPU().getLocation()));
+				beach.getConcrPU().setActive(false);
+				this.powerUpPickedUp();
+			}
 		}
-		else if (animal.getBounds().intersects(beach.getConcrPU().getBounds())) {
-			beach.getConcrPU().setWallState(ConcPUState.WALL);
-			beach.getConcrPU().setBounds(beach.getConcrPU().getLocation().getX(), beach.getConcrPU().getLocation().getY(), 15 , 10);
-			this.powerUpPickedUp();
+		else if ((beach.getConcrPU().getIsActive())) {
+			if (beach.getConcrPU().getIsActive() && animal.getBounds().intersects(beach.getConcrPU().getBounds())) {
+				System.out.println("Intersection between concrete and animal");
+				timer.stop();
+				beach.getConcrPU().setPickedUp(true);
+				beach.removeGabPU(beach.findPairInGrid(beach.getGabPU().getLocation()));
+				beach.getGabPU().setIsActive(false);
+				this.powerUpPickedUp();
+			}
 		}
 	}
 	

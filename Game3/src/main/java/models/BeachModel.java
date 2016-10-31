@@ -45,9 +45,11 @@ public class BeachModel {
 	
 	public void spawnGabPU(ArrayList<Pair> ppul) {
 		if(ppul.size() == 0) {
+			System.out.println("Made it here");
 			return;
 		}
 		else{
+			System.out.println("Made it here1");
 			Random randLoc = new Random();
 			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
 			gabPU.setLocation(pair);
@@ -74,8 +76,7 @@ public class BeachModel {
 	}
 	
 	public void removeConcrPU(Pair pair) {
-		GridBlock sp = beachGrid.get(pair);
-		sp.setVacant(true);
+		beachGrid.get(this.findPairInGrid(pair)).setVacant(true);
 		concrPU.setLocation(null);
 		positionGrid[pair.getX()][pair.getY()] = 0;
 		concrPU.setIsActive(false);
@@ -83,7 +84,7 @@ public class BeachModel {
 	}
 	
 	public void removeGabPU(Pair pair) {
-		beachGrid.get(pair).setVacant(true);
+		beachGrid.get(this.findPairInGrid(pair)).setVacant(true);
 		gabPU.setLocation(null);
 		positionGrid[pair.getX()][pair.getY()] = 0;
 		gabPU.setIsActive(false);

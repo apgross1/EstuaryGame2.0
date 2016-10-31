@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.OverlayLayout;
@@ -55,7 +56,13 @@ public class Game3View extends JPanel implements KeyListener{
 		
     	
     	//Panes
-		play_ground.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
+		//For animal movement
+		JLayeredPane layoutContainer = new JLayeredPane();
+		//layoutContainer.setLayout(new OverlayLayout(layoutContainer));
+		Animal animalPane = new Animal();
+		animalPane.setPreferredSize(new Dimension(1000,700));
+		//frame.add(animalPane);
+		//animalPane.isVisible();
 		JPanel beachGrid = new JPanel(new GridLayout(10,10));
 		Collection<GridBlock> blocks = controller.getBeach().getBeachGrid().values();
 		Iterator<GridBlock> it = blocks.iterator();
@@ -71,32 +78,19 @@ public class Game3View extends JPanel implements KeyListener{
 		    
 		    beachGrid.add(beachOverlay);
 		}
-		/*for (int i =0; i<(controller.getBeach().getBeachGrid().size()); i++){
-			
-			JPanel beachOverlay = new JPanel();
-			beachOverlay.setLayout(new OverlayLayout(beachOverlay));
-			
-			SandWater gridBlock = new SandWater();
-			GridTile powerUp = new GridTile();
-		    beachOverlay.add(powerUp);
-		    beachOverlay.add(gridBlock);
-		    
-		    beachGrid.add(beachOverlay);
-		}*/
 		
 		ShoreLine water = new ShoreLine();
 		water.setPreferredSize(new Dimension(100,frame.getHeight()));
 		water.setVisible(true);
-		beachGrid.setVisible(true);
+		beachGrid.setBounds(0, 0, 1000, 700);
+		animalPane.setBounds(0, 0, 1000, 700);
+		layoutContainer.add(beachGrid);
+		layoutContainer.add(animalPane, new Integer(0), 0);
+		
+		play_ground.add(layoutContainer, BorderLayout.CENTER);
 		play_ground.add(water, BorderLayout.EAST);
-		play_ground.add(beachGrid, BorderLayout.CENTER);
 		frame.add(play_ground);
-		play_ground.setVisible(true);
 		frame.setVisible(true);
-		
-		
-		
-    	//frame.add();
     	
     	//addKeyListener
     	frame.addKeyListener(this);
@@ -105,13 +99,16 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	public void repaintAll(){
 		frame.repaint();
-		frame.getContentPane().repaint();
-		int numComps = frame.getContentPane().getComponentCount();
-		for(int i = 0; i < numComps; i++) {
-			frame.getContentPane().getComponent(i).repaint();
-		}
 	}
 	
+	
+	public class Animal extends JComponent {
+		@Override
+		public void paint(Graphics g) {
+			g.setColor(Color.MAGENTA);
+			g.fillRect((int)controller.getAnimal().getBounds().getMaxX(),(int) controller.getAnimal().getBounds().getMaxY(),(int) controller.getAnimal().getBounds().getWidth(), (int)controller.getAnimal().getBounds().getHeight());
+		}
+	}
 	
 	public class ShoreLine extends JComponent {
 		@Override
@@ -130,11 +127,11 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			if(grid.getWater() == null) {
 				g.setColor(Color.YELLOW);
-				g.fillRect(grid.getLocation().getX(), grid.getLocation().getY(), grid.getWidth(), grid.getHeight());
+				g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}
 			else{
 			g.setColor(Color.BLUE);
-			g.fillRect(grid.getWater().getLocation().getX(), grid.getWater().getLocation().getY(), grid.getWater().getWidth(), grid.getWater().getHeight());
+			g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}
 		}
 	}
@@ -149,13 +146,13 @@ public class Game3View extends JPanel implements KeyListener{
 			if(gridBlock.getConcrPU() != null) {
 				if(gridBlock.getConcrPU().getIsActive()) {
 					g.setColor(Color.RED);
-					g.fillRect(gridBlock.getConcrPU().getLocation().getX(), gridBlock.getConcrPU().getLocation().getX(), gridBlock.getConcrPU().getWidth(), gridBlock.getConcrPU().getHeight());
+					g.fillRect((int) gridBlock.getConcrPU().getBounds().getMaxX(), (int) gridBlock.getConcrPU().getBounds().getMaxY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
 				}
 			}
 			else if(gridBlock.getGabPU() != null) {
 				if(gridBlock.getGabPU().getIsActive()) {
-					g.setColor(Color.GREEN);
-					g.fillRect(gridBlock.getGabPU().getLocation().getX(), gridBlock.getGabPU().getLocation().getX(), gridBlock.getGabPU().getWidth(), gridBlock.getGabPU().getHeight());
+					g.setColor(Color.DARK_GRAY);
+					g.fillRect((int) gridBlock.getGabPU().getBounds().getMaxX(), (int) gridBlock.getGabPU().getBounds().getMaxY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
 				}
 			}
 			else {
@@ -165,52 +162,52 @@ public class Game3View extends JPanel implements KeyListener{
 	}
 	 
 	 
-	/* @Override
-		public void keyPressed(KeyEvent e) {
-		    int keyCode = e.getKeyCode();
-		    switch( keyCode ) {
-		        case KeyEvent.VK_UP:
-		            // handle up 
-		        	if(controller.getAnimalModel().getCurrDir() != Direction.NORTH){
-		        		controller.getAnimalModel().setCurrDir(Direction.NORTH);
-		        	}
-		        	if(controller.getAnimalModel().getLocY() > 50){
-		        		controller.getAnimalModel().move();
-		        	}
-		            break;
-		        case KeyEvent.VK_DOWN:
-		            // handle down 
-		        	if(controller.getAnimalModel().getCurrDir() != Direction.SOUTH){
-		        		controller.getAnimalModel().setCurrDir(Direction.SOUTH);
-		        	}
-		        	if(controller.getAnimalModel().getLocY() < 560){
-		        		controller.getAnimalModel().move();
-		        	}
-		            break;
-		        case KeyEvent.VK_LEFT:
-		            // handle left
-		        	if(controller.getAnimalModel().getCurrDir() != Direction.WEST){
-		        		controller.getAnimalModel().setCurrDir(Direction.WEST);
-		        	}
-		        	if(controller.getAnimalModel().getLocX() > 0){
-		        		controller.getAnimalModel().move();
-		        	}
-		            break;
-		        case KeyEvent.VK_RIGHT :
-		            // handle right
-		        	if(controller.getAnimalModel().getCurrDir() != Direction.EAST){
-		        		controller.getAnimalModel().setCurrDir(Direction.EAST);
-		        	}
-		        	if(controller.getAnimalModel().getLocX() < 885){
-		        		controller.getAnimalModel().move();
-		        	}
-		            break;
-		        case KeyEvent.VK_SPACE :
-		        	System.out.println("This is a temp key event to end the game (set bool gameActive in controller to false)");
-		        	controller.setGameState(false);
-		            break;
-		    }
-		}*/
+	@Override
+	public void keyPressed(KeyEvent e) {
+	    int keyCode = e.getKeyCode();
+	    switch( keyCode ) {
+	        case KeyEvent.VK_UP:
+	            // handle up 
+	        	if(controller.getAnimal().getCurrDir() != Direction.NORTH){
+	        		controller.getAnimal().setCurrDir(Direction.NORTH);
+	        	}
+	        	if(controller.getAnimal().getLocY() > 50){
+	        		controller.getAnimal().move();
+	        	}
+	            break;
+	        case KeyEvent.VK_DOWN:
+	            // handle down 
+	        	if(controller.getAnimal().getCurrDir() != Direction.SOUTH){
+	        		controller.getAnimal().setCurrDir(Direction.SOUTH);
+	        	}
+	        	if(controller.getAnimal().getLocY() < 560){
+	        		controller.getAnimal().move();
+	        	}
+	            break;
+	        case KeyEvent.VK_LEFT:
+	            // handle left
+	        	if(controller.getAnimal().getCurrDir() != Direction.WEST){
+	        		controller.getAnimal().setCurrDir(Direction.WEST);
+	        	}
+	        	if(controller.getAnimal().getLocX() > 0){
+	        		controller.getAnimal().move();
+	        	}
+	            break;
+	        case KeyEvent.VK_RIGHT :
+	            // handle right
+	        	if(controller.getAnimal().getCurrDir() != Direction.EAST){
+	        		controller.getAnimal().setCurrDir(Direction.EAST);
+	        	}
+	        	if(controller.getAnimal().getLocX() < 885){
+	        		controller.getAnimal().move();
+	        	}
+	            break;
+	        case KeyEvent.VK_SPACE :
+	        	System.out.println("This is a temp key event to end the game (set bool gameActive in controller to false)");
+	        	controller.setGameActive(false);
+	            break;
+	    }
+	}
 
 	public Game3Controller getController() {
 		return controller;
@@ -234,14 +231,6 @@ public class Game3View extends JPanel implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 	/*
 	public JFrame getFrame() {

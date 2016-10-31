@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import models.BeachModel.Pair;
+import models.ConcretePUModel.ConcPUState;
 
 public class GabionPUModel extends WallModelAbstract {
 	private boolean isActive;
@@ -14,7 +15,6 @@ public class GabionPUModel extends WallModelAbstract {
 	private Pair location;
 	private BufferedImage powerUp;
 	private BufferedImage wall;
-	private int GabionPUonbeach;
 	private GabPUState wallState;
 	private Rectangle bounds;
 	private int height;
@@ -22,9 +22,11 @@ public class GabionPUModel extends WallModelAbstract {
 	
 	public GabionPUModel() {
 		this.setWallState(GabPUState.POWER_UP);
-		this.setIsActive(false);
+		this.isActive = false;
 		this.height = 10;
 		this.width = 10;
+		this.isPickedUp = false;
+		this.bounds = new Rectangle(0, 0, width, height);
 	}
 
 	public boolean getIsActive() {
@@ -32,6 +34,9 @@ public class GabionPUModel extends WallModelAbstract {
 	}
 	
 	public void setIsActive(boolean active) {
+		if(active) {
+			this.setBounds(this.location.getX(), this.location.getY(), this.width, this.height);
+		}
 		isActive = active;
 	}
 	//Spawning for PU placement
@@ -91,7 +96,8 @@ public class GabionPUModel extends WallModelAbstract {
 	}
 	
 	public Rectangle getBounds() {
-		return this.bounds;
+		
+		return (new Rectangle(this.getLocation().getX(),this.getLocation().getY(),width,height));
 		
 	}
 
@@ -116,6 +122,18 @@ public class GabionPUModel extends WallModelAbstract {
 	}
 
 	public void setPickedUp(boolean isPickedUp) {
+		if(isPickedUp) {
+			this.setWallState(GabPUState.WALL);
+			this.width = 20;
+			this.height = 50;
+			this.setBounds(this.location.getX(), this.location.getY(), this.width, this.height);
+		}
+		else {
+			this.width = 10;
+			this.height = 10;
+			//this.setBounds(this.location.getX(), this.location.getY(), this.width, this.height);
+		}
+		
 		this.isPickedUp = isPickedUp;
 	}
 

@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import models.BeachModel.Pair;
+import models.GabionPUModel.GabPUState;
 
 public class ConcretePUModel extends WallModelAbstract {
 	public enum ConcPUState {
@@ -21,13 +22,18 @@ public class ConcretePUModel extends WallModelAbstract {
 
 	
 	public void setActive(boolean isActive) {
+		if(isActive) {
+			this.setBounds(this.location.getX(), this.location.getY(), this.width, this.height);
+		}
 		this.isActive = isActive;
 	}
 	public ConcretePUModel() {
 		setWallState(ConcPUState.POWER_UP);
-		this.setIsActive(false);
+		this.isActive = false;
 		this.height = 10;
 		this.width = 10;
+		this.isPickedUp = false;
+		this.bounds = new Rectangle(0,0, width, height);
 		
 	}
 	public ConcretePUModel(Pair loc) {
@@ -84,7 +90,7 @@ public class ConcretePUModel extends WallModelAbstract {
 	}
 	
 	public Rectangle getBounds() {
-		return this.bounds;
+		return (new Rectangle(this.getLocation().getX(),this.getLocation().getY(),width,height));
 		
 	}
 	
@@ -105,6 +111,17 @@ public class ConcretePUModel extends WallModelAbstract {
 		return isPickedUp;
 	}
 	public void setPickedUp(boolean isPickedUp) {
+		if(isPickedUp) {
+			this.setWallState(ConcPUState.WALL);
+			this.width = 20;
+			this.height = 50;
+			this.setBounds(this.location.getX(), this.location.getY(), this.width, this.height);
+		}
+		else {
+			this.width = 10;
+			this.height = 10;
+			//this.setBounds(this.location.getX(), this.location.getY(), this.width, this.height);
+		}
 		this.isPickedUp = isPickedUp;
 	}
 }

@@ -14,14 +14,14 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 
 	private int emptyHanded;
 	private boolean isDead;
-
-	private int xloc; //exists in abstract model not needed?
-	private int yloc; //exists in abstract model not needed?
+	private int height;
+	private int width;
 
 
 	
 	public AnimalModelG3() {
-		
+		this.setHeight(100);
+		this.setWidth(100);
 	}
 	@Override
 	public void healthUp() {
@@ -47,23 +47,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.animations = animations;
 	}
 	
-	//exists in abstract model not needed?
-	/*public void setXloc(int Xloc){
-		this.xloc = Xloc;
-	}
-	
-	public int getXloc(){
-		return xloc;
-	}
-
-	public void setYloc(int yloc){
-		this.yloc = yloc;
-	}
-	
-	public int getYloc(){
-		return yloc;
-	}
-*/
 	public void setHealth(int health){
 		this.health = health;
 	}
@@ -77,32 +60,32 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		// TODO Auto-generated method stub
 		switch(this.getCurrDir()){
 			case NORTH:
-				this.setLocY(this.getLocY() - 1);
+				this.setLocY(this.getLocY() - 5);
 				break;
 			case SOUTH:
-				this.setLocY(this.getLocY() + 1);
+				this.setLocY(this.getLocY() + 5);
 				break;
 			case EAST:
-				this.setLocX(this.getLocX() + 1);
+				this.setLocX(this.getLocX() + 5);
 				break;
 			case WEST:
-				this.setLocX(this.getLocX() - 1);
+				this.setLocX(this.getLocX() - 5);
 				break;
 			case NORTH_EAST:
-				this.setLocX(this.getLocX() + 1);
-				this.setLocY(this.getLocY() - 1);
+				this.setLocX(this.getLocX() + 5);
+				this.setLocY(this.getLocY() - 5);
 				break;
 			case NORTH_WEST:
-				this.setLocX(this.getLocX() - 1);
-				this.setLocY(this.getLocY() - 1);
+				this.setLocX(this.getLocX() - 5);
+				this.setLocY(this.getLocY() - 5);
 				break;
 			case SOUTH_EAST:
-				this.setLocX(this.getLocX() + 1);
-				this.setLocY(this.getLocY() + 1);
+				this.setLocX(this.getLocX() + 5);
+				this.setLocY(this.getLocY() + 5);
 				break;
 			case SOUTH_WEST:
-				this.setLocX(this.getLocX() - 1);
-				this.setLocY(this.getLocY() + 1);
+				this.setLocX(this.getLocX() - 5);
+				this.setLocY(this.getLocY() + 5);
 				break;
 		}
 		
@@ -119,5 +102,16 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	public Rectangle getBounds() {
 		return (new Rectangle(this.getLocX(),this.getLocY(),20,20));
 	}
-
+	public int getHeight() {
+		return height;
+	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	public int getWidth() {
+		return width;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
 }
