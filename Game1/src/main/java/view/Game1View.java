@@ -131,36 +131,28 @@ public class Game1View extends JPanel implements KeyListener{
 		        	if(controller.getAnimalModel().getCurrDir() != Direction.NORTH){
 		        		controller.getAnimalModel().setCurrDir(Direction.NORTH);
 		        	}
-		        	if(controller.getAnimalModel().getLocY() > 50){
-		        		controller.getAnimalModel().move();
-		        	}
+		        	controller.getAnimalModel().move();
 		            break;
 		        case KeyEvent.VK_DOWN:
 		            // handle down 
 		        	if(controller.getAnimalModel().getCurrDir() != Direction.SOUTH){
 		        		controller.getAnimalModel().setCurrDir(Direction.SOUTH);
 		        	}
-		        	if(controller.getAnimalModel().getLocY() < 560){
-		        		controller.getAnimalModel().move();
-		        	}
+		        	controller.getAnimalModel().move();
 		            break;
 		        case KeyEvent.VK_LEFT:
 		            // handle left
 		        	if(controller.getAnimalModel().getCurrDir() != Direction.WEST){
 		        		controller.getAnimalModel().setCurrDir(Direction.WEST);
 		        	}
-		        	if(controller.getAnimalModel().getLocX() > 0){
-		        		controller.getAnimalModel().move();
-		        	}
+		        	controller.getAnimalModel().move();
 		            break;
 		        case KeyEvent.VK_RIGHT :
 		            // handle right
 		        	if(controller.getAnimalModel().getCurrDir() != Direction.EAST){
 		        		controller.getAnimalModel().setCurrDir(Direction.EAST);
 		        	}
-		        	if(controller.getAnimalModel().getLocX() < 885){
-		        		controller.getAnimalModel().move();
-		        	}
+		        	controller.getAnimalModel().move();
 		            break;
 		    }
 		}

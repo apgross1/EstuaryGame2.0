@@ -45,8 +45,8 @@ public class GabionWallModelG1 extends WallModelAbstract{
 		gc.toggleActive();
 		chunks.add(gc);
 		activeClamsOnBoard++;
-		
 	}
+	
 	public int getActiveClams(){
 		return activeClamsOnBoard;
 	}

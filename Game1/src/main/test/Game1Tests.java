@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.JPanel;
 import javax.swing.text.html.HTMLDocument.Iterator;
@@ -42,23 +43,23 @@ public class Game1Tests {
 	public void testAnimalMovement() {
 		models.AnimalModel myAnimal = new models.AnimalModel();
 		myAnimal.setLocX(0);
-		myAnimal.setLocY(0);
+		myAnimal.setLocY(50);//TOP OF SCREEN
 		
 		//Basic cardinal directions with no edge cases
 		//South from origin
 		myAnimal.setCurrDir(enums.Direction.SOUTH);
 		myAnimal.move();
-		assertTrue("Y should be 1... ", myAnimal.getLocY()==1);
+		assertTrue("Y should be 1... ", myAnimal.getLocY()==55);
 		
 		//North from 1 down from origin (to avoid edge case)
 		myAnimal.setCurrDir(enums.Direction.NORTH);
 		myAnimal.move();
-		assertTrue("Y should be 0...", myAnimal.getLocY() == 0);
+		assertTrue("Y should be 0...", myAnimal.getLocY() == 50);
 		
 		//East from origin
 		myAnimal.setCurrDir(enums.Direction.EAST);
 		myAnimal.move();
-		assertTrue("X should be 1...", myAnimal.getLocX() == 1);
+		assertTrue("X should be 1...", myAnimal.getLocX() == 5);
 		
 		//West from origin+1
 		myAnimal.setCurrDir(enums.Direction.WEST);
@@ -95,6 +96,7 @@ public class Game1Tests {
 		myAnimal.move();
 		assertTrue("X should be 0 and y should be 1...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 1));
 		*/
+		
 		//Edge cases
 		//West (0,0)
 		myAnimal.setLocX(0);
@@ -103,192 +105,108 @@ public class Game1Tests {
 		myAnimal.move();
 		assertTrue("Position should remain the same...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 0));
 		
-		JPanel frame = new JPanel();
-		frame.setBounds(0, 0, 200 ,200);
-		//East (199,0)
-		myAnimal.setLocX(frame.getWidth());
-		myAnimal.setLocY(frame.getY());
+		//East
+		myAnimal.setLocX(885);
+		myAnimal.setLocY(0);
 		myAnimal.setCurrDir(enums.Direction.EAST);
 		myAnimal.move();
-		assertTrue("Position should remain the same...", (myAnimal.getLocX() == frame.getWidth()) && (myAnimal.getLocY() == frame.getY()));
+		assertTrue("Position should remain the same...", (myAnimal.getLocX() == 885) && (myAnimal.getLocY() == 0));
 		
 		//North (0,0)
-		myAnimal.setLocX(frame.getX());
-		myAnimal.setLocY(frame.getY());
+		myAnimal.setLocX(0);
+		myAnimal.setLocY(0);
 		myAnimal.setCurrDir(enums.Direction.NORTH);
 		myAnimal.move();
-		assertTrue("Position should remain the same...", (myAnimal.getLocX() == frame.getX()) && (myAnimal.getLocY() == frame.getY()));
+		assertTrue("Position should remain the same...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 0));
 		
 		//South (0,200)
-		myAnimal.setLocX(frame.getWidth());
-		myAnimal.setLocY(frame.getHeight());
+		myAnimal.setLocX(0);
+		myAnimal.setLocY(560);
 		myAnimal.setCurrDir(enums.Direction.SOUTH);
 		myAnimal.move();
-		assertTrue("Position should remain the same...", (myAnimal.getLocX() == frame.getX() && (myAnimal.getLocY() == frame.getHeight())));}
-		
-		/*
-		//NE (200,0)
-		myAnimal.setLocX(frame.getWidth());
-		myAnimal.setLocY(frame.getY());
-		myAnimal.setCurrDir(enums.Direction.NORTH_EAST);
-		myAnimal.move();
-		assertTrue("Position should remain the same...", (myAnimal.getLocX() == frame.getWidth() && (myAnimal.getLocY() == frame.getY())));
-		
-		//NW (0,0)
-		myAnimal.setLocX(frame.getX());
-		myAnimal.setLocY(frame.getY());
-		myAnimal.setCurrDir(enums.Direction.NORTH_WEST);
-		myAnimal.move();
-		assertTrue("Position should remain the same...", (myAnimal.getLocX() == frame.getX() && (myAnimal.getLocY() == frame.getY())));
-		
-		//SE (200,200)
-		myAnimal.setLocX(frame.getWidth());
-		myAnimal.setLocY(frame.getHeight());
-		myAnimal.setCurrDir(enums.Direction.SOUTH_EAST);
-		myAnimal.move();
-		assertTrue("Position should remain the same...", (myAnimal.getLocX() == frame.getWidth() && (myAnimal.getLocY() == frame.getHeight())));
-		
-		//SW (0,200)
-		myAnimal.setLocX(frame.getX());
-		myAnimal.setLocY(frame.getHeight());
-		myAnimal.setCurrDir(enums.Direction.SOUTH_WEST);
-		myAnimal.move();
-		assertTrue("Position should remain the same...", (myAnimal.getLocX() == frame.getX() && (myAnimal.getLocY() == frame.getHeight())));
-	}*/
-	
-	@Test
-	public void testAnimalPickUp() {
-		models.AnimalModel myAnimal = new models.AnimalModel();
-		myAnimal.pickUp();
-		assertFalse("Should be false...", myAnimal.isEmptyHanded());
+		assertTrue("Position should remain the same...", (myAnimal.getLocX() == 0 && (myAnimal.getLocY() == 560)));
 	}
 	
 	
-	//These methods will not be implemented in Game1 maybe copy them over
-	//If they have effective tests that aren't included in games that
-	//use healthUp/healthDown?
 	@Test
-	public void testHealthDown() {
-		models.AnimalModel myAnimal = new models.AnimalModel();
-		myAnimal.setHealth(1);
-		
-		//Health Down
-		myAnimal.healthDown();
-		assertTrue("Should be 0...", myAnimal.getHealth() == 0);
-		
-		//Edge case
-		myAnimal.healthDown();
-		assertTrue("Health should still be 0...", myAnimal.getHealth() == 0);
+	public void testGabWallReset(){
+		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
+		myGabWall.spawnChunk(50, 50);
+		myGabWall.reset();
+		assertEquals(myGabWall.getActiveClams(), 0);
+		assertEquals(myGabWall.getMaxOysters(), 30);		
 	}
 	
-	/* @Test
-	public void testHealthUp() {
-		models.AnimalModel myAnimal = new models.AnimalModel();
-		myAnimal.setHealth(myAnimal.getMaxHealth()-1);
-		
-		//Health up
-		myAnimal.healthUp();
-		assertTrue("Should be max...", myAnimal.getHealth() == myAnimal.getMaxHealth());
-		
-		//Edge case
-		myAnimal.healthUp();
-		assertTrue("Should still be max...", myAnimal.getHealth() == myAnimal.getMaxHealth());
-	}*/
+	@Test
+	public void testGabWallBreakDown(){
+		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
+		myGabWall.setCurrentOysters(100);
+		myGabWall.breakDown();
+		assertEquals(85, myGabWall.getCurrentOysters());
+	}
 	
-	//GabionWallModel
+	@Test
+	public void testGabSpawnChunk(){
+		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
+		myGabWall.spawnChunk(100, 100);
+		myGabWall.spawnChunk(10, 100);
+		assertEquals(2, myGabWall.getActiveClams());
+	}
 	
-	/* @Test
+	@Test
+	public void testConcReset(){
+		models.ConcreteWallModelG1 myConWall = new models.ConcreteWallModelG1();
+		myConWall.spawnChunk(50, 50);
+		assertEquals(myConWall.getActiveBlocks(), 1);
+		myConWall.reset();
+		assertEquals(myConWall.getActiveBlocks(), 0);
+	}
+	
+	@Test
+	public void testConcAddPiece(){
+		models.ConcreteWallModelG1 myConWall = new models.ConcreteWallModelG1();
+		myConWall.setMaxBlocks(100);
+		myConWall.spawnChunk(50,50);
+		Collection<ConcreteChunk> ccc = myConWall.getChunks();
+		assertTrue("Should be 1...", ccc.size() == 1);
+	}
+	
+	@Test
 	public void testAddPiece() {
 		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
 		myGabWall.setMaxOysters(100);
-		myGabWall.setCurrentOysters(0);
-		myGabWall.addPiece();
-		assertTrue("Should be 1...", myGabWall.getCurrentOysters() == 1);
+		myGabWall.spawnChunk(50,50);
+		Collection<GabionChunk> gcc = myGabWall.getChunks();
+		assertTrue("Should be 1...", gcc.size() == 1);
 		
-		//Edge case
-		myGabWall.setCurrentOysters(myGabWall.getMaxOysters());
-		myGabWall.addPiece();
-		assertTrue("Should be the same number...", myGabWall.getCurrentOysters() == myGabWall.getMaxOysters());
 	}
+
+
 	
-	@Test
-	public void testRemoveChunk() {
-		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
-		myGabWall.setMaxOysters(100);
-		myGabWall.setCurrentOysters(1);
-		myGabWall.removeChunk(1);
-		assertTrue("Should be 0...", myGabWall.getCurrentOysters() == 0);
-		
-		//Edge case
-		myGabWall.setCurrentOysters(0);
-		myGabWall.removeChunk(1);
-		assertTrue("Should be the same number...", myGabWall.getCurrentOysters() == 0);
-	}
-	
-	@Test
-	public void testIsFull() {
-		//Test for full
-		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
-		myGabWall.setMaxOysters(100);
-		myGabWall.setCurrentOysters(myGabWall.getMaxOysters());
-		assertTrue("Should be max...", myGabWall.isFull());
-		
-		//Test for not full
-		myGabWall.setCurrentOysters(50);
-		assertFalse("Should not be max...", myGabWall.isFull());
-	}
-	
-	@Test
-	public void isEmpty() {
-		//Test for full
-		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
-		myGabWall.setMaxOysters(100);
-		myGabWall.setCurrentOysters(0);
-		assertTrue("Should be min...", myGabWall.isEmpty());
-		
-		//Test for not full
-		myGabWall.setCurrentOysters(50);
-		assertFalse("Should not be max...", myGabWall.isEmpty());
-	}
-	
-	@Test
-	public void testBreakdown() {
-		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
-		myGabWall.setMaxOysters(100);
-		myGabWall.setCurrentOysters(myGabWall.getMaxOysters());
-		myGabWall.breakDown();
-		assertTrue("Should be empty...", myGabWall.isEmpty());
-	}
-	
-	@Test
-	public void testOystersOnBeach() {
-		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
-		myGabWall.setMaxOysters(100);
-		myGabWall.setOystersOnBeach(0);
-		myGabWall.amountRemoved(5);
-		assertTrue("Should be 5...", myGabWall.getOystersOnBeach() == 5);
-	}
-	
+
 	@Test
 	public void testSpawn() {
 		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
 		myGabWall.setMaxOysters(100);
-		myGabWall.setOystersOnBeach(0);
-		int onBeachBeforeSpawn = myGabWall.getOystersOnBeach();
-		myGabWall.spawn(true, 15);
+		for(int i=0; i<15; i++){
+			myGabWall.spawnChunk(10, 15);
+		}
 		assertTrue("Should be 15...", myGabWall.getChunks().size() == 15);
 		
 		boolean allHaveCoords = true;
 		java.util.Iterator<GabionChunk> it = myGabWall.getChunks().iterator();
-		GabionChunk chunk = it.next();
 		while(it.hasNext()) {
+			GabionChunk chunk = it.next();
 			if ((chunk.getLocY() < 0) && (chunk.getLocX() < 0)) {
 				allHaveCoords = false;
 				break;
 			}
 		}
 		assertTrue("Should be true", allHaveCoords);
+		
 	}
+	
+	/*
 	
 	@Test
 	public void testCalculateDamage() {
