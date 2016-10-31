@@ -1,21 +1,23 @@
 
-//import static org.junit.Assert.*;
-//
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
-//import java.util.ArrayList;
-//
-//import javax.swing.Timer;
-//
-//import org.junit.Test;
-//
-//import controller.Game2Controller;
-//import models.AlgaeEaterModel;
-//import models.AlgaeModel;
-//import models.AnimalModelG2;
-//import models.BarModelG2;
-//import models.WaterModelG2;
-///*
+import static org.junit.Assert.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.Timer;
+
+import org.junit.Test;
+
+import controller.Game2Controller;
+import models.AlgaeEaterModel;
+import models.AlgaeModel;
+import models.AnimalModelG2;
+import models.BarModelG2;
+import models.WaterModelG2;
+
+
+/*
 //
 ////Functions to test:
 ///*
@@ -262,3 +264,28 @@
 //	}
 //}
 //*/
+
+public class gameTwoTests {
+	@Test
+	public void testAnimalModelG2MovementNorth() {
+		AnimalModelG2 myAnimalModelG2 = new AnimalModelG2();
+		myAnimalModelG2.setLocX(50);
+		myAnimalModelG2.setLocY(250);
+		
+		myAnimalModelG2.setCurrDir(enums.Direction.NORTH);
+		myAnimalModelG2.move();
+		assertTrue( myAnimalModelG2.getLocY()==250-myAnimalModelG2.getSpeed());
+		
+	}
+	@Test
+	public void testAnimalModelG2MovementSouth() {
+		AnimalModelG2 myAnimalModelG2 = new AnimalModelG2();
+		myAnimalModelG2.setLocX(50);
+		myAnimalModelG2.setLocY(250);
+		
+		myAnimalModelG2.setCurrDir(enums.Direction.SOUTH);
+		myAnimalModelG2.move();
+		assertTrue( myAnimalModelG2.getLocY()==250+myAnimalModelG2.getSpeed());
+		
+	}
+}

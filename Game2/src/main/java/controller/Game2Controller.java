@@ -88,7 +88,7 @@ public class Game2Controller {
 		gameActive = active; 
 	}
 	
-	boolean collisionOccured(AnimalModelG2 animal, AlgaeModel algae){
+	public boolean collisionOccured(AnimalModelG2 animal, AlgaeModel algae){
 		
 		Rectangle algae_rect = new Rectangle(algae.getLocX(), algae.getLocY(), algae.getWidth(), algae.getHeight());
 		Rectangle animal_rect = new Rectangle(animal.getLocX(), animal.getLocY(), animal.getWidth(), animal.getHeight());
@@ -101,7 +101,7 @@ public class Game2Controller {
 		}
 	}
 	
-	boolean shallowWaterCollision(AlgaeModel algae){
+	public boolean shallowWaterCollision(AlgaeModel algae){
 		if(algae.getLocX()<=0){
 			return true;
 		}
