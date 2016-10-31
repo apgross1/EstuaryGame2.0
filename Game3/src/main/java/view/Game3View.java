@@ -125,7 +125,7 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 		@Override
 		public void paint(Graphics g) {
-			if(grid.getWater() == null) {
+			if(grid.getWater().isActive() == false) {
 				g.setColor(Color.YELLOW);
 				g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}
@@ -143,20 +143,14 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 		@Override
 		public void paint(Graphics g) {
-			if(gridBlock.getConcrPU() != null) {
-				if(gridBlock.getConcrPU().getIsActive()) {
-					g.setColor(Color.RED);
-					g.fillRect((int) gridBlock.getConcrPU().getBounds().getMaxX(), (int) gridBlock.getConcrPU().getBounds().getMaxY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
-				}
+			if(gridBlock.getConcrPU().getIsActive()) {
+				g.setColor(Color.RED);
+				g.fillRect((int) gridBlock.getConcrPU().getBounds().getMaxX(), (int) gridBlock.getConcrPU().getBounds().getMaxY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
 			}
-			else if(gridBlock.getGabPU() != null) {
-				if(gridBlock.getGabPU().getIsActive()) {
-					g.setColor(Color.DARK_GRAY);
-					g.fillRect((int) gridBlock.getGabPU().getBounds().getMaxX(), (int) gridBlock.getGabPU().getBounds().getMaxY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
-				}
-			}
-			else {
-				
+			
+			else if(gridBlock.getGabPU().getIsActive()) {
+				g.setColor(Color.DARK_GRAY);
+				g.fillRect((int) gridBlock.getGabPU().getBounds().getMaxX(), (int) gridBlock.getGabPU().getBounds().getMaxY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
 			}
 		}
 	}

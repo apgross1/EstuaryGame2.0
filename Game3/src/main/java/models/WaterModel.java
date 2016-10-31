@@ -2,16 +2,18 @@ package models;
 
 import java.awt.Rectangle;
 
-import models.BeachModel.Pair;
-
 public class WaterModel {
-	private Pair location;
+	private Pair location = new Pair(0,0);
 	private int height;
 	private int width;
+	private boolean isActive;
 	
+	
+
 	public WaterModel() {
 		this.height = 200;
 		this.width = 200;
+		this.location = new Pair(0,0);
 	}
 	
 	public WaterModel(Pair loc) {
@@ -42,5 +44,13 @@ public class WaterModel {
 
 	public void setWidth(int width) {
 		this.width = width;
+	}
+	
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 }

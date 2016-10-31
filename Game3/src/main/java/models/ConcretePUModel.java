@@ -3,7 +3,6 @@ package models;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import models.BeachModel.Pair;
 import models.GabionPUModel.GabPUState;
 
 public class ConcretePUModel extends WallModelAbstract {
@@ -21,20 +20,14 @@ public class ConcretePUModel extends WallModelAbstract {
 	private int width;
 
 	
-	public void setActive(boolean isActive) {
-		if(isActive) {
-			this.setBounds(this.location.getX(), this.location.getY(), this.width, this.height);
-		}
-		this.isActive = isActive;
-	}
+	
 	public ConcretePUModel() {
 		setWallState(ConcPUState.POWER_UP);
 		this.isActive = false;
 		this.height = 10;
 		this.width = 10;
 		this.isPickedUp = false;
-		this.bounds = new Rectangle(0,0, width, height);
-		
+		this.location = new Pair(0,0);
 	}
 	public ConcretePUModel(Pair loc) {
 		location = loc;
@@ -43,8 +36,11 @@ public class ConcretePUModel extends WallModelAbstract {
 		return isActive;
 	}
 	
-	public void setIsActive(boolean active) {
-		isActive = active;
+	public void setActive(boolean isActive) {
+		if(isActive) {
+			this.setBounds(this.location.getX(), this.location.getY(), this.width, this.height);
+		}
+		this.isActive = isActive;
 	}
 	
 	@Override

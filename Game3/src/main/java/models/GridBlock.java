@@ -3,46 +3,58 @@ package models;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import models.BeachModel.Pair;
-
 public class GridBlock {
 	private Pair location;
-	private GabionPUModel gabPU;
-	private ConcretePUModel concrPU;
-	private WaterModel water;
+	private GabionPUModel gabPU = new GabionPUModel();
+	private ConcretePUModel concrPU = new ConcretePUModel();
+	private WaterModel water = new WaterModel();
 	private boolean vacant;
 	private int height;
 	private int width;
 	
 	public GridBlock() {
+		gabPU.setIsActive(false);
+		concrPU.setActive(false);
 		height = 200;
 		width = 200;
 		vacant = true;
 	}
 	
 	public GridBlock(Pair loc) {
+		gabPU = new GabionPUModel();
+		gabPU.setIsActive(false);
+		
+		concrPU = new ConcretePUModel();
+		concrPU.setActive(false);
 		location = loc;
 		height = 200;
 		width = 200;
 		vacant = true;
 	}
 	
-	public GridBlock(WallModelAbstract powerUp, Pair loc) {
-		if (powerUp instanceof ConcretePUModel) {
-			this.setConcrPU((ConcretePUModel)powerUp);
-		}
-		else {
-			this.setGabPU((GabionPUModel) powerUp);
-		}
+	public GridBlock(ConcretePUModel powerUp, Pair loc) {
+		gabPU.setIsActive(false);
+		concrPU.setActive(false);
+		powerUp.setLocation(loc);
+		this.setConcrPU(powerUp);
+		this.location = loc;
+		this.setVacant(false);
+	}
+	public GridBlock(GabionPUModel powerUp, Pair loc) {
+		gabPU.setIsActive(false);
+		concrPU.setActive(false);
+		powerUp.setLocation(loc);
+		this.setGabPU(powerUp);
 		this.location = loc;
 		this.setVacant(false);
 	}
 	
-	
-	public void setWater(WaterModel water) {
-		gabPU = null;
-		concrPU = null;
+	public void setWater(WaterModel water, Pair loc) {
+		gabPU.setIsActive(false);
+		concrPU.setActive(false);
+		water.setLocation(loc);
 		this.water = water;
+		//this.location = loc;
 		this.setVacant(false);
 		
 	}
@@ -60,9 +72,12 @@ public class GridBlock {
 	}
 
 	public void setGabPU(GabionPUModel gabPU) {
-		concrPU = null;
-		water = null;
+		concrPU.setActive(false);
+		water.setActive(false);
 		this.gabPU = gabPU;
+		gabPU.setIsActive(true);
+		
+		this.setVacant(false);
 	}
 
 	public ConcretePUModel getConcrPU() {
@@ -71,8 +86,11 @@ public class GridBlock {
 
 	public void setConcrPU(ConcretePUModel concrPU) {
 		this.concrPU = concrPU;
-		gabPU = null;
-		water = null;
+		concrPU.setActive(true);
+		this.gabPU.setIsActive(false);
+		this.water.setActive(false);
+		
+		this.setVacant(false);
 	}
 
 	public boolean isVacant() {
@@ -81,9 +99,11 @@ public class GridBlock {
 
 	public void setVacant(boolean vacant) {
 		this.vacant = vacant;
-		this.water = null;
-		this.gabPU = null;
-		this.concrPU = null;
+		if(vacant) {
+			this.water.setActive(false);
+			this.gabPU.setIsActive(false);
+			this.concrPU.setActive(false);
+		}
 	}
 	
 	public Rectangle getBounds() {
