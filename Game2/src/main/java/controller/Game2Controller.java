@@ -57,15 +57,16 @@ public class Game2Controller implements KeyListener {
 			view.repaintFrame();
 			collisionDetection();
 			
-			if(algaeList.size()< algae.getMaxAlgae() & count ==80000)
+			if(algaeList.size()< algae.getMaxAlgae() & count ==100000)
 			{
 				AlgaeModel newAlgae = new AlgaeModel();
 				newAlgae.spawnAlgaeModel();
 				algaeList.add(newAlgae);
 				count=0;
 				
+				
 			}
-			
+			System.out.println(count);
 			count++;
 			
 			
