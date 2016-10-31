@@ -20,16 +20,14 @@ public class BeachModel {
 	private Collection<BufferedImage> beachStates;
 	private HashMap<Pair, GridBlock> beachGrid;
 	private int[][] positionGrid;
-	private GabionPUModel gabPU;
-	private ConcretePUModel concrPU;
+	private Pair gabPair = new Pair(0,0);
+	private Pair concPair = new Pair(0,0);
 	private Timer puTimer;
-	
+
 	
 	public BeachModel() {
 		beachGrid = new HashMap<Pair,GridBlock>();
 		positionGrid = new int[10][8];
-		gabPU = new GabionPUModel();
-		concrPU = new ConcretePUModel();
 		this.initializeBeach();
 	}
 	
@@ -39,8 +37,10 @@ public class BeachModel {
 		Iterator<Pair> it = pairList.iterator();
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
+			System.out.println("X is: " + tempPair.getX() + " " + "Y is: " + tempPair.getY());
 			beachGrid.put(tempPair, (new GridBlock(tempPair)));
 		}
+	
 	}
 	
 	public void spawnGabPU(ArrayList<Pair> ppul) {
@@ -49,12 +49,13 @@ public class BeachModel {
 			return;
 		}
 		else{
-			System.out.println("Made it here1");
+			System.out.println("Spawning gabions");
 			Random randLoc = new Random();
 			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
-			gabPU.setLocation(pair);
-			gabPU.setIsActive(true);
-			GabionPUModel tempGab = gabPU;
+			setGabPair(this.findPairInGrid(pair));
+			GabionPUModel tempGab = new GabionPUModel();
+			tempGab.setLocation(this.findPairInGrid(pair));
+			tempGab.setIsActive(true);
 			beachGrid.get(this.findPairInGrid(pair)).setGabPU(tempGab);
 			positionGrid[pair.getX()][pair.getY()] = Walls.GABION_GAME3.getValue();
 		}
@@ -65,30 +66,38 @@ public class BeachModel {
 			return;
 		}
 		else{
+			System.out.println("Spawning concrete");
 			Random randLoc = new Random();
 			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
-			concrPU.setIsActive(true);
-			concrPU.setLocation(pair);
-			ConcretePUModel tempConcr = concrPU;
+			setConcPair(pair);
+			ConcretePUModel tempConcr = new ConcretePUModel();
+			tempConcr.setLocation(this.findPairInGrid(pair));
+			tempConcr.setActive(true);
 			beachGrid.get(this.findPairInGrid(pair)).setConcrPU(tempConcr);
 			positionGrid[pair.getX()][pair.getY()] = Walls.CONCRETE_GAME3.getValue();
 		}
 	}
 	
 	public void removeConcrPU(Pair pair) {
+		beachGrid.get(this.findPairInGrid(pair)).getConcrPU().setActive(false);
 		beachGrid.get(this.findPairInGrid(pair)).setVacant(true);
-		concrPU.setLocation(null);
+		setConcPair(new Pair(0,0));
+		
 		positionGrid[pair.getX()][pair.getY()] = 0;
-		concrPU.setIsActive(false);
-		System.out.println("concrPU is now: " + concrPU.getIsActive());
 	}
 	
 	public void removeGabPU(Pair pair) {
+		beachGrid.get(this.findPairInGrid(pair)).getGabPU().setIsActive(false);
 		beachGrid.get(this.findPairInGrid(pair)).setVacant(true);
-		gabPU.setLocation(null);
+		setGabPair(new Pair(0,0));
+		
 		positionGrid[pair.getX()][pair.getY()] = 0;
-		gabPU.setIsActive(false);
-		System.out.println("gabPU is now: " + gabPU.getIsActive());
+	}
+	
+	public void removeSquare(Pair waterLoc) {
+		beachGrid.get(this.findPairInGrid(waterLoc)).setWater(new WaterModel(waterLoc), waterLoc);
+		
+		positionGrid[waterLoc.getX()][waterLoc.getY()] = Waves.WAVE_GAME3.getValue();
 	}
 	
 	
@@ -107,10 +116,7 @@ public class BeachModel {
 		return ppulPair;
 	}
 	
-	public void removeSquare(Pair waterLoc) {
-		beachGrid.get(this.findPairInGrid(waterLoc)).setWater(new WaterModel(waterLoc));
-		positionGrid[waterLoc.getX()][waterLoc.getY()] = Waves.WAVE_GAME3.getValue();
-	}
+	
 	
 	public Pair findPairInGrid(Pair pair) {
 		for(Pair p : this.getBeachGrid().keySet()) {
@@ -163,7 +169,7 @@ public class BeachModel {
 		this.beachGrid = beachGrid;
 	}
 	
-	public GabionPUModel getGabPU() {
+	/*public GabionPUModel getGabPU() {
 		return gabPU;
 	}
 
@@ -177,7 +183,7 @@ public class BeachModel {
 
 	public void setConcrPU(ConcretePUModel concrPU) {
 		this.concrPU = concrPU;
-	}
+	}*/
 
 	public Timer getPuTimer() {
 		return puTimer;
@@ -187,31 +193,20 @@ public class BeachModel {
 		this.puTimer = puTimer;
 	}
 
-	public class Pair {
-		private int a;
-		private int b;
-		
-		public Pair(int num1, int num2) {
-			setY(num1);
-			setX(num2);
-		}
-
-		public int getX() {
-			return a;
-		}
-
-		public void setX(int a) {
-			this.a = a;
-		}
-
-		public int getY() {
-			return b;
-		}
-
-		public void setY(int b) {
-			this.b = b;
-		}
+	public Pair getGabPair() {
+		return gabPair;
 	}
-	
-	
+
+	public void setGabPair(Pair gabPair) {
+		this.gabPair = gabPair;
+	}
+
+	public Pair getConcPair() {
+		return concPair;
+	}
+
+	public void setConcPair(Pair concPair) {
+		this.concPair = concPair;
+	}
+
 }

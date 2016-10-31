@@ -5,7 +5,6 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import models.BeachModel.Pair;
 import models.ConcretePUModel.ConcPUState;
 
 public class GabionPUModel extends WallModelAbstract {
@@ -26,7 +25,7 @@ public class GabionPUModel extends WallModelAbstract {
 		this.height = 10;
 		this.width = 10;
 		this.isPickedUp = false;
-		this.bounds = new Rectangle(0, 0, width, height);
+		this.location = new Pair(0,0);
 	}
 
 	public boolean getIsActive() {

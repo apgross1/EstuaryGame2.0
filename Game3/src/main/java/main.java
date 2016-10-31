@@ -6,7 +6,7 @@ public class main {
 
 	public static void main(String[] args) {
 		Game3Controller ctlr = new Game3Controller();
-		ctlr.startGame();
+		ctlr.runGame();
 	}
 
 }
