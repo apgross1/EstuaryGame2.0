@@ -15,14 +15,15 @@ public class AlgaeModel {
 	Random rand = new Random();
 	
 	int algaeXBoundMax = 1000;
-	int algaeYBoundMax = 700;
+	int algaeYBoundMax = 600;
 	int algaeYBoundMin = 100;
-	int maxAlgaeNum = 10;
+	int maxAlgaeNum = 30;
 	
 	public AlgaeModel() {
 		randomYBound = rand.nextInt((algaeYBoundMax - algaeYBoundMin) + 1) + algaeYBoundMin;
 		
 	}
+	
 	public int getHeight(){
 		return height;
 	}

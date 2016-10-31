@@ -96,14 +96,16 @@ public class Game2View extends JPanel implements KeyListener{
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
 			g.setColor(Color.WHITE);
 			
-			
+			//temp condition
 			g.drawString("TIME LEFT: null", 700, 25);
 			
-			 //Behind health bar doesnt change
-			g.fillRect(400, 20, 200, 20);
+			 if(controller.getNumMissed()*10 ==200){
+				 controller.setGameActive(false);
+			 }
+			g.fillRect(400, 18, 200-(controller.getNumMissed()*10), 20);
 			g.setColor(Color.BLACK);
 			g.drawString("Oxygen Level:", 250, 35);
-			
+			g.drawString("Algae Missed:"+ controller.getNumMissed(), 250, 100);
 			Collection<AlgaeModel> algaeTemp = controller.getAlgaeList();
 			Iterator<AlgaeModel> it = algaeTemp.iterator();
 			

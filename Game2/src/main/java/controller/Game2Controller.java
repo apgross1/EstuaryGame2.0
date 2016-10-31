@@ -6,7 +6,9 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import javax.swing.Timer;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 import models.AlgaeEaterModel;
 import models.AlgaeModel;
@@ -15,7 +17,7 @@ import models.AnimalModelG2;
 import models.WaterModelG2;
 import view.Game2View;
 import java.awt.event.*;
-public class Game2Controller implements KeyListener {
+public class Game2Controller implements KeyListener  {
 	private boolean gameActive;
 	private Game2View view;
 	private AnimalModelG2 animal;
@@ -23,32 +25,25 @@ public class Game2Controller implements KeyListener {
 	private AlgaeModel algae;
 	private Collection<AlgaeModel> algaeList = new ArrayList<AlgaeModel>();
 	private WaterModelG2 water;
-	int count = 0;
+	long spawnTime=0;
+	int spawnDelay = 1000;
+	int numMissed = 0;
 	
 	public Game2Controller() {
 		animal = new AnimalModelG2();
 		water = new WaterModelG2();
 		algae = new AlgaeModel();
 		algaeEater = new AlgaeEaterModel();
-		
 		view = new Game2View(this);
 		view.addController(this);
 		
 	}
-//	ActionListener spawnAlgae = new ActionListener(){
-//		@Override
-//		public void actionPerformed(ActionEvent event){
-//			
-//			AlgaeModel newAlgae = new AlgaeModel();
-//			newAlgae.spawnAlgaeModel();
-//			algaeList.add(newAlgae);
-//			
-//			
-//		}
-//	};
+
 
 	
 	public void startGame() {
+		
+		
 		
 		gameActive = true;
 		
@@ -56,19 +51,13 @@ public class Game2Controller implements KeyListener {
 			
 			view.repaintFrame();
 			collisionDetection();
-			
-			if(algaeList.size()< algae.getMaxAlgae() & count ==100000)
-			{
-				AlgaeModel newAlgae = new AlgaeModel();
-				newAlgae.spawnAlgaeModel();
-				algaeList.add(newAlgae);
-				count=0;
+			if(algaeList.size()<algae.getMaxAlgae()){
+				if(System.currentTimeMillis()>=spawnTime+spawnDelay){
+				spawnAlgae();
+				spawnTime = System.currentTimeMillis();
 				
-				
+				}
 			}
-			System.out.println(count);
-			count++;
-			
 			
 			
 			}
@@ -76,6 +65,19 @@ public class Game2Controller implements KeyListener {
 		
 		
 	}
+	public void addNumMissed(){
+		numMissed++;
+	}
+	public int getNumMissed(){
+		return numMissed;
+	}
+	
+	public void spawnAlgae(){
+		AlgaeModel newAlgae = new AlgaeModel();
+		newAlgae.spawnAlgaeModel();
+		algaeList.add(newAlgae);
+	}
+	
 	
 	
 	
@@ -109,6 +111,12 @@ public class Game2Controller implements KeyListener {
 		return false;
 		}
 	}
+	boolean shallowWaterCollision(AlgaeModel algae){
+		if(algae.getLocX()<=0){
+			return true;
+		}
+		return false;
+	}
 	public void collisionDetection(){
 		
 		Collection<AlgaeModel> algaeList = getAlgaeList();
@@ -124,12 +132,17 @@ public class Game2Controller implements KeyListener {
 					tmp.eaten();
 					
 				}
+				if(shallowWaterCollision(tmp)){
+					tmp.eaten();
+					addNumMissed();
+				}
 				
 			}
 		}
 		
 		
 	}
+	
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -185,6 +198,10 @@ public class Game2Controller implements KeyListener {
 	public AnimalModelG2 getAnimalModelG2() {
 		return this.animal;
 	}
+
+
+
+	
 
 	
 }
