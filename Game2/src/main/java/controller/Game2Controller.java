@@ -1,6 +1,12 @@
 package controller;
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import javax.swing.Timer;
 
 import models.AlgaeEaterModel;
 import models.AlgaeModel;
@@ -8,41 +14,74 @@ import models.AnimalModelAbstract;
 import models.AnimalModelG2;
 import models.WaterModelG2;
 import view.Game2View;
-
+import java.awt.event.*;
 public class Game2Controller implements KeyListener {
 	private boolean gameActive;
 	private Game2View view;
 	private AnimalModelG2 animal;
 	private AlgaeEaterModel algaeEater;
 	private AlgaeModel algae;
+	private Collection<AlgaeModel> algaeList = new ArrayList<AlgaeModel>();
 	private WaterModelG2 water;
+	int count = 0;
 	
 	public Game2Controller() {
-		setAnimal(new AnimalModelG2());
-		setWater(new WaterModelG2());
-		setAlgae(new AlgaeModel());
-		setAlgaeEater(new AlgaeEaterModel());
+		animal = new AnimalModelG2();
+		water = new WaterModelG2();
+		algae = new AlgaeModel();
+		algaeEater = new AlgaeEaterModel();
 		
 		view = new Game2View(this);
 		view.addController(this);
+		
 	}
+//	ActionListener spawnAlgae = new ActionListener(){
+//		@Override
+//		public void actionPerformed(ActionEvent event){
+//			
+//			AlgaeModel newAlgae = new AlgaeModel();
+//			newAlgae.spawnAlgaeModel();
+//			algaeList.add(newAlgae);
+//			
+//			
+//		}
+//	};
+
 	
 	public void startGame() {
+		
 		gameActive = true;
 		
 		while(gameActive){
 			
 			view.repaintFrame();
-		}
-	}
-	
-	public void startTime() {
+			collisionDetection();
+			
+			if(algaeList.size()< algae.getMaxAlgae() & count ==80000)
+			{
+				AlgaeModel newAlgae = new AlgaeModel();
+				newAlgae.spawnAlgaeModel();
+				algaeList.add(newAlgae);
+				count=0;
+				
+			}
+			
+			count++;
+			
+			
+			
+			}
+			
+		
 		
 	}
 	
-	public void stopTime() {
-		
+	
+	
+	public Collection<AlgaeModel> getAlgaeList() {
+		return algaeList;
 	}
+
 
 	
 	public boolean getgameActive() {
@@ -53,8 +92,42 @@ public class Game2Controller implements KeyListener {
 
 }
 
-	public int setTime(int i) {
-		return i;
+	
+	boolean collisionOccured(AnimalModelG2 animal, AlgaeModel algae){
+		
+		
+		Rectangle algae_rect = new Rectangle(algae.getLocX(), algae.getLocY(), algae.getWidth(), algae.getHeight());
+		Rectangle animal_rect = new Rectangle(animal.getLocX(), animal.getLocY(), animal.getWidth(), animal.getHeight());
+		
+		
+		
+		if(animal_rect.getBounds().intersects(algae_rect)){
+			return true;
+		}
+		else{
+		return false;
+		}
+	}
+	public void collisionDetection(){
+		
+		Collection<AlgaeModel> algaeList = getAlgaeList();
+		
+		
+		Iterator<AlgaeModel> it = algaeList.iterator();
+		
+		while(it.hasNext()){
+			
+			AlgaeModel tmp = it.next();
+			if(tmp.isActive()){
+				if(collisionOccured(animal, tmp)){
+					tmp.eaten();
+					
+				}
+				
+			}
+		}
+		
+		
 	}
 
 	@Override

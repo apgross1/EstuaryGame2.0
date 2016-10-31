@@ -1,5 +1,6 @@
 package models;
-
+import java.util.Random;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class AlgaeModel {
@@ -7,19 +8,51 @@ public class AlgaeModel {
 	private int locY;
 	private int health;
 	private boolean isActive;
+	int height = 20;
+	int width = 20;
 	
+	int randomYBound =0;
+	Random rand = new Random();
+	
+	int algaeXBoundMax = 1000;
+	int algaeYBoundMax = 700;
+	int algaeYBoundMin = 100;
+	int maxAlgaeNum = 10;
 	
 	public AlgaeModel() {
+		randomYBound = rand.nextInt((algaeYBoundMax - algaeYBoundMin) + 1) + algaeYBoundMin;
 		
+	}
+	public int getHeight(){
+		return height;
+	}
+	public int getWidth(){
+		return width;
+	}
+	public int getRandomYLocation(){
+		return randomYBound;
+	}
+	
+	public void move(){
+		this.setLocX(getLocX()-1);
 	}
 	
 	public void eaten() {
 		this.setActive(false);
 	}
 	
-	public AlgaeModel(int x, int y) {
-		setLocX(x);
-		setLocY(y);
+	public void spawnAlgaeModel() {
+		
+		
+		this.setActive(true);
+	
+		setLocX(950);
+		setLocY(getRandomYLocation());
+		
+	}
+	
+	public int getMaxAlgae(){
+		return maxAlgaeNum;
 	}
 
 	public int getHealth() {

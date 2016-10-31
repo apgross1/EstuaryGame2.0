@@ -1,33 +1,30 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+import java.util.Collection;
+import java.util.Iterator;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-
-import models.AnimalModelG2;
-
+import models.AlgaeModel;
 import controller.Game2Controller;
 import enums.Direction;
 
 
 public class Game2View extends JPanel implements KeyListener{
-	private int damageLevel;
+	
 	private Game2Controller controller;
 	private JFrame frame = new JFrame();
 	//private JPanel action_pannel = new JPanel();
-	private JPanel bar_pannel = new JPanel();
+	
 	private JPanel algaeWater = new JPanel();
 	private JPanel shallowWater = new JPanel();
-	
+	AlgaeModel algae = new AlgaeModel();
 
     //final static int frameWidth = 800;
     //final static int frameHeight = 800;
@@ -47,11 +44,11 @@ public class Game2View extends JPanel implements KeyListener{
 		
     	
 		algaeWater.setSize(1000, 500);
-		algaeWater.setBackground(Color.GREEN);
+		algaeWater.setBackground(Color.BLUE);
 		algaeWater.setVisible(true);
 		
 		shallowWater.setSize(1000, 500);
-		shallowWater.setBackground(Color.BLUE);
+		shallowWater.setBackground(Color.CYAN);
 		shallowWater.setVisible(true);
 		
     	
@@ -107,14 +104,26 @@ public class Game2View extends JPanel implements KeyListener{
 			g.setColor(Color.BLACK);
 			g.drawString("Oxygen Level:", 250, 35);
 			
+			Collection<AlgaeModel> algaeTemp = controller.getAlgaeList();
+			Iterator<AlgaeModel> it = algaeTemp.iterator();
 			
-			
+			while(it.hasNext()){
+				//
+				AlgaeModel tmp = it.next();
+				if(tmp.isActive()){
+					g.setColor(Color.GREEN);
+					g.fillRect(tmp.getLocX(), tmp.getLocY(), tmp.getWidth(), tmp.getHeight());
+					tmp.move();
+					
+				}
+				
 			
 			
 			
 			
 			}
 		}
+	}
     
 	@Override
 	public void keyTyped(KeyEvent e) {
