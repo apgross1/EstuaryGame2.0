@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -58,11 +59,10 @@ public class Game3View extends JPanel implements KeyListener{
     	//Panes
 		//For animal movement
 		JLayeredPane layoutContainer = new JLayeredPane();
-		//layoutContainer.setLayout(new OverlayLayout(layoutContainer));
+
 		Animal animalPane = new Animal();
 		animalPane.setPreferredSize(new Dimension(1000,700));
-		//frame.add(animalPane);
-		//animalPane.isVisible();
+		
 		JPanel beachGrid = new JPanel(new GridLayout(10,10));
 		Collection<GridBlock> blocks = controller.getBeach().getBeachGrid().values();
 		Iterator<GridBlock> it = blocks.iterator();
@@ -73,7 +73,9 @@ public class Game3View extends JPanel implements KeyListener{
 			
 			SandWater gridBlock = new SandWater(currBlock);
 			GridTile powerUp = new GridTile(currBlock);
-		    beachOverlay.add(powerUp);
+			powerUp.setBounds(0, 0, 1000, 700);
+			layoutContainer.add(powerUp, new Integer(2),-1);
+		    //beachOverlay.add(powerUp);
 		    beachOverlay.add(gridBlock);
 		    
 		    beachGrid.add(beachOverlay);
@@ -84,8 +86,8 @@ public class Game3View extends JPanel implements KeyListener{
 		water.setVisible(true);
 		beachGrid.setBounds(0, 0, 1000, 700);
 		animalPane.setBounds(0, 0, 1000, 700);
-		layoutContainer.add(beachGrid);
-		layoutContainer.add(animalPane, new Integer(0), 0);
+		layoutContainer.add(beachGrid, new Integer(1),0);
+		layoutContainer.add(animalPane, new Integer(2), 1);
 		
 		play_ground.add(layoutContainer, BorderLayout.CENTER);
 		play_ground.add(water, BorderLayout.EAST);
@@ -145,12 +147,12 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			if(gridBlock.getConcrPU().getIsActive()) {
 				g.setColor(Color.RED);
-				g.fillRect((int) gridBlock.getConcrPU().getBounds().getMaxX(), (int) gridBlock.getConcrPU().getBounds().getMaxY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
+				g.fillRect(0+gridBlock.getConcrPU().getViewLocation().getX(), gridBlock.getConcrPU().getViewLocation().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
 			}
 			
 			else if(gridBlock.getGabPU().getIsActive()) {
 				g.setColor(Color.DARK_GRAY);
-				g.fillRect((int) gridBlock.getGabPU().getBounds().getMaxX(), (int) gridBlock.getGabPU().getBounds().getMaxY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
+				g.fillRect(0+gridBlock.getGabPU().getViewLocation().getX(), gridBlock.getGabPU().getViewLocation().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
 			}
 		}
 	}
