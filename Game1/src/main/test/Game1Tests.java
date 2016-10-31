@@ -16,7 +16,7 @@ import models.BarModel;
 import controller.Game1Controller;
 
 public class Game1Tests {
-	/*
+	
 	//My tests
 	//Low level tests (within-class) (All methods in AnimalModel and GabionWallModel:
 	//Movement
@@ -65,6 +65,7 @@ public class Game1Tests {
 		myAnimal.move();
 		assertTrue("X should be 0...", myAnimal.getLocX() == 0);
 		
+		/*
 		//Combinations (NE,NW,SE,SW)
 		//NE from (0,1)
 		myAnimal.setLocX(0);
@@ -93,7 +94,7 @@ public class Game1Tests {
 		myAnimal.setCurrDir(enums.Direction.SOUTH_WEST);
 		myAnimal.move();
 		assertTrue("X should be 0 and y should be 1...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 1));
-		
+		*/
 		//Edge cases
 		//West (0,0)
 		myAnimal.setLocX(0);
@@ -123,8 +124,9 @@ public class Game1Tests {
 		myAnimal.setLocY(frame.getHeight());
 		myAnimal.setCurrDir(enums.Direction.SOUTH);
 		myAnimal.move();
-		assertTrue("Position should remain the same...", (myAnimal.getLocX() == frame.getX() && (myAnimal.getLocY() == frame.getHeight())));
+		assertTrue("Position should remain the same...", (myAnimal.getLocX() == frame.getX() && (myAnimal.getLocY() == frame.getHeight())));}
 		
+		/*
 		//NE (200,0)
 		myAnimal.setLocX(frame.getWidth());
 		myAnimal.setLocY(frame.getY());
@@ -152,7 +154,7 @@ public class Game1Tests {
 		myAnimal.setCurrDir(enums.Direction.SOUTH_WEST);
 		myAnimal.move();
 		assertTrue("Position should remain the same...", (myAnimal.getLocX() == frame.getX() && (myAnimal.getLocY() == frame.getHeight())));
-	}
+	}*/
 	
 	@Test
 	public void testAnimalPickUp() {
@@ -179,7 +181,7 @@ public class Game1Tests {
 		assertTrue("Health should still be 0...", myAnimal.getHealth() == 0);
 	}
 	
-	@Test
+	/* @Test
 	public void testHealthUp() {
 		models.AnimalModel myAnimal = new models.AnimalModel();
 		myAnimal.setHealth(myAnimal.getMaxHealth()-1);
@@ -191,10 +193,11 @@ public class Game1Tests {
 		//Edge case
 		myAnimal.healthUp();
 		assertTrue("Should still be max...", myAnimal.getHealth() == myAnimal.getMaxHealth());
-	}
+	}*/
 	
 	//GabionWallModel
-	@Test
+	
+	/* @Test
 	public void testAddPiece() {
 		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
 		myGabWall.setMaxOysters(100);
@@ -305,14 +308,11 @@ public class Game1Tests {
 		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
 		myGabWall.setMaxOysters(100);
 		myGabWall.setCurrentOysters(100);
-		int damage1 = myGabWall.calculateDamage();
-		
-		myGabWall.setCurrentOysters(50);
-		int damage2 = myGabWall.calculateDamage();
-		
-		int remove1 = myGabWall.amountRemoved(damage1);
-		int remove2 = myGabWall.amountRemoved(damage2);
-		assertTrue("remove1 should be less than remove 2", remove1 < remove2);
+		myGabWall.breakDown();
+		assertTrue("should be 85", myGabWall.getCurrentOysters() == 85);
+		myGabWall.setCurrentOysters(85);
+		myGabWall.breakDown();
+		assertTrue("should be 72", myGabWall.getCurrentOysters() == 72);
 		
 		//Edge case
 		myGabWall.setCurrentOysters(1);
@@ -328,11 +328,11 @@ public class Game1Tests {
 		ConcreteWallModelG1 Wall = new ConcreteWallModelG1();
 
 		Wall.setMaxBlocks(20);
-		Wall.setBlockOnBeach(0);
+		Wall.setactiveBlocksOnBoard(0);
 
-		int BeforeSpawn = Wall.getBlockOnBeach();
+		int BeforeSpawn = Wall.getActiveBlocks();
 
-		Wall.spawn(true, 10);
+		Wall.spawnChunk(200, 200);
 		assertTrue("Should be 10", Wall.getChunks().size() == 15);
 
 		boolean allHaveCoords = true;
@@ -360,10 +360,10 @@ public class Game1Tests {
 		
 		myGabWall.setMaxOysters(100);
 		myGabWall.setCurrentOysters(99);
-		myGabWall.setOystersOnBeach(1);
+		myGabWall.setactiveClamsOnBoard(1);
 		myAnimal.pickUp();
 		
-		assertTrue("None should be on beach...", myGabWall.getOystersOnBeach() == 0);
+		assertTrue("None should be on beach...", myGabWall.getActiveClams() == 0);
 		assertTrue("All should be in wall...", myGabWall.getCurrentOysters() == 100);
 	}
 	
@@ -385,8 +385,8 @@ public class Game1Tests {
 				assertTrue("Should be true", process.isConcrHit() == true);
 				
 				//time should stop after round
-				float time1 = clock.getCurrTime();
-				float time2 = clock.getCurrTime();
+				float time1 = clock.getTime();
+				float time2 = clock.getTime();
 				assertTrue("Should be equal", time1 == time2);
 				
 				//removing from wall
@@ -399,10 +399,10 @@ public class Game1Tests {
 				assertTrue("Should be less than 100", bar.getStatus() < 100);
 				
 				//tests if time is reset
-				assertTrue("Should be 0.0", clock.getCurrTime() == 0.0 );
+				assertTrue("Should be 0.0", clock.getTime() == 0.0 );
 				
 				//time should restart
-				assertTrue("Should be true", clock.getCurrTime() > 0.0);
+				assertTrue("Should be true", clock.getTime() > 0.0);
 				
 				//tests game over
 				bar.setStatus(0);
@@ -410,6 +410,6 @@ public class Game1Tests {
 				
 			}
 			
-			
-*/
+			*/
+
 }

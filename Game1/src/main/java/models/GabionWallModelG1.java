@@ -117,5 +117,20 @@ public class GabionWallModelG1 extends WallModelAbstract{
 	@Override
 	public void spawn(boolean gameStart, int numChunksRemoved) {
 	}
+
+	public void setMaxOysters(int i) {
+		maxOysters = i;
+		
+	}
+
+	public void setCurrentOysters(int i) {
+		currentOysters = i;
+		
+	}
+
+	public void setactiveClamsOnBoard(int i) {
+		activeClamsOnBoard = i;
+		
+	}
 	
 }

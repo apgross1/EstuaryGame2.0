@@ -119,4 +119,17 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void setMaxBlocks(int i) {
+	maxBlocks = i;
+		
+	}
+
+	public void setCurrentBlocks(int i) {
+		currentBlocks = i;
+		
+	}
+	public void setactiveBlocksOnBoard(int i){
+		activeBlocksOnBoard = i;
+	}
 }
