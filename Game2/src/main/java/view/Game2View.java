@@ -140,12 +140,14 @@ public class Game2View extends JPanel implements KeyListener{
 		switch(keyCode){
 		case KeyEvent.VK_DOWN:
 			
-			controller.getAnimalModelG2().setSpeed(10);
+				controller.getAnimalModelG2().setSpeed(5);
+			
 			break;
 		
 		case KeyEvent.VK_UP:
 			
-			controller.getAnimalModelG2().setSpeed(-10);
+				controller.getAnimalModelG2().setSpeed(-5);
+			
 			
 			break;
 		}
