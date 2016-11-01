@@ -102,7 +102,7 @@ public class Game1Controller{
 			}
 			
 			Random r = new Random();
-			if(wallModel.getCurrentBlocks() < (wallModel.getMaxBlocks()-5) & wallModel.getActiveBlocks() < 5){//Max concrete that can be on the screen at once.
+			if(wallModel.getCurrentBlocks() <= (wallModel.getMaxBlocks()-5) & wallModel.getActiveBlocks() < 5){//Max concrete that can be on the screen at once.
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
 				int randx = r.nextInt(975);
@@ -111,7 +111,7 @@ public class Game1Controller{
 				wallModel.spawnChunk(randx, randy);
 			}
 			
-			if(gabionModel.getCurrentOysters() < (gabionModel.getMaxOysters()-5) & gabionModel.getActiveClams() < 5){//Max concrete that can be on the screen at once.
+			if(gabionModel.getCurrentOysters() <= (gabionModel.getMaxOysters()-5) & gabionModel.getActiveClams() < 5){//Max concrete that can be on the screen at once.
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
 				int randx = r.nextInt(975);
@@ -123,6 +123,7 @@ public class Game1Controller{
 			collisionDetectionLoop();
 			g1view.repaintFrame();
 		}
+		gameTime = 0; // Set the time to 0 for the final repaint.
 		//Caclulate score and then reset for round 2
 		//math fn
 		takeDamage();

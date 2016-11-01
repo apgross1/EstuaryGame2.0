@@ -32,9 +32,10 @@ public class AnimalModel extends AnimalModelAbstract {
 		this.speedY = speed;
 	}
 	
-	//Have to add boarder controls to keep within bounds (we first have to determine the size of the screen.
+	
 	@Override
 	public void move() {
+		//Set conditions for bounds....
 		this.setLocY(this.getLocY() + speedY);
 		this.setLocX(this.getLocX() + speedX);
 	}

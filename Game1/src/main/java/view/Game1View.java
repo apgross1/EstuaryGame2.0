@@ -103,7 +103,6 @@ public class Game1View extends JPanel implements KeyListener{
 				Iterator<GabionChunk> git = GabionChunkTemp.iterator();
 				Iterator<ConcreteChunk> it = concreteChunkTemp.iterator();
 				while(it.hasNext()){
-					//
 					ConcreteChunk tmp = it.next();
 					if(tmp.isActive()){
 						g.setColor(Color.RED);
@@ -126,18 +125,22 @@ public class Game1View extends JPanel implements KeyListener{
 		    switch( keyCode ) {
 		        case KeyEvent.VK_UP:
 		            // handle up 
+		        	controller.getAnimalModel().setCurrDir(Direction.NORTH);
 		        	controller.getAnimalModel().setSpeedY(-5);
 		            break;
 		        case KeyEvent.VK_DOWN:
 		            // handle down 
+		        	controller.getAnimalModel().setCurrDir(Direction.SOUTH);
 		        	controller.getAnimalModel().setSpeedY(5);
 		            break;
 		        case KeyEvent.VK_LEFT:
 		            // handle left
+		        	controller.getAnimalModel().setCurrDir(Direction.WEST);
 		        	controller.getAnimalModel().setSpeedX(-5);
 		            break;
 		        case KeyEvent.VK_RIGHT :
 		            // handle right
+		        	controller.getAnimalModel().setCurrDir(Direction.EAST);
 		        	controller.getAnimalModel().setSpeedX(5);
 		            break;
 		    }
@@ -145,8 +148,25 @@ public class Game1View extends JPanel implements KeyListener{
 	 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			controller.getAnimalModel().setSpeedX(0);
-			controller.getAnimalModel().setSpeedY(0);			
+		    int keyCode = e.getKeyCode();
+		    switch( keyCode ) {
+		        case KeyEvent.VK_UP:
+		            // handle up 
+		        	controller.getAnimalModel().setSpeedY(0);
+		            break;
+		        case KeyEvent.VK_DOWN:
+		            // handle down 
+		        	controller.getAnimalModel().setSpeedY(0);
+		            break;
+		        case KeyEvent.VK_LEFT:
+		            // handle left
+		        	controller.getAnimalModel().setSpeedX(0);
+		            break;
+		        case KeyEvent.VK_RIGHT :
+		            // handle right
+		        	controller.getAnimalModel().setSpeedX(0);
+		            break;
+		    }
 			
 		}
 
