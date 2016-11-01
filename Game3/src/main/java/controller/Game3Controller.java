@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 import javax.swing.Timer;
@@ -16,6 +19,7 @@ import models.ConcretePUModel.ConcPUState;
 import models.GridBlock;
 import models.WallModelAbstract;
 import models.WaterModel;
+import models.WaveModel;
 import models.GabionPUModel.GabPUState;
 import view.Game3View;
 
@@ -28,23 +32,26 @@ public class Game3Controller implements KeyListener {
 	private WaterModel water;
 	private Timer timer;
 	
+	
 	public Game3Controller() {
 		setAnimal(new AnimalModelG3());
 		setBeach(new BeachModel());
 		setSandPatch(new GridBlock());
 		setWater(new WaterModel());
 		view = new Game3View(this);
-		runGame();
+		//runGame();
 		
 	}
 	
 	public void runGame()  {
 		this.setGameActive(true);
 		Random die = new Random();
-		int trigger = 4;
+		int triggerSpawn = 4;
 		while(getgameActive()) {
-			if(trigger == die.nextInt(700000)) {
-				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getGabPU().getIsActive() == false) {
+			if(triggerSpawn == die.nextInt(700000)) {
+				System.out.println("Does this always");
+				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
+					System.out.println("Print in tandem?");
 					getBeach().spawnConcrPU(getBeach().generatePPUL());
 					getBeach().spawnGabPU(getBeach().generatePPUL());
 					this.powerUpSpawned();
@@ -54,7 +61,6 @@ public class Game3Controller implements KeyListener {
 				this.collisionPowerUps();
 			}
 			this.view.repaintAll();
-			
 		}
 	}
 
@@ -70,6 +76,7 @@ public class Game3Controller implements KeyListener {
 			
 			//beach.getBeachGrid().get(beach.findPairInGrid(beach.getBlockWithConc().getLocation())).getConcrPU().setPickedUp(false);
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setActive(false);
+			beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setPickedUp(false);
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).setVacant(true);
 			
 			Object time = e.getSource();
@@ -81,22 +88,27 @@ public class Game3Controller implements KeyListener {
 	ActionListener powerUpWallTimerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Wall Timer stopped");
+			
 			if (beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getWallState() == GabPUState.WALL) {
 				beach.removeGabPU(beach.findPairInGrid(beach.getGabPair()));
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setPickedUp(false);
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setIsActive(false);
+				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).setVacant(true);
+				System.out.println("Wall Timer stopped");
 			}
 			else {
 				beach.removeConcrPU(beach.findPairInGrid(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getLocation()));
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setActive(false);
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setPickedUp(false);
+				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).setVacant(true);
+				System.out.println("Wall Timer stopped");
 			}
 			Object time = e.getSource();
 			Timer myTime = (Timer) time;
 			myTime.stop();
 		}
 	};
+	
 	
 	//Duration for which power-up is available to be picked up
 	public void powerUpSpawned() {
@@ -122,21 +134,9 @@ public class Game3Controller implements KeyListener {
 	}
 	
 	public void collisionPowerUps(){
-		if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()) &  beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().isPickedUp() == false) {
-			if (animal.getBounds().intersects(beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getBounds())) {
-				//System.out.println("Intersection between gab and animal");
-				timer.stop();
-				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setPickedUp(true);
-				beach.removeConcrPU(beach.findPairInGrid(beach.getConcPair()));
-				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setActive(false);
-				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).setVacant(true);
-				
-				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setPickedUp(true);
-				this.powerUpPickedUp();
-			}
-		}
+		//Gabion wall collision works (to a degree) Concrete doesn't though
 		if ((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive()) & beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().isPickedUp() == false) {
-			if (animal.getBounds().intersects(beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getConcrPU().getBounds())) {
+			if (animal.getBounds().intersects(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getBounds())) {
 				System.out.println("Intersection between concrete and animal");
 				timer.stop();
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setPickedUp(true);
@@ -146,9 +146,25 @@ public class Game3Controller implements KeyListener {
 				
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setPickedUp(true);
 				this.powerUpPickedUp();
+				return;
+			}
+		}
+		if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()) &  beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().isPickedUp() == false) {
+			if (animal.getBounds().intersects(beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getBounds())) {
+				System.out.println("Intersection between gab and animal");
+				timer.stop();
+				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setPickedUp(true);
+				beach.removeConcrPU(beach.findPairInGrid(beach.getConcPair()));
+				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setActive(false);
+				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).setVacant(true);
+				
+				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setPickedUp(true);
+				this.powerUpPickedUp();
+				return;
 			}
 		}
 	}
+	
 	
 	public void collisionDetectionLoop(){
 		

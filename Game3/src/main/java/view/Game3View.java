@@ -31,6 +31,7 @@ import models.BeachModel;
 import models.ConcretePUModel;
 import models.GabionPUModel;
 import models.GridBlock;
+import models.WaveModel;
 
 public class Game3View extends JPanel implements KeyListener{
 	private Game3Controller controller;
@@ -84,6 +85,8 @@ public class Game3View extends JPanel implements KeyListener{
 		ShoreLine water = new ShoreLine();
 		water.setPreferredSize(new Dimension(100,frame.getHeight()));
 		water.setVisible(true);
+		
+		
 		beachGrid.setBounds(0, 0, 1000, 700);
 		animalPane.setBounds(0, 0, 1000, 700);
 		layoutContainer.add(beachGrid, new Integer(1),0);
@@ -102,7 +105,6 @@ public class Game3View extends JPanel implements KeyListener{
 	public void repaintAll(){
 		frame.repaint();
 	}
-	
 	
 	public class Animal extends JComponent {
 		@Override
@@ -167,7 +169,7 @@ public class Game3View extends JPanel implements KeyListener{
 	        	if(controller.getAnimal().getCurrDir() != Direction.NORTH){
 	        		controller.getAnimal().setCurrDir(Direction.NORTH);
 	        	}
-	        	if(controller.getAnimal().getLocY() > 50){
+	        	if(controller.getAnimal().getLocY() > 0){
 	        		controller.getAnimal().move();
 	        	}
 	            break;
@@ -176,7 +178,7 @@ public class Game3View extends JPanel implements KeyListener{
 	        	if(controller.getAnimal().getCurrDir() != Direction.SOUTH){
 	        		controller.getAnimal().setCurrDir(Direction.SOUTH);
 	        	}
-	        	if(controller.getAnimal().getLocY() < 560){
+	        	if(controller.getAnimal().getLocY() < 699){
 	        		controller.getAnimal().move();
 	        	}
 	            break;
@@ -194,7 +196,7 @@ public class Game3View extends JPanel implements KeyListener{
 	        	if(controller.getAnimal().getCurrDir() != Direction.EAST){
 	        		controller.getAnimal().setCurrDir(Direction.EAST);
 	        	}
-	        	if(controller.getAnimal().getLocX() < 885){
+	        	if(controller.getAnimal().getLocX() < 1000){
 	        		controller.getAnimal().move();
 	        	}
 	            break;

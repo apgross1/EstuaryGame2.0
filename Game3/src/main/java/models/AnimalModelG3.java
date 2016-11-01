@@ -20,8 +20,8 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 
 	
 	public AnimalModelG3() {
-		this.setHeight(30);
-		this.setWidth(30);
+		this.setHeight(50);
+		this.setWidth(50);
 		this.setLocX(250);
 		this.setLocY(250);
 	}
@@ -59,20 +59,20 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	
 	@Override
 	public void move() {
-		System.out.println("Animal is at: (" + this.getLocX() + "," + this.getLocY());
+		//System.out.println("Animal is at: (" + this.getLocX() + "," + this.getLocY());
 		// TODO Auto-generated method stub
 		switch(this.getCurrDir()){
 			case NORTH:
-				this.setLocY(this.getLocY() - 1);
+				this.setLocY(this.getLocY() - 5);
 				break;
 			case SOUTH:
-				this.setLocY(this.getLocY() + 1);
+				this.setLocY(this.getLocY() + 5);
 				break;
 			case EAST:
-				this.setLocX(this.getLocX() + 1);
+				this.setLocX(this.getLocX() + 5);
 				break;
 			case WEST:
-				this.setLocX(this.getLocX() - 1);
+				this.setLocX(this.getLocX() - 5);
 				break;
 			case NORTH_EAST:
 				this.setLocX(this.getLocX() + 1);

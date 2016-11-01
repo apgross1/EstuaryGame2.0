@@ -1,6 +1,6 @@
 import models.AnimalModelG3;
 import models.BeachModel;
-import models.BeachModel.Pair;
+import models.Pair;
 import models.ConcretePUModel;
 import models.ConcretePUModel.ConcPUState;
 import models.GabionPUModel.GabPUState;
@@ -43,15 +43,15 @@ public class Game3Tests {
 	@Test
 	public void testSpawnConc(){
 		BeachModel beach = new BeachModel();
-		ConcretePUModel concrWall = beach.getConcrPU();
 		beach.spawnConcrPU(beach.generatePPUL());
+		ConcretePUModel concrWall = beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU();
 		assertTrue("Should be true...", concrWall.getIsActive());
 		assertTrue("Should still be in PU form...", concrWall.getWallState().equals(ConcPUState.POWER_UP));
 		
 		ActionListener actionListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				concrWall.setIsActive(false);
+				concrWall.setActive(false);
 				Object time = e.getSource();
 				Timer myTime = (Timer) time;
 				myTime.stop();
@@ -74,8 +74,8 @@ public class Game3Tests {
 	@Test
 	public void testSpawnGab(){
 		BeachModel beach = new BeachModel();
-		GabionPUModel gabWall = beach.getGabPU();
 		beach.spawnGabPU(beach.generatePPUL());
+		GabionPUModel gabWall = beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU();
 		assertTrue("Should be true...", gabWall.getIsActive());
 		assertTrue("Should still be in PU form...", gabWall.getWallState().equals(GabPUState.POWER_UP));
 		
@@ -113,7 +113,7 @@ public class Game3Tests {
 	public void testGeneratePPUL() {
 		BeachModel beach = new BeachModel();
 		Collection<Pair> origList = beach.generatePPUL();
-		beach.removeSquare((beach.new Pair(3,5))); //Low-level
+		beach.removeSquare((new Pair(3,5))); //Low-level
 		Collection<Pair> modifiedList = beach.generatePPUL();
 		assertTrue("New list should have less combos...", origList.size() > modifiedList.size());
 		
@@ -137,7 +137,7 @@ public class Game3Tests {
 		
 		Collection<Pair> listPostRemovePU = beach.generatePPUL();
 
-		assertTrue("New list should be one less", listPostRemovePU.size() == listPostConcrSpawn.size()+1);
+		assertTrue("New list should be one less", listPostRemovePU.size() == listPostConcrSpawn.size());
 	}
 	
 	//Testing removal of square/position on grid
@@ -150,11 +150,11 @@ public class Game3Tests {
 		while(it.hasNext()) {
 			pairs.add(it.next());
 		}
-		beach.getBeachGrid().get(pairs.get(0)).setWater(new WaterModel(pairs.get(0)));
+		beach.getBeachGrid().get(pairs.get(0)).setWater(new WaterModel(pairs.get(0)), pairs.get(0));
 		beach.removeSquare(pairs.get(0));
 		assertFalse("Should be false...", beach.getBeachGrid().get(pairs.get(0)).isVacant());
-		assertTrue("Should be true...", beach.getBeachGrid().get(pairs.get(0)).getConcrPU() == null);
-		assertTrue("Should be true...", beach.getBeachGrid().get(pairs.get(0)).getGabPU() == null);
+		assertTrue("Should be true...", beach.getBeachGrid().get(pairs.get(0)).getConcrPU().getIsActive() == false);
+		assertTrue("Should be true...", beach.getBeachGrid().get(pairs.get(0)).getGabPU().getIsActive() == false);
 	}
 	
 	
@@ -163,7 +163,7 @@ public class Game3Tests {
 		Game3Controller walldamage = new Game3Controller();
 		ConcretePUModel conc = new ConcretePUModel();
 		GabionPUModel gab = new GabionPUModel();
-		conc.setIsActive(true);
+		conc.setActive(true);
 		gab.setIsActive(true);
 		
 		conc.breakDown();
@@ -190,46 +190,29 @@ public class Game3Tests {
 		assertFalse("", true);
 	}
 	
-	@Test
-	public void voidstartTimer(){
-		Game3Controller g3clock = new Game3Controller();
-		g3clock.setTime(180);
-		assertTrue("True", g3clock.getgameActive());
-	}
-
 	
 	@Test
 	public void testSpawnTimer() {
 		Game3Controller controller = new Game3Controller();
 		ArrayList<Pair> pairs = new ArrayList<Pair>();
-		pairs.add(controller.getBeach().new Pair(2,1));
+		pairs.add(new Pair(2,1));
 		controller.getBeach().spawnConcrPU(pairs);
 		controller.getBeach().spawnGabPU(pairs);
-		assertTrue("Should be true", controller.getBeach().getConcrPU().getIsActive());
-		assertTrue("Should be true", controller.getBeach().getGabPU().getIsActive());
+		assertTrue("Should be true", controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(controller.getBeach().getConcPair())).getConcrPU().getIsActive());
+		assertTrue("Should be true", controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(controller.getBeach().getGabPair())).getGabPU().getIsActive());
 		controller.powerUpSpawned();
-		assertFalse("Should be false", controller.getBeach().getConcrPU().getIsActive());
-		assertFalse("Should be false", controller.getBeach().getGabPU().getIsActive());
+		assertFalse("Should be false", controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(controller.getBeach().getConcPair())).getConcrPU().getIsActive());
+		assertFalse("Should be false", controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(controller.getBeach().getGabPair())).getGabPU().getIsActive());
 		
 		ArrayList<Pair> pairs2 = new ArrayList<Pair>();
-		pairs2.add(controller.getBeach().new Pair(2,1));
+		pairs2.add(new Pair(2,1));
 		controller.getBeach().spawnConcrPU(pairs2);
 		controller.getBeach().spawnGabPU(pairs2);
-		assertTrue("Should be true", controller.getBeach().getConcrPU().getIsActive());
-		assertTrue("Should be true", controller.getBeach().getGabPU().getIsActive());
+		assertTrue("Should be true", controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(controller.getBeach().getConcPair())).getConcrPU().getIsActive());
+		assertTrue("Should be true", controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(controller.getBeach().getGabPair())).getGabPU().getIsActive());
 		controller.powerUpPickedUp();
-		assertFalse("Should be false", controller.getBeach().getConcrPU().getIsActive());
-		assertFalse("Should be false", controller.getBeach().getGabPU().getIsActive());
-		
-	}
-	
-	//View tests
-	@Test
-	public void testGabPlacement() {
-		Game3Controller controller = new Game3Controller();
-		while(controller.getgameActive()) {
-			
-		}
+		assertFalse("Should be false", controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(controller.getBeach().getConcPair())).getConcrPU().getIsActive());
+		assertFalse("Should be false", controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(controller.getBeach().getGabPair())).getGabPU().getIsActive());
 		
 	}
 }
