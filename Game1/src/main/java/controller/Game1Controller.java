@@ -35,6 +35,7 @@ public class Game1Controller{
 	private ArrayList<BufferedImage> landSeqs;
 	int overallRound = 0;
 	long gameTime;
+	long startTime;
 	
 	
 	public Game1Controller() {
@@ -77,11 +78,30 @@ public class Game1Controller{
 		
 		//Add intro animation here....
 		
+		
+		startTime = System.currentTimeMillis();
+		long lastTime = System.nanoTime();
+		final double ammountOfTicks = 60.0;	
+		double ns = 1000000000 /ammountOfTicks;
+		double delta = 0;
+		//long timer = System.currentTimeMillis();
+		
+		
+		
 		long startTime = System.currentTimeMillis(); //fetch starting time
+		
 		while((System.currentTimeMillis()-startTime)<30000){
-			gameTime = (System.currentTimeMillis() - startTime);
-			Random r = new Random();
+			gameTime = (System.currentTimeMillis() - startTime); //Used to print on screen
+			long now = System.nanoTime();
+			delta += (now-lastTime)/ns;
+			lastTime=now;
+			if(delta>=1){
+				animal.move();
+				g1view.repaintFrame();
+				delta--;
+			}
 			
+			Random r = new Random();
 			if(wallModel.getCurrentBlocks() < (wallModel.getMaxBlocks()-5) & wallModel.getActiveBlocks() < 5){//Max concrete that can be on the screen at once.
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;

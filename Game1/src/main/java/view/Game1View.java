@@ -122,39 +122,32 @@ public class Game1View extends JPanel implements KeyListener{
 	 
 	 @Override
 		public void keyPressed(KeyEvent e) {
-			//System.out.println("y: "+ controller.getAnimalModel().getLocY());
-			//System.out.println("x: "+ controller.getAnimalModel().getLocX());
 		    int keyCode = e.getKeyCode();
 		    switch( keyCode ) {
 		        case KeyEvent.VK_UP:
 		            // handle up 
-		        	if(controller.getAnimalModel().getCurrDir() != Direction.NORTH){
-		        		controller.getAnimalModel().setCurrDir(Direction.NORTH);
-		        	}
-		        	controller.getAnimalModel().move();
+		        	controller.getAnimalModel().setSpeedY(-5);
 		            break;
 		        case KeyEvent.VK_DOWN:
 		            // handle down 
-		        	if(controller.getAnimalModel().getCurrDir() != Direction.SOUTH){
-		        		controller.getAnimalModel().setCurrDir(Direction.SOUTH);
-		        	}
-		        	controller.getAnimalModel().move();
+		        	controller.getAnimalModel().setSpeedY(5);
 		            break;
 		        case KeyEvent.VK_LEFT:
 		            // handle left
-		        	if(controller.getAnimalModel().getCurrDir() != Direction.WEST){
-		        		controller.getAnimalModel().setCurrDir(Direction.WEST);
-		        	}
-		        	controller.getAnimalModel().move();
+		        	controller.getAnimalModel().setSpeedX(-5);
 		            break;
 		        case KeyEvent.VK_RIGHT :
 		            // handle right
-		        	if(controller.getAnimalModel().getCurrDir() != Direction.EAST){
-		        		controller.getAnimalModel().setCurrDir(Direction.EAST);
-		        	}
-		        	controller.getAnimalModel().move();
+		        	controller.getAnimalModel().setSpeedX(5);
 		            break;
 		    }
+		}
+	 
+		@Override
+		public void keyReleased(KeyEvent e) {
+			controller.getAnimalModel().setSpeedX(0);
+			controller.getAnimalModel().setSpeedY(0);			
+			
 		}
 
 	 
@@ -163,13 +156,6 @@ public class Game1View extends JPanel implements KeyListener{
 	  * 
 	  */
 
-
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {

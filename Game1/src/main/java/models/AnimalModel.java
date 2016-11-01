@@ -6,6 +6,8 @@ public class AnimalModel extends AnimalModelAbstract {
 	
 	private int height = 100;
 	private int width = 100;
+	private int speedX = 0;
+	private int speedY = 0;
 	
 	public AnimalModel() {
 		//Set initial location and direction
@@ -22,51 +24,19 @@ public class AnimalModel extends AnimalModelAbstract {
 		return width;
 	}
 	
+	public void setSpeedX(int speed) {
+		this.speedX = speed;
+	}
+	
+	public void setSpeedY(int speed) {
+		this.speedY = speed;
+	}
+	
 	//Have to add boarder controls to keep within bounds (we first have to determine the size of the screen.
 	@Override
 	public void move() {
-		if(this.getCurrDir() == Direction.NORTH){
-			if(getLocY() > 50){
-				this.setLocY(this.getLocY() - 5);
-        	}
-		}
-		else if(this.getCurrDir() == Direction.EAST){
-			if(getLocX() < 885){
-				this.setLocX(this.getLocX() + 5);
-        	}
-		}
-		else if(this.getCurrDir() == Direction.SOUTH){
-			if(getLocY() < 560){
-				this.setLocY(this.getLocY() + 5);
-        	}
-		}
-		else if(this.getCurrDir() == Direction.WEST){
-			if(getLocX() > 0){
-				this.setLocX(this.getLocX() - 5);
-        	}
-		}
-		/*
-		 *DECIDED FOR NOW WE'RE ONLY USING 4 DIRECTIONS BECAUSE OF KEY LISENER
-		else if(this.getCurrDir() == Direction.NORTH_EAST){
-			this.setLocX(this.getLocX() + 1);
-			this.setLocY(this.getLocY() + 1);
-		}
-		else if(this.getCurrDir() == Direction.SOUTH_EAST){
-			this.setLocX(this.getLocX() - 1);
-			this.setLocY(this.getLocY() + 1);
-		}
-		else if(this.getCurrDir() == Direction.SOUTH_WEST){
-			this.setLocX(this.getLocX() - 1);
-			this.setLocY(this.getLocY() - 1);
-		}
-		else if(this.getCurrDir() == Direction.NORTH_WEST){
-			this.setLocX(this.getLocX() - 1);
-			this.setLocY(this.getLocY() + 1);
-		}
-		*/
-		else{
-			System.out.println("Directional data out of bounds: " + this.getCurrDir());
-		}
+		this.setLocY(this.getLocY() + speedY);
+		this.setLocX(this.getLocX() + speedX);
 	}
 	
 	
