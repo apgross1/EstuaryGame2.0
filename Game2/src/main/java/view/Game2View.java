@@ -90,7 +90,7 @@ public class Game2View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			//Draw animal at current position
 			g.setColor(Color.ORANGE);
-			g.fillRect(controller.getAnimalModelG2().getLocX(),controller.getAnimalModelG2().getLocY(),controller.getAnimalModelG2().getWidth(),controller.getAnimalModelG2().getHeight());
+			g.fillRect(controller.getAnimalModelG2().getLocX(),controller.getAnimalModelG2().getY(),controller.getAnimalModelG2().getWidth(),controller.getAnimalModelG2().getHeight());
 			
 			
 			//Draw score data and timer and health
@@ -139,17 +139,14 @@ public class Game2View extends JPanel implements KeyListener{
 		int keyCode = e.getKeyCode();
 		switch(keyCode){
 		case KeyEvent.VK_DOWN:
-			if(controller.getAnimalModelG2().getCurrDir()!=Direction.SOUTH){
-				controller.getAnimalModelG2().setCurrDir(Direction.SOUTH);
-			}
-			controller.getAnimalModelG2().move();
+			
+			controller.getAnimalModelG2().setSpeed(10);
 			break;
 		
 		case KeyEvent.VK_UP:
-			if(controller.getAnimalModelG2().getCurrDir()!=Direction.NORTH){
-				controller.getAnimalModelG2().setCurrDir(Direction.NORTH);
-			}
-			controller.getAnimalModelG2().move();
+			
+			controller.getAnimalModelG2().setSpeed(-10);
+			
 			break;
 		}
 	}
@@ -157,7 +154,7 @@ public class Game2View extends JPanel implements KeyListener{
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		controller.getAnimalModelG2().setSpeed(0);
 		
 	}
 }

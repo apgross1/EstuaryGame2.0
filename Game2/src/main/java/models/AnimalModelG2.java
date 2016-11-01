@@ -13,7 +13,7 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 	private int speed;
 	private boolean isDead;
 	private int height, width;
-	
+	private int y;
 	
 	public AnimalModelG2() {
 		this.height = 75;
@@ -23,10 +23,18 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 		this.setLocX(10);
 		this.setSpeed(100);
 		this.isDead = false;
-		this.speed = 10;
-
+		this.speed = 0;
+		
+		this.y = 275;
 	}
-
+	public void tick(){
+		y+=speed;
+		
+	}
+	public int getY(){
+		return y;
+	}
+	
 	public int getHeight() {
 		return height;
 	}
@@ -40,12 +48,14 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 		switch (this.getCurrDir()) {
 		case NORTH:
 			if(this.getLocY()>0){
-				this.setLocY(this.getLocY() - speed);
+				
+				this.setLocY(y);
 			}
 			break;
 		case SOUTH:
 			if(this.getLocY()<585){
-				this.setLocY(this.getLocY() + speed);
+				
+				this.setLocY(y);
 			}
 			
 			break;

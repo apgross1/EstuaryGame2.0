@@ -29,6 +29,8 @@ public class Game2Controller {
 	int spawnDelay = 1000;
 	int numMissed = 0;
 	long startTime;
+	int updates = 0;
+	int frames = 0;
 	
 	public Game2Controller() {
 		animal = new AnimalModelG2();
@@ -40,15 +42,40 @@ public class Game2Controller {
 		
 	}
 
-
+	
 	
 	public void startGame() {
 		gameActive = true;
 		startTime = System.currentTimeMillis();
+		long lastTime = System.nanoTime();
+		final double ammountOfTicks = 60.0;	
+		double ns = 1000000000 /ammountOfTicks;
+		double delta = 0;
+		long timer = System.currentTimeMillis();
+		
 		while(gameActive){
+			long now = System.nanoTime();
+			delta += (now-lastTime)/ns;
+			lastTime=now;
+			if(delta>=1){
+				animal.tick();
+				view.repaintFrame();
+				updates++;
+				delta--;
+			}
 			
-			view.repaintFrame();
+			frames++;
 			collisionDetection();
+			
+			if(System.currentTimeMillis()-timer>1000){
+				timer +=1000;
+				System.out.println(updates + " Ticks, FPS " + frames);
+				updates = 0;
+				frames = 0;
+			}
+			
+			
+			
 			
 			if(algaeList.size()<algae.getMaxAlgae()){
 				if(System.currentTimeMillis()>=spawnTime+spawnDelay){
@@ -91,7 +118,7 @@ public class Game2Controller {
 	public boolean collisionOccured(AnimalModelG2 animal, AlgaeModel algae){
 		
 		Rectangle algae_rect = new Rectangle(algae.getLocX(), algae.getLocY(), algae.getWidth(), algae.getHeight());
-		Rectangle animal_rect = new Rectangle(animal.getLocX(), animal.getLocY(), animal.getWidth(), animal.getHeight());
+		Rectangle animal_rect = new Rectangle(animal.getLocX(), animal.getY(), animal.getWidth(), animal.getHeight());
 		
 		if(animal_rect.getBounds().intersects(algae_rect)){
 			return true;
