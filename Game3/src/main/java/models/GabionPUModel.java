@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 import models.ConcretePUModel.ConcPUState;
 
@@ -12,6 +13,8 @@ public class GabionPUModel extends WallModelAbstract {
 	private boolean isPickedUp;
 	private int PUonBeach;
 	private Pair location;
+	private Pair viewLocation;
+
 	private BufferedImage powerUp;
 	private BufferedImage wall;
 	private GabPUState wallState;
@@ -22,10 +25,11 @@ public class GabionPUModel extends WallModelAbstract {
 	public GabionPUModel() {
 		this.setWallState(GabPUState.POWER_UP);
 		this.isActive = false;
-		this.height = 10;
-		this.width = 10;
+		this.height = 30;
+		this.width = 30;
 		this.isPickedUp = false;
 		this.location = new Pair(0,0);
+		this.viewLocation = new Pair(0,0);
 	}
 
 	public boolean getIsActive() {
@@ -34,7 +38,7 @@ public class GabionPUModel extends WallModelAbstract {
 	
 	public void setIsActive(boolean active) {
 		if(active) {
-			this.setBounds(this.location.getX(), this.location.getY(), this.width, this.height);
+			this.setBounds(this.getViewLocation().getX(), this.getViewLocation().getY(), this.width, this.height);
 		}
 		isActive = active;
 	}
@@ -88,6 +92,7 @@ public class GabionPUModel extends WallModelAbstract {
 
 	public void setLocation(Pair location) {
 		this.location = location;
+		this.setViewLocation(location);
 	}
 	
 	public void setBounds(int x, int y, int width, int height) {
@@ -96,7 +101,7 @@ public class GabionPUModel extends WallModelAbstract {
 	
 	public Rectangle getBounds() {
 		
-		return (new Rectangle(this.getLocation().getX(),this.getLocation().getY(),width,height));
+		return (new Rectangle(this.getViewLocation().getX(),this.getViewLocation().getY(),width,height));
 		
 	}
 
@@ -123,18 +128,30 @@ public class GabionPUModel extends WallModelAbstract {
 	public void setPickedUp(boolean isPickedUp) {
 		if(isPickedUp) {
 			this.setWallState(GabPUState.WALL);
-			this.width = 20;
-			this.height = 50;
-			this.setBounds(this.location.getX(), this.location.getY(), this.width, this.height);
+			this.width = 70;
+			this.height = 150;
+			this.setBounds(this.getViewLocation().getX(), this.getViewLocation().getY(), this.width, this.height);
 		}
 		else {
-			this.width = 10;
-			this.height = 10;
-			//this.setBounds(this.location.getX(), this.location.getY(), this.width, this.height);
+			this.setWallState(GabPUState.POWER_UP);
+			this.width = 30;
+			this.height = 30;
+			this.setBounds(this.getViewLocation().getX(), this.getViewLocation().getY(), this.width, this.height);
 		}
 		
 		this.isPickedUp = isPickedUp;
 	}
+	
+	public Pair getViewLocation() {
+		return viewLocation;
+	}
 
+	public void setViewLocation(Pair viewLocation) {
+		Random rand = new Random();
+		this.viewLocation.setX((int)((this.location.getX()*100)/1.107));
+		this.viewLocation.setY((int)(this.location.getY()*(700/8)/1.208));
+	}
+	
+	
 
 }
