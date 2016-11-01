@@ -20,8 +20,10 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 
 	
 	public AnimalModelG3() {
-		this.setHeight(100);
-		this.setWidth(100);
+		this.setHeight(50);
+		this.setWidth(50);
+		this.setLocX(250);
+		this.setLocY(250);
 	}
 	@Override
 	public void healthUp() {
@@ -57,6 +59,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	
 	@Override
 	public void move() {
+		//System.out.println("Animal is at: (" + this.getLocX() + "," + this.getLocY());
 		// TODO Auto-generated method stub
 		switch(this.getCurrDir()){
 			case NORTH:
@@ -72,20 +75,20 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 				this.setLocX(this.getLocX() - 5);
 				break;
 			case NORTH_EAST:
-				this.setLocX(this.getLocX() + 5);
-				this.setLocY(this.getLocY() - 5);
+				this.setLocX(this.getLocX() + 1);
+				this.setLocY(this.getLocY() - 1);
 				break;
 			case NORTH_WEST:
-				this.setLocX(this.getLocX() - 5);
-				this.setLocY(this.getLocY() - 5);
+				this.setLocX(this.getLocX() - 1);
+				this.setLocY(this.getLocY() - 1);
 				break;
 			case SOUTH_EAST:
-				this.setLocX(this.getLocX() + 5);
-				this.setLocY(this.getLocY() + 5);
+				this.setLocX(this.getLocX() + 1);
+				this.setLocY(this.getLocY() + 1);
 				break;
 			case SOUTH_WEST:
-				this.setLocX(this.getLocX() - 5);
-				this.setLocY(this.getLocY() + 5);
+				this.setLocX(this.getLocX() - 1);
+				this.setLocY(this.getLocY() + 1);
 				break;
 		}
 		
@@ -100,7 +103,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	}
 
 	public Rectangle getBounds() {
-		return (new Rectangle(this.getLocX(),this.getLocY(),20,20));
+		return (new Rectangle(this.getLocX(),this.getLocY(),this.getWidth(),this.getHeight()));
 	}
 	public int getHeight() {
 		return height;

@@ -45,11 +45,9 @@ public class BeachModel {
 	
 	public void spawnGabPU(ArrayList<Pair> ppul) {
 		if(ppul.size() == 0) {
-			System.out.println("Made it here");
 			return;
 		}
 		else{
-			System.out.println("Spawning gabions");
 			Random randLoc = new Random();
 			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
 			setGabPair(this.findPairInGrid(pair));
@@ -66,7 +64,6 @@ public class BeachModel {
 			return;
 		}
 		else{
-			System.out.println("Spawning concrete");
 			Random randLoc = new Random();
 			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
 			setConcPair(pair);

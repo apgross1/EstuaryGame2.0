@@ -74,8 +74,8 @@ public class GridBlock {
 	public void setGabPU(GabionPUModel gabPU) {
 		concrPU.setActive(false);
 		water.setActive(false);
-		this.gabPU = gabPU;
 		gabPU.setIsActive(true);
+		this.gabPU = gabPU;
 		
 		this.setVacant(false);
 	}
@@ -85,8 +85,8 @@ public class GridBlock {
 	}
 
 	public void setConcrPU(ConcretePUModel concrPU) {
-		this.concrPU = concrPU;
 		concrPU.setActive(true);
+		this.concrPU = concrPU;
 		this.gabPU.setIsActive(false);
 		this.water.setActive(false);
 		

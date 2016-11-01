@@ -1,6 +1,7 @@
 package models;
 
 import java.awt.Rectangle;
+import java.util.Random;
 
 public class WaterModel {
 	private Pair location = new Pair(0,0);
@@ -13,7 +14,7 @@ public class WaterModel {
 	public WaterModel() {
 		this.height = 200;
 		this.width = 200;
-		this.location = new Pair(0,0);
+
 	}
 	
 	public WaterModel(Pair loc) {
