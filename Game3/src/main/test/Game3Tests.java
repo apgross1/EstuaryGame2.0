@@ -43,8 +43,9 @@ public class Game3Tests {
 	@Test
 	public void testSpawnConc(){
 		BeachModel beach = new BeachModel();
-		ConcretePUModel concrWall =  beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU();
 		beach.spawnConcrPU(beach.generatePPUL());
+		ConcretePUModel concrWall =  beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU();
+		
 		assertTrue("Should be true...", concrWall.getIsActive());
 		assertTrue("Should still be in PU form...", concrWall.getWallState().equals(ConcPUState.POWER_UP));
 		
@@ -74,8 +75,9 @@ public class Game3Tests {
 	@Test
 	public void testSpawnGab(){
 		BeachModel beach = new BeachModel();
-		GabionPUModel gabWall = beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU();
 		beach.spawnGabPU(beach.generatePPUL());
+		GabionPUModel gabWall = beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU();
+		
 		assertTrue("Should be true...", gabWall.getIsActive());
 		assertTrue("Should still be in PU form...", gabWall.getWallState().equals(GabPUState.POWER_UP));
 		
@@ -137,7 +139,7 @@ public class Game3Tests {
 		
 		Collection<Pair> listPostRemovePU = beach.generatePPUL();
 
-		assertTrue("New list should be one less", listPostRemovePU.size() == listPostConcrSpawn.size()+1);
+		assertTrue("New list should be one less", listPostRemovePU.size() == listPostConcrSpawn.size());
 	}
 	
 	//Testing removal of square/position on grid
@@ -153,8 +155,8 @@ public class Game3Tests {
 		beach.getBeachGrid().get(pairs.get(0)).setWater(new WaterModel(pairs.get(0)), pairs.get(0));
 		beach.removeSquare(pairs.get(0));
 		assertFalse("Should be false...", beach.getBeachGrid().get(pairs.get(0)).isVacant());
-		assertTrue("Should be true...", beach.getBeachGrid().get(pairs.get(0)).getConcrPU() == null);
-		assertTrue("Should be true...", beach.getBeachGrid().get(pairs.get(0)).getGabPU() == null);
+		assertTrue("Should be true...", beach.getBeachGrid().get(pairs.get(0)).getConcrPU().getIsActive()==false);
+		assertTrue("Should be true...", beach.getBeachGrid().get(pairs.get(0)).getGabPU().getIsActive()==false);
 	}
 	
 	
@@ -188,13 +190,6 @@ public class Game3Tests {
 	public void testPickup(){
 		AnimalModelG3 animal = new AnimalModelG3();
 		assertFalse("", true);
-	}
-	
-	@Test
-	public void voidstartTimer(){
-		Game3Controller g3clock = new Game3Controller();
-		g3clock.setTime(180);
-		assertTrue("True", g3clock.getgameActive());
 	}
 
 	
