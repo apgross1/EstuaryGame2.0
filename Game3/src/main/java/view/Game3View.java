@@ -107,6 +107,8 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			g.setColor(Color.MAGENTA);
 			g.fillRect((int)controller.getAnimal().getBounds().getMaxX(),(int) controller.getAnimal().getBounds().getMaxY(),(int) controller.getAnimal().getBounds().getWidth(), (int)controller.getAnimal().getBounds().getHeight());
+		
+			
 		}
 	}
 	
