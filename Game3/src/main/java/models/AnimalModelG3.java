@@ -16,6 +16,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private boolean isDead;
 	private int height;
 	private int width;
+	
 
 
 	
@@ -23,6 +24,11 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.setHeight(60);
 		this.setWidth(60);
 	}
+	
+	/*public void tick(){
+		this.setLocX(this.getLocX()  );
+		this.setLocY(this.getLocY()  );
+	}*/
 	@Override
 	public void healthUp() {
 		
