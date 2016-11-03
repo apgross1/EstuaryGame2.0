@@ -38,7 +38,7 @@ public class Game3View extends JPanel implements KeyListener{
 	private JFrame frame = new JFrame();
 	//private JPanel action_pannel = new JPanel();
 	private JPanel play_ground = new JPanel(new BorderLayout());
-
+	JLayeredPane layoutContainer = new JLayeredPane();
     //final static int frameWidth = 800;
     //final static int frameHeight = 800;
 	
@@ -59,7 +59,7 @@ public class Game3View extends JPanel implements KeyListener{
     	
     	//Panes
 		//For animal movement
-		JLayeredPane layoutContainer = new JLayeredPane();
+		
 		Animal animalPane = new Animal();
 		animalPane.setPreferredSize(new Dimension(1000,700));
 		JPanel beachGrid = new JPanel(new GridLayout(10,10));
@@ -102,13 +102,26 @@ public class Game3View extends JPanel implements KeyListener{
 	}
 	
 	
+	
+	public class Wave extends JComponent {
+		public WaveModel wave;
+		public Wave(WaveModel wave) {
+			this.wave = wave;
+		}
+		@Override
+		public void paint(Graphics g) {
+			if(wave.getLocation().getX() > -5) {
+				g.setColor(Color.BLUE);
+				g.fillRect((int)wave.getBounds().getMaxX(), (int)wave.getBounds().getMaxY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
+			}
+		}
+	}
+	
 	public class Animal extends JComponent {
 		@Override
 		public void paint(Graphics g) {
 			g.setColor(Color.MAGENTA);
 			g.fillRect((int)controller.getAnimal().getBounds().getMaxX(),(int) controller.getAnimal().getBounds().getMaxY(),(int) controller.getAnimal().getBounds().getWidth(), (int)controller.getAnimal().getBounds().getHeight());
-		
-			
 		}
 	}
 	
@@ -157,7 +170,13 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 	}
 	 
-	 
+	public void addWave(WaveModel w) {
+		WaveModel waveM = w;
+		waveM.randomSpawn();
+		Wave wave = new Wave(waveM);
+		wave.setBounds(0, 0, 1000, 700);
+		this.layoutContainer.add(wave, new Integer(2), 1);
+	}
 	@Override
 	public void keyPressed(KeyEvent e) {
 	    int keyCode = e.getKeyCode();
@@ -176,7 +195,7 @@ public class Game3View extends JPanel implements KeyListener{
 	        	if(controller.getAnimal().getCurrDir() != Direction.SOUTH){
 	        		controller.getAnimal().setCurrDir(Direction.SOUTH);
 	        	}
-	        	if(controller.getAnimal().getLocY() < 700){
+	        	if(controller.getAnimal().getLocY() < 541){
 	        		controller.getAnimal().move();
 	        	}
 	            break;
@@ -194,7 +213,7 @@ public class Game3View extends JPanel implements KeyListener{
 	        	if(controller.getAnimal().getCurrDir() != Direction.EAST){
 	        		controller.getAnimal().setCurrDir(Direction.EAST);
 	        	}
-	        	if(controller.getAnimal().getLocX() < 1000){
+	        	if(controller.getAnimal().getLocX() < 771){
 	        		controller.getAnimal().move();
 	        	}
 	            break;
