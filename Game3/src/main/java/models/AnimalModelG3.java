@@ -1,5 +1,7 @@
 package models;
 
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,25 +11,31 @@ import enums.Direction;
 public class AnimalModelG3 extends AnimalModelAbstract{
 	private HashMap<Direction,ArrayList<BufferedImage>> animations;
 	private int health;
-	private int xloc;
-	private int yloc;
-	private int emptyHanded;
 
+	private int emptyHanded;
+	private boolean isDead;
+	private int height;
+	private int width;
+
+
+	
+	public AnimalModelG3() {
+		this.setHeight(60);
+		this.setWidth(60);
+	}
 	@Override
 	public void healthUp() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void healthDown() {
-		// TODO Auto-generated method stub
-		
+		this.setHealth(0);
 	}
 
 	@Override
 	public void pickUp() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -39,22 +47,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.animations = animations;
 	}
 	
-	public void setXloc(int Xloc){
-		this.xloc = Xloc;
-	}
-	
-	public int getXloc(){
-		return xloc;
-	}
-	
-	public void setYloc(int yloc){
-		this.yloc = yloc;
-	}
-	
-	public int getYloc(){
-		return yloc;
-	}
-
 	public void setHealth(int health){
 		this.health = health;
 	}
@@ -63,16 +55,64 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		return health;
 	}
 	
-	public void setEmptyHanded(int emptyHanded){
-		this.emptyHanded = emptyHanded;
-	}
-	
-	public int getEmptyHanded(){
-		return emptyHanded;
-	}
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
+		System.out.println("Animal at: " + "(" + this.getLocX() + "," + this.getLocY() + ")");
+		switch(this.getCurrDir()){
+			case NORTH:
+				this.setLocY(this.getLocY() - 5);
+				break;
+			case SOUTH:
+				this.setLocY(this.getLocY() + 5);
+				break;
+			case EAST:
+				this.setLocX(this.getLocX() + 5);
+				break;
+			case WEST:
+				this.setLocX(this.getLocX() - 5);
+				break;
+			case NORTH_EAST:
+				this.setLocX(this.getLocX() + 1);
+				this.setLocY(this.getLocY() - 1);
+				break;
+			case NORTH_WEST:
+				this.setLocX(this.getLocX() - 1);
+				this.setLocY(this.getLocY() - 1);
+				break;
+			case SOUTH_EAST:
+				this.setLocX(this.getLocX() + 1);
+				this.setLocY(this.getLocY() + 1);
+				break;
+			case SOUTH_WEST:
+				this.setLocX(this.getLocX() - 1);
+				this.setLocY(this.getLocY() + 1);
+				break;
+		}
 		
+	}
+
+	public boolean isDead() {
+		return isDead;
+	}
+
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
+	}
+
+	public Rectangle getBounds() {
+		return (new Rectangle(this.getLocX(),this.getLocY(),this.getWidth(),this.getHeight()));
+	}
+	public int getHeight() {
+		return height;
+	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	public int getWidth() {
+		return width;
+	}
+	public void setWidth(int width) {
+		this.width = width;
 	}
 }
