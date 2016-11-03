@@ -58,6 +58,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
+		System.out.println("Animal at: " + "(" + this.getLocX() + "," + this.getLocY() + ")");
 		switch(this.getCurrDir()){
 			case NORTH:
 				this.setLocY(this.getLocY() - 5);

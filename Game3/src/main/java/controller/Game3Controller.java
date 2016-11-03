@@ -30,6 +30,7 @@ public class Game3Controller implements KeyListener {
 	private BeachModel beach;
 	private GridBlock sandPatch;
 	private WaterModel water;
+
 	private Timer timer;
 	
 	
@@ -47,15 +48,17 @@ public class Game3Controller implements KeyListener {
 		this.setGameActive(true);
 		Random die = new Random();
 		int triggerSpawn = 4;
+		int triggerWave = 45;
 		while(getgameActive()) {
 			if(triggerSpawn == die.nextInt(700000)) {
-				System.out.println("Does this always");
 				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
-					System.out.println("Print in tandem?");
 					getBeach().spawnConcrPU(getBeach().generatePPUL());
 					getBeach().spawnGabPU(getBeach().generatePPUL());
 					this.powerUpSpawned();
 				}	
+			}
+			if(triggerWave == die.nextInt(350000)) {
+				this.view.addWave(new WaveModel());
 			}
 			if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair()))).getConcrPU().getIsActive() && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()); {
 				this.collisionPowerUps();
@@ -75,7 +78,6 @@ public class Game3Controller implements KeyListener {
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setIsActive(false);
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).setVacant(true);
 			
-			//beach.getBeachGrid().get(beach.findPairInGrid(beach.getBlockWithConc().getLocation())).getConcrPU().setPickedUp(false);
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setActive(false);
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setPickedUp(false);
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).setVacant(true);
@@ -164,7 +166,6 @@ public class Game3Controller implements KeyListener {
 			}
 		}
 	}
-	
 	
 	public void collisionDetectionLoop(){
 		
