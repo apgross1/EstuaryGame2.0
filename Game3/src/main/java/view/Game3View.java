@@ -12,6 +12,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -35,6 +36,7 @@ import models.WaveModel;
 
 public class Game3View extends JPanel implements KeyListener{
 	private Game3Controller controller;
+	private HashMap componentMap;
 	private JFrame frame = new JFrame();
 	//private JPanel action_pannel = new JPanel();
 	private JPanel play_ground = new JPanel(new BorderLayout());
@@ -72,7 +74,7 @@ public class Game3View extends JPanel implements KeyListener{
 			
 			SandWater gridBlock = new SandWater(currBlock);
 			GridTile powerUp = new GridTile(currBlock);
-		    powerUp.setBounds(0, 0, 1000, 700);
+		    powerUp.setBounds(30, 30, 1000, 700);
 			layoutContainer.add(powerUp, new Integer(2),-1);
 		    beachOverlay.add(gridBlock);
 		    
@@ -110,6 +112,9 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 		@Override
 		public void paint(Graphics g) {
+			if(wave.getBounds().intersects(controller.getAnimal().getBounds())) {
+				System.out.println("Hit!");
+			}
 			if(wave.getLocation().getX() > -5) {
 				g.setColor(Color.BLUE);
 				g.fillRect((int)wave.getBounds().getMaxX(), (int)wave.getBounds().getMaxY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
@@ -246,6 +251,18 @@ public class Game3View extends JPanel implements KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
+		
+	}
+
+
+	public HashMap getComponentMap() {
+		
+		return componentMap;
+	}
+
+
+	public void createComponentMap(String name) {
+		componentMap = new HashMap<String, Component>();
 		
 	}
 

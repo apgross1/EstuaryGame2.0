@@ -58,7 +58,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
-		System.out.println("Animal at: " + "(" + this.getLocX() + "," + this.getLocY() + ")");
+		System.out.println("Animal at: " + "(" + this.getBounds().getCenterX() + "," + this.getBounds().getCenterY() + ")");
 		switch(this.getCurrDir()){
 			case NORTH:
 				this.setLocY(this.getLocY() - 5);
@@ -101,7 +101,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	}
 
 	public Rectangle getBounds() {
-		return (new Rectangle(this.getLocX(),this.getLocY(),this.getWidth(),this.getHeight()));
+		return (new Rectangle(this.getLocX()-140,this.getLocY()-100,this.getWidth(),this.getHeight()));
 	}
 	public int getHeight() {
 		return height;

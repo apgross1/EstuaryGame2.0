@@ -57,6 +57,7 @@ public class Game3Controller implements KeyListener {
 					this.powerUpSpawned();
 				}	
 			}
+			
 			if(triggerWave == die.nextInt(350000)) {
 				this.view.addWave(new WaveModel());
 			}
@@ -138,7 +139,7 @@ public class Game3Controller implements KeyListener {
 	public void collisionPowerUps(){
 		//Gabion wall collision works (to a degree) Concrete doesn't though
 		if ((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive()) & beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().isPickedUp() == false) {
-			if (animal.getBounds().intersects(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getBounds())) {
+			if (animal.getBounds().contains(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getBounds())) {
 				System.out.println("Intersection between concrete and animal");
 				timer.stop();
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setPickedUp(true);
@@ -152,7 +153,7 @@ public class Game3Controller implements KeyListener {
 			}
 		}
 		if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()) &  beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().isPickedUp() == false) {
-			if (animal.getBounds().intersects(beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getBounds())) {
+			if (animal.getBounds().contains(beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getBounds())) {
 				System.out.println("Intersection between gab and animal");
 				timer.stop();
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setPickedUp(true);
@@ -167,6 +168,7 @@ public class Game3Controller implements KeyListener {
 		}
 	}
 	
+
 	public void collisionDetectionLoop(){
 		
 	}

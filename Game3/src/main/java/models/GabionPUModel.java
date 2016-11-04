@@ -148,8 +148,9 @@ public class GabionPUModel extends WallModelAbstract {
 
 	public void setViewLocation(Pair viewLocation) {
 		Random rand = new Random();
-		this.viewLocation.setX((int)((this.location.getX()*100)/1.107));
-		this.viewLocation.setY((int)(this.location.getY()*(700/8)/1.208));
+		this.viewLocation.setX((int)((this.location.getX()*rand.nextInt(100))));
+		this.viewLocation.setY((int)(this.location.getY()*rand.nextInt(70)));
+		System.out.println("Gabion at: (" + this.getViewLocation().getX() + "," + this.getViewLocation().getY() + ")");
 	}
 	
 	
