@@ -74,7 +74,7 @@ public class Game3View extends JPanel implements KeyListener{
 			
 			SandWater gridBlock = new SandWater(currBlock);
 			GridTile powerUp = new GridTile(currBlock);
-		    powerUp.setBounds(30, 30, 1000, 700);
+		    powerUp.setBounds((int)currBlock.getBounds().getX(), (int)currBlock.getBounds().getY(), 835, 605);
 			layoutContainer.add(powerUp, new Integer(2),-1);
 		    beachOverlay.add(gridBlock);
 		    
@@ -167,12 +167,12 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			if(gridBlock.getConcrPU().getIsActive()) {
 				g.setColor(Color.RED);
-				g.fillRect(gridBlock.getConcrPU().getLocation().getX(), gridBlock.getConcrPU().getLocation().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
+				g.fillRect((int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
 			}
 			
 			else if(gridBlock.getGabPU().getIsActive()) {
 				g.setColor(Color.DARK_GRAY);
-				g.fillRect(gridBlock.getGabPU().getLocation().getX(), gridBlock.getGabPU().getLocation().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
+				g.fillRect((int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
 			}
 		}
 	}

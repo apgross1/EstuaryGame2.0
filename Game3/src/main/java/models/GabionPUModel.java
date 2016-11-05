@@ -128,9 +128,11 @@ public class GabionPUModel extends WallModelAbstract {
 	public void setPickedUp(boolean isPickedUp) {
 		if(isPickedUp) {
 			this.setWallState(GabPUState.WALL);
+			System.out.println("In wall form");
+			System.out.println("Bounds are: " + this.getBounds().getX());
 			this.width = 70;
 			this.height = 150;
-			this.setBounds(this.getViewLocation().getX(), this.getViewLocation().getY(), this.width, this.height);
+			this.getViewLocation().setX(this.getViewLocation().getX() + 30);
 		}
 		else {
 			this.setWallState(GabPUState.POWER_UP);

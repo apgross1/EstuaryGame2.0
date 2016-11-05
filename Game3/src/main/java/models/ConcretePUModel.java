@@ -116,9 +116,10 @@ public class ConcretePUModel extends WallModelAbstract {
 	public void setPickedUp(boolean isPickedUp) {
 		if(isPickedUp) {
 			this.setWallState(ConcPUState.WALL);
+			System.out.println("In wall form");
 			this.width = 70;
 			this.height = 150;
-			this.setBounds(this.getViewLocation().getX(), this.getViewLocation().getY(), this.width, this.height);
+			this.getViewLocation().setX(this.getViewLocation().getX() + 30);
 		}
 		else {
 			this.setWallState(ConcPUState.POWER_UP);
