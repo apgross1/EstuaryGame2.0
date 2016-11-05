@@ -35,7 +35,10 @@ public class Game3Controller implements KeyListener {
 	
 	
 	public Game3Controller() {
-		setAnimal(new AnimalModelG3());
+		AnimalModelG3 a = new AnimalModelG3();
+		a.setLocX(250);
+		a.setLocY(250);
+		setAnimal(a);
 		setBeach(new BeachModel());
 		setSandPatch(new GridBlock());
 		setWater(new WaterModel());

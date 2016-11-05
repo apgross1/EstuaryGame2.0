@@ -117,7 +117,7 @@ public class Game3View extends JPanel implements KeyListener{
 			}
 			if(wave.getLocation().getX() > -5) {
 				g.setColor(Color.BLUE);
-				g.fillRect((int)wave.getBounds().getMaxX(), (int)wave.getBounds().getMaxY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
+				g.fillRect((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
 			}
 		}
 	}
@@ -126,7 +126,7 @@ public class Game3View extends JPanel implements KeyListener{
 		@Override
 		public void paint(Graphics g) {
 			g.setColor(Color.MAGENTA);
-			g.fillRect((int)controller.getAnimal().getBounds().getMaxX(),(int) controller.getAnimal().getBounds().getMaxY(),(int) controller.getAnimal().getBounds().getWidth(), (int)controller.getAnimal().getBounds().getHeight());
+			g.fillRect((int)controller.getAnimal().getBounds().getX(),(int) controller.getAnimal().getBounds().getY(),(int) controller.getAnimal().getBounds().getWidth(), (int)controller.getAnimal().getBounds().getHeight());
 		
 			
 		}
@@ -167,12 +167,12 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			if(gridBlock.getConcrPU().getIsActive()) {
 				g.setColor(Color.RED);
-				g.fillRect(0+gridBlock.getConcrPU().getViewLocation().getX(), gridBlock.getConcrPU().getViewLocation().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
+				g.fillRect(gridBlock.getConcrPU().getLocation().getX(), gridBlock.getConcrPU().getLocation().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
 			}
 			
 			else if(gridBlock.getGabPU().getIsActive()) {
 				g.setColor(Color.DARK_GRAY);
-				g.fillRect(0+gridBlock.getGabPU().getViewLocation().getX(), gridBlock.getGabPU().getViewLocation().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
+				g.fillRect(gridBlock.getGabPU().getLocation().getX(), gridBlock.getGabPU().getLocation().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
 			}
 		}
 	}
@@ -193,7 +193,7 @@ public class Game3View extends JPanel implements KeyListener{
 	        	if(controller.getAnimal().getCurrDir() != Direction.NORTH){
 	        		controller.getAnimal().setCurrDir(Direction.NORTH);
 	        	}
-	        	if(controller.getAnimal().getLocY() > 0){
+	        	if(controller.getAnimal().getBounds().getY() > 0){
 	        		controller.getAnimal().move();
 	        	}
 	            break;
@@ -202,7 +202,7 @@ public class Game3View extends JPanel implements KeyListener{
 	        	if(controller.getAnimal().getCurrDir() != Direction.SOUTH){
 	        		controller.getAnimal().setCurrDir(Direction.SOUTH);
 	        	}
-	        	if(controller.getAnimal().getLocY() < 541){
+	        	if(controller.getAnimal().getBounds().getY() < 605){
 	        		controller.getAnimal().move();
 	        	}
 	            break;
@@ -211,7 +211,7 @@ public class Game3View extends JPanel implements KeyListener{
 	        	if(controller.getAnimal().getCurrDir() != Direction.WEST){
 	        		controller.getAnimal().setCurrDir(Direction.WEST);
 	        	}
-	        	if(controller.getAnimal().getLocX() > 0){
+	        	if(controller.getAnimal().getBounds().getX() > 0){
 	        		controller.getAnimal().move();
 	        	}
 	            break;
@@ -220,7 +220,7 @@ public class Game3View extends JPanel implements KeyListener{
 	        	if(controller.getAnimal().getCurrDir() != Direction.EAST){
 	        		controller.getAnimal().setCurrDir(Direction.EAST);
 	        	}
-	        	if(controller.getAnimal().getLocX() < 771){
+	        	if(controller.getAnimal().getBounds().getX() < 835){
 	        		controller.getAnimal().move();
 	        	}
 	            break;
