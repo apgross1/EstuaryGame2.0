@@ -11,6 +11,7 @@ public class WaveModel {
 	private int height = 15;
 	private int width = 15;
 	private Pair location;
+	private boolean receed = false;
 	
 	public WaveModel() {
 		this.randomSpawn();
@@ -27,7 +28,13 @@ public class WaveModel {
 	ActionListener movementTimer = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			location.setX(location.getX()-5);
+			if(!isReceed()) {
+				location.setX(location.getX()-5);
+			}
+			else {
+				location.setX(location.getX()+5);
+			}
+			
 			Object time = e.getSource();
 			Timer myTime = (Timer) time;
 		}
@@ -65,6 +72,14 @@ public class WaveModel {
 
 	public void setLocation(Pair location) {
 		this.location = location;
+	}
+
+	public boolean isReceed() {
+		return receed;
+	}
+
+	public void setReceed(boolean receed) {
+		this.receed = receed;
 	}
 
 }

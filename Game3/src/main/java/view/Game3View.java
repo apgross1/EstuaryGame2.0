@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,9 +39,11 @@ public class Game3View extends JPanel implements KeyListener{
 	private Game3Controller controller;
 	private HashMap componentMap;
 	private JFrame frame = new JFrame();
+	private ArrayList<GridTile> powerUps;
 	//private JPanel action_pannel = new JPanel();
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	JLayeredPane layoutContainer = new JLayeredPane();
+	
     //final static int frameWidth = 800;
     //final static int frameHeight = 800;
 	
@@ -57,7 +60,7 @@ public class Game3View extends JPanel implements KeyListener{
 		play_ground.setSize(1000, 700);
 		play_ground.setBackground(Color.WHITE);
 		
-		
+		powerUps = new ArrayList<GridTile>();
     	
     	//Panes
 		//For animal movement
@@ -74,6 +77,7 @@ public class Game3View extends JPanel implements KeyListener{
 			
 			SandWater gridBlock = new SandWater(currBlock);
 			GridTile powerUp = new GridTile(currBlock);
+			powerUps.add(powerUp);
 		    powerUp.setBounds((int)currBlock.getBounds().getX(), (int)currBlock.getBounds().getY(), 835, 605);
 			layoutContainer.add(powerUp, new Integer(2),-1);
 		    beachOverlay.add(gridBlock);
@@ -114,7 +118,23 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			if(wave.getBounds().intersects(controller.getAnimal().getBounds())) {
 				System.out.println("Hit!");
+				controller.setGameActive(false);
 			}
+			for(GridTile gr : powerUps) {
+				ConcretePUModel conc = gr.getGridBlock().getConcrPU();
+				GabionPUModel gab = gr.getGridBlock().getGabPU();
+				if(conc.getIsActive() & conc.isPickedUp()) {
+					if(conc.getBounds().intersects(wave.getBounds())) {
+						wave.setReceed(true);
+					}
+				}
+				else if (gab.getIsActive() & gab.isPickedUp()) {
+					if(gab.getBounds().intersects(wave.getBounds())) {
+						wave.setReceed(true);
+					}
+				}
+			}
+			
 			if(wave.getLocation().getX() > -5) {
 				g.setColor(Color.BLUE);
 				g.fillRect((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
@@ -162,6 +182,9 @@ public class Game3View extends JPanel implements KeyListener{
 		private GridBlock gridBlock;
 		public GridTile(GridBlock g) {
 			gridBlock = g;
+		}
+		public GridBlock getGridBlock() {
+			return gridBlock;
 		}
 		@Override
 		public void paint(Graphics g) {
