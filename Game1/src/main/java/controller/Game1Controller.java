@@ -123,7 +123,7 @@ public class Game1Controller{
 			collisionDetectionLoop();
 			g1view.repaintFrame();
 		}
-		gameTime = 0; // Set the time to 0 for the final repaint.
+		gameTime = 30000; // Set the time to 30000 so the repaint says 0 time remaining.
 		//Caclulate score and then reset for round 2
 		//math fn
 		takeDamage();

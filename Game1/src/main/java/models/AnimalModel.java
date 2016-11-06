@@ -35,9 +35,26 @@ public class AnimalModel extends AnimalModelAbstract {
 	
 	@Override
 	public void move() {
-		//Set conditions for bounds....
-		this.setLocY(this.getLocY() + speedY);
-		this.setLocX(this.getLocX() + speedX);
+		if(getCurrDir() == Direction.EAST){
+			if(getLocX() < 890 + speedX){
+			this.setLocX(this.getLocX() + speedX);
+			}
+		}
+		if(getCurrDir() == Direction.WEST){
+			if(getLocX() > 0 + speedX){
+			this.setLocX(this.getLocX() + speedX);
+			}
+		}
+		if(getCurrDir() == Direction.NORTH){
+			if(getLocY() + speedY >= 50){
+				this.setLocY(this.getLocY() + speedY);
+			}
+		}
+		if(getCurrDir() == Direction.SOUTH){
+			if(getLocY() + speedY <= 570){
+				this.setLocY(this.getLocY() + speedY);
+			}
+		}
 	}
 	
 	
@@ -48,19 +65,11 @@ public class AnimalModel extends AnimalModelAbstract {
 	
 	@Override
 	public void healthUp() {
-		if(getHealth() < 100){
-			setHealth(getHealth()+1); //Do we want to change the increase and make it more siginificant?
-		}
 	}
 	@Override
 	public void healthDown() {
-		if(getHealth() >= 1){
-			setHealth(getHealth()-1);
-		}
 	}
 	@Override
 	public void pickUp() {
-		//This function is not needed as we're not actually picking anything up.. Collision will be taken care of in the controller which will tell
-		//the model for each type of wall / gabion to update.
 	}
 }
