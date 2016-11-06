@@ -125,7 +125,7 @@ public class Game1Controller{
 		}
 		gameTime = 30000; // Set the time to 30000 so the repaint says 0 time remaining.
 		//Caclulate score and then reset for round 2
-		//math fn
+		//math fn 
 		takeDamage();
 		//one more paint
 		g1view.repaintFrame();

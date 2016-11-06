@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,6 +12,7 @@ import java.awt.event.KeyListener;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,49 +25,81 @@ import models.ConcreteWallModelG1.ConcreteChunk;
 import models.GabionWallModelG1.GabionChunk;
 
 public class Game1View extends JPanel implements KeyListener{
-	private int damageLevel;
-	private Game1Controller controller;
-	private JFrame frame = new JFrame();
-	private JPanel bar_pannel = new JPanel();
-	private JPanel play_ground = new JPanel();
+    private int damageLevel;
+    private Game1Controller controller;
+    private JFrame frame = new JFrame();
+    private JPanel bar_pannel = new JPanel();
+    private JPanel play_ground = new JPanel();
+    private JPanel gab_wall = new JPanel();
+    private JPanel conc_wall = new JPanel();
+    private JPanel estuary = new JPanel();
+    private JPanel super_panel = new JPanel();
 
 	public Game1View(Game1Controller ctl){
-		controller = ctl;
-
-    	frame = new JFrame();
-    	frame.getContentPane().add(new Animation());
-    	frame.setBackground(Color.gray);
-
-    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	frame.setSize(1000, 700);
-    	frame.setVisible(true);
-    	frame.setResizable(false);
-   
-		bar_pannel.setSize(1000, 50);
-		bar_pannel.setBackground(Color.BLACK);
-		bar_pannel.setVisible(true);
-    	
-		play_ground.setSize(1000, 500);
-		play_ground.setBackground(Color.BLUE);
-		play_ground.setVisible(true);
-		
-    	
-    	//Panes
-    	JSplitPane view = new  JSplitPane();
-    	view.setSize(1000, 550);
-    	view.setDividerSize(5);
-    	view.setDividerLocation(50);
-    	view.setEnabled(false);
-    	
-    	view.setOrientation(JSplitPane.VERTICAL_SPLIT);
-    	view.setTopComponent(bar_pannel);
-    	view.setBottomComponent(play_ground);
-    	
-    	frame.add(view);
-    	
-    	//addKeyListener
-    	frame.addKeyListener(this);
-	}
+        controller = ctl;
+ 
+        frame = new JFrame();
+        frame.getContentPane().add(new Animation());
+        frame.setBackground(Color.gray);
+ 
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1000, 700);
+        frame.setVisible(true);
+        frame.setResizable(false);
+       
+        super_panel.setSize(1000,700);
+        super_panel.setBackground(Color.CYAN);
+        super_panel.setVisible(true);
+        super_panel.setLayout(new BoxLayout(super_panel, BoxLayout.Y_AXIS));
+        frame.add(super_panel);
+       
+       
+        bar_pannel.setPreferredSize(new Dimension(1000, 50));
+        bar_pannel.setBackground(Color.BLACK);
+        bar_pannel.setVisible(true);
+        //bar_pannel.setLayout(new BoxLayout(bar_pannel, BoxLayout.LINE_AXIS));
+       
+        play_ground.setPreferredSize(new Dimension(1000, 400));
+        play_ground.setBackground(Color.BLUE);
+        play_ground.setVisible(true);
+        //play_ground.setLayout(new BoxLayout(play_ground, BoxLayout.LINE_AXIS));
+       
+        gab_wall.setPreferredSize(new Dimension(1000, 50));
+        gab_wall.setBackground(Color.RED);
+        gab_wall.setVisible(true);
+       
+        conc_wall.setPreferredSize(new Dimension(1000, 50));
+        conc_wall.setBackground(Color.GREEN);
+        conc_wall.setVisible(true);
+       
+        estuary.setPreferredSize(new Dimension(1000, 100));
+        estuary.setBackground(Color.GRAY);
+        estuary.setVisible(true);
+       
+        super_panel.add(bar_pannel);
+        super_panel.add(estuary);
+        super_panel.add(gab_wall);
+        super_panel.add(conc_wall);
+        super_panel.add(play_ground);
+ 
+       
+       
+        /*//Panes
+        JSplitPane view = new  JSplitPane();
+        view.setSize(1000, 550);
+        view.setDividerSize(5);
+        view.setDividerLocation(50);
+        view.setEnabled(false);
+       
+        view.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        view.setTopComponent(bar_pannel);
+        view.setBottomComponent(play_ground);
+       
+        frame.add(view);*/
+       
+        //addKeyListener
+        frame.addKeyListener(this);
+    }
  
 	
 	public void repaintFrame(){
