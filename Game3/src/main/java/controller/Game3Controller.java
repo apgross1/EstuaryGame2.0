@@ -30,6 +30,7 @@ public class Game3Controller implements KeyListener {
 	private BeachModel beach;
 	private GridBlock sandPatch;
 	private WaterModel water;
+
 	private Timer timer;
 	private long startTime;
 	private int updates = 0;
@@ -37,13 +38,14 @@ public class Game3Controller implements KeyListener {
 	
 	
 	public Game3Controller() {
-		setAnimal(new AnimalModelG3());
+		AnimalModelG3 a = new AnimalModelG3();
+		a.setLocX(250);
+		a.setLocY(250);
+		setAnimal(a);
 		setBeach(new BeachModel());
 		setSandPatch(new GridBlock());
 		setWater(new WaterModel());
 		view = new Game3View(this);
-
-		
 	}
 	
 	public void runGame()  {
@@ -57,6 +59,7 @@ public class Game3Controller implements KeyListener {
 		
 		Random die = new Random();
 		int triggerSpawn = 4;
+		int triggerWave = 45;
 		while(getgameActive()) {
 			long now = System.nanoTime();
 			delta += (now-lastTime)/ns;
@@ -76,13 +79,15 @@ public class Game3Controller implements KeyListener {
 			}
 
 			if(triggerSpawn == die.nextInt(700000)) {
-				System.out.println("Does this always");
 				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
-					System.out.println("Print in tandem?");
 					getBeach().spawnConcrPU(getBeach().generatePPUL());
 					getBeach().spawnGabPU(getBeach().generatePPUL());
 					this.powerUpSpawned();
 				}	
+			}
+			
+			if(triggerWave == die.nextInt(3200000)) {
+				this.view.generateWaveCluster();
 			}
 			if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair()))).getConcrPU().getIsActive() && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()); {
 				this.collisionPowerUps();
@@ -103,7 +108,6 @@ public class Game3Controller implements KeyListener {
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setIsActive(false);
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).setVacant(true);
 			
-			//beach.getBeachGrid().get(beach.findPairInGrid(beach.getBlockWithConc().getLocation())).getConcrPU().setPickedUp(false);
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setActive(false);
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setPickedUp(false);
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).setVacant(true);
@@ -166,7 +170,7 @@ public class Game3Controller implements KeyListener {
 	public void collisionPowerUps(){
 		//Gabion wall collision works (to a degree) Concrete doesn't though
 		if ((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive()) & beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().isPickedUp() == false) {
-			if (animal.getBounds().intersects(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getBounds())) {
+			if (animal.getBounds().contains(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getBounds())) {
 				System.out.println("Intersection between concrete and animal");
 				timer.stop();
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setPickedUp(true);
@@ -180,7 +184,7 @@ public class Game3Controller implements KeyListener {
 			}
 		}
 		if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()) &  beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().isPickedUp() == false) {
-			if (animal.getBounds().intersects(beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getBounds())) {
+			if (animal.getBounds().contains(beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getBounds())) {
 				System.out.println("Intersection between gab and animal");
 				timer.stop();
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setPickedUp(true);
@@ -195,7 +199,7 @@ public class Game3Controller implements KeyListener {
 		}
 	}
 	
-	
+
 	public void collisionDetectionLoop(){
 		
 	}

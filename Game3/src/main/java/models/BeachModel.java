@@ -95,7 +95,7 @@ public class BeachModel {
 	public void removeSquare(Pair waterLoc) {
 		beachGrid.get(this.findPairInGrid(waterLoc)).setWater(new WaterModel(waterLoc), waterLoc);
 		
-		positionGrid[waterLoc.getX()][waterLoc.getY()] = Waves.WAVE_GAME3.getValue();
+		positionGrid[waterLoc.getX()][waterLoc.getY()] = Waves.WAVE_GAME3.getWaveID();
 	}
 	
 	
