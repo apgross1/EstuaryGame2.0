@@ -31,6 +31,11 @@ public class Game3Controller implements KeyListener {
 	private GridBlock sandPatch;
 	private WaterModel water;
 	private Timer timer;
+	private long startTime;
+	private int updates = 0;
+	private int frames = 0;
+	private long gameTime = System.nanoTime();
+	
 	
 	
 	public Game3Controller() {
@@ -45,9 +50,44 @@ public class Game3Controller implements KeyListener {
 	
 	public void runGame()  {
 		this.setGameActive(true);
+		startTime = System.currentTimeMillis();
+		long lastTime = System.nanoTime();
+		final double ammountOfTicks = 60.0;	
+		double ns = 1000000000 /ammountOfTicks;
+		double delta = 0;
+		
+		//long stopwatch = System.currentTimeMillis();
+		
 		Random die = new Random();
 		int triggerSpawn = 4;
 		while(getgameActive()) {
+			long startTime = System.currentTimeMillis(); //fetch starting time
+
+			
+
+			while((System.currentTimeMillis()-startTime)<3000){
+
+				gameTime = (System.currentTimeMillis() - startTime); //Used to print on screen
+
+				long now = System.nanoTime();
+
+				delta += (now-lastTime)/ns;
+
+				lastTime=now;
+
+				if(delta>=1){
+
+					animal.move();
+
+					view.repaintAll();
+
+					delta--;
+
+				}
+			}
+
+				
+			
 			if(triggerSpawn == die.nextInt(700000)) {
 				System.out.println("Does this always");
 				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
@@ -63,6 +103,7 @@ public class Game3Controller implements KeyListener {
 			this.view.repaintAll();
 			
 		}
+	
 	}
 
 	ActionListener powerUpSpawnTimerListener = new ActionListener() {
@@ -109,6 +150,8 @@ public class Game3Controller implements KeyListener {
 			myTime.stop();
 		}
 	};
+	
+	
 	
 	
 	//Duration for which power-up is available to be picked up

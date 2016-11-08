@@ -16,6 +16,8 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private boolean isDead;
 	private int height;
 	private int width;
+	private int speedX;
+	private int speedY;
 	
 
 
@@ -23,12 +25,14 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	public AnimalModelG3() {
 		this.setHeight(60);
 		this.setWidth(60);
+		this.setCurrDir(Direction.STILL);
 	}
 	
-	/*public void tick(){
-		this.setLocX(this.getLocX()  );
-		this.setLocY(this.getLocY()  );
-	}*/
+	public void tick(){
+		this.setLocX(this.getLocX() + speedX  );
+		this.setLocY(this.getLocY() + speedY );
+	}
+	
 	@Override
 	public void healthUp() {
 		
@@ -61,6 +65,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		return health;
 	}
 	
+	//Body may need to be deleted
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
@@ -119,5 +124,21 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	}
 	public void setWidth(int width) {
 		this.width = width;
+	}
+
+	public int getSpeedX() {
+		return speedX;
+	}
+
+	public void setSpeedX(int speed) {
+		this.speedX = speed;
+	}
+	
+	public int getSpeedY() {
+		return speedY;
+	}
+
+	public void setSpeedY(int speed) {
+		this.speedY = speed;
 	}
 }
