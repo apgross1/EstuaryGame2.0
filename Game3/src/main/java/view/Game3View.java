@@ -37,19 +37,16 @@ import models.WaveModel;
 
 public class Game3View extends JPanel implements KeyListener{
 	private Game3Controller controller;
-	private HashMap componentMap;
+	private HashMap<Integer, Wave> componentMap;
 	private JFrame frame = new JFrame();
 	private ArrayList<GridTile> powerUps;
-	//private JPanel action_pannel = new JPanel();
+	
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	JLayeredPane layoutContainer = new JLayeredPane();
-	
-    //final static int frameWidth = 800;
-    //final static int frameHeight = 800;
-	
+
 	public Game3View(Game3Controller ctl){
 		controller = ctl;
-
+		componentMap = new HashMap<Integer,Wave>();
     	frame = new JFrame();
     	frame.setBackground(Color.gray);
 
@@ -111,33 +108,46 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	public class Wave extends JComponent {
 		public WaveModel wave;
+		public boolean waveGone;
 		public Wave(WaveModel wave) {
 			this.wave = wave;
+			waveGone = false;
 		}
 		@Override
 		public void paint(Graphics g) {
-			if(wave.getBounds().intersects(controller.getAnimal().getBounds())) {
-				System.out.println("Hit!");
-				controller.setGameActive(false);
-			}
-			for(GridTile gr : powerUps) {
-				ConcretePUModel conc = gr.getGridBlock().getConcrPU();
-				GabionPUModel gab = gr.getGridBlock().getGabPU();
-				if(conc.getIsActive() & conc.isPickedUp()) {
-					if(conc.getBounds().intersects(wave.getBounds())) {
+			if(!this.waveGone) {
+				if(wave.getBounds().intersects(controller.getAnimal().getBounds())) {
+					System.out.println("Hit!");
+					controller.setGameActive(false);
+				}
+				for(GridTile gr : powerUps) {
+					ConcretePUModel conc = gr.getGridBlock().getConcrPU();
+					GabionPUModel gab = gr.getGridBlock().getGabPU();
+					if(conc.getIsActive() & conc.isPickedUp()) {
+						if(conc.getBounds().intersects(wave.getBounds())) {
+							wave.setReceed(true);
+						}
+					}
+					else if (gab.getIsActive() & gab.isPickedUp()) {
+						if(gab.getBounds().intersects(wave.getBounds())) {
+							wave.setReceed(true);
+						}
+					}
+					else if(wave.getBounds().getX() < 10) {
 						wave.setReceed(true);
 					}
 				}
-				else if (gab.getIsActive() & gab.isPickedUp()) {
-					if(gab.getBounds().intersects(wave.getBounds())) {
-						wave.setReceed(true);
-					}
+				
+				if((wave.getLocation().getX() > -5) && wave.getLocation().getX() < 2000) {
+					g.setColor(Color.BLUE);
+					g.fillRect((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
 				}
-			}
-			
-			if(wave.getLocation().getX() > -5) {
-				g.setColor(Color.BLUE);
-				g.fillRect((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
+				else {
+					layoutContainer.remove(componentMap.get(this.hashCode()));
+					componentMap.remove(this.hashCode());
+					wave = null;
+					this.waveGone = true;
+				}
 			}
 		}
 	}
@@ -199,12 +209,22 @@ public class Game3View extends JPanel implements KeyListener{
 			}
 		}
 	}
-	 
-	public void addWave(WaveModel w) {
+	
+	public void generateWaveCluster() {
+		int randCluster = 3 + (int)(Math.random() * ((9 - 3) + 1));
+		System.out.println(randCluster);
+		for(int i = 0; i < 500; i++) {
+			WaveModel wave = new WaveModel(randCluster);
+			addWave(wave, randCluster);
+		}
+	}
+	
+	public void addWave(WaveModel w, int clusterVal) {
 		WaveModel waveM = w;
-		waveM.randomSpawn();
+		waveM.randomSpawn(clusterVal);
 		Wave wave = new Wave(waveM);
 		wave.setBounds(0, 0, 1000, 700);
+		componentMap.put(wave.hashCode(), wave);
 		this.layoutContainer.add(wave, new Integer(2), 1);
 	}
 	@Override
@@ -281,12 +301,6 @@ public class Game3View extends JPanel implements KeyListener{
 	public HashMap getComponentMap() {
 		
 		return componentMap;
-	}
-
-
-	public void createComponentMap(String name) {
-		componentMap = new HashMap<String, Component>();
-		
 	}
 
 	/*

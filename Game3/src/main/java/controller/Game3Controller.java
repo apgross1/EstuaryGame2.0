@@ -43,8 +43,6 @@ public class Game3Controller implements KeyListener {
 		setSandPatch(new GridBlock());
 		setWater(new WaterModel());
 		view = new Game3View(this);
-
-		
 	}
 	
 	public void runGame()  {
@@ -61,8 +59,8 @@ public class Game3Controller implements KeyListener {
 				}	
 			}
 			
-			if(triggerWave == die.nextInt(350000)) {
-				this.view.addWave(new WaveModel());
+			if(triggerWave == die.nextInt(3200000)) {
+				this.view.generateWaveCluster();
 			}
 			if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair()))).getConcrPU().getIsActive() && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()); {
 				this.collisionPowerUps();
