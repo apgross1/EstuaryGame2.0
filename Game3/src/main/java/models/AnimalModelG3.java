@@ -25,12 +25,16 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	public AnimalModelG3() {
 		this.setHeight(60);
 		this.setWidth(60);
-		this.setCurrDir(Direction.STILL);
 	}
 	
 	public void tick(){
-		this.setLocX(this.getLocX() + speedX  );
-		this.setLocY(this.getLocY() + speedY );
+		if ((getLocY() + speedY >= -60 & getLocX() + speedX >= -60) && (getLocY() + speedY <= 570 & getLocX()+ speedX < 776) ) {
+			this.setLocX(this.getLocX() + speedX);
+			this.setLocY(this.getLocY() + speedY);
+		}
+		else{
+			
+		}
 	}
 	
 	@Override
@@ -69,36 +73,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
-		switch(this.getCurrDir()){
-			case NORTH:
-				this.setLocY(this.getLocY() - 5);
-				break;
-			case SOUTH:
-				this.setLocY(this.getLocY() + 5);
-				break;
-			case EAST:
-				this.setLocX(this.getLocX() + 5);
-				break;
-			case WEST:
-				this.setLocX(this.getLocX() - 5);
-				break;
-			case NORTH_EAST:
-				this.setLocX(this.getLocX() + 1);
-				this.setLocY(this.getLocY() - 1);
-				break;
-			case NORTH_WEST:
-				this.setLocX(this.getLocX() - 1);
-				this.setLocY(this.getLocY() - 1);
-				break;
-			case SOUTH_EAST:
-				this.setLocX(this.getLocX() + 1);
-				this.setLocY(this.getLocY() + 1);
-				break;
-			case SOUTH_WEST:
-				this.setLocX(this.getLocX() - 1);
-				this.setLocY(this.getLocY() + 1);
-				break;
-		}
 		
 	}
 

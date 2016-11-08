@@ -159,57 +159,27 @@ public class Game3View extends JPanel implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 	    int keyCode = e.getKeyCode();
-	    System.out.println("movement");
 	    switch( keyCode ) {
 	        case KeyEvent.VK_UP:
+	        	controller.getAnimal().setCurrDir(Direction.NORTH);
 	        	controller.getAnimal().setSpeedY(-5);
-	            /*// handle up 
-	        	if(controller.getAnimal().getCurrDir() != Direction.NORTH){
-	        		controller.getAnimal().setCurrDir(Direction.NORTH);
-	        		
-	        	}
-	        	if(controller.getAnimal().getLocY() > 0){
-	        		controller.getAnimal().move();
-	        	}*/
 	            break;
 	        case KeyEvent.VK_DOWN:
-	        	controller.getAnimal().setLocY(5);
-	            /*// handle down 
-	        	if(controller.getAnimal().getCurrDir() != Direction.SOUTH){
-	        		controller.getAnimal().setCurrDir(Direction.SOUTH);
-	        	}
-	        	if(controller.getAnimal().getLocY() < 700){
-	        		controller.getAnimal().move();
-	        	}*/
+	        	controller.getAnimal().setCurrDir(Direction.SOUTH);
+	        	controller.getAnimal().setSpeedY(5);
 	            break;
 	        case KeyEvent.VK_LEFT:
+	        	controller.getAnimal().setCurrDir(Direction.WEST);
 	        	controller.getAnimal().setSpeedX(-5);
-	           /* // handle left
-	        	if(controller.getAnimal().getCurrDir() != Direction.WEST){
-	        		controller.getAnimal().setCurrDir(Direction.WEST);
-	        	}
-	        	if(controller.getAnimal().getLocX() > 0){
-	        		controller.getAnimal().move();
-	        	}*/
 	            break;
 	        case KeyEvent.VK_RIGHT :
+	        	controller.getAnimal().setCurrDir(Direction.EAST);
 	        	controller.getAnimal().setSpeedX(5);
-	            /*// handle right
-	        	if(controller.getAnimal().getCurrDir() != Direction.EAST){
-	        		controller.getAnimal().setCurrDir(Direction.EAST);
-	        	}
-	        	if(controller.getAnimal().getLocX() < 1000){
-	        		controller.getAnimal().move();
-	        	}*/
 	            break;
 	        case KeyEvent.VK_SPACE :
 	        	System.out.println("This is a temp key event to end the game (set bool gameActive in controller to false)");
 	        	controller.setGameActive(false);
 	            break;
-	        //case KeyEvent.KEY_RELEASED:
-	        	//controller.getAnimal().setSpeedX(0);
-	        	//controller.getAnimal().setSpeedY(0);
-	        	//break;
 	    }
 	}
 	
@@ -227,44 +197,26 @@ public class Game3View extends JPanel implements KeyListener{
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		int keyCode = e.getKeyCode();
-		System.out.println("freeze");
 	    switch( keyCode ) {
-
 	        case KeyEvent.VK_UP:
-
 	            // handle up 
-
 	        	controller.getAnimal().setSpeedY(0);
-
 	            break;
-
 	        case KeyEvent.VK_DOWN:
-
 	            // handle down 
-
 	        	controller.getAnimal().setSpeedY(0);
-
 	            break;
-
 	        case KeyEvent.VK_LEFT:
-
 	            // handle left
-
 	        	controller.getAnimal().setSpeedX(0);
-
 	            break;
-
 	        case KeyEvent.VK_RIGHT :
-
 	            // handle right
-
 	        	controller.getAnimal().setSpeedX(0);
-
 	            break;
-
 	    }
 
-		
+	
 	}
 
 
@@ -272,27 +224,7 @@ public class Game3View extends JPanel implements KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		int keyCode = e.getKeyCode();
-		switch (keyCode) {
-		case KeyEvent.VK_UP:
-			// handle up
-			controller.getAnimal().setSpeedY(0);
-			break;
-
-		case KeyEvent.VK_DOWN:
-			// handle down
-			controller.getAnimal().setSpeedY(0);
-			break;
-
-		case KeyEvent.VK_LEFT:
-			// handle left
-			controller.getAnimal().setSpeedX(0);
-			break;
-		case KeyEvent.VK_RIGHT:
-			// handle right
-			controller.getAnimal().setSpeedX(0);
-			break;
-		}
+		
 	}
 
 	/*

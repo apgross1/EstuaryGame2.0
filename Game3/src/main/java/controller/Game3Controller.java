@@ -33,9 +33,7 @@ public class Game3Controller implements KeyListener {
 	private Timer timer;
 	private long startTime;
 	private int updates = 0;
-	private int frames = 0;
-	private long gameTime = System.nanoTime();
-	
+	private int frames = 0;	
 	
 	
 	public Game3Controller() {
@@ -55,39 +53,28 @@ public class Game3Controller implements KeyListener {
 		final double ammountOfTicks = 60.0;	
 		double ns = 1000000000 /ammountOfTicks;
 		double delta = 0;
-		
-		//long stopwatch = System.currentTimeMillis();
+		long timer2 = System.currentTimeMillis();
 		
 		Random die = new Random();
 		int triggerSpawn = 4;
 		while(getgameActive()) {
-			long startTime = System.currentTimeMillis(); //fetch starting time
-
-			
-
-			while((System.currentTimeMillis()-startTime)<3000){
-
-				gameTime = (System.currentTimeMillis() - startTime); //Used to print on screen
-
-				long now = System.nanoTime();
-
-				delta += (now-lastTime)/ns;
-
-				lastTime=now;
-
-				if(delta>=1){
-
-					animal.move();
-
-					view.repaintAll();
-
-					delta--;
-
-				}
+			long now = System.nanoTime();
+			delta += (now-lastTime)/ns;
+			lastTime=now;
+			if(delta>=1){
+				animal.tick();
+				view.repaintAll();
+				updates++;
+				delta--;
+			}
+			frames++;
+			if(System.currentTimeMillis()-timer2>1000){
+				timer2 +=1000;
+				System.out.println(updates + " Ticks, FPS " + frames);
+				updates = 0;
+				frames = 0;
 			}
 
-				
-			
 			if(triggerSpawn == die.nextInt(700000)) {
 				System.out.println("Does this always");
 				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
