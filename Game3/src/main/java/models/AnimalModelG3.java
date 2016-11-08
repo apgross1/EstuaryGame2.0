@@ -72,10 +72,11 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	//Body may need to be deleted
 	@Override
 	public void move() {
-		// TODO Auto-generated method stub
-		System.out.println("Animal at: " + "(" + this.getBounds().getX() + "," + this.getBounds().getY() + ")");
 		
 	}
+
+		
+	
 
 	public boolean isDead() {
 		return isDead;

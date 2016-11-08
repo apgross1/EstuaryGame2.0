@@ -5,10 +5,10 @@ package models;
 import java.awt.Rectangle;
 
 import java.awt.event.ActionEvent;
-
 import java.awt.event.ActionListener;
 
 import java.util.Random;
+
 
 
 
@@ -18,44 +18,30 @@ import javax.swing.Timer;
 
 import enums.Waves;
 
-
-
 public class WaveModel {
 
 	private int height = 15;
-
 	private int width = 15;
-
 	private Pair location;
-
 	private boolean receed = false;
-
 	private double accelerator = 1.01;
-
 	private double movement = 3;
-
 	
 
+	
 	public WaveModel(int clusterVal) {
-
 		this.randomSpawn(clusterVal);
-
 		this.move();
-
 	}
 
 	
 
 	public void randomSpawn(int clusterVal) {
-
 		Waves waveEnum = Waves.values()[clusterVal];
-
 		location = new Pair(0,0);
 
 		location.setX(900 + (int)(Math.random() * ((2000 - 900) + 1)));
-
 		location.setY(waveEnum.getMinY() + (int)(Math.random() * (((waveEnum.getMaxY()) - waveEnum.getMinY()) + 1)));
-
 	}
 
 	
@@ -109,11 +95,8 @@ public class WaveModel {
 	public void move() {
 
 		Timer timer = new Timer(50, movementTimer);
-
 		timer.setRepeats(true);
-
 		timer.start();
-
 	}
 
 	
@@ -172,38 +155,20 @@ public class WaveModel {
 
 	}
 
-
-
 	public boolean isReceed() {
-
 		return receed;
-
 	}
-
-
 
 	public void setReceed(boolean receed) {
-
 		this.receed = receed;
-
 	}
-
-
 
 	public double getAccelerator() {
-
 		return accelerator;
-
 	}
-
-
 
 	public void setAccelerator(double accelerator) {
-
 		this.accelerator = accelerator;
-
 	}
-
-
 
 }

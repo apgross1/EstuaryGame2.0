@@ -213,35 +213,21 @@ public class Game3View extends JPanel implements KeyListener{
 	public void generateWaveCluster() {
 
 		int randCluster = 3 + (int)(Math.random() * ((9 - 3) + 1));
-
 		System.out.println(randCluster);
-
 		for(int i = 0; i < 500; i++) {
-
 			WaveModel wave = new WaveModel(randCluster);
-
 			addWave(wave, randCluster);
-
 		}
-
 	}
-	 
+	
 	public void addWave(WaveModel w, int clusterVal) {
-
 		WaveModel waveM = w;
-
 		waveM.randomSpawn(clusterVal);
-
 		Wave wave = new Wave(waveM);
-
 		wave.setBounds(0, 0, 1000, 700);
-
 		componentMap.put(wave.hashCode(), wave);
-
 		this.layoutContainer.add(wave, new Integer(2), 1);
-
 	}
-	 //may need to delete part of body 
 	@Override
 	public void keyPressed(KeyEvent e) {
 	    int keyCode = e.getKeyCode();

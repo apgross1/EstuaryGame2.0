@@ -116,9 +116,10 @@ public class ConcretePUModel extends WallModelAbstract {
 	public void setPickedUp(boolean isPickedUp) {
 		if(isPickedUp) {
 			this.setWallState(ConcPUState.WALL);
+			System.out.println("In wall form");
 			this.width = 70;
 			this.height = 150;
-			this.setBounds(this.getViewLocation().getX(), this.getViewLocation().getY(), this.width, this.height);
+			this.getViewLocation().setX(this.getViewLocation().getX() + 30);
 		}
 		else {
 			this.setWallState(ConcPUState.POWER_UP);
@@ -133,8 +134,9 @@ public class ConcretePUModel extends WallModelAbstract {
 	}
 	public void setViewLocation(Pair viewLocation) {
 		Random rand = new Random();
-		this.viewLocation.setX((int)((this.location.getX()*100)/1.107));
-		this.viewLocation.setY((int)(this.location.getY()*(700/8)/1.208));
+		this.viewLocation.setX((int)((this.location.getX()))*rand.nextInt(100));
+		this.viewLocation.setY((int)(this.location.getY())*rand.nextInt(70));
+		System.out.println("Concrete at: (" + this.getViewLocation().getX() + "," + this.getViewLocation().getY() + ")");
 		
 		
 	}
