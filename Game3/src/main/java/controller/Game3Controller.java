@@ -73,7 +73,6 @@ public class Game3Controller implements KeyListener {
 			frames++;
 			if(System.currentTimeMillis()-timer2>1000){
 				timer2 +=1000;
-				System.out.println(updates + " Ticks, FPS " + frames);
 				updates = 0;
 				frames = 0;
 			}

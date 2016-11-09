@@ -28,7 +28,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	}
 	
 	public void tick(){
-		if ((getLocY() + speedY >= -60 & getLocX() + speedX >= -60) && (getLocY() + speedY <= 570 & getLocX()+ speedX < 776) ) {
+		if ((getLocY() + speedY >= 100 & getLocX() + speedX >= 140) && (getLocY() + speedY <= 705 & getLocX()+ speedX < 975) ) {
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
 		}
