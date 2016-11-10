@@ -33,18 +33,22 @@ import models.BeachModel;
 import models.ConcretePUModel;
 import models.GabionPUModel;
 import models.GridBlock;
+import models.SunHurricaneModel;
 import models.WaveModel;
 
 public class Game3View extends JPanel implements KeyListener{
 	private Game3Controller controller;
 	private HashMap<Integer, Wave> componentMap;
 	private JFrame frame = new JFrame();
+	private JPanel timePanel = new JPanel();
 	private ArrayList<GridTile> powerUps;
+	
 	
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	JLayeredPane layoutContainer = new JLayeredPane();
 
 	public Game3View(Game3Controller ctl){
+		timePanel.setLayout(null);
 		controller = ctl;
 		componentMap = new HashMap<Integer,Wave>();
     	frame = new JFrame();
@@ -59,6 +63,7 @@ public class Game3View extends JPanel implements KeyListener{
 		
 		powerUps = new ArrayList<GridTile>();
     	
+		
     	//Panes
 		//For animal movement
 		
@@ -82,6 +87,11 @@ public class Game3View extends JPanel implements KeyListener{
 		    beachGrid.add(beachOverlay);
 		}
 		
+
+		timePanel.setPreferredSize(new Dimension(frame.getWidth(),200));
+		timePanel.setBackground(Color.CYAN);
+		
+		
 		ShoreLine water = new ShoreLine();
 		water.setPreferredSize(new Dimension(100,frame.getHeight()));
 		water.setVisible(true);
@@ -89,7 +99,7 @@ public class Game3View extends JPanel implements KeyListener{
 		animalPane.setBounds(0, 0, 1000, 700);
 		layoutContainer.add(beachGrid, new Integer(1),0);
 		layoutContainer.add(animalPane, new Integer(2), 1);
-		
+		play_ground.add(timePanel, BorderLayout.NORTH);
 		play_ground.add(layoutContainer, BorderLayout.CENTER);
 		play_ground.add(water, BorderLayout.EAST);
 		frame.add(play_ground);
@@ -100,10 +110,65 @@ public class Game3View extends JPanel implements KeyListener{
 	}
  
 	
+	
+	public void addSun() {
+		System.out.println("Sun spawned");
+		Sun sun = new Sun(controller.getSun());
+		sun.setBounds(0, 0, 1000, 700);
+		sun.setVisible(true);
+		timePanel.add(sun);
+		timePanel.revalidate();
+		frame.revalidate();
+		
+	}
+	
+	public void addHurricane() {
+		System.out.println("Hurricane spawned");
+		Hurricane hurricane = new Hurricane(controller.getHurricane());
+		hurricane.setBounds(0, 0, 1000, 700);
+		hurricane.setVisible(true);
+		timePanel.add(hurricane);
+		timePanel.revalidate();
+		frame.revalidate();
+		
+	}
+
 	public void repaintAll(){
 		frame.repaint();
 	}
 	
+	
+	public class Hurricane extends JComponent {
+		SunHurricaneModel hurricane;
+		public Hurricane(SunHurricaneModel s) {
+			hurricane = s;
+			hurricane.getLocation().setX(hurricane.getPanel().getWidth()/2);
+			hurricane.getLocation().setY(hurricane.calculateY(hurricane.getLocation().getX()));
+			
+		}
+		@Override
+		public void paint(Graphics g) {
+			System.out.println("Location of hurricane: " + "(" + hurricane.getLocation().getX() + "," + hurricane.getLocation().getY() + ")");
+			g.setColor(Color.GREEN);
+			g.fillOval(hurricane.getLocation().getX(), hurricane.getLocation().getY(), hurricane.getWidth(), hurricane.getHeight());
+		}
+	}
+	
+	public class Sun extends JComponent {
+		SunHurricaneModel sun;
+		public Sun(SunHurricaneModel s) {
+			sun = s;
+			sun.getLocation().setX(sun.getPanel().getWidth());
+			sun.getLocation().setY(-200);
+		}
+		@Override
+		public void paint(Graphics g) {
+			
+			g.setColor(Color.YELLOW);
+			g.fillOval(sun.getLocation().getX(), sun.getLocation().getY(), sun.getWidth(), sun.getHeight());
+			System.out.println("Sun at: " + sun.getLocation().getX() + "," + sun.getLocation().getY() + ")");
+		}
+	}
 	
 	
 	public class Wave extends JComponent {
@@ -305,6 +370,19 @@ public class Game3View extends JPanel implements KeyListener{
 		return componentMap;
 	}
 
+	public JPanel getTimePanel() {
+		return timePanel;
+	}
+
+
+	public void setTimePanel(JPanel timePanel) {
+		this.timePanel = timePanel;
+	}
+
+
+
+	
+	
 	/*
 	public JFrame getFrame() {
 		return frame;
