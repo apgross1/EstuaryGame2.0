@@ -17,6 +17,7 @@ import models.AnimalModelG3;
 import models.BeachModel;
 import models.ConcretePUModel.ConcPUState;
 import models.GridBlock;
+import models.SunHurricaneModel;
 import models.WallModelAbstract;
 import models.WaterModel;
 import models.WaveModel;
@@ -30,6 +31,8 @@ public class Game3Controller implements KeyListener {
 	private BeachModel beach;
 	private GridBlock sandPatch;
 	private WaterModel water;
+	private SunHurricaneModel sun;
+	private SunHurricaneModel hurricane;
 
 	private Timer timer;
 	private long startTime;
@@ -46,6 +49,17 @@ public class Game3Controller implements KeyListener {
 		setSandPatch(new GridBlock());
 		setWater(new WaterModel());
 		view = new Game3View(this);
+		
+		SunHurricaneModel sun = new SunHurricaneModel(this.view.getTimePanel());
+		sun.setInitialPosition(200);
+		SunHurricaneModel hurricane = new SunHurricaneModel(this.view.getTimePanel());
+		hurricane.setInitialPosition(200);
+		setSun(sun);
+		setHurricane(hurricane);
+		view.addSun();
+		view.addHurricane();
+		System.out.println("Added  hurricane");
+		this.startTime();
 	}
 	
 	public void runGame()  {
@@ -77,17 +91,17 @@ public class Game3Controller implements KeyListener {
 				frames = 0;
 			}
 
-			if(triggerSpawn == die.nextInt(700000)) {
+			/*if(triggerSpawn == die.nextInt(700000)) {
 				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
 					getBeach().spawnConcrPU(getBeach().generatePPUL());
 					getBeach().spawnGabPU(getBeach().generatePPUL());
 					this.powerUpSpawned();
 				}	
-			}
+			}*/
 			
-			if(triggerWave == die.nextInt(3200000)) {
+			/*if(triggerWave == die.nextInt(3200000)) {
 				this.view.generateWaveCluster();
-			}
+			}*/
 			if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair()))).getConcrPU().getIsActive() && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()); {
 				this.collisionPowerUps();
 			}
@@ -97,6 +111,9 @@ public class Game3Controller implements KeyListener {
 	
 	}
 
+	
+	
+	
 	ActionListener powerUpSpawnTimerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -198,14 +215,36 @@ public class Game3Controller implements KeyListener {
 		}
 	}
 	
+	ActionListener gameTimerListener = new ActionListener() {
+		public int timeElapsed;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Timer t = (Timer) e.getSource();
+			timeElapsed += t.getDelay();
+			if (timeElapsed < 120000) {
+				sun.move();
+				hurricane.move();
+			}
+			else {
+				gameActive = false;
+				timer.stop();
+			}
+		}
+	};
+	
+	public void startTime() {
+		timer = new Timer(220, gameTimerListener);
+		
+		timer.setRepeats(true);
+		timer.start();
+	}
 
 	public void collisionDetectionLoop(){
 		
 	}
 	
-	public void startTime() {
-		
-	}
+	
 	
 	public void stopTime() {
 		
@@ -273,5 +312,21 @@ public class Game3Controller implements KeyListener {
 
 	public void setSandPatch(GridBlock sandPatch) {
 		this.sandPatch = sandPatch;
+	}
+
+	public SunHurricaneModel getSun() {
+		return sun;
+	}
+
+	public void setSun(SunHurricaneModel sun) {
+		this.sun = sun;
+	}
+
+	public SunHurricaneModel getHurricane() {
+		return hurricane;
+	}
+
+	public void setHurricane(SunHurricaneModel hurricane) {
+		this.hurricane = hurricane;
 	}
 }
