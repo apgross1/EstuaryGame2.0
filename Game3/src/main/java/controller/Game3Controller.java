@@ -70,10 +70,9 @@ public class Game3Controller implements KeyListener {
 		double ns = 1000000000 /ammountOfTicks;
 		double delta = 0;
 		long timer2 = System.currentTimeMillis();
-		
+		this.genWaveTimer();
 		Random die = new Random();
 		int triggerSpawn = 4;
-		int triggerWave = 45;
 		while(getgameActive()) {
 			long now = System.nanoTime();
 			delta += (now-lastTime)/ns;
@@ -91,17 +90,14 @@ public class Game3Controller implements KeyListener {
 				frames = 0;
 			}
 
-			/*if(triggerSpawn == die.nextInt(700000)) {
+			if(triggerSpawn == die.nextInt(700000)) {
 				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
 					getBeach().spawnConcrPU(getBeach().generatePPUL());
 					getBeach().spawnGabPU(getBeach().generatePPUL());
 					this.powerUpSpawned();
 				}	
-			}*/
+			}
 			
-			/*if(triggerWave == die.nextInt(3200000)) {
-				this.view.generateWaveCluster();
-			}*/
 			if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair()))).getConcrPU().getIsActive() && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()); {
 				this.collisionPowerUps();
 			}
@@ -233,6 +229,8 @@ public class Game3Controller implements KeyListener {
 		}
 	};
 	
+	
+	
 	public void startTime() {
 		timer = new Timer(220, gameTimerListener);
 		
@@ -240,6 +238,29 @@ public class Game3Controller implements KeyListener {
 		timer.start();
 	}
 
+	//Can change later for different levels of difficulty
+	ActionListener genWaveTimer = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Timer t = (Timer) e.getSource();
+			if(!gameActive) {
+				t.stop();
+			}
+			else {
+				for(int i = 0; i < 1; i++) {
+					view.generateWaveCluster();
+				}
+			}
+		}
+	};
+	
+	public void genWaveTimer() {
+		Timer waveTimer = new Timer(4000, genWaveTimer);
+		
+		waveTimer.setRepeats(true);
+		waveTimer.start();
+	}
+	
 	public void collisionDetectionLoop(){
 		
 	}

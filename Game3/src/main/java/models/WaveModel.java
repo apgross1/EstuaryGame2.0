@@ -20,8 +20,8 @@ import enums.Waves;
 
 public class WaveModel {
 
-	private int height = 15;
-	private int width = 15;
+	private int height = 30;
+	private int width = 30;
 	private Pair location;
 	private boolean receed = false;
 	private double accelerator = 1.01;
@@ -55,39 +55,21 @@ public class WaveModel {
 			if(!isReceed()) {
 
 				location.setX((int)(location.getX()-Math.pow(movement, accelerator)));
-
 				movement = Math.pow(movement, accelerator);
-
-				//System.out.println("Value of movement: " + movement);
-
 			}
-
 			else {
-
-				if(accelerator > 0) {
-
-					accelerator = -1*accelerator;
-
-				}
-
 				
-
+				if(accelerator > 0) {
+					accelerator = -1*accelerator;
+				}
 				location.setX((int)(location.getX()+Math.pow(movement, accelerator)));
-
 				//accelerator = -1*accelerator;
-
 				movement = Math.pow(movement, accelerator);
-
+				
 			}
-
-			
-
 			Object time = e.getSource();
-
 			Timer myTime = (Timer) time;
-
 		}
-
 	};
 
 	

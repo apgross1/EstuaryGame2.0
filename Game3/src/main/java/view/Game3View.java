@@ -148,7 +148,6 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 		@Override
 		public void paint(Graphics g) {
-			System.out.println("Location of hurricane: " + "(" + hurricane.getLocation().getX() + "," + hurricane.getLocation().getY() + ")");
 			g.setColor(Color.GREEN);
 			g.fillOval(hurricane.getLocation().getX(), hurricane.getLocation().getY(), hurricane.getWidth(), hurricane.getHeight());
 		}
@@ -163,10 +162,8 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 		@Override
 		public void paint(Graphics g) {
-			
 			g.setColor(Color.YELLOW);
 			g.fillOval(sun.getLocation().getX(), sun.getLocation().getY(), sun.getWidth(), sun.getHeight());
-			System.out.println("Sun at: " + sun.getLocation().getX() + "," + sun.getLocation().getY() + ")");
 		}
 	}
 	
@@ -182,7 +179,6 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			if(!this.waveGone) {
 				if(wave.getBounds().intersects(controller.getAnimal().getBounds())) {
-					System.out.println("Hit!");
 					controller.setGameActive(false);
 				}
 				for(GridTile gr : powerUps) {
@@ -203,9 +199,9 @@ public class Game3View extends JPanel implements KeyListener{
 					}
 				}
 				
-				if((wave.getLocation().getX() > -5) && wave.getLocation().getX() < 2000) {
+				if((wave.getLocation().getX() > -5) && wave.getLocation().getX() < 2500) {
 					g.setColor(Color.BLUE);
-					g.fillRect((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
+					g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
 				}
 				else {
 					layoutContainer.remove(componentMap.get(this.hashCode()));
@@ -278,8 +274,7 @@ public class Game3View extends JPanel implements KeyListener{
 	public void generateWaveCluster() {
 
 		int randCluster = 3 + (int)(Math.random() * ((9 - 3) + 1));
-		System.out.println(randCluster);
-		for(int i = 0; i < 500; i++) {
+		for(int i = 0; i < 250; i++) {
 			WaveModel wave = new WaveModel(randCluster);
 			addWave(wave, randCluster);
 		}

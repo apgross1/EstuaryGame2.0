@@ -37,7 +37,6 @@ public class BeachModel {
 		Iterator<Pair> it = pairList.iterator();
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			System.out.println("X is: " + tempPair.getX() + " " + "Y is: " + tempPair.getY());
 			beachGrid.put(tempPair, (new GridBlock(tempPair)));
 		}
 	
