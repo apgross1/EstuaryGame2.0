@@ -113,7 +113,7 @@ public class Game1View extends JPanel implements KeyListener{
 				g.fillRect(controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(),controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight());
 				
 				//Draw score data and timer and health
-				g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
+				g.setFont(new Font("Haettenschweiler", Font.PLAIN, 30)); 
 				g.setColor(Color.WHITE);
 				g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), 20, 30);
 				g.setColor(Color.RED);
@@ -153,7 +153,10 @@ public class Game1View extends JPanel implements KeyListener{
 				}
 				if(controller.getInCountDown()){
 					//Print the timer mid screen.
-					g.drawString("" + controller.getIntermTime(), 500, 500);
+					g.setFont(new Font("Rockwell", Font.PLAIN, 100)); 
+					g.setColor(Color.WHITE);
+					g.drawString("" + controller.getIntermTime(), 500, 310);
+					
 				}
 			}
 	 }

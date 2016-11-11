@@ -1,3 +1,5 @@
+import java.awt.GraphicsEnvironment;
+
 import controller.Game1Controller;
 import models.AnimalModel;
 import models.BarModel;
@@ -13,6 +15,7 @@ public class main {
 		Game1Controller ctlr = new Game1Controller();
 		
 		ctlr.startGame();
+		
 	}
 
 }
