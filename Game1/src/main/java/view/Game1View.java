@@ -59,20 +59,20 @@ public class Game1View extends JPanel implements KeyListener{
         bar_pannel.setVisible(true);
         //bar_pannel.setLayout(new BoxLayout(bar_pannel, BoxLayout.LINE_AXIS));
        
-        play_ground.setPreferredSize(new Dimension(1000, 400));
+        play_ground.setPreferredSize(new Dimension(1000, 375));
         play_ground.setBackground(Color.BLUE);
         play_ground.setVisible(true);
         //play_ground.setLayout(new BoxLayout(play_ground, BoxLayout.LINE_AXIS));
        
-        gab_wall.setPreferredSize(new Dimension(1000, 50));
+        gab_wall.setPreferredSize(new Dimension(1000, 100));
         gab_wall.setBackground(Color.RED);
         gab_wall.setVisible(true);
        
-        conc_wall.setPreferredSize(new Dimension(1000, 50));
+        conc_wall.setPreferredSize(new Dimension(1000, 100));
         conc_wall.setBackground(Color.GREEN);
         conc_wall.setVisible(true);
        
-        estuary.setPreferredSize(new Dimension(1000, 100));
+        estuary.setPreferredSize(new Dimension(1000, 75));
         estuary.setBackground(Color.GRAY);
         estuary.setVisible(true);
        
@@ -130,28 +130,33 @@ public class Game1View extends JPanel implements KeyListener{
 				int health = (controller.getBarModel().getStatus()*2);
 				g.fillRect(400, 20, health, 20);
 				
-				
-				//Draw all the chunks that are active.
-				Collection<ConcreteChunk> concreteChunkTemp = controller.getWallModel().getChunks();
-				Collection<GabionChunk> GabionChunkTemp = controller.getGabionWallModel().getChunks();
-				Iterator<GabionChunk> git = GabionChunkTemp.iterator();
-				Iterator<ConcreteChunk> it = concreteChunkTemp.iterator();
-				while(it.hasNext()){
-					ConcreteChunk tmp = it.next();
-					if(tmp.isActive()){
-						g.setColor(Color.RED);
-						g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
+				if(!controller.getInCountDown()){
+					//Draw all the chunks that are active.
+					Collection<ConcreteChunk> concreteChunkTemp = controller.getWallModel().getChunks();
+					Collection<GabionChunk> GabionChunkTemp = controller.getGabionWallModel().getChunks();
+					Iterator<GabionChunk> git = GabionChunkTemp.iterator();
+					Iterator<ConcreteChunk> it = concreteChunkTemp.iterator();
+					while(it.hasNext()){
+						ConcreteChunk tmp = it.next();
+						if(tmp.isActive()){
+							g.setColor(Color.RED);
+							g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
+						}
+					}
+					while (git.hasNext()){
+						GabionChunk tmp = git.next();
+						if(tmp.isActive()){
+							g.setColor(Color.WHITE);
+							g.fillRect(tmp.getLocX(), tmp.getLocY(), 20, 10);
+						}
 					}
 				}
-				while (git.hasNext()){
-					GabionChunk tmp = git.next();
-					if(tmp.isActive()){
-						g.setColor(Color.WHITE);
-						g.fillRect(tmp.getLocX(), tmp.getLocY(), 20, 10);
-					}
+				if(controller.getInCountDown()){
+					//Print the timer mid screen.
+					g.drawString("" + controller.getIntermTime(), 500, 500);
 				}
 			}
-	    }
+	 }
 	 
 	 @Override
 		public void keyPressed(KeyEvent e) {
@@ -160,22 +165,22 @@ public class Game1View extends JPanel implements KeyListener{
 		        case KeyEvent.VK_UP:
 		            // handle up 
 		        	controller.getAnimalModel().setCurrDir(Direction.NORTH);
-		        	controller.getAnimalModel().setSpeedY(-5);
+		        	controller.getAnimalModel().setSpeedY(-2);
 		            break;
 		        case KeyEvent.VK_DOWN:
 		            // handle down 
 		        	controller.getAnimalModel().setCurrDir(Direction.SOUTH);
-		        	controller.getAnimalModel().setSpeedY(5);
+		        	controller.getAnimalModel().setSpeedY(2);
 		            break;
 		        case KeyEvent.VK_LEFT:
 		            // handle left
 		        	controller.getAnimalModel().setCurrDir(Direction.WEST);
-		        	controller.getAnimalModel().setSpeedX(-5);
+		        	controller.getAnimalModel().setSpeedX(-2);
 		            break;
 		        case KeyEvent.VK_RIGHT :
 		            // handle right
 		        	controller.getAnimalModel().setCurrDir(Direction.EAST);
-		        	controller.getAnimalModel().setSpeedX(5);
+		        	controller.getAnimalModel().setSpeedX(2);
 		            break;
 		    }
 		}

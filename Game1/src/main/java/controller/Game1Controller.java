@@ -35,7 +35,9 @@ public class Game1Controller{
 	private ArrayList<BufferedImage> landSeqs;
 	int overallRound = 0;
 	long gameTime;
+	long countDownTime;
 	long startTime;
+	boolean countdown; //if were in the three second count down mode at the end of round
 	
 	
 	public Game1Controller() {
@@ -56,6 +58,9 @@ public class Game1Controller{
 	}
 	public long getTime(){
 		return (30 -(gameTime/1000));
+	}
+	public long getIntermTime(){
+		return (3 -(countDownTime/1000));
 	}
 	
 	//Setters
@@ -105,17 +110,17 @@ public class Game1Controller{
 			if(wallModel.getCurrentBlocks() <= (wallModel.getMaxBlocks()-5) & wallModel.getActiveBlocks() < 5){//Max concrete that can be on the screen at once.
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
-				int randx = r.nextInt(975);
-				int randy = r.nextInt(560-50) + 50;
+				int randx = r.nextInt(890);
+				int randy = r.nextInt(570-310) + 310;
 				//Need a condition here to make sure that there is not already a chunk at that location.
 				wallModel.spawnChunk(randx, randy);
 			}
 			
-			if(gabionModel.getCurrentOysters() <= (gabionModel.getMaxOysters()-5) & gabionModel.getActiveClams() < 5){//Max concrete that can be on the screen at once.
+			if(gabionModel.getCurrentOysters() <= (gabionModel.getMaxOysters()-3) & gabionModel.getActiveClams() < 3){//Max concrete that can be on the screen at once.
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
-				int randx = r.nextInt(975);
-				int randy = r.nextInt(650-50) + 50;
+				int randx = r.nextInt(890);
+				int randy = r.nextInt(570-310) + 310;
 				//Need a condition here to make sure that there is not already a chunk at that location.
 				gabionModel.spawnChunk(randx, randy);
 			}
@@ -129,10 +134,22 @@ public class Game1Controller{
 		takeDamage();
 		//one more paint
 		g1view.repaintFrame();
+		startTime = System.currentTimeMillis();
+		countdown = true;
+		while((System.currentTimeMillis()-startTime)<3000){ //Print the timer mid screen
+			countDownTime = (System.currentTimeMillis() - startTime); //Used to print mid screen
+			g1view.repaintFrame();
+			
+		}
+		countdown = false;
 		//reset vars
 		reset();
 		//set game round to 2/3
 		overallRound++;
+	}
+	
+	public boolean getInCountDown(){
+		return countdown;
 	}
 	
 	boolean collisionOccured(AnimalModel a, Object chunk){

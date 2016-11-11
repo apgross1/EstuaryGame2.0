@@ -35,6 +35,7 @@ public class AnimalModel extends AnimalModelAbstract {
 	
 	@Override
 	public void move() {
+		System.out.println(getLocY());
 		if(getCurrDir() == Direction.EAST){
 			if(getLocX() < 890 + speedX){
 			this.setLocX(this.getLocX() + speedX);
@@ -46,7 +47,7 @@ public class AnimalModel extends AnimalModelAbstract {
 			}
 		}
 		if(getCurrDir() == Direction.NORTH){
-			if(getLocY() + speedY >= 50){
+			if(getLocY() + speedY >= 310){
 				this.setLocY(this.getLocY() + speedY);
 			}
 		}
