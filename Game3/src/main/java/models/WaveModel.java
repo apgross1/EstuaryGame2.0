@@ -27,6 +27,7 @@ public class WaveModel {
 	private double accelerator = 1.01;
 	private double movement = 3;
 	private Waves clusterGroup;
+	private boolean lastWave;
 	
 
 	
@@ -38,11 +39,11 @@ public class WaveModel {
 	
 
 	public void randomSpawn(int clusterVal) {
-		Waves waveEnum = Waves.values()[clusterVal];
+		Waves waveEnum = Waves.values()[clusterVal-1];
 		setClusterGroup(waveEnum);
 		location = new Pair(0,0);
 
-		location.setX(900 + (int)(Math.random() * ((2000 - 900) + 1)));
+		location.setX(990 + (int)(Math.random() * ((2000 - 900) + 1)));
 		location.setY(waveEnum.getMinY() + (int)(Math.random() * (((waveEnum.getMaxY()) - waveEnum.getMinY()) + 1)));
 	}
 
@@ -165,6 +166,18 @@ public class WaveModel {
 
 	public void setClusterGroup(Waves clusterGroup) {
 		this.clusterGroup = clusterGroup;
+	}
+
+
+
+	public boolean isLastWave() {
+		return lastWave;
+	}
+
+
+
+	public void setLastWave(boolean lastWave) {
+		this.lastWave = lastWave;
 	}
 
 }

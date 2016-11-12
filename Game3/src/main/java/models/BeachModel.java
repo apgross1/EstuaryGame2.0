@@ -33,7 +33,7 @@ public class BeachModel {
 	public BeachModel() {
 		beachGrid = new HashMap<Pair,GridBlock>();
 		gridLayers = new HashMap<Waves, List<Pair>>();
-		positionGrid = new int[10][8];
+		positionGrid = new int[7][7];
 		orderedPairs = new ArrayList<Pair>();
 		this.initializeBeach();
 	}
@@ -57,10 +57,11 @@ public class BeachModel {
 		
 		int i = 0;
 		int j = 0;
-		while (i < 8) {
+		while (i < 7) {
 			List<Pair> tempLane = new ArrayList<Pair>();
-			while((j%11) < 10) {
-				tempLane.add(new Pair((j%11),i));
+			while((j%8) < 7) {
+				
+				tempLane.add(new Pair((j%8),i));
 				j++;
 			}
 			switch(i) {
@@ -84,9 +85,6 @@ public class BeachModel {
 					break;
 				case(6):
 					gridLayers.put(Waves.CLUSTER_SEVEN, tempLane);
-					break;
-				case(7):
-					gridLayers.put(Waves.CLUSTER_EIGHT, tempLane);
 					break;
 			}
 			j++;

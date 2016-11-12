@@ -31,6 +31,7 @@ import javax.swing.border.Border;
 
 import controller.Game3Controller;
 import enums.Direction;
+import enums.Waves;
 import models.BeachModel;
 import models.ConcretePUModel;
 import models.GabionPUModel;
@@ -59,10 +60,10 @@ public class Game3View extends JPanel implements KeyListener{
     	frame.setBackground(Color.gray);
 
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	frame.setSize(1000, 700);
+    	frame.setSize(1090, 700);
     	frame.setResizable(false);
     	
-		play_ground.setSize(1000, 700);
+		play_ground.setSize(1090, 700);
 		play_ground.setBackground(Color.WHITE);
 		
 		powerUps = new ArrayList<GridTile>();
@@ -72,14 +73,16 @@ public class Game3View extends JPanel implements KeyListener{
 		//For animal movement
 		
 		Animal animalPane = new Animal();
-		animalPane.setPreferredSize(new Dimension(1000,700));
-		JPanel beachGrid = new JPanel(new GridLayout(10,10));
+		animalPane.setPreferredSize(new Dimension(1090,700));
+		JPanel beachGrid = new JPanel(new GridLayout(7,7));
 
+		
 		
 		Collection<Pair> blocks = controller.getBeach().getOrderedPairs();
 		Iterator<Pair> it = blocks.iterator();
 		while(it.hasNext()) {
 			Pair currBlock = it.next();
+			System.out.println("currBlock x and y: " + currBlock.getX() + " " + currBlock.getY());
 			JPanel beachOverlay = new JPanel();
 			beachOverlay.setLayout(new OverlayLayout(beachOverlay));
 			
@@ -98,22 +101,32 @@ public class Game3View extends JPanel implements KeyListener{
 		timePanel.setPreferredSize(new Dimension(frame.getWidth(),200));
 		timePanel.setBackground(Color.CYAN);
 		
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.setLayout(null);
+		bottomPanel.setPreferredSize(new Dimension(200,200));
+		
 		
 		ShoreLine water = new ShoreLine();
+		
+		
 		water.setPreferredSize(new Dimension(100,frame.getHeight()));
 		water.setVisible(true);
-		beachGrid.setBounds(0, 0, 1000, 700);
-		animalPane.setBounds(0, 0, 1000, 700);
+		beachGrid.setBounds(0, 0, 1090, 700);
+		animalPane.setBounds(0, 0, 1090, 700);
 		layoutContainer.add(beachGrid, new Integer(1),0);
 		layoutContainer.add(animalPane, new Integer(2), 1);
 		play_ground.add(timePanel, BorderLayout.NORTH);
-		play_ground.add(layoutContainer, BorderLayout.CENTER);
 		play_ground.add(water, BorderLayout.EAST);
+		play_ground.add(layoutContainer, BorderLayout.CENTER);
+		
+		
+
 		frame.add(play_ground);
 		frame.setVisible(true);
     	
     	//addKeyListener
     	frame.addKeyListener(this);
+    	frame.pack();
 	}
  
 	
@@ -121,7 +134,7 @@ public class Game3View extends JPanel implements KeyListener{
 	public void addSun() {
 		System.out.println("Sun spawned");
 		Sun sun = new Sun(controller.getSun());
-		sun.setBounds(0, 0, 1000, 700);
+		sun.setBounds(0, 0, 1090, 700);
 		sun.setVisible(true);
 		timePanel.add(sun);
 		timePanel.revalidate();
@@ -132,7 +145,7 @@ public class Game3View extends JPanel implements KeyListener{
 	public void addHurricane() {
 		System.out.println("Hurricane spawned");
 		Hurricane hurricane = new Hurricane(controller.getHurricane());
-		hurricane.setBounds(0, 0, 1000, 700);
+		hurricane.setBounds(0, 0, 1090, 700);
 		hurricane.setVisible(true);
 		timePanel.add(hurricane);
 		timePanel.revalidate();
@@ -206,21 +219,32 @@ public class Game3View extends JPanel implements KeyListener{
 					}
 				}
 				
-				if((wave.getLocation().getX() > -5) && wave.getLocation().getX() < 2500) {
+				if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < 2500) {
 					g.setColor(Color.BLUE);
 					g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
 				}
-				else if ((wave.getLocation().getX() > 950) && wave.isReceed()) {
+				
+				else if ((wave.getLocation().getX() > 950) && wave.isReceed() && wave.isLastWave()) {
 					List<Pair> pairs = controller.getBeach().getGridLayers().get(wave.getClusterGroup());
 					for(int i = pairs.size()-1; i >= 0; i--) {
-						//System.out.println(i);
 						if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))) != null) {
 							if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).isVacant()) {
 								controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).setWater(new WaterModel(), controller.getBeach().findPairInGrid(pairs.get(i)));
-								break;
+								if(i >= 1) {
+									System.out.println("Made it here!");
+									controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i-1))).setWater(new WaterModel(), controller.getBeach().findPairInGrid(pairs.get(i-1))); 
+								}
+								
+								
+								layoutContainer.remove(componentMap.get(this.hashCode()));
+								componentMap.remove(this.hashCode());
+								wave = null;
+								this.waveGone = true;
+								return;
 							}
 							
 						}
+						
 					}
 				}
 				else {
@@ -295,10 +319,13 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	public void generateWaveCluster() {
 
-		int randCluster = 3 + (int)(Math.random() * ((9 - 3) + 1));
+		int randCluster = 3 + (int)(Math.random() * ((8 - 3) + 1));
 		for(int i = 0; i < 250; i++) {
 			WaveModel wave = new WaveModel(randCluster);
-			addWave(wave, randCluster);
+			if(i == 249) {
+				wave.setLastWave(true);
+			}
+			addWave(wave,Waves.CLUSTER_THREE.getWaveID());
 		}
 	}
 	
@@ -306,7 +333,7 @@ public class Game3View extends JPanel implements KeyListener{
 		WaveModel waveM = w;
 		waveM.randomSpawn(clusterVal);
 		Wave wave = new Wave(waveM);
-		wave.setBounds(0, 0, 1000, 700);
+		wave.setBounds(0, 0, 1090, 700);
 		componentMap.put(wave.hashCode(), wave);
 		this.layoutContainer.add(wave, new Integer(2), 1);
 	}
