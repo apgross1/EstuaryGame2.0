@@ -54,6 +54,7 @@ public class GridBlock {
 		concrPU.setActive(false);
 		water.setLocation(loc);
 		this.water = water;
+		this.water.setActive(true);
 		//this.location = loc;
 		this.setVacant(false);
 		

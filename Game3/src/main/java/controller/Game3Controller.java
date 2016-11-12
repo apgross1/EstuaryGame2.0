@@ -9,10 +9,12 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.swing.Timer;
 
+import enums.Waves;
 import models.AnimalModelG3;
 import models.BeachModel;
 import models.ConcretePUModel.ConcPUState;
@@ -33,7 +35,6 @@ public class Game3Controller implements KeyListener {
 	private WaterModel water;
 	private SunHurricaneModel sun;
 	private SunHurricaneModel hurricane;
-
 	private Timer timer;
 	private long startTime;
 	private int updates = 0;
@@ -58,7 +59,6 @@ public class Game3Controller implements KeyListener {
 		setHurricane(hurricane);
 		view.addSun();
 		view.addHurricane();
-		System.out.println("Added  hurricane");
 		this.startTime();
 	}
 	
@@ -118,11 +118,17 @@ public class Game3Controller implements KeyListener {
 			
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setPickedUp(false);
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setIsActive(false);
-			beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).setVacant(true);
+			if(!beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getWater().isActive()) {
+				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).setVacant(true);
+			}
+			
 			
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setActive(false);
 			beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setPickedUp(false);
-			beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).setVacant(true);
+			if(!beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getWater().isActive()) {
+				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).setVacant(true);
+			}
+			
 			
 			Object time = e.getSource();
 			Timer myTime = (Timer) time;
@@ -138,14 +144,20 @@ public class Game3Controller implements KeyListener {
 				beach.removeGabPU(beach.findPairInGrid(beach.getGabPair()));
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setPickedUp(false);
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().setIsActive(false);
-				beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).setVacant(true);
+				if(!beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getWater().isActive()) {
+					beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).setVacant(true);
+				}
+				
 				System.out.println("Wall Timer stopped");
 			}
 			else {
 				beach.removeConcrPU(beach.findPairInGrid(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getLocation()));
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setActive(false);
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setPickedUp(false);
-				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).setVacant(true);
+				if(!beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getWater().isActive()) {
+					beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).setVacant(true);
+				}
+				
 				System.out.println("Wall Timer stopped");
 			}
 			Object time = e.getSource();
@@ -159,7 +171,7 @@ public class Game3Controller implements KeyListener {
 	
 	//Duration for which power-up is available to be picked up
 	public void powerUpSpawned() {
-		timer = new Timer(500000, powerUpSpawnTimerListener);
+		timer = new Timer(3000, powerUpSpawnTimerListener);
 		System.out.println("Gabion is at: (" + beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getViewLocation().getX() +", " + beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getViewLocation().getY() + ")");
 		System.out.println("Concrete is at:(" + beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getViewLocation().getX() +", " + beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getViewLocation().getY() + ")");
 		
@@ -173,7 +185,7 @@ public class Game3Controller implements KeyListener {
 	
 	//Duration for which power-up is in wall form
 	public void powerUpPickedUp() {
-		timer = new Timer(3000, powerUpWallTimerListener);
+		timer = new Timer(5000, powerUpWallTimerListener);
 		timer.setRepeats(true);
 		timer.start();
 		System.out.println("Wall timer started");
@@ -247,19 +259,23 @@ public class Game3Controller implements KeyListener {
 				t.stop();
 			}
 			else {
-				for(int i = 0; i < 1; i++) {
-					view.generateWaveCluster();
-				}
+				view.generateWaveCluster();
 			}
 		}
 	};
 	
 	public void genWaveTimer() {
-		Timer waveTimer = new Timer(4000, genWaveTimer);
+		Timer waveTimer = new Timer(15000, genWaveTimer);
 		
 		waveTimer.setRepeats(true);
 		waveTimer.start();
 	}
+	
+	public void collisionTile() {
+		ArrayList<GridBlock> sandPatches = (ArrayList<GridBlock>) this.getBeach().getBeachGrid().values();
+		
+	}
+	
 	
 	public void collisionDetectionLoop(){
 		

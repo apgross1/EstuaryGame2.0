@@ -26,6 +26,7 @@ public class WaveModel {
 	private boolean receed = false;
 	private double accelerator = 1.01;
 	private double movement = 3;
+	private Waves clusterGroup;
 	
 
 	
@@ -38,6 +39,7 @@ public class WaveModel {
 
 	public void randomSpawn(int clusterVal) {
 		Waves waveEnum = Waves.values()[clusterVal];
+		setClusterGroup(waveEnum);
 		location = new Pair(0,0);
 
 		location.setX(900 + (int)(Math.random() * ((2000 - 900) + 1)));
@@ -151,6 +153,18 @@ public class WaveModel {
 
 	public void setAccelerator(double accelerator) {
 		this.accelerator = accelerator;
+	}
+
+
+
+	public Waves getClusterGroup() {
+		return clusterGroup;
+	}
+
+
+
+	public void setClusterGroup(Waves clusterGroup) {
+		this.clusterGroup = clusterGroup;
 	}
 
 }

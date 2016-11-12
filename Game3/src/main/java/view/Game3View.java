@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
@@ -26,6 +27,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.OverlayLayout;
+import javax.swing.border.Border;
 
 import controller.Game3Controller;
 import enums.Direction;
@@ -33,7 +35,9 @@ import models.BeachModel;
 import models.ConcretePUModel;
 import models.GabionPUModel;
 import models.GridBlock;
+import models.Pair;
 import models.SunHurricaneModel;
+import models.WaterModel;
 import models.WaveModel;
 
 public class Game3View extends JPanel implements KeyListener{
@@ -70,21 +74,24 @@ public class Game3View extends JPanel implements KeyListener{
 		Animal animalPane = new Animal();
 		animalPane.setPreferredSize(new Dimension(1000,700));
 		JPanel beachGrid = new JPanel(new GridLayout(10,10));
-		Collection<GridBlock> blocks = controller.getBeach().getBeachGrid().values();
-		Iterator<GridBlock> it = blocks.iterator();
+
+		
+		Collection<Pair> blocks = controller.getBeach().getOrderedPairs();
+		Iterator<Pair> it = blocks.iterator();
 		while(it.hasNext()) {
-			GridBlock currBlock = it.next();
+			Pair currBlock = it.next();
 			JPanel beachOverlay = new JPanel();
 			beachOverlay.setLayout(new OverlayLayout(beachOverlay));
 			
 			SandWater gridBlock = new SandWater(currBlock);
 			GridTile powerUp = new GridTile(currBlock);
 			powerUps.add(powerUp);
-		    powerUp.setBounds((int)currBlock.getBounds().getX(), (int)currBlock.getBounds().getY(), 835, 605);
+		    powerUp.setBounds((int)controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(currBlock)).getBounds().getX(), (int)controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(currBlock)).getBounds().getY(), 835, 605);
 			layoutContainer.add(powerUp, new Integer(2),-1);
 		    beachOverlay.add(gridBlock);
-		    
+		    beachOverlay.setBorder(BorderFactory.createLineBorder(Color.black));
 		    beachGrid.add(beachOverlay);
+		    
 		}
 		
 
@@ -203,6 +210,19 @@ public class Game3View extends JPanel implements KeyListener{
 					g.setColor(Color.BLUE);
 					g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
 				}
+				else if ((wave.getLocation().getX() > 950) && wave.isReceed()) {
+					List<Pair> pairs = controller.getBeach().getGridLayers().get(wave.getClusterGroup());
+					for(int i = pairs.size()-1; i >= 0; i--) {
+						//System.out.println(i);
+						if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))) != null) {
+							if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).isVacant()) {
+								controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).setWater(new WaterModel(), controller.getBeach().findPairInGrid(pairs.get(i)));
+								break;
+							}
+							
+						}
+					}
+				}
 				else {
 					layoutContainer.remove(componentMap.get(this.hashCode()));
 					componentMap.remove(this.hashCode());
@@ -233,11 +253,13 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	public class SandWater extends JComponent {
 		private GridBlock grid;
-		public SandWater(GridBlock g) {
-			this.grid = g;
+		public SandWater(Pair pair) {
+			this.grid = controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pair));
 		}
 		@Override
 		public void paint(Graphics g) {
+			String coords = "("+grid.getLocation().getX()+","+grid.getLocation().getY()+")";
+			//g.drawString(coords, this.getWidth()/2, this.getHeight()/2);
 			if(grid.getWater().isActive() == false) {
 				g.setColor(Color.YELLOW);
 				g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
@@ -251,8 +273,8 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	public class GridTile extends JComponent {
 		private GridBlock gridBlock;
-		public GridTile(GridBlock g) {
-			gridBlock = g;
+		public GridTile(Pair pair) {
+			gridBlock = controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pair));
 		}
 		public GridBlock getGridBlock() {
 			return gridBlock;
@@ -294,19 +316,19 @@ public class Game3View extends JPanel implements KeyListener{
 	    switch( keyCode ) {
 	        case KeyEvent.VK_UP:
 	        	controller.getAnimal().setCurrDir(Direction.NORTH);
-	        	controller.getAnimal().setSpeedY(-1);
+	        	controller.getAnimal().setSpeedY(-3);
 	            break;
 	        case KeyEvent.VK_DOWN:
 	        	controller.getAnimal().setCurrDir(Direction.SOUTH);
-	        	controller.getAnimal().setSpeedY(1);
+	        	controller.getAnimal().setSpeedY(3);
 	            break;
 	        case KeyEvent.VK_LEFT:
 	        	controller.getAnimal().setCurrDir(Direction.WEST);
-	        	controller.getAnimal().setSpeedX(-1);
+	        	controller.getAnimal().setSpeedX(-3);
 	            break;
 	        case KeyEvent.VK_RIGHT :
 	        	controller.getAnimal().setCurrDir(Direction.EAST);
-	        	controller.getAnimal().setSpeedX(1);
+	        	controller.getAnimal().setSpeedX(3);
 	            break;
 	        case KeyEvent.VK_SPACE :
 	        	System.out.println("This is a temp key event to end the game (set bool gameActive in controller to false)");

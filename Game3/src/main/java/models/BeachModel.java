@@ -3,8 +3,11 @@ package models;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.Timer;
@@ -19,6 +22,8 @@ public class BeachModel {
 	private int landSize;
 	private Collection<BufferedImage> beachStates;
 	private HashMap<Pair, GridBlock> beachGrid;
+	private HashMap<Waves, List<Pair>> gridLayers;
+	private List<Pair> orderedPairs;
 	private int[][] positionGrid;
 	private Pair gabPair = new Pair(0,0);
 	private Pair concPair = new Pair(0,0);
@@ -27,7 +32,9 @@ public class BeachModel {
 	
 	public BeachModel() {
 		beachGrid = new HashMap<Pair,GridBlock>();
+		gridLayers = new HashMap<Waves, List<Pair>>();
 		positionGrid = new int[10][8];
+		orderedPairs = new ArrayList<Pair>();
 		this.initializeBeach();
 	}
 	
@@ -37,11 +44,76 @@ public class BeachModel {
 		Iterator<Pair> it = pairList.iterator();
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			beachGrid.put(tempPair, (new GridBlock(tempPair)));
+			GridBlock g = new GridBlock(tempPair);
+			beachGrid.put(tempPair, g);
 		}
-	
+		
+		Collection<Pair> blockLocs = beachGrid.keySet();
+		Iterator<Pair> pairIt = blockLocs.iterator();
+		while(pairIt.hasNext()) {
+			orderedPairs.add(pairIt.next());
+		}
+		Collections.sort(orderedPairs, new PairComparator());
+		
+		int i = 0;
+		int j = 0;
+		while (i < 8) {
+			List<Pair> tempLane = new ArrayList<Pair>();
+			while((j%11) < 10) {
+				tempLane.add(new Pair((j%11),i));
+				j++;
+			}
+			switch(i) {
+				case(0):
+					gridLayers.put(Waves.CLUSTER_ONE, tempLane);
+					break;
+				case(1):
+					gridLayers.put(Waves.CLUSTER_TWO, tempLane);
+					break;
+				case(2):
+					gridLayers.put(Waves.CLUSTER_THREE, tempLane);
+					break;
+				case(3):
+					gridLayers.put(Waves.CLUSTER_FOUR, tempLane);
+					break;
+				case(4):
+					gridLayers.put(Waves.CLUSTER_FIVE, tempLane);
+					break;
+				case(5):
+					gridLayers.put(Waves.CLUSTER_SIX, tempLane);
+					break;
+				case(6):
+					gridLayers.put(Waves.CLUSTER_SEVEN, tempLane);
+					break;
+				case(7):
+					gridLayers.put(Waves.CLUSTER_EIGHT, tempLane);
+					break;
+			}
+			j++;
+			i++;
+		}
+		
+		
 	}
 	
+	
+	
+	public List<Pair> getOrderedPairs() {
+		return orderedPairs;
+	}
+
+	public void setOrderedPairs(List<Pair> orderedPairs) {
+		this.orderedPairs = orderedPairs;
+	}
+
+	public HashMap<Waves, List<Pair>> getGridLayers() {
+		return gridLayers;
+	}
+
+	public void setGridLayers(HashMap<Waves, List<Pair>> gridLayers) {
+		this.gridLayers = gridLayers;
+	}
+
 	public void spawnGabPU(ArrayList<Pair> ppul) {
 		if(ppul.size() == 0) {
 			return;
@@ -103,7 +175,7 @@ public class BeachModel {
 		for(int i = 0; i < positionGrid.length; i++) {
 			for(int j = 0; j < positionGrid[i].length; j++) {
 				if (positionGrid[i][j] == 0) {
-					ppulPair.add(new Pair(j,i)); //NOTE!!!!! IT MAY BE PAIR(i,j) NOT (j,i)
+					ppulPair.add(new Pair(j,i));
 				}
 				else {
 					continue;
