@@ -43,36 +43,36 @@ public class Game1View extends JPanel implements KeyListener{
         frame.setBackground(Color.gray);
  
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 700);
+        frame.setSize(1090, 700);
         frame.setVisible(true);
         frame.setResizable(false);
        
-        super_panel.setSize(1000,700);
+        super_panel.setSize(1090,700);
         super_panel.setBackground(Color.CYAN);
         super_panel.setVisible(true);
         super_panel.setLayout(new BoxLayout(super_panel, BoxLayout.Y_AXIS));
         frame.add(super_panel);
        
        
-        bar_pannel.setPreferredSize(new Dimension(1000, 50));
+        bar_pannel.setPreferredSize(new Dimension(1090, 50));
         bar_pannel.setBackground(Color.BLACK);
         bar_pannel.setVisible(true);
         //bar_pannel.setLayout(new BoxLayout(bar_pannel, BoxLayout.LINE_AXIS));
        
-        play_ground.setPreferredSize(new Dimension(1000, 375));
+        play_ground.setPreferredSize(new Dimension(1090, 375));
         play_ground.setBackground(Color.BLUE);
         play_ground.setVisible(true);
         //play_ground.setLayout(new BoxLayout(play_ground, BoxLayout.LINE_AXIS));
        
-        gab_wall.setPreferredSize(new Dimension(1000, 100));
+        gab_wall.setPreferredSize(new Dimension(1090, 100));
         gab_wall.setBackground(Color.RED);
         gab_wall.setVisible(true);
        
-        conc_wall.setPreferredSize(new Dimension(1000, 100));
+        conc_wall.setPreferredSize(new Dimension(1090, 100));
         conc_wall.setBackground(Color.GREEN);
         conc_wall.setVisible(true);
        
-        estuary.setPreferredSize(new Dimension(1000, 75));
+        estuary.setPreferredSize(new Dimension(1090, 75));
         estuary.setBackground(Color.GRAY);
         estuary.setVisible(true);
        
@@ -115,20 +115,20 @@ public class Game1View extends JPanel implements KeyListener{
 				//Draw score data and timer and health
 				g.setFont(new Font("Haettenschweiler", Font.PLAIN, 30)); 
 				g.setColor(Color.WHITE);
-				g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), 20, 30);
+				g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), 40, 30);
 				g.setColor(Color.RED);
-				g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), 200, 30);
+				g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), 220, 30);
 				g.setColor(Color.GREEN);
-				g.drawString("Time Left: "+ controller.getTime(), 775, 30);
+				g.drawString("Time Left: "+ controller.getTime(), 895, 30);
 				
-				g.drawString("Health: " + controller.getBarModel().getStatus(), 625, 30);
+				g.drawString("Health: " + controller.getBarModel().getStatus(), 705, 30);
 				
-				g.drawRect(400, 20, 200, 20); //Behind health bar doesn't change
+				g.drawRect(420, 10, 200, 20); //Behind health bar doesn't change
 				
 				
 				g.setColor(Color.RED);
 				int health = (controller.getBarModel().getStatus()*2);
-				g.fillRect(400, 20, health, 20);
+				g.fillRect(420, 10, health, 20);
 				
 				if(!controller.getInCountDown()){
 					//Draw all the chunks that are active.

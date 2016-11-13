@@ -206,7 +206,8 @@ public class Game1Controller{
 		int gabbionsCollected = gabionModel.getCurrentOysters();
 		int concreteCollected = wallModel.getCurrentBlocks();
 		
-		int protection = (gabbionsCollected * 5) + (concreteCollected * 1);
+		//changed the gabion level to 4 so that it is harder
+		int protection = (gabbionsCollected * 4) + (concreteCollected * 1);
 		int new_status;
 		
 		//Prevent health going up
