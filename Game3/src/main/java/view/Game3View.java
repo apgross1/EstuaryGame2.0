@@ -325,7 +325,7 @@ public class Game3View extends JPanel implements KeyListener{
 			if(i == 249) {
 				wave.setLastWave(true);
 			}
-			addWave(wave,Waves.CLUSTER_THREE.getWaveID());
+			addWave(wave, randCluster);
 		}
 	}
 	

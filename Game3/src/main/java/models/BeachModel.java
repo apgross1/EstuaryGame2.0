@@ -44,7 +44,7 @@ public class BeachModel {
 		Iterator<Pair> it = pairList.iterator();
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			GridBlock g = new GridBlock(tempPair);
+			GridBlock g = new GridBlock(tempPair, this);
 			beachGrid.put(tempPair, g);
 		}
 		

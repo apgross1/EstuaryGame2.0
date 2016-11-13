@@ -47,7 +47,7 @@ public class Game3Controller implements KeyListener {
 		a.setLocY(250);
 		setAnimal(a);
 		setBeach(new BeachModel());
-		setSandPatch(new GridBlock());
+		setSandPatch(new GridBlock(beach));
 		setWater(new WaterModel());
 		view = new Game3View(this);
 		
@@ -192,7 +192,6 @@ public class Game3Controller implements KeyListener {
 	}
 	
 	public void collisionPowerUps(){
-		//Gabion wall collision works (to a degree) Concrete doesn't though
 		if ((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive()) & beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().isPickedUp() == false) {
 			if (animal.getBounds().contains(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getBounds())) {
 				System.out.println("Intersection between concrete and animal");

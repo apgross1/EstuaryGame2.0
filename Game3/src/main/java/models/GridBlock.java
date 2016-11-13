@@ -11,19 +11,21 @@ public class GridBlock {
 	private boolean vacant;
 	private int height;
 	private int width;
+	private BeachModel beach;
 	
-	public GridBlock() {
+	public GridBlock(BeachModel b) {
 		gabPU.setIsActive(false);
 		concrPU.setActive(false);
 		height = 200;
 		width = 200;
 		vacant = true;
+		beach = b;
 	}
 	
-	public GridBlock(Pair loc) {
+	public GridBlock(Pair loc, BeachModel b) {
 		gabPU = new GabionPUModel();
 		gabPU.setIsActive(false);
-		
+		beach = b;
 		concrPU = new ConcretePUModel();
 		concrPU.setActive(false);
 		location = loc;
@@ -57,7 +59,8 @@ public class GridBlock {
 		this.water.setActive(true);
 		//this.location = loc;
 		this.setVacant(false);
-		
+		System.out.println(loc.getX());
+		beach.getPositionGrid()[loc.getX()][loc.getY()] = 2;
 	}
 	
 	public Pair getLocation() {
