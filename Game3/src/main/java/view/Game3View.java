@@ -282,16 +282,16 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 		@Override
 		public void paint(Graphics g) {
-			String coords = "("+grid.getLocation().getX()+","+grid.getLocation().getY()+")";
-			//g.drawString(coords, this.getWidth()/2, this.getHeight()/2);
-			if(grid.getWater().isActive() == false) {
+			String coords = "("+grid.getViewLocation().getX()+","+grid.getViewLocation().getY()+")";
+			g.drawString(coords, this.getWidth()/2, this.getHeight()/2);
+			/*if(grid.getWater().isActive() == false) {
 				g.setColor(Color.YELLOW);
 				g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}
 			else{
 			g.setColor(Color.BLUE);
 			g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
-			}
+			}*/
 		}
 	}
 	

@@ -101,6 +101,8 @@ public class Game3Controller implements KeyListener {
 			if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair()))).getConcrPU().getIsActive() && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()); {
 				this.collisionPowerUps();
 			}
+			
+			this.collisionTile();
 			this.view.repaintAll();
 			
 		}
@@ -271,11 +273,20 @@ public class Game3Controller implements KeyListener {
 	}
 	
 	public void collisionTile() {
-		ArrayList<GridBlock> sandPatches = (ArrayList<GridBlock>) this.getBeach().getBeachGrid().values();
-		
+		Collection<GridBlock> sandPatches = this.getBeach().getBeachGrid().values();
+		for(GridBlock gb : sandPatches) {
+			//System.out.println("Location gb: " + "("+gb.getLocation().getX() + ","+gb.getLocation().getY() +")");
+			//System.out.println("Location animal: " + "(" + animal.getBounds().getX() + "," + animal.getBounds().getY() + ")");
+			if(this.getAnimal().getBounds().intersects(gb.getBounds())) {
+				if(gb.getWater().isActive()) {
+					System.out.println("It's a hit!");
+					this.getAnimal().setSpeedX(0);
+					this.getAnimal().setSpeedY(0);
+				}
+			}
+		}
 	}
-	
-	
+
 	public void collisionDetectionLoop(){
 		
 	}

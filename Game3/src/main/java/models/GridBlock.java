@@ -2,6 +2,7 @@ package models;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.Random;
 
 public class GridBlock {
 	private Pair location;
@@ -12,6 +13,7 @@ public class GridBlock {
 	private int height;
 	private int width;
 	private BeachModel beach;
+	private Pair viewLocation = new Pair(0,0);
 	
 	public GridBlock(BeachModel b) {
 		gabPU.setIsActive(false);
@@ -29,25 +31,30 @@ public class GridBlock {
 		concrPU = new ConcretePUModel();
 		concrPU.setActive(false);
 		location = loc;
+		this.setViewLocation(location);
 		height = 200;
 		width = 200;
 		vacant = true;
 	}
 	
 	public GridBlock(ConcretePUModel powerUp, Pair loc) {
+		
 		gabPU.setIsActive(false);
 		concrPU.setActive(false);
 		powerUp.setLocation(loc);
 		this.setConcrPU(powerUp);
 		this.location = loc;
+		this.setViewLocation(location);
 		this.setVacant(false);
 	}
 	public GridBlock(GabionPUModel powerUp, Pair loc) {
+		
 		gabPU.setIsActive(false);
 		concrPU.setActive(false);
 		powerUp.setLocation(loc);
 		this.setGabPU(powerUp);
 		this.location = loc;
+		this.setViewLocation(location);
 		this.setVacant(false);
 	}
 	
@@ -59,7 +66,7 @@ public class GridBlock {
 		this.water.setActive(true);
 		//this.location = loc;
 		this.setVacant(false);
-		System.out.println(loc.getX());
+		
 		beach.getPositionGrid()[loc.getX()][loc.getY()] = 2;
 	}
 	
@@ -110,7 +117,7 @@ public class GridBlock {
 	}
 	
 	public Rectangle getBounds() {
-		return (new Rectangle(this.getLocation().getX(),this.getLocation().getY(),this.getWidth(),this.getHeight()));
+		return (new Rectangle(this.getViewLocation().getX(),this.getViewLocation().getY(),this.getWidth(),this.getHeight()));
 	}
 
 	public int getHeight() {
@@ -131,6 +138,13 @@ public class GridBlock {
 
 	public WaterModel getWater() {
 		return water;
+	}
+	
+	public Pair getViewLocation() {
+		return viewLocation;
+	}
+	public void setViewLocation(Pair viewLocation) {
+		this.viewLocation = viewLocation;
 	}
 
 	

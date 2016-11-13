@@ -41,12 +41,26 @@ public class BeachModel {
 	public void initializeBeach() {
 		
 		ArrayList<Pair> pairList = this.generatePPUL();
+		Collections.sort(pairList, new PairComparator());
 		Iterator<Pair> it = pairList.iterator();
 		while(it.hasNext()) {
-			Pair tempPair = it.next();
-			GridBlock g = new GridBlock(tempPair, this);
-			beachGrid.put(tempPair, g);
+			for(int i = 0; i < 600; i += 100) {
+				for(int j = 0; j < 930; j+=155) {
+					Pair viewLoc = new Pair(i,j);
+					if(it.hasNext()){
+						Pair tempPair = it.next();
+						GridBlock g = new GridBlock(tempPair, this);
+						g.setViewLocation(viewLoc);
+						g.setLocation(tempPair);
+						beachGrid.put(tempPair, g);
+					}
+					
+				}
+			}
 		}
+		
+		
+		
 		
 		Collection<Pair> blockLocs = beachGrid.keySet();
 		Iterator<Pair> pairIt = blockLocs.iterator();
@@ -141,6 +155,7 @@ public class BeachModel {
 			tempConcr.setLocation(this.findPairInGrid(pair));
 			tempConcr.setActive(true);
 			beachGrid.get(this.findPairInGrid(pair)).setConcrPU(tempConcr);
+			System.out.println(pair.getX() + " " + pair.getY());
 			positionGrid[pair.getX()][pair.getY()] = Walls.CONCRETE_GAME3.getValue();
 		}
 	}
