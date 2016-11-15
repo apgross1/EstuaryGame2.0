@@ -55,6 +55,7 @@ public class Game1View extends JPanel implements KeyListener{
         frame.setSize(1090, 700);
         frame.setVisible(true);
         frame.setResizable(false);
+        /*
        
         super_panel.setSize(1090,700);
         super_panel.setBackground(Color.CYAN);
@@ -90,6 +91,7 @@ public class Game1View extends JPanel implements KeyListener{
         super_panel.add(gab_wall);
         super_panel.add(conc_wall);
         super_panel.add(play_ground);
+        */
        
         //addKeyListener
         frame.addKeyListener(this);
@@ -119,6 +121,14 @@ public class Game1View extends JPanel implements KeyListener{
 	 public class Animation extends JComponent {
 			@Override
 			public void paint(Graphics g) {
+				
+				//First draw background
+				try {
+					g.drawImage(ImageIO.read(new File("./images/sandy.jpg")), 0, 0, this);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
 				//Draw animal at current position
 				g.fillRect(controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(),controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight());
 				
