@@ -75,7 +75,7 @@ public class Game1Controller{
 	public void startGame(){
 		gameState = true;
 		//Load walls in in view
-		gabSeq = g1view.getGabSeq();
+		//gabSeq = g1view.getGabSeq();
 		while(overallRound < 3 & gameState == true){
 			round();
 		}
@@ -211,7 +211,7 @@ public class Game1Controller{
 		int concreteCollected = wallModel.getCurrentBlocks();
 		
 		//changed the gabion level to 4 so that it is harder
-		int protection = (gabbionsCollected * 4) + (concreteCollected * 1);
+		int protection = (gabbionsCollected * 4) + (concreteCollected * 2);
 		int new_status;
 		
 		//Prevent health going up

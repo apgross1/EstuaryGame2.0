@@ -42,6 +42,7 @@ public class Game1View extends JPanel implements KeyListener{
     
     //Load in sprites
     private ArrayList<BufferedImage> gabSeq = new ArrayList<BufferedImage>();
+    private ArrayList<BufferedImage> concSeq = new ArrayList<BufferedImage>();
     
 
 	public Game1View(Game1Controller ctl){
@@ -55,6 +56,8 @@ public class Game1View extends JPanel implements KeyListener{
         frame.setSize(1090, 700);
         frame.setVisible(true);
         frame.setResizable(false);
+        
+        getWallseq();
         /*
        
         super_panel.setSize(1090,700);
@@ -101,20 +104,23 @@ public class Game1View extends JPanel implements KeyListener{
 		frame.repaint();
 	}
 	
-	BufferedImage mainImg;
-    public ArrayList<BufferedImage> getGabSeq(){
+	BufferedImage gabImg;
+	BufferedImage concImg;
+    public void getWallseq(){
     	boolean check = new File("./images/testwallgrid.png").exists();
     	System.out.println("This should be true.....: " + check);
     		try {
-    			mainImg = ImageIO.read(new File("./images/testwallgrid.png"));
+    			gabImg = ImageIO.read(new File("./images/testwallgrid.png"));
+    			concImg = ImageIO.read(new File("./images/testwallgrid.png"));
     		} catch (IOException e) {
 	    		e.printStackTrace();
 	    	}
 	    	for(int i = 0; i < 30; i++){
 	    		//getSubimage(int x, int y, int w, int h)
-	    		gabSeq.add(mainImg.getSubimage(0, 100*i, 1090, 100));
+	    		gabSeq.add(gabImg.getSubimage(0, 100*i, 1090, 100));
+	    		concSeq.add(concImg.getSubimage(0, 100*i, 1090, 100));
 	    	}
-	    	return gabSeq;
+	    	
     	}
  
 	
@@ -152,6 +158,7 @@ public class Game1View extends JPanel implements KeyListener{
 				
 				//Draw wall sprites (First this gives an ugly error, second can we set the bg of the jpannel rather than paint on jframe?)
 				g.drawImage(gabSeq.get(controller.getGabionWallModel().getCurrentOysters()), 0, 210, 1090, 100, this);
+				g.drawImage(concSeq.get(controller.getWallModel().getCurrentBlocks()), 0, 100, 1090, 100, this);
 				
 				
 				if(!controller.getInCountDown()){
