@@ -40,7 +40,9 @@ public class Game1View extends JPanel implements KeyListener{
     private JPanel estuary = new JPanel();
     private JPanel super_panel = new JPanel();
     
-    private ArrayList<BufferedImage> gabSeq = new ArrayList<BufferedImage>(30);
+    //Load in sprites
+    private ArrayList<BufferedImage> gabSeq = new ArrayList<BufferedImage>();
+    
 
 	public Game1View(Game1Controller ctl){
         controller = ctl;
@@ -88,21 +90,6 @@ public class Game1View extends JPanel implements KeyListener{
         super_panel.add(gab_wall);
         super_panel.add(conc_wall);
         super_panel.add(play_ground);
- 
-       
-       
-        /*//Panes
-        JSplitPane view = new  JSplitPane();
-        view.setSize(1000, 550);
-        view.setDividerSize(5);
-        view.setDividerLocation(50);
-        view.setEnabled(false);
-       
-        view.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        view.setTopComponent(bar_pannel);
-        view.setBottomComponent(play_ground);
-       
-        frame.add(view);*/
        
         //addKeyListener
         frame.addKeyListener(this);
@@ -114,26 +101,18 @@ public class Game1View extends JPanel implements KeyListener{
 	
 	BufferedImage mainImg;
     public ArrayList<BufferedImage> getGabSeq(){
-    	System.out.println("Here");
-    	//BufferedImage mainImg;
-    	boolean check = new File("/Game1/images/testwallgrid.png").exists();
+    	boolean check = new File("./images/testwallgrid.png").exists();
     	System.out.println("This should be true.....: " + check);
-    	/*
     		try {
-    			mainImg = ImageIO.read(new File("Game1/images/testwallgrid.png"));
-    			boolean check = new File("Game1/images/testwallgrid.png").exists();
-    			System.out.println("Hey: " + check);
-    			
+    			mainImg = ImageIO.read(new File("./images/testwallgrid.png"));
     		} catch (IOException e) {
 	    		e.printStackTrace();
 	    	}
-    	
 	    	for(int i = 0; i < 30; i++){
-	    		gabSeq.set(i, mainImg.getSubimage(1090*i, 0, 1090, 100));
+	    		//getSubimage(int x, int y, int w, int h)
+	    		gabSeq.add(mainImg.getSubimage(0, 100*i, 1090, 100));
 	    	}
-	    	*/
 	    	return gabSeq;
-	    
     	}
  
 	
@@ -160,6 +139,10 @@ public class Game1View extends JPanel implements KeyListener{
 				g.setColor(Color.RED);
 				int health = (controller.getBarModel().getStatus()*2);
 				g.fillRect(420, 10, health, 20);
+				
+				//Draw wall sprites (First this gives an ugly error, second can we set the bg of the jpannel rather than paint on jframe?)
+				g.drawImage(gabSeq.get(controller.getGabionWallModel().getCurrentOysters()), 0, 210, 1090, 100, this);
+				
 				
 				if(!controller.getInCountDown()){
 					//Draw all the chunks that are active.
