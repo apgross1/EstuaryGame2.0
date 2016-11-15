@@ -33,6 +33,7 @@ public class Game1Controller{
 	
 	//Vars
 	private boolean gameState;
+	
 	private ArrayList<BufferedImage> gabSeq;// = new ArrayList<BufferedImage>(30);;
 	//private BufferedImage gabSeq;
 	int overallRound = 0;
@@ -80,6 +81,7 @@ public class Game1Controller{
 			round();
 		}
 		gameState = false;
+		return;
 	}
 	
 	
@@ -234,4 +236,13 @@ public class Game1Controller{
 		wallModel.breakDown();
 		gabionModel.breakDown();
 	}
+	
+	public boolean isGameState() {
+		return gameState;
+	}
+
+	public void setGameState(boolean gameState) {
+		this.gameState = gameState;
+	}
+
 }

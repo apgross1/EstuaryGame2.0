@@ -110,8 +110,8 @@ public class Game1View extends JPanel implements KeyListener{
     	boolean check = new File("./images/testwallgrid.png").exists();
     	System.out.println("This should be true.....: " + check);
     		try {
-    			gabImg = ImageIO.read(new File("./images/testwallgrid.png"));
-    			concImg = ImageIO.read(new File("./images/testwallgrid.png"));
+    			gabImg = ImageIO.read(new File("./images/Game1/testwallgrid.png"));
+    			concImg = ImageIO.read(new File("./images/Game1/testwallgrid.png"));
     		} catch (IOException e) {
 	    		e.printStackTrace();
 	    	}
@@ -130,7 +130,7 @@ public class Game1View extends JPanel implements KeyListener{
 				
 				//First draw background
 				try {
-					g.drawImage(ImageIO.read(new File("./images/sandy.jpg")), 0, 0, this);
+					g.drawImage(ImageIO.read(new File("./images/Game1/sandy.jpg")), 0, 0, this);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
