@@ -168,7 +168,7 @@ public class Game1View extends JPanel implements KeyListener{
 				if(controller.getInCountDown()){
 					//Print the timer mid screen.
 					g.setFont(new Font("Rockwell", Font.PLAIN, 100)); 
-					g.setColor(Color.WHITE);
+					g.setColor(Color.BLACK);
 					g.drawString("" + controller.getIntermTime(), 500, 310);
 					
 				}
