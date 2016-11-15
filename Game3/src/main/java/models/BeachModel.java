@@ -44,19 +44,10 @@ public class BeachModel {
 		Collections.sort(pairList, new PairComparator());
 		Iterator<Pair> it = pairList.iterator();
 		while(it.hasNext()) {
-			for(int i = 0; i < 600; i += 100) {
-				for(int j = 0; j < 930; j+=155) {
-					Pair viewLoc = new Pair(i,j);
-					if(it.hasNext()){
-						Pair tempPair = it.next();
-						GridBlock g = new GridBlock(tempPair, this);
-						g.setViewLocation(viewLoc);
-						g.setLocation(tempPair);
-						beachGrid.put(tempPair, g);
-					}
-					
-				}
-			}
+			Pair tempPair = it.next();
+			GridBlock g = new GridBlock(tempPair, this);
+			g.setLocation(tempPair);
+			beachGrid.put(tempPair, g);
 		}
 		
 		

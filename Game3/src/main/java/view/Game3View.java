@@ -82,7 +82,6 @@ public class Game3View extends JPanel implements KeyListener{
 		Iterator<Pair> it = blocks.iterator();
 		while(it.hasNext()) {
 			Pair currBlock = it.next();
-			System.out.println("currBlock x and y: " + currBlock.getX() + " " + currBlock.getY());
 			JPanel beachOverlay = new JPanel();
 			beachOverlay.setLayout(new OverlayLayout(beachOverlay));
 			
@@ -92,7 +91,7 @@ public class Game3View extends JPanel implements KeyListener{
 		    powerUp.setBounds((int)controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(currBlock)).getBounds().getX(), (int)controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(currBlock)).getBounds().getY(), 835, 605);
 			layoutContainer.add(powerUp, new Integer(2),-1);
 		    beachOverlay.add(gridBlock);
-		    beachOverlay.setBorder(BorderFactory.createLineBorder(Color.black));
+		    //beachOverlay.setBorder(BorderFactory.createLineBorder(Color.black));
 		    beachGrid.add(beachOverlay);
 		    
 		}
@@ -230,10 +229,10 @@ public class Game3View extends JPanel implements KeyListener{
 						if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))) != null) {
 							if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).isVacant()) {
 								controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).setWater(new WaterModel(), controller.getBeach().findPairInGrid(pairs.get(i)));
-								if(i >= 1) {
+								/*if(i >= 1) {
 									System.out.println("Made it here!");
 									controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i-1))).setWater(new WaterModel(), controller.getBeach().findPairInGrid(pairs.get(i-1))); 
-								}
+								}*/
 								
 								
 								layoutContainer.remove(componentMap.get(this.hashCode()));
@@ -283,15 +282,15 @@ public class Game3View extends JPanel implements KeyListener{
 		@Override
 		public void paint(Graphics g) {
 			String coords = "("+grid.getViewLocation().getX()+","+grid.getViewLocation().getY()+")";
-			g.drawString(coords, this.getWidth()/2, this.getHeight()/2);
-			/*if(grid.getWater().isActive() == false) {
+			//g.drawString(coords, this.getWidth()/2, this.getHeight()/2);
+			if(grid.getWater().isActive() == false) {
 				g.setColor(Color.YELLOW);
 				g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}
 			else{
-			g.setColor(Color.BLUE);
-			g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
-			}*/
+				g.setColor(Color.BLUE);
+				g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
+			}
 		}
 	}
 	
@@ -319,7 +318,7 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	public void generateWaveCluster() {
 
-		int randCluster = 3 + (int)(Math.random() * ((8 - 3) + 1));
+		int randCluster = Waves.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((Waves.CLUSTER_SEVEN.getWaveID() - Waves.CLUSTER_ONE.getWaveID()) + 1));
 		for(int i = 0; i < 250; i++) {
 			WaveModel wave = new WaveModel(randCluster);
 			if(i == 249) {

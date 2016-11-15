@@ -39,7 +39,7 @@ public class WaveModel {
 	
 
 	public void randomSpawn(int clusterVal) {
-		Waves waveEnum = Waves.values()[clusterVal-1];
+		Waves waveEnum = Waves.values()[clusterVal];
 		setClusterGroup(waveEnum);
 		location = new Pair(0,0);
 

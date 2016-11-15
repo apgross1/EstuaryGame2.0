@@ -187,7 +187,12 @@ public class Game3Controller implements KeyListener {
 	
 	//Duration for which power-up is in wall form
 	public void powerUpPickedUp() {
-		timer = new Timer(5000, powerUpWallTimerListener);
+		if (beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getWallState() == GabPUState.WALL) { 
+			timer = new Timer(5000, powerUpWallTimerListener);
+		}
+		else {
+			timer = new Timer(1000, powerUpWallTimerListener);
+		}
 		timer.setRepeats(true);
 		timer.start();
 		System.out.println("Wall timer started");
@@ -266,14 +271,14 @@ public class Game3Controller implements KeyListener {
 	};
 	
 	public void genWaveTimer() {
-		Timer waveTimer = new Timer(8000, genWaveTimer);
+		Timer waveTimer = new Timer(4000, genWaveTimer);
 		
 		waveTimer.setRepeats(true);
 		waveTimer.start();
 	}
 	
 	public void collisionTile() {
-		Collection<GridBlock> sandPatches = this.getBeach().getBeachGrid().values();
+		/*Collection<GridBlock> sandPatches = this.getBeach().getBeachGrid().values();
 		for(GridBlock gb : sandPatches) {
 			//System.out.println("Location gb: " + "("+gb.getLocation().getX() + ","+gb.getLocation().getY() +")");
 			//System.out.println("Location animal: " + "(" + animal.getBounds().getX() + "," + animal.getBounds().getY() + ")");
@@ -284,7 +289,7 @@ public class Game3Controller implements KeyListener {
 					this.getAnimal().setSpeedY(0);
 				}
 			}
-		}
+		}*/
 	}
 
 	public void collisionDetectionLoop(){
