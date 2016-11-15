@@ -267,7 +267,102 @@ import models.WaterModelG2;
 
 public class gameTwoTests {
 	@Test
-	public void testAnimalModelG2MovementNorth() {
+	public void testAEHealthUp() {
+		AnimalModelG2 a = new AnimalModelG2(); //Default crab.
+		AlgaeEaterModel eater = new AlgaeEaterModel(a.getLocX(), a.getLocY());
+		eater.setHealth(90);
+		eater.healthUp(); // Increase 10.
+		assertEquals(eater.getHealth(), 100);
+	}
+	@Test
+	public void testAEHealthDown(){
+		AnimalModelG2 a = new AnimalModelG2();
+		AlgaeEaterModel eater = new AlgaeEaterModel(a.getLocX(), a.getLocY());
+		eater.setHealth(100);
+		eater.healthDown(); //decrease 10
+		assertEquals(eater.getHealth(), 90);
+	}
+	
+	@Test
+	public void testincConcentration(){
+		//if AlgaeModel gets through, incConcentration
+		WaterModelG2 w = new WaterModelG2();
+		w.setAlgConcentration(0);
+		w.incrAlgConcentration();
+		assertEquals(w.getAlgConcentration(), 25);
+		
+	}
+	
+	@Test
+	public void testdecOxyg(){
+		//if AlgaeModel gets through, decrease Oxygen
+		WaterModelG2 w = new WaterModelG2();
+		w.setHealth(100);
+		w.decOxygen();
+		assertEquals(w.getOxLevel(), 75); //starts at 100, decrements by 25?
+		
+	}
+	
+	@Test
+	public void testDecreaseBarModelG2(){
+		//if AlgaeModel gets through decreaseBarModelG2 will be called
+		BarModelG2 b = new BarModelG2(50);// 50 is initial health
+		b.decrease(1);//Assume decreases by one.(status--)
+		assertEquals(b.getStatus(), 49);
+	}
+	
+	@Test
+	public void testInrecaseBarModelG2(){
+		//if AlgaeModel gets through increaseBarModelG2 will be called
+		BarModelG2 b = new BarModelG2(49);// 49 is initial health
+		b.increase(1);//Assume increase by one.(status++)
+		assertEquals(b.getStatus(), 50);
+	}
+	
+	@Test
+	public void testisEmpty(){
+		BarModelG2 b = new BarModelG2(0);
+		assertEquals(b.isEmpty(), 0);
+	}
+	
+	@Test
+	public void testisEmpty2(){
+		BarModelG2 b = new BarModelG2(100);
+		assertEquals(b.isEmpty(), 1);
+	}
+	
+	
+	@Test
+	public void testdecreaseSpeed(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setSpeed(100);
+		a.decreaseSpeed();
+		assertEquals(a.getSpeed(), 75);
+	}
+	
+	@Test
+	public void testIncreaseSpeed(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setSpeed(75);
+		a.increaseSpeed();
+		assertEquals(a.getSpeed(), 100);
+	}
+	
+	@Test
+	public void testeaten(){
+		AlgaeModel a = new AlgaeModel();
+		a.eaten();
+		assertEquals(a.isActive(), 0);
+	}
+	
+	@Test
+	public void testeaten2(){
+		AlgaeModel a = new AlgaeModel();
+		assertEquals(a.isActive(), 1);
+	}
+	
+	@Test
+	public void testAnimalModelG2Movement() {
 		AnimalModelG2 myAnimalModelG2 = new AnimalModelG2();
 		myAnimalModelG2.setLocX(50);
 		myAnimalModelG2.setLocY(250);

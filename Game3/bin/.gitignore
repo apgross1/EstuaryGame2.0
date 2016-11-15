@@ -1,14 +1,4 @@
-<<<<<<< HEAD
-/controller/
-/models/
-/main.class
 /Game3Tests$1.class
 /Game3Tests$2.class
 /Game3Tests.class
-=======
-/Game3Tests$1.class
-/Game3Tests.class
-/controller/
-/models/
->>>>>>> refs/remotes/origin/Game2
-/view/
+/main.class
