@@ -97,6 +97,11 @@ public class Game2View extends JPanel implements KeyListener{
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
 			g.setColor(Color.WHITE);
 			
+			if(controller.getStormStatus()==true){
+				g.setFont(g.getFont().deriveFont(Font.BOLD));
+				g.drawString("It's Storming!" , 700, 50);
+				g.setFont(g.getFont().deriveFont(Font.PLAIN));
+			}
 			//temp condition
 			g.drawString("Time: " +controller.getGameTime(), 700, 25);
 			
@@ -142,14 +147,27 @@ public class Game2View extends JPanel implements KeyListener{
 			
 				controller.getAnimalModelG2().setSpeed(5);
 			
+			
 			break;
 		
 		case KeyEvent.VK_UP:
 			
+			
 				controller.getAnimalModelG2().setSpeed(-5);
 			
-			
 			break;
+			
+		case KeyEvent.VK_SPACE:
+			
+			if(controller.getStormStatus()==true){
+				controller.deactivateStorm();
+			}
+			else{
+				controller.activateStorm();
+			}
+		
+		
+		break;
 		}
 	}
 				

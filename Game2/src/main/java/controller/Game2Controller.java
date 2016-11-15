@@ -26,11 +26,13 @@ public class Game2Controller {
 	private Collection<AlgaeModel> algaeList = new ArrayList<AlgaeModel>();
 	private WaterModelG2 water;
 	long spawnTime=0;
-	int spawnDelay = 1000;
 	int numMissed = 0;
 	long startTime;
 	int updates = 0;
 	int frames = 0;
+	
+	int spawnDelay = 2000; //in milliseconds
+	boolean isStorming = false;
 	
 	public Game2Controller() {
 		animal = new AnimalModelG2();
@@ -51,7 +53,8 @@ public class Game2Controller {
 		final double ammountOfTicks = 60.0;	
 		double ns = 1000000000 /ammountOfTicks;
 		double delta = 0;
-		long timer = System.currentTimeMillis();
+		
+		long stormTimer = System.currentTimeMillis();
 		
 		while(gameActive){
 			long now = System.nanoTime();
@@ -67,18 +70,22 @@ public class Game2Controller {
 			frames++;
 			collisionDetection();
 			
-			if(System.currentTimeMillis()-timer>1000){
-				timer +=1000;
-				System.out.println(updates + " Ticks, FPS " + frames);
-				updates = 0;
-				frames = 0;
+			if(System.currentTimeMillis()-stormTimer>10000){
+				stormTimer+=10000;
+				if(getStormStatus()==true){
+					deactivateStorm();
+				}
+				else{
+					activateStorm();
+				}
+				
 			}
 			
 			
 			
 			
 			if(algaeList.size()<algae.getMaxAlgae()){
-				if(System.currentTimeMillis()>=spawnTime+spawnDelay){
+				if(System.currentTimeMillis()>=spawnTime+getSpawnDelay()){
 				spawnAlgae();
 				spawnTime = System.currentTimeMillis();
 				
@@ -86,6 +93,28 @@ public class Game2Controller {
 			}
 		}
 	}
+	
+	
+	public boolean getStormStatus(){
+		return isStorming;
+	}
+	public void activateStorm(){
+	
+		isStorming = true;
+		setSpawnDelay(getSpawnDelay()-1500);
+	}
+	public void deactivateStorm(){
+		
+		isStorming = false;
+		setSpawnDelay(getSpawnDelay()+1500);
+	}
+	public int getSpawnDelay(){
+		return spawnDelay;
+	}
+	public void setSpawnDelay(int delay){
+		spawnDelay = delay;
+	}
+	
 	public long getGameTime(){
 		return (System.currentTimeMillis()-startTime)/1000;
 	}

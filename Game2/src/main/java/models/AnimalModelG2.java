@@ -28,7 +28,13 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 		this.y = 275;
 	}
 	public void tick(){
+		if(y>5 && speed<0)
+		{
 		y+=speed;
+		}
+		else if( y<590 && speed>0 ){
+			y+=speed;
+		}
 		
 	}
 	public int getY(){
@@ -45,23 +51,23 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 
 	@Override
 	public void move() {
-		switch (this.getCurrDir()) {
-		case NORTH:
-			if(this.getLocY()>0){
-				
-				this.setLocY(y);
-			}
-			break;
-		case SOUTH:
-			if(this.getLocY()<585){
-				
-				this.setLocY(y);
-			}
-			
-			break;
-		default:
-			break;
-		}
+//		switch (this.getCurrDir()) {
+//		case NORTH:
+//			if(this.getLocY()>0){
+//				
+//				this.setLocY(y);
+//			}
+//			break;
+//		case SOUTH:
+//			if(this.getLocY()<585){
+//				
+//				this.setLocY(y);
+//			}
+//			
+//			break;
+//		default:
+//			break;
+//		}
 	}
 
 	@Override

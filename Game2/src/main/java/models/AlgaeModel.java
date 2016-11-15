@@ -9,8 +9,8 @@ public class AlgaeModel {
 	private int locY;
 	private int health;
 	private boolean isActive;
-	private int height = 20;
-	private int width = 20;
+	private int height = 40;
+	private int width = 40;
 	private int speed = 1;
 	private int randomYBound = 0;
 	Random rand = new Random();
@@ -18,11 +18,15 @@ public class AlgaeModel {
 	int algaeXBoundMax = 1000;
 	int algaeYBoundMax = 600;
 	int algaeYBoundMin = 100;
-	int maxAlgaeNum = 30;
+	int maxAlgaeNum = 100;
+	
+	
 
 	public AlgaeModel() {
 		randomYBound = rand.nextInt((algaeYBoundMax - algaeYBoundMin) + 1) + algaeYBoundMin;
 	}
+	
+
 
 	public int getHeight() {
 		return height;
