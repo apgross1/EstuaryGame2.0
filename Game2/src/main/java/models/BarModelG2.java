@@ -3,12 +3,21 @@ package models;
 public class BarModelG2 extends BarModelAbstract{
 	private int status;
 	private int maxLevel;
-	
+	private int width;
+	private int damage;
 	public BarModelG2(){
 		
 	}
 	public BarModelG2(int maxLevel) {
 		this.maxLevel = maxLevel;
+		this.width =20;
+		damage = 10;
+	}
+	public int getDamage(){
+		return damage;
+	}
+	public int getWidth(){
+		return width;
 	}
 	@Override
 	public void decrease(int i){
