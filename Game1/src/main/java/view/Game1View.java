@@ -9,9 +9,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -19,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import java.io.File;
 import controller.Game1Controller;
 import enums.Direction;
 import models.ConcreteWallModelG1.ConcreteChunk;
@@ -34,6 +39,8 @@ public class Game1View extends JPanel implements KeyListener{
     private JPanel conc_wall = new JPanel();
     private JPanel estuary = new JPanel();
     private JPanel super_panel = new JPanel();
+    
+    private ArrayList<BufferedImage> gabSeq = new ArrayList<BufferedImage>(30);
 
 	public Game1View(Game1Controller ctl){
         controller = ctl;
@@ -100,11 +107,35 @@ public class Game1View extends JPanel implements KeyListener{
         //addKeyListener
         frame.addKeyListener(this);
     }
- 
 	
 	public void repaintFrame(){
 		frame.repaint();
 	}
+	
+	BufferedImage mainImg;
+    public ArrayList<BufferedImage> getGabSeq(){
+    	System.out.println("Here");
+    	//BufferedImage mainImg;
+    	boolean check = new File("/Game1/images/testwallgrid.png").exists();
+    	System.out.println("This should be true.....: " + check);
+    	/*
+    		try {
+    			mainImg = ImageIO.read(new File("Game1/images/testwallgrid.png"));
+    			boolean check = new File("Game1/images/testwallgrid.png").exists();
+    			System.out.println("Hey: " + check);
+    			
+    		} catch (IOException e) {
+	    		e.printStackTrace();
+	    	}
+    	
+	    	for(int i = 0; i < 30; i++){
+	    		gabSeq.set(i, mainImg.getSubimage(1090*i, 0, 1090, 100));
+	    	}
+	    	*/
+	    	return gabSeq;
+	    
+    	}
+ 
 	
 	 public class Animation extends JComponent {
 			@Override

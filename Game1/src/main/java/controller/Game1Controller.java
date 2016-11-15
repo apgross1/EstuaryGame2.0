@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -32,7 +33,8 @@ public class Game1Controller{
 	
 	//Vars
 	private boolean gameState;
-	private ArrayList<BufferedImage> landSeqs;
+	private ArrayList<BufferedImage> gabSeq;// = new ArrayList<BufferedImage>(30);;
+	//private BufferedImage gabSeq;
 	int overallRound = 0;
 	long gameTime;
 	long countDownTime;
@@ -72,6 +74,8 @@ public class Game1Controller{
 	
 	public void startGame(){
 		gameState = true;
+		//Load walls in in view
+		gabSeq = g1view.getGabSeq();
 		while(overallRound < 3 & gameState == true){
 			round();
 		}
@@ -110,7 +114,7 @@ public class Game1Controller{
 			if(wallModel.getCurrentBlocks() <= (wallModel.getMaxBlocks()-5) & wallModel.getActiveBlocks() < 5){//Max concrete that can be on the screen at once.
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
-				int randx = r.nextInt(890);
+				int randx = r.nextInt(980);
 				int randy = r.nextInt(570-310) + 310;
 				//Need a condition here to make sure that there is not already a chunk at that location.
 				wallModel.spawnChunk(randx, randy);
@@ -119,7 +123,7 @@ public class Game1Controller{
 			if(gabionModel.getCurrentOysters() <= (gabionModel.getMaxOysters()-3) & gabionModel.getActiveClams() < 3){//Max concrete that can be on the screen at once.
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
-				int randx = r.nextInt(890);
+				int randx = r.nextInt(980);
 				int randy = r.nextInt(570-310) + 310;
 				//Need a condition here to make sure that there is not already a chunk at that location.
 				gabionModel.spawnChunk(randx, randy);
