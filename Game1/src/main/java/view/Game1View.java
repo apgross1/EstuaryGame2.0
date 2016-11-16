@@ -57,44 +57,8 @@ public class Game1View extends JPanel implements KeyListener{
         frame.setVisible(true);
         frame.setResizable(false);
         
-        getWallseq();
-        /*
-       
-        super_panel.setSize(1090,700);
-        super_panel.setBackground(Color.CYAN);
-        super_panel.setVisible(true);
-        super_panel.setLayout(new BoxLayout(super_panel, BoxLayout.Y_AXIS));
-        frame.add(super_panel);
-       
-       
-        bar_pannel.setPreferredSize(new Dimension(1090, 50));
-        bar_pannel.setBackground(Color.BLACK);
-        bar_pannel.setVisible(true);
-        //bar_pannel.setLayout(new BoxLayout(bar_pannel, BoxLayout.LINE_AXIS));
-       
-        play_ground.setPreferredSize(new Dimension(1090, 375));
-        play_ground.setBackground(Color.BLUE);
-        play_ground.setVisible(true);
-        //play_ground.setLayout(new BoxLayout(play_ground, BoxLayout.LINE_AXIS));
-       
-        gab_wall.setPreferredSize(new Dimension(1090, 100));
-        gab_wall.setBackground(Color.RED);
-        gab_wall.setVisible(true);
-       
-        conc_wall.setPreferredSize(new Dimension(1090, 100));
-        conc_wall.setBackground(Color.GREEN);
-        conc_wall.setVisible(true);
-       
-        estuary.setPreferredSize(new Dimension(1090, 75));
-        estuary.setBackground(Color.GRAY);
-        estuary.setVisible(true);
-       
-        super_panel.add(bar_pannel);
-        super_panel.add(estuary);
-        super_panel.add(gab_wall);
-        super_panel.add(conc_wall);
-        super_panel.add(play_ground);
-        */
+        //Load all pictures in the view
+        loadImgs();
        
         //addKeyListener
         frame.addKeyListener(this);
@@ -106,21 +70,35 @@ public class Game1View extends JPanel implements KeyListener{
 	
 	BufferedImage gabImg;
 	BufferedImage concImg;
-    public void getWallseq(){
+	BufferedImage bg;
+	
+    public void loadImgs(){
     	boolean check = new File("./images/testwallgrid.png").exists();
     	System.out.println("This should be true.....: " + check);
+
     		try {
-    			gabImg = ImageIO.read(new File("./images/Game1/testwallgrid.png"));
-    			concImg = ImageIO.read(new File("./images/Game1/testwallgrid.png"));
+    			gabImg = ImageIO.read(new File("./images/testwallgrid.png"));
+    			concImg = ImageIO.read(new File("./images/testwallgrid.png"));
+    			
+    	    	for(int i = 0; i < 30; i++){
+    	    		//getSubimage(int x, int y, int w, int h)
+    	    		gabSeq.add(gabImg.getSubimage(0, 100*i, 1090, 100));
+    	    		concSeq.add(concImg.getSubimage(0, 100*i, 1090, 100));
+    	    	}
     		} catch (IOException e) {
 	    		e.printStackTrace();
+		    	for(int i = 0; i < 30; i++){
+		    		//Fill the arraylist with empty pictures
+		    		//gabSeq.add();
+		    		//concSeq.add();
+		    	}
 	    	}
-	    	for(int i = 0; i < 30; i++){
-	    		//getSubimage(int x, int y, int w, int h)
-	    		gabSeq.add(gabImg.getSubimage(0, 100*i, 1090, 100));
-	    		concSeq.add(concImg.getSubimage(0, 100*i, 1090, 100));
-	    	}
-	    	
+	    	try {
+					bg = ImageIO.read(new File("./images/sandy.jpg"));
+				} catch (IOException e) {
+					e.printStackTrace();
+					//add a blank bg image.
+				}
     	}
  
 	
@@ -129,11 +107,7 @@ public class Game1View extends JPanel implements KeyListener{
 			public void paint(Graphics g) {
 				
 				//First draw background
-				try {
-					g.drawImage(ImageIO.read(new File("./images/Game1/sandy.jpg")), 0, 0, this);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				g.drawImage(bg, 0, 0, this);
 				
 				//Draw animal at current position
 				g.fillRect(controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(),controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight());
