@@ -72,6 +72,7 @@ public class Game1View extends JPanel implements KeyListener{
 	BufferedImage bg;
 	BufferedImage crabImg;
 	BufferedImage clam;
+	BufferedImage ccc;
 	
     public void loadImgs(){
     	boolean check = new File("./images/testwallgrid.png").exists();
@@ -106,6 +107,12 @@ public class Game1View extends JPanel implements KeyListener{
 				} catch (IOException e) {
 					e.printStackTrace();
 					//add a blank bg image.
+				}
+	    	try {
+					ccc = ImageIO.read(new File("./Images/Game1/ccChunk.png"));
+				} catch (IOException e) {
+					e.printStackTrace();
+					//
 				}
 	    	try{
 				crabImg = ImageIO.read(new File("./Images/Game1/bluecrab_0.png"));
@@ -175,16 +182,17 @@ public class Game1View extends JPanel implements KeyListener{
 					while(it.hasNext()){
 						ConcreteChunk tmp = it.next();
 						if(tmp.isActive()){
-							g.setColor(Color.RED);
-							g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
+							//g.setColor(Color.RED);
+							//g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
+							g.drawImage(ccc, tmp.getLocX(), tmp.getLocY(), 30, 20, this);
 						}
 					}
 					while (git.hasNext()){
 						GabionChunk tmp = git.next();
 						if(tmp.isActive()){
-							g.setColor(Color.WHITE);
-							g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
-							//g.drawImage(clam, tmp.getLocX(), tmp.getLocY(), 30, 20, this);
+							//g.setColor(Color.WHITE);
+							//g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
+							g.drawImage(clam, tmp.getLocX(), tmp.getLocY(), 30, 20, this);
 						}
 					}
 				}
