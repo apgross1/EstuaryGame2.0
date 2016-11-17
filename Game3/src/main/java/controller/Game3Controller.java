@@ -202,7 +202,7 @@ public class Game3Controller implements KeyListener {
 			timer = new Timer(5000, powerUpWallTimerListener);
 		}
 		else {
-			timer = new Timer(1000, powerUpWallTimerListener);
+			timer = new Timer(3000, powerUpWallTimerListener);
 		}
 		timer.setRepeats(true);
 		timer.start();
@@ -282,7 +282,7 @@ public class Game3Controller implements KeyListener {
 	};
 	
 	public void genWaveTimer() {
-		Timer waveTimer = new Timer(8000, genWaveTimer);
+		Timer waveTimer = new Timer(6000, genWaveTimer);
 		
 		waveTimer.setRepeats(true);
 		waveTimer.start();
