@@ -4,8 +4,13 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
+
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,6 +34,9 @@ public class Game2View extends JPanel implements KeyListener{
 	private JPanel shallowWater = new JPanel();
 	AlgaeModel algae = new AlgaeModel();
 	BarModelG2 oxyBar;
+	BufferedImage background;
+	BufferedImage character;
+	BufferedImage algaeImg;
     //final static int frameWidth = 800;
     //final static int frameHeight = 800;
 	
@@ -36,6 +44,7 @@ public class Game2View extends JPanel implements KeyListener{
 		oxyBar = new BarModelG2(200);
 		controller = ctl;
 		frame = gamef;
+		loadImages();
     	
 		/*
 		algaeWater.setSize(1000, 500);
@@ -77,16 +86,28 @@ public class Game2View extends JPanel implements KeyListener{
 	public void repaintFrame(){
 		frame.repaint();
 	}
+	public void loadImages(){
+		try {
+			background = ImageIO.read(new File("./Images/Game2/waterBackgroundG2.png"));
+			character = ImageIO.read(new File("./Images/Game2/hsCrab.png"));
+			algaeImg = ImageIO.read(new File("./Images/Game2/Grass.png"));
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+	  
+		}
+	}
 	
 	public class Animation extends JComponent {
 		@Override
 		public void paint(Graphics g) {
 			//Draw animal at current position
 			
-			g.setColor(Color.ORANGE);
-			g.fillRect(controller.getAnimalModelG2().getLocX(),controller.getAnimalModelG2().getY(),controller.getAnimalModelG2().getWidth(),controller.getAnimalModelG2().getHeight());
-			
-			
+			g.drawImage(background, 0, 0, this);
+			//g.setColor(Color.ORANGE);
+			//g.fillRect(controller.getAnimalModelG2().getLocX(),controller.getAnimalModelG2().getY(),controller.getAnimalModelG2().getWidth(),controller.getAnimalModelG2().getHeight());
+			g.drawImage(character, controller.getAnimalModelG2().getLocX(),controller.getAnimalModelG2().getY(),controller.getAnimalModelG2().getWidth(),controller.getAnimalModelG2().getHeight(), this);		
 			//Draw score data and timer and health
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
 			g.setColor(Color.WHITE);
@@ -113,8 +134,9 @@ public class Game2View extends JPanel implements KeyListener{
 				//
 				AlgaeModel tmp = it.next();
 				if(tmp.isActive()){
-					g.setColor(Color.GREEN);
-					g.fillRect(tmp.getLocX(), tmp.getLocY(), tmp.getWidth(), tmp.getHeight());
+					g.drawImage(algaeImg, tmp.getLocX(), tmp.getLocY(), tmp.getWidth(), tmp.getHeight(), this);
+					//g.setColor(Color.GREEN);
+					//g.fillRect(tmp.getLocX(), tmp.getLocY(), tmp.getWidth(), tmp.getHeight());
 					tmp.move();
 					
 				}

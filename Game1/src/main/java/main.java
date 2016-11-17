@@ -11,10 +11,12 @@ public class main {
 
 	public static void main(String[] args) {
 
+		/*
 		//Controller
 		Game1Controller ctlr = new Game1Controller();
 		
 		ctlr.startGame();
+		*/
 		
 	}
 

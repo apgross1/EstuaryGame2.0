@@ -32,6 +32,13 @@ public class AnimalModel extends AnimalModelAbstract {
 		this.speedY = speed;
 	}
 	
+	public boolean isMoving(){
+		if(speedX != 0 || speedY != 0){
+			return true;
+		}
+		return false;
+	}
+	
 	
 	@Override
 	public void move() {
