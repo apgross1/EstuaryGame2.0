@@ -30,15 +30,8 @@ import models.ConcreteWallModelG1.ConcreteChunk;
 import models.GabionWallModelG1.GabionChunk;
 
 public class Game1View extends JPanel implements KeyListener{
-    private int damageLevel;
     private Game1Controller controller;
-    private JFrame frame = new JFrame();
-    private JPanel bar_pannel = new JPanel();
-    private JPanel play_ground = new JPanel();
-    private JPanel gab_wall = new JPanel();
-    private JPanel conc_wall = new JPanel();
-    private JPanel estuary = new JPanel();
-    private JPanel super_panel = new JPanel();
+    private JFrame frame;
     BufferedImage[][] pics;
     final int frameCount = 3;
     final static int imgWidth = 165;
@@ -48,6 +41,7 @@ public class Game1View extends JPanel implements KeyListener{
     //Load in sprites
     private ArrayList<BufferedImage> gabSeq = new ArrayList<BufferedImage>();
     private ArrayList<BufferedImage> concSeq = new ArrayList<BufferedImage>();
+    private ArrayList<BufferedImage> animalSeq = new ArrayList<BufferedImage>();
     
 
 	public Game1View(Game1Controller ctl, JFrame gameF){
@@ -72,26 +66,6 @@ public class Game1View extends JPanel implements KeyListener{
 	public void repaintFrame(){
 		frame.repaint();
 	}
-	
-	/* private BufferedImage createImage(int buffimg){
-	       	//BufferedImage[] bufferedImg = new BufferedImage[8];
-	    	BufferedImage bufferimg;
-	    	try {
-	            switch(buffimg)
-	            {
-	            case 0:
-	            	bufferimg = ImageIO.read(new File("images/bluecrab_0.png"));
-	                return bufferimg;
-	            case 1:
-	            	bufferimg = ImageIO.read(new File("images/bluecrab_1.png"));
-	                return bufferimg;
-	            case 2:
-	            	bufferimg = ImageIO.read(new File("images/bluecrab_2.png"));
-	                return bufferimg;
-	            }}catch (IOException e) {
-	                e.printStackTrace();
-	            }
-	            return null;}*/
 	
 	BufferedImage gabImg;
 	BufferedImage concImg;
@@ -128,28 +102,39 @@ public class Game1View extends JPanel implements KeyListener{
 	    	}
 	    	try {
 					bg = ImageIO.read(new File("./Images/Game1/sandy.jpg"));
-					crabImg = ImageIO.read(new File("./Images/Game1/bluecrab_0.png"));
 				} catch (IOException e) {
 					e.printStackTrace();
 					//add a blank bg image.
 				}
+	    	try{
+				crabImg = ImageIO.read(new File("./Images/Game1/bluecrab_0.png"));
+				animalSeq.add(crabImg);
+				crabImg = ImageIO.read(new File("./Images/Game1/bluecrab_1.png"));
+				animalSeq.add(crabImg);
+				crabImg = ImageIO.read(new File("./Images/Game1/bluecrab_2.png"));
+				animalSeq.add(crabImg);
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    		//add blank animal img
+	    	}
     	}
  
 	
 	 public class Animation extends JComponent {
 			@Override
 			public void paint(Graphics g) {
-				
+				if(controller.getAnimalModel().isMoving()){
+					picNum = (picNum + 1) % frameCount;
+				}
 				
 				//First draw background
 				g.drawImage(bg, 0, 0, this);
 				
 				//Draw animal at current position
-				//for(int i = 0; i < 3; i++){
-					 
-				//}
+				
 				//g.fillRect(controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(),controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight());
-				g.drawImage(crabImg, controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(), controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight(),this);
+				g.drawImage(animalSeq.get(picNum), controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(), controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight(),this);
+				
 				//Draw score data and timer and health
 				g.setFont(new Font("Haettenschweiler", Font.PLAIN, 30)); 
 				g.setColor(Color.WHITE);
