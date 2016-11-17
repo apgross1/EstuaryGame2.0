@@ -11,6 +11,9 @@ import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -32,6 +36,7 @@ import javax.swing.border.Border;
 import controller.Game3Controller;
 import enums.Direction;
 import enums.Waves;
+import models.AnimalModelG3;
 import models.BeachModel;
 import models.ConcretePUModel;
 import models.GabionPUModel;
@@ -41,12 +46,14 @@ import models.SunHurricaneModel;
 import models.WaterModel;
 import models.WaveModel;
 
+
 public class Game3View extends JPanel implements KeyListener{
 	private Game3Controller controller;
 	private HashMap<Integer, Wave> componentMap;
 	private JFrame frame;
 	private JPanel timePanel = new JPanel();
 	private ArrayList<GridTile> powerUps;
+	private AnimalModelG3 animal = new AnimalModelG3();
 	
 	
 	private JPanel play_ground = new JPanel(new BorderLayout());
@@ -167,8 +174,16 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 		@Override
 		public void paint(Graphics g) {
-			g.setColor(Color.GREEN);
-			g.fillOval(hurricane.getLocation().getX(), hurricane.getLocation().getY(), hurricane.getWidth(), hurricane.getHeight());
+			//g.setColor(Color.GREEN);
+			//g.fillOval(hurricane.getLocation().getX(), hurricane.getLocation().getY(), hurricane.getWidth(), hurricane.getHeight());
+			try {
+				
+				g.drawImage(ImageIO.read(new File("./Images/Game3/angry cloud.png")), hurricane.getLocation().getX(), hurricane.getLocation().getY(), Color.CYAN, this);
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 	}
 	
@@ -181,8 +196,16 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 		@Override
 		public void paint(Graphics g) {
-			g.setColor(Color.YELLOW);
-			g.fillOval(sun.getLocation().getX(), sun.getLocation().getY(), sun.getWidth(), sun.getHeight());
+			//g.setColor(Color.YELLOW);
+			//g.fillOval(sun.getLocation().getX(), sun.getLocation().getY(), sun.getWidth(), sun.getHeight());
+			try {
+				
+				g.drawImage(ImageIO.read(new File("./Images/Game3/glowingbg.png")), sun.getLocation().getX(), sun.getLocation().getY(), Color.CYAN, this);
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 	}
 	
@@ -221,6 +244,12 @@ public class Game3View extends JPanel implements KeyListener{
 				if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < 2500) {
 					g.setColor(Color.BLUE);
 					g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
+					/*try {
+						g.drawImage(ImageIO.read(new File("./Images/Game3/watersplash_sideblast_1.png")), (int)wave.getBounds().getX(), (int)wave.getBounds().getY(), Color.blue, this);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}*/
 				}
 				
 				else if ((wave.getLocation().getX() > 950) && wave.isReceed() && wave.isLastWave()) {
@@ -259,9 +288,19 @@ public class Game3View extends JPanel implements KeyListener{
 	public class Animal extends JComponent {
 		@Override
 		public void paint(Graphics g) {
-			g.setColor(Color.MAGENTA);
-			g.fillRect((int)controller.getAnimal().getBounds().getX(),(int) controller.getAnimal().getBounds().getY(),(int) controller.getAnimal().getBounds().getWidth(), (int)controller.getAnimal().getBounds().getHeight());
-		
+			//g.setColor(Color.MAGENTA);
+			//g.fillRect((int)controller.getAnimal().getBounds().getX(),(int) controller.getAnimal().getBounds().getY(),(int) controller.getAnimal().getBounds().getWidth(), (int)controller.getAnimal().getBounds().getHeight());
+			try {
+				
+			g.drawImage(ImageIO.read(new File("./Images/Game3/bluecrab_0.png")), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), Color.yellow, this);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//g.drawImage(animal.getAnimalpics().get(0), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), Color.yellow, this);
+
 			
 		}
 	}
@@ -305,13 +344,35 @@ public class Game3View extends JPanel implements KeyListener{
 		@Override
 		public void paint(Graphics g) {
 			if(gridBlock.getConcrPU().getIsActive()) {
-				g.setColor(Color.RED);
-				g.fillRect((int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
+				//g.setColor(Color.RED);
+				//g.fillRect((int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
+				try {
+					if(gridBlock.getConcrPU().isPickedUp()){
+					g.drawImage(ImageIO.read(new File("./Images/Game3/ConcreteWall.png")),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+					}
+					else{
+						g.drawImage(ImageIO.read(new File("./Images/Game3/ConcretePU.png")),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+					}
+				} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
 			
 			else if(gridBlock.getGabPU().getIsActive()) {
-				g.setColor(Color.DARK_GRAY);
+				g.setColor(Color.RED);
 				g.fillRect((int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
+				/*try {
+					if(gridBlock.getConcrPU().isPickedUp()){
+					g.drawImage(ImageIO.read(new File("./Images/Game3/GabianWall.png")),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+					}
+					else{
+						g.drawImage(ImageIO.read(new File("./Images/Game3/GabianPU.png")),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+					}
+				} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}*/
 			}
 		}
 	}

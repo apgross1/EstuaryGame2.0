@@ -3,10 +3,15 @@ import javax.swing.JFrame;
 import controller.Game1Controller;
 import controller.Game2Controller;
 import controller.Game3Controller;
+import models.AnimalModelG3;
 
 public class main {
 
 	public static void main(String[] args) {
+		
+		AnimalModelG3 animal = new AnimalModelG3();
+		animal.addPics();
+		
 		JFrame gameFrame = new JFrame();
 		
 		
