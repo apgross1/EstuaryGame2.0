@@ -39,6 +39,11 @@ public class Game1View extends JPanel implements KeyListener{
     private JPanel conc_wall = new JPanel();
     private JPanel estuary = new JPanel();
     private JPanel super_panel = new JPanel();
+    BufferedImage[][] pics;
+    final int frameCount = 3;
+    final static int imgWidth = 165;
+    final static int imgHeight = 165;
+    int picNum = 0;
     
     //Load in sprites
     private ArrayList<BufferedImage> gabSeq = new ArrayList<BufferedImage>();
@@ -68,14 +73,42 @@ public class Game1View extends JPanel implements KeyListener{
 		frame.repaint();
 	}
 	
+	/* private BufferedImage createImage(int buffimg){
+	       	//BufferedImage[] bufferedImg = new BufferedImage[8];
+	    	BufferedImage bufferimg;
+	    	try {
+	            switch(buffimg)
+	            {
+	            case 0:
+	            	bufferimg = ImageIO.read(new File("images/bluecrab_0.png"));
+	                return bufferimg;
+	            case 1:
+	            	bufferimg = ImageIO.read(new File("images/bluecrab_1.png"));
+	                return bufferimg;
+	            case 2:
+	            	bufferimg = ImageIO.read(new File("images/bluecrab_2.png"));
+	                return bufferimg;
+	            }}catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	            return null;}*/
+	
 	BufferedImage gabImg;
 	BufferedImage concImg;
 	BufferedImage bg;
+	BufferedImage crabImg;
 	
     public void loadImgs(){
     	boolean check = new File("./images/testwallgrid.png").exists();
     	System.out.println("This should be true.....: " + check);
 
+    	/*BufferedImage[] bufferedImg = new BufferedImage[3];
+    	pics = new BufferedImage[bufferedImg.length][10];
+    	for(int j = 0; j < bufferedImg.length; j++){
+    		bufferedImg[j] = createImage(j);
+            for(int i = 0; i < frameCount; i++)
+                pics[j][i] = bufferedImg[j].getSubimage(imgWidth*i, 0, imgWidth, imgHeight);
+        }*/
     		try {
     			gabImg = ImageIO.read(new File("./Images/Game1/testwallgrid.png"));
     			concImg = ImageIO.read(new File("./Images/Game1/testwallgrid.png"));
@@ -95,6 +128,7 @@ public class Game1View extends JPanel implements KeyListener{
 	    	}
 	    	try {
 					bg = ImageIO.read(new File("./Images/Game1/sandy.jpg"));
+					crabImg = ImageIO.read(new File("./Images/Game1/bluecrab_0.png"));
 				} catch (IOException e) {
 					e.printStackTrace();
 					//add a blank bg image.
@@ -106,12 +140,16 @@ public class Game1View extends JPanel implements KeyListener{
 			@Override
 			public void paint(Graphics g) {
 				
+				
 				//First draw background
 				g.drawImage(bg, 0, 0, this);
 				
 				//Draw animal at current position
-				g.fillRect(controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(),controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight());
-				
+				//for(int i = 0; i < 3; i++){
+					 
+				//}
+				//g.fillRect(controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(),controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight());
+				g.drawImage(crabImg, controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(), controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight(),this);
 				//Draw score data and timer and health
 				g.setFont(new Font("Haettenschweiler", Font.PLAIN, 30)); 
 				g.setColor(Color.WHITE);

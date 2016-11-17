@@ -107,7 +107,7 @@ public class Game1Controller{
 		
 		long startTime = System.currentTimeMillis(); //fetch starting time
 		
-		while((System.currentTimeMillis()-startTime)<3000){
+		while((System.currentTimeMillis()-startTime)<15000){
 			gameTime = (System.currentTimeMillis() - startTime); //Used to print on screen
 			long now = System.nanoTime();
 			delta += (now-lastTime)/ns;
