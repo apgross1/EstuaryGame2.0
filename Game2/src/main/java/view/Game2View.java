@@ -37,14 +37,14 @@ public class Game2View extends JPanel implements KeyListener{
 		controller = ctl;
 		frame = gamef;
     	
-		
+		/*
 		algaeWater.setSize(1000, 500);
 		algaeWater.setBackground(Color.BLUE);
-		algaeWater.setVisible(true);
+		algaeWater.setVisible(false);
 		
 		shallowWater.setSize(1000, 500);
 		shallowWater.setBackground(Color.CYAN);
-		shallowWater.setVisible(true);
+		shallowWater.setVisible(false);
     	
     	//Panes
     	JSplitPane view = new  JSplitPane();
@@ -58,12 +58,12 @@ public class Game2View extends JPanel implements KeyListener{
     	view.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
     	view.setDividerSize(0);
     	view.setRightComponent(algaeWater);
-    	view.setLeftComponent(shallowWater);
+    	view.setLeftComponent(shallowWater);*/
 		
 	     
 	      
 	      
-    	frame.add(view);
+    	//frame.add(view);
     	
     	//addKeyListener
     	frame.addKeyListener(this);
