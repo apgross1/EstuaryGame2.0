@@ -144,10 +144,9 @@ public class Game1View extends JPanel implements KeyListener{
 				
 				//First draw background
 				g.drawImage(bg, 0, 0, this);
+				g.fillRect(0, 0, 1090, 50);
 				
 				//Draw animal at current position
-				
-				//g.fillRect(controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(),controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight());
 				g.drawImage(animalSeq.get(picNum), controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(), controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight(),this);
 				
 				//Draw score data and timer and health
