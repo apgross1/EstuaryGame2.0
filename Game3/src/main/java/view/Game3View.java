@@ -44,7 +44,7 @@ import models.WaveModel;
 public class Game3View extends JPanel implements KeyListener{
 	private Game3Controller controller;
 	private HashMap<Integer, Wave> componentMap;
-	private JFrame frame = new JFrame();
+	private JFrame frame;
 	private JPanel timePanel = new JPanel();
 	private ArrayList<GridTile> powerUps;
 	
@@ -52,11 +52,11 @@ public class Game3View extends JPanel implements KeyListener{
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	JLayeredPane layoutContainer = new JLayeredPane();
 
-	public Game3View(Game3Controller ctl){
+	public Game3View(Game3Controller ctl, JFrame gameF){
+		frame = gameF;
 		timePanel.setLayout(null);
 		controller = ctl;
 		componentMap = new HashMap<Integer,Wave>();
-    	frame = new JFrame();
     	frame.setBackground(Color.gray);
 
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

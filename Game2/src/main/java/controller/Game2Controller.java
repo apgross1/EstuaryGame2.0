@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-
+import javax.swing.JFrame;
 
 import models.AlgaeEaterModel;
 import models.AlgaeModel;
@@ -16,6 +17,7 @@ import models.AnimalModelG2;
 import models.WaterModelG2;
 
 import view.Game2View;
+import view.Game2View.Animation;
 
 public class Game2Controller {
 	private boolean gameActive;
@@ -25,6 +27,7 @@ public class Game2Controller {
 	private AlgaeModel algae;
 	private Collection<AlgaeModel> algaeList = new ArrayList<AlgaeModel>();
 	private WaterModelG2 water;
+	private JFrame gameFrame;
 	long spawnTime=0;
 	int numMissed = 0;
 	long startTime;
@@ -34,20 +37,31 @@ public class Game2Controller {
 	int spawnDelay = 2000; //in milliseconds
 	boolean isStorming = false;
 	
-	public Game2Controller() {
+	public Game2Controller(JFrame gamef) {
+		gameFrame = gamef;
 		animal = new AnimalModelG2();
 		water = new WaterModelG2();
 		algae = new AlgaeModel();
 		algaeEater = new AlgaeEaterModel();
-		view = new Game2View(this);
-		view.addController(this);
 		
 	}
 
 	
 	
 	public void startGame() {
+		gameFrame.getContentPane().removeAll();
+		gameFrame.revalidate();
+		view = new Game2View(this, gameFrame);
+		view.addController(this);
+    	gameFrame.getContentPane().add(view.new Animation());
+    	gameFrame.setBackground(Color.GRAY);
+    	gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	gameFrame.setSize(1000, 700);
+    	gameFrame.setVisible(true);
+    	gameFrame.setResizable(false);
 		gameActive = true;
+
+    	
 		startTime = System.currentTimeMillis();
 		long lastTime = System.nanoTime();
 		final double ammountOfTicks = 60.0;	

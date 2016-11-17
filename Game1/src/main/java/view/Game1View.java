@@ -45,10 +45,11 @@ public class Game1View extends JPanel implements KeyListener{
     private ArrayList<BufferedImage> concSeq = new ArrayList<BufferedImage>();
     
 
-	public Game1View(Game1Controller ctl){
+	public Game1View(Game1Controller ctl, JFrame gameF){
         controller = ctl;
- 
-        frame = new JFrame();
+        //Load all pictures in the view
+        loadImgs();
+        frame = gameF;
         frame.getContentPane().add(new Animation());
         frame.setBackground(Color.gray);
  
@@ -57,8 +58,7 @@ public class Game1View extends JPanel implements KeyListener{
         frame.setVisible(true);
         frame.setResizable(false);
         
-        //Load all pictures in the view
-        loadImgs();
+
        
         //addKeyListener
         frame.addKeyListener(this);
@@ -77,8 +77,8 @@ public class Game1View extends JPanel implements KeyListener{
     	System.out.println("This should be true.....: " + check);
 
     		try {
-    			gabImg = ImageIO.read(new File("./images/testwallgrid.png"));
-    			concImg = ImageIO.read(new File("./images/testwallgrid.png"));
+    			gabImg = ImageIO.read(new File("./Images/Game1/testwallgrid.png"));
+    			concImg = ImageIO.read(new File("./Images/Game1/testwallgrid.png"));
     			
     	    	for(int i = 0; i < 30; i++){
     	    		//getSubimage(int x, int y, int w, int h)
@@ -94,7 +94,7 @@ public class Game1View extends JPanel implements KeyListener{
 		    	}
 	    	}
 	    	try {
-					bg = ImageIO.read(new File("./images/sandy.jpg"));
+					bg = ImageIO.read(new File("./Images/Game1/sandy.jpg"));
 				} catch (IOException e) {
 					e.printStackTrace();
 					//add a blank bg image.

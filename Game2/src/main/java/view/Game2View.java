@@ -10,8 +10,12 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+
+import models.AlgaeEaterModel;
 import models.AlgaeModel;
+import models.AnimalModelG2;
 import models.BarModelG2;
+import models.WaterModelG2;
 import controller.Game2Controller;
 import enums.Direction;
 
@@ -21,7 +25,6 @@ public class Game2View extends JPanel implements KeyListener{
 	private Game2Controller controller;
 	private JFrame frame = new JFrame();
 	//private JPanel action_pannel = new JPanel();
-	
 	private JPanel algaeWater = new JPanel();
 	private JPanel shallowWater = new JPanel();
 	AlgaeModel algae = new AlgaeModel();
@@ -29,21 +32,12 @@ public class Game2View extends JPanel implements KeyListener{
     //final static int frameWidth = 800;
     //final static int frameHeight = 800;
 	
-	public Game2View(Game2Controller ctl){
+	public Game2View(Game2Controller ctl, JFrame gamef){
 		oxyBar = new BarModelG2(200);
 		controller = ctl;
-
-    	frame = new JFrame();
-    	frame.getContentPane().add(new Animation());
-    	frame.setBackground(Color.gray);
-
-    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	frame.setSize(1000, 700);
-    	frame.setVisible(true);
-    	frame.setResizable(false);
-   
-		
+		frame = gamef;
     	
+		
 		algaeWater.setSize(1000, 500);
 		algaeWater.setBackground(Color.BLUE);
 		algaeWater.setVisible(true);
@@ -51,7 +45,6 @@ public class Game2View extends JPanel implements KeyListener{
 		shallowWater.setSize(1000, 500);
 		shallowWater.setBackground(Color.CYAN);
 		shallowWater.setVisible(true);
-		
     	
     	//Panes
     	JSplitPane view = new  JSplitPane();
@@ -89,6 +82,7 @@ public class Game2View extends JPanel implements KeyListener{
 		@Override
 		public void paint(Graphics g) {
 			//Draw animal at current position
+			
 			g.setColor(Color.ORANGE);
 			g.fillRect(controller.getAnimalModelG2().getLocX(),controller.getAnimalModelG2().getY(),controller.getAnimalModelG2().getWidth(),controller.getAnimalModelG2().getHeight());
 			

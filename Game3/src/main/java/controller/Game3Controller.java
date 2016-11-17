@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import enums.Waves;
@@ -38,10 +40,12 @@ public class Game3Controller implements KeyListener {
 	private Timer timer;
 	private long startTime;
 	private int updates = 0;
-	private int frames = 0;	
+	private int frames = 0;
+	private JFrame gameFrame;
 	
 	
-	public Game3Controller() {
+	public Game3Controller(JFrame gameF) {
+		gameFrame = gameF;
 		AnimalModelG3 a = new AnimalModelG3();
 		a.setLocX(250);
 		a.setLocY(250);
@@ -49,20 +53,27 @@ public class Game3Controller implements KeyListener {
 		setBeach(new BeachModel());
 		setSandPatch(new GridBlock(beach));
 		setWater(new WaterModel());
-		view = new Game3View(this);
 		
+	}
+	
+	public void runGame()  {
+		
+		gameFrame.getContentPane().removeAll();
+		gameFrame.revalidate();
+		view = new Game3View(this, gameFrame);
 		SunHurricaneModel sun = new SunHurricaneModel(this.view.getTimePanel());
 		sun.setInitialPosition(200);
 		SunHurricaneModel hurricane = new SunHurricaneModel(this.view.getTimePanel());
 		hurricane.setInitialPosition(200);
+	
+		
+		
 		setSun(sun);
 		setHurricane(hurricane);
 		view.addSun();
 		view.addHurricane();
 		this.startTime();
-	}
-	
-	public void runGame()  {
+		
 		this.setGameActive(true);
 		startTime = System.currentTimeMillis();
 		long lastTime = System.nanoTime();

@@ -20,6 +20,8 @@ import models.GabionWallModelG1.GabionChunk;
 import view.Game1View;
 
 import java.awt.Rectangle;
+
+import javax.swing.JFrame;
 import javax.swing.Timer;
 
 public class Game1Controller{
@@ -29,7 +31,7 @@ public class Game1Controller{
 	GabionWallModelG1 gabionModel = new GabionWallModelG1();
 	BarModel bar = new BarModel();
 	//View
-	Game1View g1view = new Game1View(this);
+	Game1View g1view;
 	
 	//Vars
 	private boolean gameState;
@@ -43,7 +45,8 @@ public class Game1Controller{
 	boolean countdown; //if were in the three second count down mode at the end of round
 	
 	
-	public Game1Controller() {
+	public Game1Controller(JFrame gameF) {
+		g1view = new Game1View(this, gameF);
 	}
 	
 	//Getters
@@ -71,6 +74,9 @@ public class Game1Controller{
 		//This should reset all variables (except the bar), timer and all as we're going to have 3 sub rounds in game 1
 		wallModel.reset();
 		gabionModel.reset();
+		g1view.removeAll();
+		g1view.revalidate();
+	
 	}
 	
 	public void startGame(){
@@ -101,7 +107,7 @@ public class Game1Controller{
 		
 		long startTime = System.currentTimeMillis(); //fetch starting time
 		
-		while((System.currentTimeMillis()-startTime)<30000){
+		while((System.currentTimeMillis()-startTime)<3000){
 			gameTime = (System.currentTimeMillis() - startTime); //Used to print on screen
 			long now = System.nanoTime();
 			delta += (now-lastTime)/ns;
