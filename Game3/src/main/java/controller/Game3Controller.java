@@ -282,7 +282,7 @@ public class Game3Controller implements KeyListener {
 	};
 	
 	public void genWaveTimer() {
-		Timer waveTimer = new Timer(12000, genWaveTimer);
+		Timer waveTimer = new Timer(8000, genWaveTimer);
 		
 		waveTimer.setRepeats(true);
 		waveTimer.start();

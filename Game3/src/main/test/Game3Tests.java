@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import org.junit.Test;
@@ -162,7 +163,7 @@ public class Game3Tests {
 	
 	@Test
 	public void testWaveHit(){
-		Game3Controller walldamage = new Game3Controller();
+		Game3Controller walldamage = new Game3Controller(new JFrame());
 		ConcretePUModel conc = new ConcretePUModel();
 		GabionPUModel gab = new GabionPUModel();
 		conc.setActive(true);
@@ -195,7 +196,7 @@ public class Game3Tests {
 	
 	@Test
 	public void testSpawnTimer() {
-		Game3Controller controller = new Game3Controller();
+		Game3Controller controller = new Game3Controller(new JFrame());
 		ArrayList<Pair> pairs = new ArrayList<Pair>();
 		pairs.add(new Pair(2,1));
 		controller.getBeach().spawnConcrPU(pairs);
