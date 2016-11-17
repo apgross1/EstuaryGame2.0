@@ -71,6 +71,7 @@ public class Game1View extends JPanel implements KeyListener{
 	BufferedImage concImg;
 	BufferedImage bg;
 	BufferedImage crabImg;
+	BufferedImage clam;
 	
     public void loadImgs(){
     	boolean check = new File("./images/testwallgrid.png").exists();
@@ -101,7 +102,7 @@ public class Game1View extends JPanel implements KeyListener{
 		    	}
 	    	}
 	    	try {
-					bg = ImageIO.read(new File("./Images/Game1/sandy.jpg"));
+					clam = ImageIO.read(new File("./Images/Game1/clam_back_0.png"));
 				} catch (IOException e) {
 					e.printStackTrace();
 					//add a blank bg image.
@@ -117,6 +118,13 @@ public class Game1View extends JPanel implements KeyListener{
 	    		e.printStackTrace();
 	    		//add blank animal img
 	    	}
+	    	
+	    	try {
+				bg = ImageIO.read(new File("./Images/Game1/sandy.jpg"));
+			} catch (IOException e) {
+				e.printStackTrace();
+				//add a blank bg image.
+			}
     	}
  
 	
@@ -175,7 +183,8 @@ public class Game1View extends JPanel implements KeyListener{
 						GabionChunk tmp = git.next();
 						if(tmp.isActive()){
 							g.setColor(Color.WHITE);
-							g.fillRect(tmp.getLocX(), tmp.getLocY(), 20, 10);
+							g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
+							//g.drawImage(clam, tmp.getLocX(), tmp.getLocY(), 30, 20, this);
 						}
 					}
 				}
