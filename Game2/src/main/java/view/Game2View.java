@@ -175,12 +175,15 @@ public class Game2View extends JPanel implements KeyListener{
 			
 		case KeyEvent.VK_SPACE:
 			
+			/*
 			if(controller.getStormStatus()==true){
 				controller.deactivateStorm();
 			}
 			else{
 				controller.activateStorm();
 			}
+			*/
+			controller.setGameActive(false);
 		
 		
 		break;

@@ -169,8 +169,8 @@ public class Game1View extends JPanel implements KeyListener{
 				g.fillRect(420, 10, health, 20);
 				
 				//Draw wall sprites (First this gives an ugly error, second can we set the bg of the jpannel rather than paint on jframe?)
-				g.drawImage(gabSeq.get(controller.getGabionWallModel().getCurrentOysters()), 0, 210, 1090, 100, this);
-				g.drawImage(concSeq.get(controller.getWallModel().getCurrentBlocks()), 0, 100, 1090, 100, this);
+				g.drawImage(concSeq.get(controller.getWallModel().getCurrentBlocks()), 0, 210, 1090, 100, this);
+				g.drawImage(gabSeq.get(controller.getGabionWallModel().getCurrentOysters()), 0, 100, 1090, 100, this);
 				
 				
 				if(!controller.getInCountDown()){
