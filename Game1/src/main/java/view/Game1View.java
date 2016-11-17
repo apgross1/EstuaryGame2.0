@@ -4,9 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Paint;
+import java.awt.GradientPaint;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.TexturePaint;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -14,6 +19,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
+import java.awt.BasicStroke;
+import java.awt.Shape;
+import java.awt.font.GlyphVector;
+import java.awt.geom.AffineTransform;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -32,6 +45,8 @@ import models.GabionWallModelG1.GabionChunk;
 public class Game1View extends JPanel implements KeyListener{
     private Game1Controller controller;
     private JFrame frame;
+    private Dimension screenSize;
+    private TexturePaint sandTexture;
     BufferedImage[][] pics;
     final int frameCount = 3;
     final static int imgWidth = 165;
@@ -51,9 +66,14 @@ public class Game1View extends JPanel implements KeyListener{
         frame = gameF;
         frame.getContentPane().add(new Animation());
         frame.setBackground(Color.gray);
+        
+        //Full screen
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        frame.setUndecorated(true);
  
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1090, 700);
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setSize(screenSize.width, screenSize.height); 
         frame.setVisible(true);
         frame.setResizable(false);
         
@@ -77,14 +97,7 @@ public class Game1View extends JPanel implements KeyListener{
     public void loadImgs(){
     	boolean check = new File("./images/testwallgrid.png").exists();
     	System.out.println("This should be true.....: " + check);
-
-    	/*BufferedImage[] bufferedImg = new BufferedImage[3];
-    	pics = new BufferedImage[bufferedImg.length][10];
-    	for(int j = 0; j < bufferedImg.length; j++){
-    		bufferedImg[j] = createImage(j);
-            for(int i = 0; i < frameCount; i++)
-                pics[j][i] = bufferedImg[j].getSubimage(imgWidth*i, 0, imgWidth, imgHeight);
-        }*/
+    	
     		try {
     			gabImg = ImageIO.read(new File("./Images/Game1/testwallgrid.png"));
     			concImg = ImageIO.read(new File("./Images/Game1/testwallgrid.png"));
@@ -128,6 +141,7 @@ public class Game1View extends JPanel implements KeyListener{
 	    	
 	    	try {
 				bg = ImageIO.read(new File("./Images/Game1/sandy.jpg"));
+				sandTexture = new TexturePaint(bg, new Rectangle(0, 0, 1000, 1000));
 			} catch (IOException e) {
 				e.printStackTrace();
 				//add a blank bg image.
@@ -143,8 +157,11 @@ public class Game1View extends JPanel implements KeyListener{
 				}
 				
 				//First draw background
-				g.drawImage(bg, 0, 0, this);
-				g.fillRect(0, 0, 1090, 50);
+				g.fillRect(0, 0, 1090, 50); //Draws top bar black
+
+				((Graphics2D) g).setPaint(sandTexture);
+				//g.drawImage(bg, 0, 0,this);
+				g.fillRect(0, 0, screenSize.width, screenSize.height);
 				
 				//Draw animal at current position
 				g.drawImage(animalSeq.get(picNum), controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(), controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight(),this);
@@ -229,6 +246,10 @@ public class Game1View extends JPanel implements KeyListener{
 		        	controller.getAnimalModel().setCurrDir(Direction.EAST);
 		        	controller.getAnimalModel().setSpeedX(2);
 		            break;
+		        case KeyEvent.VK_ESCAPE :
+		            // handle escape (to minimize game)
+		        	frame.setExtendedState(JFrame.ICONIFIED);
+		            break;		            
 		    }
 		}
 	 
