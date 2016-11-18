@@ -1,20 +1,29 @@
 package models;
 
+import controller.Game1Controller;
 import enums.Direction;
 
 public class AnimalModel extends AnimalModelAbstract {
 	
-	private int height = 100;
-	private int width = 100;
+	private int height = 0;
+	private int width = 0;
+	private int screenHeight = 0;
+	private int screenWidth = 0;
 	private int speedX = 0;
 	private int speedY = 0;
 	
-	public AnimalModel() {
+	public AnimalModel(Game1Controller ctl) {
+		//Set screen resolution for movement
+		height = 100;
+		width = 100;
+		screenHeight = ctl.getDim().height;
+		screenWidth = ctl.getDim().width;
 		//Set initial location and direction
 		setLocX(500);
 		setLocY(500);
 		setCurrDir(Direction.NORTH);
 	}
+	
 	
 	public int getHeight(){
 		return height;
@@ -44,7 +53,7 @@ public class AnimalModel extends AnimalModelAbstract {
 	public void move() {
 		//System.out.println(getLocY());
 		if(getCurrDir() == Direction.EAST){
-			if(getLocX() < 980 + speedX){
+			if(getLocX() < (screenWidth-width) + speedX){
 			this.setLocX(this.getLocX() + speedX);
 			}
 		}
@@ -54,12 +63,12 @@ public class AnimalModel extends AnimalModelAbstract {
 			}
 		}
 		if(getCurrDir() == Direction.NORTH){
-			if(getLocY() + speedY >= 310){
+			if(getLocY() + speedY >= (int)(.45 * (screenHeight))){
 				this.setLocY(this.getLocY() + speedY);
 			}
 		}
 		if(getCurrDir() == Direction.SOUTH){
-			if(getLocY() + speedY <= 570){
+			if(getLocY() + speedY <= (screenHeight-height)){
 				this.setLocY(this.getLocY() + speedY);
 			}
 		}

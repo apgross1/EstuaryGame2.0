@@ -27,14 +27,14 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 public class Game1Controller{
+	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	//Models
-	private AnimalModel animal = new AnimalModel();
+	private AnimalModel animal = new AnimalModel(this);
 	ConcreteWallModelG1 wallModel = new ConcreteWallModelG1();
 	GabionWallModelG1 gabionModel = new GabionWallModelG1();
 	BarModel bar = new BarModel();
 	//View
 	Game1View g1view;
-	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	//Vars
 	private boolean gameState;
@@ -129,7 +129,7 @@ public class Game1Controller{
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
 				int randx = r.nextInt(screenSize.width);
-				int randy = r.nextInt(570-310) + 310; //This is going to have to change depending on percet of screen.
+				int randy = r.nextInt(screenSize.height - (int)(.45*(screenSize.height))) + (int)(.45*(screenSize.height)); //This is going to have to change depending on percet of screen.
 				//Need a condition here to make sure that there is not already a chunk at that location.
 				wallModel.spawnChunk(randx, randy);
 			}
@@ -138,7 +138,7 @@ public class Game1Controller{
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
 				int randx = r.nextInt(screenSize.width);
-				int randy = r.nextInt(570-310) + 310;
+				int randy = r.nextInt(screenSize.height - (int)(.45*(screenSize.height))) + (int)(.45*(screenSize.height)); //This is going to have to change depending on percet of screen.
 				//Need a condition here to make sure that there is not already a chunk at that location.
 				gabionModel.spawnChunk(randx, randy);
 			}

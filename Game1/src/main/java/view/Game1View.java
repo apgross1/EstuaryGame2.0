@@ -153,13 +153,15 @@ public class Game1View extends JPanel implements KeyListener{
 				if(controller.getAnimalModel().isMoving()){
 					picNum = (picNum + 1) % frameCount;
 				}
-				
-				//First draw background
-				g.fillRect(0, 0, 1090, 50); //Draws top bar black
-
+				//Draw BG FIRST
 				((Graphics2D) g).setPaint(sandTexture);
-				//g.drawImage(bg, 0, 0,this);
 				g.fillRect(0, 0, controller.getDim().width, controller.getDim().height);
+				
+				
+				//First draw bar
+				g.setColor(Color.BLACK);
+				g.fillRect(0, 0, controller.getDim().width, (int) ((controller.getDim().height)*.05)); //top bar 5% of screen
+
 				
 				//Draw animal at current position
 				g.drawImage(animalSeq.get(picNum), controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(), controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight(),this);
@@ -167,13 +169,13 @@ public class Game1View extends JPanel implements KeyListener{
 				//Draw score data and timer and health
 				g.setFont(new Font("Haettenschweiler", Font.PLAIN, 30)); 
 				g.setColor(Color.WHITE);
-				g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), 40, 30);
+				g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), (int)(.10*(controller.getDim().width)), (int)(.02*(controller.getDim().width)));
 				g.setColor(Color.RED);
-				g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), 220, 30);
+				g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), (int)(.20*(controller.getDim().width)), (int)(.02*(controller.getDim().width)));
 				g.setColor(Color.GREEN);
 				g.drawString("Time Left: "+ controller.getTime(), 895, 30);
 				
-				g.drawString("Health: " + controller.getBarModel().getStatus(), 705, 30);
+				g.drawString("Health: " + controller.getBarModel().getStatus(), (int)(.30*(controller.getDim().width)), (int)(.02*(controller.getDim().width)));
 				
 				g.drawRect(420, 10, 200, 20); //Behind health bar doesn't change
 				
@@ -183,9 +185,12 @@ public class Game1View extends JPanel implements KeyListener{
 				g.fillRect(420, 10, health, 20);
 				
 				//Draw wall sprites (First this gives an ugly error, second can we set the bg of the jpannel rather than paint on jframe?)
-				g.drawImage(concSeq.get(controller.getWallModel().getCurrentBlocks()), 0, 210, 1090, 100, this);
-				g.drawImage(gabSeq.get(controller.getGabionWallModel().getCurrentOysters()), 0, 100, 1090, 100, this);
+				//g.drawImage(concSeq.get(controller.getWallModel().getCurrentBlocks()), 0, 210, 1090, 100, this);
+				//g.drawImage(gabSeq.get(controller.getGabionWallModel().getCurrentOysters()), 0, 100, 1090, 100, this);
+				//g.drawImage(gabSeq.get(controller.getGabionWallModel().getCurrentOysters()), (int)(controller.getDim().width / 2), (int)(controller.getDim().height * .20), controller.getDim().width, (int)(controller.getDim().height * .20), this);
+				g.drawImage(gabSeq.get(controller.getGabionWallModel().getCurrentOysters()), 0, (int)(controller.getDim().height * .15), controller.getDim().width, (int)(controller.getDim().height * .15), this);
 				
+				g.drawImage(concSeq.get(controller.getWallModel().getCurrentBlocks()), 0, (int)(controller.getDim().height * .30), controller.getDim().width, (int)(controller.getDim().height * .15), this);
 				
 				if(!controller.getInCountDown()){
 					//Draw all the chunks that are active.
