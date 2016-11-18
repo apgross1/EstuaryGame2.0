@@ -45,7 +45,6 @@ import models.GabionWallModelG1.GabionChunk;
 public class Game1View extends JPanel implements KeyListener{
     private Game1Controller controller;
     private JFrame frame;
-    private Dimension screenSize;
     private TexturePaint sandTexture;
     BufferedImage[][] pics;
     final int frameCount = 3;
@@ -72,8 +71,7 @@ public class Game1View extends JPanel implements KeyListener{
         frame.setUndecorated(true);
  
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setSize(screenSize.width, screenSize.height); 
+        frame.setSize(controller.getDim().width, controller.getDim().height); 
         frame.setVisible(true);
         frame.setResizable(false);
         
@@ -161,7 +159,7 @@ public class Game1View extends JPanel implements KeyListener{
 
 				((Graphics2D) g).setPaint(sandTexture);
 				//g.drawImage(bg, 0, 0,this);
-				g.fillRect(0, 0, screenSize.width, screenSize.height);
+				g.fillRect(0, 0, controller.getDim().width, controller.getDim().height);
 				
 				//Draw animal at current position
 				g.drawImage(animalSeq.get(picNum), controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(), controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight(),this);
@@ -229,22 +227,22 @@ public class Game1View extends JPanel implements KeyListener{
 		        case KeyEvent.VK_UP:
 		            // handle up 
 		        	controller.getAnimalModel().setCurrDir(Direction.NORTH);
-		        	controller.getAnimalModel().setSpeedY(-2);
+		        	controller.getAnimalModel().setSpeedY(-7);
 		            break;
 		        case KeyEvent.VK_DOWN:
 		            // handle down 
 		        	controller.getAnimalModel().setCurrDir(Direction.SOUTH);
-		        	controller.getAnimalModel().setSpeedY(2);
+		        	controller.getAnimalModel().setSpeedY(7);
 		            break;
 		        case KeyEvent.VK_LEFT:
 		            // handle left
 		        	controller.getAnimalModel().setCurrDir(Direction.WEST);
-		        	controller.getAnimalModel().setSpeedX(-2);
+		        	controller.getAnimalModel().setSpeedX(-7);
 		            break;
 		        case KeyEvent.VK_RIGHT :
 		            // handle right
 		        	controller.getAnimalModel().setCurrDir(Direction.EAST);
-		        	controller.getAnimalModel().setSpeedX(2);
+		        	controller.getAnimalModel().setSpeedX(7);
 		            break;
 		        case KeyEvent.VK_ESCAPE :
 		            // handle escape (to minimize game)

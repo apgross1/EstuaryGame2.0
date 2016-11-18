@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -20,6 +21,7 @@ import models.GabionWallModelG1.GabionChunk;
 import view.Game1View;
 
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -32,6 +34,7 @@ public class Game1Controller{
 	BarModel bar = new BarModel();
 	//View
 	Game1View g1view;
+	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	//Vars
 	private boolean gameState;
@@ -67,6 +70,9 @@ public class Game1Controller{
 	}
 	public long getIntermTime(){
 		return (3 -(countDownTime/1000));
+	}
+	public Dimension getDim(){
+		return screenSize;
 	}
 	
 	//Setters
@@ -122,8 +128,8 @@ public class Game1Controller{
 			if(wallModel.getCurrentBlocks() <= (wallModel.getMaxBlocks()-5) & wallModel.getActiveBlocks() < 5){//Max concrete that can be on the screen at once.
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
-				int randx = r.nextInt(980);
-				int randy = r.nextInt(570-310) + 310;
+				int randx = r.nextInt(screenSize.width);
+				int randy = r.nextInt(570-310) + 310; //This is going to have to change depending on percet of screen.
 				//Need a condition here to make sure that there is not already a chunk at that location.
 				wallModel.spawnChunk(randx, randy);
 			}
@@ -131,7 +137,7 @@ public class Game1Controller{
 			if(gabionModel.getCurrentOysters() <= (gabionModel.getMaxOysters()-3) & gabionModel.getActiveClams() < 3){//Max concrete that can be on the screen at once.
 				//Spawn a concrete block at a random location within the bounds of the board.
 				//int Result = r.nextInt(High-Low) + Low;
-				int randx = r.nextInt(980);
+				int randx = r.nextInt(screenSize.width);
 				int randy = r.nextInt(570-310) + 310;
 				//Need a condition here to make sure that there is not already a chunk at that location.
 				gabionModel.spawnChunk(randx, randy);
