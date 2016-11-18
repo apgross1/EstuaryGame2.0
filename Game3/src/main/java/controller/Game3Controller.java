@@ -1,7 +1,9 @@
 package controller;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -42,6 +44,7 @@ public class Game3Controller implements KeyListener {
 	private int updates = 0;
 	private int frames = 0;
 	private JFrame gameFrame;
+	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	
 	public Game3Controller(JFrame gameF) {
@@ -391,5 +394,9 @@ public class Game3Controller implements KeyListener {
 
 	public void setHurricane(SunHurricaneModel hurricane) {
 		this.hurricane = hurricane;
+	}
+
+	public Dimension getScreenSize() {
+		return screenSize;
 	}
 }

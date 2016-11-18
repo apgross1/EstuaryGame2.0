@@ -34,7 +34,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	
 	public void tick(){
 		//System.out.println("Animal locs: " + "("+this.getLocX()+","+this.getLocY()+")");
-		if ((getLocY() + speedY >= 100 & getLocX() + speedX >= 140) && (getLocY() + speedY <= 740 & getLocX()+ speedX < 1073) ) {
+		if ((getLocY() + speedY >= 100 & getLocX() + speedX >= 135) && (getLocY() + speedY <= 740 & getLocX()+ speedX < 1073) ) {
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
 		}

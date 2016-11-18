@@ -244,6 +244,9 @@ public class Game1View extends JPanel implements KeyListener{
 		        	controller.getAnimalModel().setCurrDir(Direction.EAST);
 		        	controller.getAnimalModel().setSpeedX(7);
 		            break;
+		        case KeyEvent.VK_SPACE : //For testing purposes to close the game at will
+		        	controller.setGameState(false);
+		            break;
 		        case KeyEvent.VK_ESCAPE :
 		            // handle escape (to minimize game)
 		        	frame.setExtendedState(JFrame.ICONIFIED);

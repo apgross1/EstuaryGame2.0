@@ -44,8 +44,12 @@ public class Game2View extends JPanel implements KeyListener{
 		oxyBar = new BarModelG2(200);
 		controller = ctl;
 		frame = gamef;
+		frame.dispose();
+		frame.setUndecorated(true);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+	    
 		loadImages();
-    	
+    
 		/*
 		algaeWater.setSize(1000, 500);
 		algaeWater.setBackground(Color.BLUE);

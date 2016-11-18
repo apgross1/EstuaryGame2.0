@@ -9,8 +9,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -55,32 +57,40 @@ public class Game3View extends JPanel implements KeyListener{
 	private ArrayList<GridTile> powerUps;
 	private AnimalModelG3 animal = new AnimalModelG3();
 	
-	
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	JLayeredPane layoutContainer = new JLayeredPane();
 
 	public Game3View(Game3Controller ctl, JFrame gameF){
-		frame = gameF;
-		timePanel.setLayout(null);
 		controller = ctl;
+		
+		frame = gameF;
+		frame.dispose();
+		frame.setUndecorated(true);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+	
+		frame.setSize((int)controller.getScreenSize().getWidth(), (int)controller.getScreenSize().getHeight());
+		//frame.setSize(this.getFrameHeight(), frame.getWidth());
+		play_ground.setSize(frame.getWidth(),frame.getHeight());
+		
+		timePanel.setLayout(null);
+		
 		componentMap = new HashMap<Integer,Wave>();
     	frame.setBackground(Color.gray);
 
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	frame.setSize(1090, 700);
-    	frame.setResizable(false);
+    	    	frame.setResizable(false);
     	
-		play_ground.setSize(1090, 700);
+    	
+		play_ground.setSize(frame.getWidth(), frame.getHeight());
 		play_ground.setBackground(Color.WHITE);
 		
 		powerUps = new ArrayList<GridTile>();
-    	
 		
     	//Panes
 		//For animal movement
 		
 		Animal animalPane = new Animal();
-		animalPane.setPreferredSize(new Dimension(1090,700));
+		animalPane.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
 		JPanel beachGrid = new JPanel(new GridLayout(7,7));
 
 		
@@ -103,13 +113,10 @@ public class Game3View extends JPanel implements KeyListener{
 		    
 		}
 		
-
-		timePanel.setPreferredSize(new Dimension(frame.getWidth(),200));
-		timePanel.setBackground(Color.CYAN);
 		
-		JPanel bottomPanel = new JPanel();
-		bottomPanel.setLayout(null);
-		bottomPanel.setPreferredSize(new Dimension(200,200));
+		
+		timePanel.setPreferredSize(new Dimension(frame.getWidth(), (int)(frame.getHeight()*.25)));
+		timePanel.setBackground(Color.CYAN);
 		
 		
 		ShoreLine water = new ShoreLine();
@@ -117,8 +124,8 @@ public class Game3View extends JPanel implements KeyListener{
 		
 		water.setPreferredSize(new Dimension(100,frame.getHeight()));
 		water.setVisible(true);
-		beachGrid.setBounds(0, 0, 1090, 700);
-		animalPane.setBounds(0, 0, 1090, 700);
+		beachGrid.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		animalPane.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		layoutContainer.add(beachGrid, new Integer(1),0);
 		layoutContainer.add(animalPane, new Integer(2), 1);
 		play_ground.add(timePanel, BorderLayout.NORTH);
@@ -140,7 +147,7 @@ public class Game3View extends JPanel implements KeyListener{
 	public void addSun() {
 		System.out.println("Sun spawned");
 		Sun sun = new Sun(controller.getSun());
-		sun.setBounds(0, 0, 1090, 700);
+		sun.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		sun.setVisible(true);
 		timePanel.add(sun);
 		timePanel.revalidate();
@@ -151,7 +158,7 @@ public class Game3View extends JPanel implements KeyListener{
 	public void addHurricane() {
 		System.out.println("Hurricane spawned");
 		Hurricane hurricane = new Hurricane(controller.getHurricane());
-		hurricane.setBounds(0, 0, 1090, 700);
+		hurricane.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		hurricane.setVisible(true);
 		timePanel.add(hurricane);
 		timePanel.revalidate();
@@ -292,7 +299,7 @@ public class Game3View extends JPanel implements KeyListener{
 			//g.fillRect((int)controller.getAnimal().getBounds().getX(),(int) controller.getAnimal().getBounds().getY(),(int) controller.getAnimal().getBounds().getWidth(), (int)controller.getAnimal().getBounds().getHeight());
 			try {
 				
-			g.drawImage(ImageIO.read(new File("./Images/Game3/bluecrab_0.png")), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), Color.yellow, this);
+			g.drawImage(ImageIO.read(new File("./Images/Game3/bluecrab_0.png")), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -309,7 +316,7 @@ public class Game3View extends JPanel implements KeyListener{
 		@Override
 		public void paint(Graphics g) {
 			g.setColor(Color.BLUE);
-			g.fillRect(0, 0, 1000, 700);
+			g.fillRect(0, 0, 1000, frame.getWidth());
 		}
 	}
 	
@@ -393,7 +400,7 @@ public class Game3View extends JPanel implements KeyListener{
 		WaveModel waveM = w;
 		waveM.randomSpawn(clusterVal);
 		Wave wave = new Wave(waveM);
-		wave.setBounds(0, 0, 1090, 700);
+		wave.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		componentMap.put(wave.hashCode(), wave);
 		this.layoutContainer.add(wave, new Integer(2), 1);
 	}
@@ -420,6 +427,7 @@ public class Game3View extends JPanel implements KeyListener{
 	        case KeyEvent.VK_SPACE :
 	        	System.out.println("This is a temp key event to end the game (set bool gameActive in controller to false)");
 	        	controller.setGameActive(false);
+	        	frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	            break;
 	    }
 	}
@@ -483,10 +491,6 @@ public class Game3View extends JPanel implements KeyListener{
 		this.timePanel = timePanel;
 	}
 
-
-
-	
-	
 	/*
 	public JFrame getFrame() {
 		return frame;

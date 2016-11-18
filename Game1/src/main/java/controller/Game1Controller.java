@@ -89,7 +89,8 @@ public class Game1Controller{
 		gameState = true;
 		//Load walls in in view
 		//gabSeq = g1view.getGabSeq();
-		while(overallRound < 3 & gameState == true){
+		while(overallRound < 3 && (gameState == true)){
+			System.out.println(this.gameState);
 			round();
 		}
 		gameState = false;
@@ -114,6 +115,9 @@ public class Game1Controller{
 		long startTime = System.currentTimeMillis(); //fetch starting time
 		
 		while((System.currentTimeMillis()-startTime)<5000){
+			if(!this.gameState) { //For testing purposes...just to close the game at will
+				return;
+			}
 			gameTime = (System.currentTimeMillis() - startTime); //Used to print on screen
 			long now = System.nanoTime();
 			delta += (now-lastTime)/ns;
