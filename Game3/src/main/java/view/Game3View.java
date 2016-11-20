@@ -51,7 +51,9 @@ import models.WaveModel;
 
 public class Game3View extends JPanel implements KeyListener{
 	private Game3Controller controller;
-	private HashMap<Integer, Wave> componentMap;
+	private HashMap<Integer, Wave> waveComponentMap;
+	
+	
 	private JFrame frame;
 	private JPanel timePanel = new JPanel();
 	private ArrayList<GridTile> powerUps;
@@ -74,7 +76,7 @@ public class Game3View extends JPanel implements KeyListener{
 		
 		timePanel.setLayout(null);
 		
-		componentMap = new HashMap<Integer,Wave>();
+		waveComponentMap = new HashMap<Integer,Wave>();
     	frame.setBackground(Color.gray);
 
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,12 +122,12 @@ public class Game3View extends JPanel implements KeyListener{
 		
 		
 		ShoreLine water = new ShoreLine();
+	
 		
-		
-		water.setPreferredSize(new Dimension(100,frame.getHeight()));
+		water.setPreferredSize(new Dimension((int)(frame.getWidth()*(.125)),frame.getHeight()));
 		water.setVisible(true);
 		beachGrid.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-		animalPane.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		animalPane.setBounds(0, 0, frame.getWidth()-water.getWidth(), frame.getHeight());
 		layoutContainer.add(beachGrid, new Integer(1),0);
 		layoutContainer.add(animalPane, new Integer(2), 1);
 		play_ground.add(timePanel, BorderLayout.NORTH);
@@ -257,8 +259,8 @@ public class Game3View extends JPanel implements KeyListener{
 								}*/
 								
 								
-								layoutContainer.remove(componentMap.get(this.hashCode()));
-								componentMap.remove(this.hashCode());
+								layoutContainer.remove(waveComponentMap.get(this.hashCode()));
+								waveComponentMap.remove(this.hashCode());
 								wave = null;
 								this.waveGone = true;
 								return;
@@ -269,8 +271,8 @@ public class Game3View extends JPanel implements KeyListener{
 					}
 				}
 				else {
-					layoutContainer.remove(componentMap.get(this.hashCode()));
-					componentMap.remove(this.hashCode());
+					layoutContainer.remove(waveComponentMap.get(this.hashCode()));
+					waveComponentMap.remove(this.hashCode());
 					wave = null;
 					this.waveGone = true;
 				}
@@ -284,8 +286,11 @@ public class Game3View extends JPanel implements KeyListener{
 			//g.setColor(Color.MAGENTA);
 			//g.fillRect((int)controller.getAnimal().getBounds().getX(),(int) controller.getAnimal().getBounds().getY(),(int) controller.getAnimal().getBounds().getWidth(), (int)controller.getAnimal().getBounds().getHeight());
 			
-			
+			int xPos = (int)controller.getAnimal().getBounds().getX();
+			int yPos = (int)controller.getAnimal().getBounds().getY();
+		
 			g.drawImage(controller.getAnimal().getGraphics().get("MOVE").get(0), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
+			
 			//g.drawImage(animal.getAnimalpics().get(0), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), Color.yellow, this);
 
 			
@@ -381,7 +386,7 @@ public class Game3View extends JPanel implements KeyListener{
 		waveM.randomSpawn(clusterVal);
 		Wave wave = new Wave(waveM);
 		wave.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-		componentMap.put(wave.hashCode(), wave);
+		waveComponentMap.put(wave.hashCode(), wave);
 		this.layoutContainer.add(wave, new Integer(2), 1);
 	}
 	@Override
@@ -459,7 +464,7 @@ public class Game3View extends JPanel implements KeyListener{
 
 	public HashMap getComponentMap() {
 		
-		return componentMap;
+		return waveComponentMap;
 	}
 
 	public JPanel getTimePanel() {

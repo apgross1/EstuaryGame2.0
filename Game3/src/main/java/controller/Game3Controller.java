@@ -65,6 +65,9 @@ public class Game3Controller implements KeyListener {
 	
 	public void runGame()  {
 		
+		
+		
+		
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
 		view = new Game3View(this, gameFrame);
@@ -73,13 +76,11 @@ public class Game3Controller implements KeyListener {
 		SunHurricaneModel hurricane = new SunHurricaneModel(this.view.getTimePanel());
 		hurricane.setInitialPosition(200);
 	
-		
-		
 		setSun(sun);
 		setHurricane(hurricane);
+		this.loadImages();
 		view.addSun();
 		view.addHurricane();
-		this.loadImages();
 		this.startTime();
 		
 		this.setGameActive(true);
