@@ -147,7 +147,6 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	
 	public void addSun() {
-		System.out.println("Sun spawned");
 		Sun sun = new Sun(controller.getSun());
 		sun.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		sun.setVisible(true);
