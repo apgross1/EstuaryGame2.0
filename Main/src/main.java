@@ -9,9 +9,6 @@ public class main {
 
 	public static void main(String[] args) {
 		
-		AnimalModelG3 animal = new AnimalModelG3();
-		animal.addPics();
-		
 		JFrame gameFrame = new JFrame();
 		
 		
@@ -20,7 +17,7 @@ public class main {
 		Game3Controller g3 = new Game3Controller(gameFrame);
 		
 		g1.startGame();
-		g2.startGame();
+		//g2.startGame();
 		g3.runGame();
 
 	}

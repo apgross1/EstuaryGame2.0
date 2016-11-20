@@ -3,8 +3,14 @@ package models;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import models.ConcretePUModel.ConcPUState;
 
@@ -14,7 +20,7 @@ public class GabionPUModel extends WallModelAbstract {
 	private int PUonBeach;
 	private Pair location;
 	private Pair viewLocation;
-
+	private HashMap<GabPUState, ArrayList<BufferedImage>> graphics;
 	private BufferedImage powerUp;
 	private BufferedImage wall;
 	private GabPUState wallState;
@@ -30,6 +36,7 @@ public class GabionPUModel extends WallModelAbstract {
 		this.isPickedUp = false;
 		this.location = new Pair(0,0);
 		this.viewLocation = new Pair(0,0);
+		graphics = new HashMap<GabPUState, ArrayList<BufferedImage>>();
 	}
 
 	public boolean getIsActive() {
@@ -84,6 +91,32 @@ public class GabionPUModel extends WallModelAbstract {
 	public void spawn(boolean gameStart, int numChunksRemoved) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void addPics() {
+		try{
+			ArrayList<BufferedImage> wallGraphic = new ArrayList<BufferedImage>();
+			BufferedImage concreteWall = ImageIO.read(new File("./Images/Game3/GabionWall.png"));
+			wallGraphic.add(concreteWall);
+			
+			ArrayList<BufferedImage> puGraphic = new ArrayList<BufferedImage>();
+			BufferedImage pu = ImageIO.read(new File("./Images/Game3/GabionPU.png"));
+			puGraphic.add(pu);
+			
+			graphics.put(GabPUState.WALL, wallGraphic);
+			graphics.put(GabPUState.POWER_UP, puGraphic);
+			}
+			catch(IOException e) {
+	    		e.printStackTrace();
+	    }
+	}
+	
+	public HashMap<GabPUState, ArrayList<BufferedImage>> getGraphics() {
+		return graphics;
+	}
+
+	public void setGraphics(HashMap<GabPUState, ArrayList<BufferedImage>> graphics) {
+		this.graphics = graphics;
 	}
 
 	public Pair getLocation() {

@@ -2,7 +2,14 @@ package models;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import models.GabionPUModel.GabPUState;
 
@@ -13,6 +20,7 @@ public class ConcretePUModel extends WallModelAbstract {
 	private boolean isActive;
 	private boolean isPickedUp;
 	private ConcPUState wallState;
+	private HashMap<ConcPUState,ArrayList<BufferedImage>> graphics;
 	private BufferedImage powerUp;
 	private BufferedImage wall;
 	private Pair location;
@@ -31,6 +39,7 @@ public class ConcretePUModel extends WallModelAbstract {
 		this.isPickedUp = false;
 		this.location = new Pair(0,0);
 		this.viewLocation = new Pair(0,0);
+		graphics = new HashMap<ConcPUState,ArrayList<BufferedImage>>();
 		
 	}
 	public ConcretePUModel(Pair loc) {
@@ -83,6 +92,31 @@ public class ConcretePUModel extends WallModelAbstract {
 		this.setViewLocation(location);
 	}
 	
+	
+	public void addPics() {
+		try{
+			ArrayList<BufferedImage> wallGraphic = new ArrayList<BufferedImage>();
+			BufferedImage concreteWall = ImageIO.read(new File("./Images/Game3/ConcreteWall.png"));
+			wallGraphic.add(concreteWall);
+			
+			ArrayList<BufferedImage> puGraphic = new ArrayList<BufferedImage>();
+			BufferedImage pu = ImageIO.read(new File("./Images/Game3/ConcretePU.png"));
+			puGraphic.add(pu);
+			
+			graphics.put(ConcPUState.WALL, wallGraphic);
+			graphics.put(ConcPUState.POWER_UP, puGraphic);
+			}
+			catch(IOException e) {
+	    		e.printStackTrace();
+	    	}
+	}
+	
+	public HashMap<ConcPUState, ArrayList<BufferedImage>> getGraphics() {
+		return graphics;
+	}
+	public void setGraphics(HashMap<ConcPUState, ArrayList<BufferedImage>> graphics) {
+		this.graphics = graphics;
+	}
 	@Override
 	public void spawn(boolean gameStart, int numChunksRemoved) {
 		

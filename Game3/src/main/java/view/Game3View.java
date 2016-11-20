@@ -55,7 +55,7 @@ public class Game3View extends JPanel implements KeyListener{
 	private JFrame frame;
 	private JPanel timePanel = new JPanel();
 	private ArrayList<GridTile> powerUps;
-	private AnimalModelG3 animal = new AnimalModelG3();
+
 	
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	JLayeredPane layoutContainer = new JLayeredPane();
@@ -183,14 +183,7 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			//g.setColor(Color.GREEN);
 			//g.fillOval(hurricane.getLocation().getX(), hurricane.getLocation().getY(), hurricane.getWidth(), hurricane.getHeight());
-			try {
-				
-				g.drawImage(ImageIO.read(new File("./Images/Game3/angry cloud.png")), hurricane.getLocation().getX(), hurricane.getLocation().getY(), Color.CYAN, this);
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			g.drawImage((hurricane.getGraphics().get("HURRICANE")).get(0), hurricane.getLocation().getX(), hurricane.getLocation().getY(), Color.CYAN, this);
 		}
 	}
 	
@@ -205,14 +198,7 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			//g.setColor(Color.YELLOW);
 			//g.fillOval(sun.getLocation().getX(), sun.getLocation().getY(), sun.getWidth(), sun.getHeight());
-			try {
-				
-				g.drawImage(ImageIO.read(new File("./Images/Game3/glowingbg.png")), sun.getLocation().getX(), sun.getLocation().getY(), Color.CYAN, this);
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			g.drawImage(sun.getGraphics().get("SUN").get(0), sun.getLocation().getX(), sun.getLocation().getY(), Color.CYAN, this);
 		}
 	}
 	
@@ -297,15 +283,9 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			//g.setColor(Color.MAGENTA);
 			//g.fillRect((int)controller.getAnimal().getBounds().getX(),(int) controller.getAnimal().getBounds().getY(),(int) controller.getAnimal().getBounds().getWidth(), (int)controller.getAnimal().getBounds().getHeight());
-			try {
-				
-			g.drawImage(ImageIO.read(new File("./Images/Game3/bluecrab_0.png")), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
+			
+			g.drawImage(controller.getAnimal().getGraphics().get("MOVE").get(0), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
 			//g.drawImage(animal.getAnimalpics().get(0), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), Color.yellow, this);
 
 			

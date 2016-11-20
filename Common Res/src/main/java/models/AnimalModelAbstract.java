@@ -12,7 +12,7 @@ public abstract class AnimalModelAbstract {
 	private int health;
 	private int maxHealth;
 	private boolean emptyHanded;
-	private HashMap<Direction, ArrayList<BufferedImage>> animations;
+	private HashMap<Direction, ArrayList<BufferedImage>> moveAnimations;
 	private Direction currDir;
 	
 	

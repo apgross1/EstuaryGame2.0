@@ -1,11 +1,13 @@
 package models;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -13,8 +15,7 @@ import javax.imageio.ImageIO;
 import enums.Direction;
 
 public class AnimalModelG3 extends AnimalModelAbstract{
-	//private HashMap<Direction,ArrayList<BufferedImage>> animations;
-	private ArrayList<BufferedImage> Animalpics = new ArrayList<BufferedImage>();
+	private HashMap<String,ArrayList<BufferedImage>> graphics;
 	private int health;
 
 	private int emptyHanded;
@@ -23,18 +24,24 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private int width;
 	private int speedX;
 	private int speedY;
+	private Dimension screenSize;
 	
 
 
 	
-	public AnimalModelG3() {
+	public AnimalModelG3(Dimension size) {
+		screenSize = size;
 		this.setHeight(60);
 		this.setWidth(60);
+		graphics = new HashMap<String, ArrayList<BufferedImage>>();
+	
 	}
 	
 	public void tick(){
 		//System.out.println("Animal locs: " + "("+this.getLocX()+","+this.getLocY()+")");
-		if ((getLocY() + speedY >= 100 & getLocX() + speedX >= 135) && (getLocY() + speedY <= 740 & getLocX()+ speedX < 1073) ) {
+		if (((getLocY() + speedY >= 0) & (getLocX() + speedX <= screenSize.getWidth())) && 
+		   ((getLocY() + speedY <= screenSize.getHeight()) & getLocX()+ speedX >= 0) ) {
+				
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
 		}
@@ -44,27 +51,21 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	}
 	
 	public void addPics(){
-		BufferedImage bufferedImage;
+
 		try{
-		bufferedImage = ImageIO.read(new File("./Images/Game3/bluecrab_0.png"));
-		Animalpics.add(bufferedImage);
-		bufferedImage = ImageIO.read(new File("./Images/Game3/bluecrab_1.png"));
-		Animalpics.add(bufferedImage);
-		bufferedImage = ImageIO.read(new File("./Images/Game3/bluecrab_2.png"));
-		Animalpics.add(bufferedImage);
-		/*bufferedImage = ImageIO.read(new File("images/orc/orc_forward_south.png"));
-		Animalpics.add(bufferedImage);
-		bufferedImage = ImageIO.read(new File("images/orc/orc_forward_east.png"));
-		Animalpics.add(bufferedImage);
-		bufferedImage = ImageIO.read(new File("images/orc/orc_forward_northwest.png"));
-		Animalpics.add(bufferedImage);
-		bufferedImage = ImageIO.read(new File("images/orc/orc_forward_northeast.png"));
-		Animalpics.add(bufferedImage);
-		bufferedImage = ImageIO.read(new File("images/orc/orc_forward_southwest.png"));*/
+		ArrayList<BufferedImage> moveAnimations = new ArrayList<BufferedImage>();
+		BufferedImage bufferedImage1 = ImageIO.read(new File("./Images/Game3/bluecrab_0.png"));
+		moveAnimations.add(bufferedImage1);
+		BufferedImage bufferedImage2 = ImageIO.read(new File("./Images/Game3/bluecrab_1.png"));
+		moveAnimations.add(bufferedImage2);
+		BufferedImage bufferedImage3 = ImageIO.read(new File("./Images/Game3/bluecrab_2.png"));
+		moveAnimations.add(bufferedImage3);
+		graphics.put("MOVE", moveAnimations);
 		}
 		catch(IOException e) {
     		e.printStackTrace();
     	}
+		
 	}
 	
 	@Override
@@ -83,22 +84,16 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		
 	}
 
-	/*public HashMap<Direction,ArrayList<BufferedImage>> getAnimations() {
-		return animations;
+	public HashMap<String, ArrayList<BufferedImage>> getGraphics() {
+		return graphics;
 	}
 
-	public void setAnimations(HashMap<Direction,ArrayList<BufferedImage>> animations) {
-		this.animations = animations;
-	}*/
 	
 	public void setHealth(int health){
 		this.health = health;
 	}
 	
-	public ArrayList<BufferedImage> getAnimalpics() {
-		return Animalpics;
-	}
-
+	
 	public int getHealth(){
 		return health;
 	}
@@ -121,7 +116,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	}
 
 	public Rectangle getBounds() {
-		return (new Rectangle(this.getLocX()-140,this.getLocY()-100,this.getWidth(),this.getHeight()));
+		return (new Rectangle(this.getLocX(),this.getLocY(),this.getWidth(),this.getHeight()));
 	}
 	public int getHeight() {
 		return height;

@@ -20,7 +20,7 @@ import enums.Waves;
 public class BeachModel {
 	private int squareCount;
 	private int landSize;
-	private Collection<BufferedImage> beachStates;
+	
 	private HashMap<Pair, GridBlock> beachGrid;
 	private HashMap<Waves, List<Pair>> gridLayers;
 	private List<Pair> orderedPairs;
@@ -126,6 +126,7 @@ public class BeachModel {
 			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
 			setGabPair(this.findPairInGrid(pair));
 			GabionPUModel tempGab = new GabionPUModel();
+			tempGab.addPics();
 			tempGab.setLocation(this.findPairInGrid(pair));
 			tempGab.setIsActive(true);
 			beachGrid.get(this.findPairInGrid(pair)).setGabPU(tempGab);
@@ -143,6 +144,7 @@ public class BeachModel {
 			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
 			setConcPair(pair);
 			ConcretePUModel tempConcr = new ConcretePUModel();
+			tempConcr.addPics();
 			tempConcr.setLocation(this.findPairInGrid(pair));
 			tempConcr.setActive(true);
 			beachGrid.get(this.findPairInGrid(pair)).setConcrPU(tempConcr);
@@ -218,13 +220,6 @@ public class BeachModel {
 		this.landSize = landSize;
 	}
 
-	public Collection<BufferedImage> getBeachStates() {
-		return beachStates;
-	}
-
-	public void setBeachStates(Collection<BufferedImage> beachStates) {
-		this.beachStates = beachStates;
-	}
 
 	public int[][] getPositionGrid() {
 		return positionGrid;
