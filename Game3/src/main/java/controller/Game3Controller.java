@@ -73,10 +73,11 @@ public class Game3Controller implements KeyListener {
 		view = new Game3View(this, gameFrame);
 		this.getAnimal().setFrameWidth(view.getLayoutContainerComps().get("ANIMAL").getWidth());
 		this.getAnimal().setFrameHeight(view.getLayoutContainerComps().get("ANIMAL").getHeight());
+		System.out.println("Time panel width: " + this.view.getTimePanel().getWidth());
 		SunHurricaneModel sun = new SunHurricaneModel(this.view.getTimePanel());
-		sun.setInitialPosition(200);
+		sun.setInitialPosition(this.view.getTimePanel().getWidth()-20);
 		SunHurricaneModel hurricane = new SunHurricaneModel(this.view.getTimePanel());
-		hurricane.setInitialPosition(200);
+		hurricane.setInitialPosition((this.view.getTimePanel().getWidth())/2);
 	
 		setSun(sun);
 		setHurricane(hurricane);

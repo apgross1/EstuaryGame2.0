@@ -115,8 +115,8 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 		
 		
-		
 		timePanel.setPreferredSize(new Dimension(frame.getWidth(), (int)(frame.getHeight()*.25)));
+		timePanel.setBounds(0, 0, frame.getWidth(), (int)(frame.getHeight()*.25));
 		timePanel.setBackground(Color.CYAN);
 		
 		
@@ -127,7 +127,7 @@ public class Game3View extends JPanel implements KeyListener{
 		
 		water.setVisible(true);
 		beachGrid.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-		water.setBounds((int)(frame.getWidth()*(.875)), 0, (int)(frame.getWidth()*(.125)), frame.getHeight());
+		water.setBounds(0, 0, (int)(frame.getWidth()*(.125)), frame.getHeight());
 		animalPane.setBounds(0, 0, frame.getWidth()-water.getWidth(), (int)(frame.getHeight()*(.75)));
 		System.out.println("Water width: " + water.getWidth() + " animal width: " + layoutContainerComps.get("ANIMAL").getHeight());
 		layoutContainer.add(beachGrid, new Integer(1),0);

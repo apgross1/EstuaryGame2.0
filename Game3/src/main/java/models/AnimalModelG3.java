@@ -40,8 +40,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	}
 	
 	public void tick(){
-		System.out.println("Animal locs: " + "("+this.getLocX()+","+this.getLocY()+")");
-		System.out.println("Frame height: " + this.getFrameHeight());
 		if (((getLocY() + speedY >= 0) & (this.getBounds().getMaxX() + speedX <= this.getFrameWidth())) && 
 		   ((this.getBounds().getMaxY() + speedY <= this.getFrameHeight()) & getLocX()+ speedX >= 0) ) {
 				

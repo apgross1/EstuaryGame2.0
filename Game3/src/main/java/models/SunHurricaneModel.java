@@ -39,7 +39,8 @@ public class SunHurricaneModel {
 	
 	
 	public int calculateY(int x) {
-		int y = ((x-firstZero)*(x-secondZero))/(1600)+initialPosition;
+		int y = ((x-firstZero)*(x-secondZero))/100000;
+		System.out.println("Y position:" + y);
 		return y;
 	}
 	
