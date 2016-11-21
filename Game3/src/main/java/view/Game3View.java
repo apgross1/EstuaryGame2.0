@@ -52,17 +52,14 @@ import models.WaveModel;
 public class Game3View extends JPanel implements KeyListener{
 	private Game3Controller controller;
 	private HashMap<Integer, Wave> waveComponentMap;
-	
-	
+	private HashMap<String, JComponent> layoutContainerComps;
 	private JFrame frame;
 	private JPanel timePanel = new JPanel();
 	private ArrayList<GridTile> powerUps;
-
-	
 	private JPanel play_ground = new JPanel(new BorderLayout());
-	JLayeredPane layoutContainer = new JLayeredPane();
-
+	private JLayeredPane layoutContainer = new JLayeredPane();
 	public Game3View(Game3Controller ctl, JFrame gameF){
+		layoutContainerComps = new HashMap<String, JComponent>();
 		controller = ctl;
 		
 		frame = gameF;
@@ -92,7 +89,9 @@ public class Game3View extends JPanel implements KeyListener{
 		//For animal movement
 		
 		Animal animalPane = new Animal();
-		animalPane.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
+		
+		animalPane.setPreferredSize(new Dimension((int)(frame.getWidth()*(.875)),(int)(frame.getHeight()*(0.75))));
+		layoutContainerComps.put("ANIMAL", animalPane);
 		JPanel beachGrid = new JPanel(new GridLayout(7,7));
 
 		
@@ -125,9 +124,12 @@ public class Game3View extends JPanel implements KeyListener{
 	
 		
 		water.setPreferredSize(new Dimension((int)(frame.getWidth()*(.125)),frame.getHeight()));
+		
 		water.setVisible(true);
 		beachGrid.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-		animalPane.setBounds(0, 0, frame.getWidth()-water.getWidth(), frame.getHeight());
+		water.setBounds((int)(frame.getWidth()*(.875)), 0, (int)(frame.getWidth()*(.125)), frame.getHeight());
+		animalPane.setBounds(0, 0, frame.getWidth()-water.getWidth(), (int)(frame.getHeight()*(.75)));
+		System.out.println("Water width: " + water.getWidth() + " animal width: " + layoutContainerComps.get("ANIMAL").getHeight());
 		layoutContainer.add(beachGrid, new Integer(1),0);
 		layoutContainer.add(animalPane, new Integer(2), 1);
 		play_ground.add(timePanel, BorderLayout.NORTH);
@@ -279,20 +281,13 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 	}
 	
+	
+	
+	
 	public class Animal extends JComponent {
 		@Override
 		public void paint(Graphics g) {
-			//g.setColor(Color.MAGENTA);
-			//g.fillRect((int)controller.getAnimal().getBounds().getX(),(int) controller.getAnimal().getBounds().getY(),(int) controller.getAnimal().getBounds().getWidth(), (int)controller.getAnimal().getBounds().getHeight());
-			
-			int xPos = (int)controller.getAnimal().getBounds().getX();
-			int yPos = (int)controller.getAnimal().getBounds().getY();
-		
 			g.drawImage(controller.getAnimal().getGraphics().get("MOVE").get(0), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
-			
-			//g.drawImage(animal.getAnimalpics().get(0), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), Color.yellow, this);
-
-			
 		}
 	}
 	
@@ -475,6 +470,16 @@ public class Game3View extends JPanel implements KeyListener{
 		this.timePanel = timePanel;
 	}
 
+	public HashMap<String, JComponent> getLayoutContainerComps() {
+		return layoutContainerComps;
+	}
+
+
+
+	public void setLayoutContainerComps(HashMap<String, JComponent> layoutContainerComps) {
+		this.layoutContainerComps = layoutContainerComps;
+	}
+	
 	/*
 	public JFrame getFrame() {
 		return frame;

@@ -52,7 +52,7 @@ public class Game3Controller implements KeyListener {
 	public Game3Controller(JFrame gameF) {
 		
 		gameFrame = gameF;
-		AnimalModelG3 a = new AnimalModelG3(screenSize);
+		AnimalModelG3 a = new AnimalModelG3();
 		a.setLocX(250);
 		a.setLocY(250);
 		setAnimal(a);
@@ -71,6 +71,8 @@ public class Game3Controller implements KeyListener {
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
 		view = new Game3View(this, gameFrame);
+		this.getAnimal().setFrameWidth(view.getLayoutContainerComps().get("ANIMAL").getWidth());
+		this.getAnimal().setFrameHeight(view.getLayoutContainerComps().get("ANIMAL").getHeight());
 		SunHurricaneModel sun = new SunHurricaneModel(this.view.getTimePanel());
 		sun.setInitialPosition(200);
 		SunHurricaneModel hurricane = new SunHurricaneModel(this.view.getTimePanel());

@@ -24,30 +24,31 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private int width;
 	private int speedX;
 	private int speedY;
-	private Dimension screenSize;
-	
+	private int frameWidth;
+	private int frameHeight;
+	private boolean boundHit;
 
 
 	
-	public AnimalModelG3(Dimension size) {
-		screenSize = size;
+
+	public AnimalModelG3() {
 		this.setHeight(60);
 		this.setWidth(60);
 		graphics = new HashMap<String, ArrayList<BufferedImage>>();
+		boundHit = false;
 	
 	}
 	
 	public void tick(){
-		//System.out.println("Animal locs: " + "("+this.getLocX()+","+this.getLocY()+")");
-		if (((getLocY() + speedY >= 0) & (getLocX() + speedX <= screenSize.getWidth())) && 
-		   ((getLocY() + speedY <= screenSize.getHeight()) & getLocX()+ speedX >= 0) ) {
+		System.out.println("Animal locs: " + "("+this.getLocX()+","+this.getLocY()+")");
+		System.out.println("Frame height: " + this.getFrameHeight());
+		if (((getLocY() + speedY >= 0) & (this.getBounds().getMaxX() + speedX <= this.getFrameWidth())) && 
+		   ((this.getBounds().getMaxY() + speedY <= this.getFrameHeight()) & getLocX()+ speedX >= 0) ) {
 				
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
 		}
-		else{
-			
-		}
+		
 	}
 	
 	public void addPics(){
@@ -145,5 +146,30 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 
 	public void setSpeedY(int speed) {
 		this.speedY = speed;
+	}
+	
+
+	public boolean isBoundHit() {
+		return boundHit;
+	}
+
+	public void setBoundHit(boolean boundHit) {
+		this.boundHit = boundHit;
+	}
+
+	public int getFrameWidth() {
+		return frameWidth;
+	}
+
+	public void setFrameWidth(int frameWidth) {
+		this.frameWidth = frameWidth;
+	}
+
+	public int getFrameHeight() {
+		return frameHeight;
+	}
+
+	public void setFrameHeight(int frameHeight) {
+		this.frameHeight = frameHeight;
 	}
 }
