@@ -238,6 +238,12 @@ public class Game3View extends JPanel implements KeyListener{
 				}
 				
 				if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < 2500) {
+					if(wave.isLastWave()){
+						System.out.print("Hi");
+						g.setColor(Color.green);
+						g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
+					}
+					else{
 					g.setColor(Color.BLUE);
 					g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
 					/*try {
@@ -246,6 +252,7 @@ public class Game3View extends JPanel implements KeyListener{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}*/
+					}
 				}
 				
 				else if ((wave.getLocation().getX() > 950) && wave.isReceed() && wave.isLastWave()) {
