@@ -238,6 +238,12 @@ public class Game3View extends JPanel implements KeyListener{
 				}
 				
 				if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < 2500) {
+					if(wave.isLastWave()){
+						System.out.print("Hi");
+						g.setColor(Color.green);
+						g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
+					}
+					else{
 					g.setColor(Color.BLUE);
 					g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
 					/*try {
@@ -246,6 +252,7 @@ public class Game3View extends JPanel implements KeyListener{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}*/
+					}
 				}
 				
 				else if ((wave.getLocation().getX() > 950) && wave.isReceed() && wave.isLastWave()) {
@@ -349,19 +356,20 @@ public class Game3View extends JPanel implements KeyListener{
 			}
 			
 			else if(gridBlock.getGabPU().getIsActive()) {
-				g.setColor(Color.RED);
-				g.fillRect((int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
-				/*try {
-					if(gridBlock.getConcrPU().isPickedUp()){
-					g.drawImage(ImageIO.read(new File("./Images/Game3/GabianWall.png")),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+				//g.setColor(Color.RED);
+				//g.fillRect((int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
+				try {
+					if(gridBlock.getGabPU().isPickedUp()){
+						System.out.println("Here");
+						g.drawImage(ImageIO.read(new File("./Images/Game3/GabionWall.png")),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);
 					}
 					else{
-						g.drawImage(ImageIO.read(new File("./Images/Game3/GabianPU.png")),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+						g.drawImage(ImageIO.read(new File("./Images/Game3/GabionPU.png")),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);
 					}
 				} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}*/
+					}
 			}
 		}
 	}
