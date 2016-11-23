@@ -32,15 +32,16 @@ public class SunHurricaneModel {
 	}
 	
 	public void move() {
-		location.setX(location.getX()-1);
+		location.setX(location.getX()-2);
 		location.setY(this.calculateY(location.getX()));
 		
 	}
 	
 	
 	public int calculateY(int x) {
-		int y = ((x-firstZero)*(x-secondZero))/100000;
-		System.out.println("Y position:" + y);
+		//System.out.println("Panel height is: " + panel.getHeight());
+		int y = (int)(-1*(panel.getHeight()*(Math.sin(((.00165)*x)))) + panel.getHeight());
+		
 		return y;
 	}
 	
