@@ -258,8 +258,6 @@ public class Game3View extends JPanel implements KeyListener{
 									System.out.println("Made it here!");
 									controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i-1))).setWater(new WaterModel(), controller.getBeach().findPairInGrid(pairs.get(i-1))); 
 								}*/
-								
-								
 								layoutContainer.remove(waveComponentMap.get(this.hashCode()));
 								waveComponentMap.remove(this.hashCode());
 								wave = null;
@@ -270,6 +268,11 @@ public class Game3View extends JPanel implements KeyListener{
 						}
 						
 					}
+					
+					layoutContainer.remove(waveComponentMap.get(this.hashCode()));
+					waveComponentMap.remove(this.hashCode());
+					wave = null;
+					this.waveGone = true;
 				}
 				else {
 					layoutContainer.remove(waveComponentMap.get(this.hashCode()));

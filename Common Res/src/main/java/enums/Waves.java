@@ -22,6 +22,7 @@ private Waves(int waveID, int minY, int maxY) {
     	this.waveID = waveID;
     	this.minY = minY;
     	this.maxY = maxY;
+    	
     }
 
     public int getWaveID() {
