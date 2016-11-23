@@ -2,8 +2,9 @@ package models;
 
 
 
+import java.awt.Dimension;
 import java.awt.Rectangle;
-
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,6 +29,7 @@ public class WaveModel {
 	private double movement = 3;
 	private Waves clusterGroup;
 	private boolean lastWave;
+	private Double screenSizeX = Toolkit.getDefaultToolkit().getScreenSize().getWidth(); 
 	
 
 	
@@ -43,7 +45,7 @@ public class WaveModel {
 		setClusterGroup(waveEnum);
 		location = new Pair(0,0);
 
-		location.setX(990 + (int)(Math.random() * ((2000 - 900) + 1)));
+		location.setX((int)(screenSizeX - 250) + (int)(Math.random() * ((2000 - 900) + 1)));
 		location.setY(waveEnum.getMinY() + (int)(Math.random() * (((waveEnum.getMaxY()) - waveEnum.getMinY()) + 1)));
 	}
 
