@@ -41,7 +41,9 @@ import enums.Waves;
 import models.AnimalModelG3;
 import models.BeachModel;
 import models.ConcretePUModel;
+import models.ConcretePUModel.ConcPUState;
 import models.GabionPUModel;
+import models.GabionPUModel.GabPUState;
 import models.GridBlock;
 import models.Pair;
 import models.SunHurricaneModel;
@@ -109,7 +111,7 @@ public class Game3View extends JPanel implements KeyListener{
 		    powerUp.setBounds((int)controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(currBlock)).getBounds().getX(), (int)controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(currBlock)).getBounds().getY(), 835, 605);
 			layoutContainer.add(powerUp, new Integer(2),-1);
 		    beachOverlay.add(gridBlock);
-		    //beachOverlay.setBorder(BorderFactory.createLineBorder(Color.black));
+		    beachOverlay.setBorder(BorderFactory.createLineBorder(Color.black));
 		    beachGrid.add(beachOverlay);
 		    
 		}
@@ -237,9 +239,8 @@ public class Game3View extends JPanel implements KeyListener{
 					}
 				}
 				
-				if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < 2500) {
+				if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < frame.getWidth()+300) {
 					if(wave.isLastWave()){
-						System.out.print("Hi");
 						g.setColor(Color.green);
 						g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
 					}
@@ -255,16 +256,13 @@ public class Game3View extends JPanel implements KeyListener{
 					}
 				}
 				
-				else if ((wave.getLocation().getX() > 950) && wave.isReceed() && wave.isLastWave()) {
+				else if ((wave.getLocation().getX() > layoutContainerComps.get("ANIMAL").getWidth()) && wave.isReceed() && wave.isLastWave()) {
 					List<Pair> pairs = controller.getBeach().getGridLayers().get(wave.getClusterGroup());
 					for(int i = pairs.size()-1; i >= 0; i--) {
 						if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))) != null) {
 							if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).isVacant()) {
 								controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).setWater(new WaterModel(), controller.getBeach().findPairInGrid(pairs.get(i)));
-								/*if(i >= 1) {
-									System.out.println("Made it here!");
-									controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i-1))).setWater(new WaterModel(), controller.getBeach().findPairInGrid(pairs.get(i-1))); 
-								}*/
+					
 								layoutContainer.remove(waveComponentMap.get(this.hashCode()));
 								waveComponentMap.remove(this.hashCode());
 								wave = null;
@@ -342,34 +340,24 @@ public class Game3View extends JPanel implements KeyListener{
 			if(gridBlock.getConcrPU().getIsActive()) {
 				//g.setColor(Color.RED);
 				//g.fillRect((int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
-				try {
-					if(gridBlock.getConcrPU().isPickedUp()){
-					g.drawImage(ImageIO.read(new File("./Images/Game3/ConcreteWall.png")),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
-					}
-					else{
-						g.drawImage(ImageIO.read(new File("./Images/Game3/ConcretePU.png")),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
-					}
-				} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				if(gridBlock.getConcrPU().isPickedUp()){
+				g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.WALL).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+				}
+				else{
+					g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.POWER_UP).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+				}
 			}
 			
 			else if(gridBlock.getGabPU().getIsActive()) {
 				//g.setColor(Color.RED);
 				//g.fillRect((int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
-				try {
-					if(gridBlock.getGabPU().isPickedUp()){
-						System.out.println("Here");
-						g.drawImage(ImageIO.read(new File("./Images/Game3/GabionWall.png")),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);
-					}
-					else{
-						g.drawImage(ImageIO.read(new File("./Images/Game3/GabionPU.png")),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);
-					}
-				} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				if(gridBlock.getGabPU().isPickedUp()){
+					System.out.println("Here");
+					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.WALL).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);
+				}
+				else{
+					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.POWER_UP).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);
+				}
 			}
 		}
 	}
