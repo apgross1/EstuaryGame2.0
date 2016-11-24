@@ -13,6 +13,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import enums.Direction;
+import view.Game3View.Animal;
 
 public class AnimalModelG3 extends AnimalModelAbstract{
 	private HashMap<String,ArrayList<BufferedImage>> graphics;
@@ -27,6 +28,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private int frameWidth;
 	private int frameHeight;
 	private boolean boundHit;
+	private Pair beachLocation = new Pair(0,0);
 
 
 	
@@ -45,6 +47,10 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 				
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
+			
+			//can do it it model or Controller
+			//FindBeachLocation();
+			//System.out.println(this.getBeachLocation().getX() + "," + this.getBeachLocation().getY());
 		}
 		
 	}
@@ -66,6 +72,8 @@ public class AnimalModelG3 extends AnimalModelAbstract{
     	}
 		
 	}
+	
+	
 	
 	@Override
 	public void healthUp() {
@@ -169,5 +177,18 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 
 	public void setFrameHeight(int frameHeight) {
 		this.frameHeight = frameHeight;
+	}
+
+	public Pair getBeachLocation() {
+		return beachLocation;
+	}
+
+	public void FindBeachLocation() {
+		//214 at edge maybe 217
+		this.beachLocation.setX(this.getLocX()/214);
+		//94 at edge maybe 95
+		this.beachLocation.setY(this.getLocY()/94);
+		System.out.println(this.getBeachLocation().getX() + "," + this.getBeachLocation().getY());
+		
 	}
 }

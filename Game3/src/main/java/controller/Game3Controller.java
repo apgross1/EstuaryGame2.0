@@ -112,7 +112,10 @@ public class Game3Controller implements KeyListener {
 				updates = 0;
 				frames = 0;
 			}
-
+			
+			//Controller for now but could be implemented in Model in tick function
+			animal.FindBeachLocation();
+			
 			if(triggerSpawn == die.nextInt(700000)) {
 				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
 					getBeach().spawnConcrPU(getBeach().generatePPUL());
