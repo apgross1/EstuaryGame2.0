@@ -1,28 +1,23 @@
 package models;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-
 import javax.swing.Timer;
-
-import org.omg.CORBA.INITIALIZE;
-
 import enums.Walls;
 import enums.Waves;
+import Enums.WaveClusters;
 
 public class BeachModel {
 	private int squareCount;
 	private int landSize;
 	
 	private HashMap<Pair, GridBlock> beachGrid;
-	private HashMap<Waves, List<Pair>> gridLayers;
+	private HashMap<WaveClusters, List<Pair>> gridLayers;
 	private List<Pair> orderedPairs;
 	private int[][] positionGrid;
 	private Pair gabPair = new Pair(0,0);
@@ -32,7 +27,7 @@ public class BeachModel {
 	
 	public BeachModel() {
 		beachGrid = new HashMap<Pair,GridBlock>();
-		gridLayers = new HashMap<Waves, List<Pair>>();
+		gridLayers = new HashMap<WaveClusters, List<Pair>>();
 		positionGrid = new int[7][7];
 		orderedPairs = new ArrayList<Pair>();
 		this.initializeBeach();
@@ -71,25 +66,25 @@ public class BeachModel {
 			}
 			switch(i) {
 				case(0):
-					gridLayers.put(Waves.CLUSTER_ONE, tempLane);
+					gridLayers.put(WaveClusters.CLUSTER_ONE, tempLane);
 					break;
 				case(1):
-					gridLayers.put(Waves.CLUSTER_TWO, tempLane);
+					gridLayers.put(WaveClusters.CLUSTER_TWO, tempLane);
 					break;
 				case(2):
-					gridLayers.put(Waves.CLUSTER_THREE, tempLane);
+					gridLayers.put(WaveClusters.CLUSTER_THREE, tempLane);
 					break;
 				case(3):
-					gridLayers.put(Waves.CLUSTER_FOUR, tempLane);
+					gridLayers.put(WaveClusters.CLUSTER_FOUR, tempLane);
 					break;
 				case(4):
-					gridLayers.put(Waves.CLUSTER_FIVE, tempLane);
+					gridLayers.put(WaveClusters.CLUSTER_FIVE, tempLane);
 					break;
 				case(5):
-					gridLayers.put(Waves.CLUSTER_SIX, tempLane);
+					gridLayers.put(WaveClusters.CLUSTER_SIX, tempLane);
 					break;
 				case(6):
-					gridLayers.put(Waves.CLUSTER_SEVEN, tempLane);
+					gridLayers.put(WaveClusters.CLUSTER_SEVEN, tempLane);
 					break;
 			}
 			j++;
@@ -109,11 +104,11 @@ public class BeachModel {
 		this.orderedPairs = orderedPairs;
 	}
 
-	public HashMap<Waves, List<Pair>> getGridLayers() {
+	public HashMap<WaveClusters, List<Pair>> getGridLayers() {
 		return gridLayers;
 	}
 
-	public void setGridLayers(HashMap<Waves, List<Pair>> gridLayers) {
+	public void setGridLayers(HashMap<WaveClusters, List<Pair>> gridLayers) {
 		this.gridLayers = gridLayers;
 	}
 

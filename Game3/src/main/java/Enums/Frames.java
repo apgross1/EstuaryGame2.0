@@ -1,4 +1,4 @@
-package Main;
+package Enums;
 
 public enum Frames {
 	TIMER(0),

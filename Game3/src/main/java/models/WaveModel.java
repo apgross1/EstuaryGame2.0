@@ -15,8 +15,7 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
-
-
+import Enums.WaveClusters;
 import enums.Waves;
 
 public class WaveModel {
@@ -26,7 +25,7 @@ public class WaveModel {
 	private Pair location;
 	private boolean receed = false;
 	private double movement;
-	private Waves clusterGroup;
+	private WaveClusters clusterGroup;
 	private boolean lastWave;
 	private Double screenSizeX = Toolkit.getDefaultToolkit().getScreenSize().getWidth(); 
 	
@@ -41,7 +40,7 @@ public class WaveModel {
 	
 
 	public void randomSpawn(int clusterVal) {
-		Waves waveEnum = Waves.values()[clusterVal];
+		WaveClusters waveEnum = WaveClusters.values()[clusterVal];
 		setClusterGroup(waveEnum);
 		location = new Pair(0,0);
 
@@ -152,14 +151,14 @@ public class WaveModel {
 	}
 
 
-	public Waves getClusterGroup() {
+	public WaveClusters getClusterGroup() {
 		return clusterGroup;
 	}
 
 
 
-	public void setClusterGroup(Waves clusterGroup) {
-		this.clusterGroup = clusterGroup;
+	public void setClusterGroup(WaveClusters waveEnum) {
+		this.clusterGroup = waveEnum;
 	}
 
 

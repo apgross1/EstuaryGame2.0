@@ -35,7 +35,8 @@ import javax.swing.JSplitPane;
 import javax.swing.OverlayLayout;
 import javax.swing.border.Border;
 
-import Main.Frames;
+import Enums.Frames;
+import Enums.WaveClusters;
 import controller.Game3Controller;
 import enums.Direction;
 import enums.Waves;
@@ -381,7 +382,7 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	public void generateWaveCluster() {
 
-		int randCluster = Waves.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((Waves.CLUSTER_SEVEN.getWaveID() - Waves.CLUSTER_ONE.getWaveID()) + 1));
+		int randCluster = WaveClusters.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((WaveClusters.CLUSTER_SEVEN.getWaveID() - WaveClusters.CLUSTER_ONE.getWaveID()) + 1));
 		for(int i = 0; i < 250; i++) {
 			WaveModel wave = new WaveModel(randCluster);
 			if(i == 249) {
