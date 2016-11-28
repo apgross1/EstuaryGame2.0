@@ -35,6 +35,7 @@ import javax.swing.JSplitPane;
 import javax.swing.OverlayLayout;
 import javax.swing.border.Border;
 
+import Main.Frames;
 import controller.Game3Controller;
 import enums.Direction;
 import enums.Waves;
@@ -54,14 +55,14 @@ import models.WaveModel;
 public class Game3View extends JPanel implements KeyListener{
 	private Game3Controller controller;
 	private HashMap<Integer, Wave> waveComponentMap;
-	private HashMap<String, JComponent> layoutContainerComps;
+	private HashMap<Frames, JComponent> frameMap;
 	private JFrame frame;
 	private JPanel timePanel = new JPanel();
 	private ArrayList<GridTile> powerUps;
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	private JLayeredPane layoutContainer = new JLayeredPane();
 	public Game3View(Game3Controller ctl, JFrame gameF){
-		layoutContainerComps = new HashMap<String, JComponent>();
+		frameMap = new HashMap<Frames, JComponent>();
 		controller = ctl;
 		
 		frame = gameF;
@@ -70,6 +71,9 @@ public class Game3View extends JPanel implements KeyListener{
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 	
 		frame.setSize((int)controller.getScreenSize().getWidth(), (int)controller.getScreenSize().getHeight());
+		
+		
+		
 		//frame.setSize(this.getFrameHeight(), frame.getWidth());
 		play_ground.setSize(frame.getWidth(),frame.getHeight());
 		
@@ -93,7 +97,7 @@ public class Game3View extends JPanel implements KeyListener{
 		Animal animalPane = new Animal();
 		
 		animalPane.setPreferredSize(new Dimension((int)(frame.getWidth()*(.875)),(int)(frame.getHeight()*(0.75))));
-		layoutContainerComps.put("ANIMAL", animalPane);
+		
 		JPanel beachGrid = new JPanel(new GridLayout(7,7));
 
 		
@@ -130,8 +134,9 @@ public class Game3View extends JPanel implements KeyListener{
 		water.setVisible(true);
 		beachGrid.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		water.setBounds(0, 0, (int)(frame.getWidth()*(.125)), frame.getHeight());
+		
 		animalPane.setBounds(0, 0, frame.getWidth()-water.getWidth(), (int)(frame.getHeight()*(.75)));
-		System.out.println("Water width: " + water.getWidth() + " animal width: " + layoutContainerComps.get("ANIMAL").getHeight());
+		System.out.println("Water width: " + water.getWidth() + " animal width: " + frameMap.get("ANIMAL").getHeight());
 		layoutContainer.add(beachGrid, new Integer(1),0);
 		layoutContainer.add(animalPane, new Integer(2), 1);
 		play_ground.add(timePanel, BorderLayout.NORTH);
@@ -146,6 +151,14 @@ public class Game3View extends JPanel implements KeyListener{
     	//addKeyListener
     	frame.addKeyListener(this);
     	frame.pack();
+    	
+    	//Inserting into frame map. This will allow us to reference 
+    	//dimensions of each component throughout the game
+    	frameMap.put(Frames.BEACH_GRID, beachGrid);
+    	frameMap.put(Frames.ANIMAL, animalPane);
+    	frameMap.put(Frames.TIMER, timePanel);
+    	frameMap.put(Frames.SHORE, water);
+    	
 	}
  
 	
@@ -239,24 +252,9 @@ public class Game3View extends JPanel implements KeyListener{
 					}
 				}
 				
-				if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < frame.getWidth()+6000) {
-					if(wave.isLastWave()){
-						g.setColor(Color.green);
-						g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
-					}
-					else{
-					g.setColor(Color.BLUE);
-					g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
-					/*try {
-						g.drawImage(ImageIO.read(new File("./Images/Game3/watersplash_sideblast_1.png")), (int)wave.getBounds().getX(), (int)wave.getBounds().getY(), Color.blue, this);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
-					}
-				}
 				
-				else if ((wave.getLocation().getX() > layoutContainerComps.get("ANIMAL").getWidth()) && wave.isReceed() && wave.isLastWave()) {
+				
+				if ((wave.getLocation().getX() > frameMap.get("ANIMAL").getWidth()) && wave.isReceed() && wave.isLastWave()) {
 					List<Pair> pairs = controller.getBeach().getGridLayers().get(wave.getClusterGroup());
 					for(int i = pairs.size()-1; i >= 0; i--) {
 						if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))) != null) {
@@ -279,6 +277,25 @@ public class Game3View extends JPanel implements KeyListener{
 					wave = null;
 					this.waveGone = true;
 				}
+				
+				//I don't think the -150 has to be dynamic. It's off the screen for all monitors, so it shouldn't' be an issue
+				else if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < frame.getWidth()+frameMap.get("SHORE").getWidth()) {
+					if(wave.isLastWave()){
+						g.setColor(Color.green);
+						g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
+					}
+					else{
+					g.setColor(Color.BLUE);
+					g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
+					/*try {
+						g.drawImage(ImageIO.read(new File("./Images/Game3/watersplash_sideblast_1.png")), (int)wave.getBounds().getX(), (int)wave.getBounds().getY(), Color.blue, this);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}*/
+					}
+				}
+				
 				else {
 					layoutContainer.remove(waveComponentMap.get(this.hashCode()));
 					waveComponentMap.remove(this.hashCode());
@@ -469,14 +486,14 @@ public class Game3View extends JPanel implements KeyListener{
 		this.timePanel = timePanel;
 	}
 
-	public HashMap<String, JComponent> getLayoutContainerComps() {
-		return layoutContainerComps;
+	public HashMap<Frames, JComponent> getLayoutContainerComps() {
+		return frameMap;
 	}
 
 
 
-	public void setLayoutContainerComps(HashMap<String, JComponent> layoutContainerComps) {
-		this.layoutContainerComps = layoutContainerComps;
+	public void setLayoutContainerComps(HashMap<Frames, JComponent> layoutContainerComps) {
+		this.frameMap = layoutContainerComps;
 	}
 	
 	/*
