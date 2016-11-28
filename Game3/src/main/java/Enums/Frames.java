@@ -8,6 +8,7 @@ public enum Frames {
 	
 	private final int frameID;
 	
+	
 	private Frames(int ID) {
 		this.frameID = ID;
 	}

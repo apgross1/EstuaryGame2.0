@@ -137,7 +137,6 @@ public class Game3View extends JPanel implements KeyListener{
 		water.setBounds(0, 0, (int)(frame.getWidth()*(.125)), frame.getHeight());
 		
 		animalPane.setBounds(0, 0, frame.getWidth()-water.getWidth(), (int)(frame.getHeight()*(.75)));
-		System.out.println("Water width: " + water.getWidth() + " animal width: " + frameMap.get("ANIMAL").getHeight());
 		layoutContainer.add(beachGrid, new Integer(1),0);
 		layoutContainer.add(animalPane, new Integer(2), 1);
 		play_ground.add(timePanel, BorderLayout.NORTH);
@@ -159,6 +158,8 @@ public class Game3View extends JPanel implements KeyListener{
     	frameMap.put(Frames.ANIMAL, animalPane);
     	frameMap.put(Frames.TIMER, timePanel);
     	frameMap.put(Frames.SHORE, water);
+    	
+   
     	
 	}
  
@@ -255,7 +256,7 @@ public class Game3View extends JPanel implements KeyListener{
 				
 				
 				
-				if ((wave.getLocation().getX() > frameMap.get("ANIMAL").getWidth()) && wave.isReceed() && wave.isLastWave()) {
+				if ((wave.getLocation().getX() > frameMap.get(Frames.ANIMAL).getWidth()) && wave.isReceed() && wave.isLastWave()) {
 					List<Pair> pairs = controller.getBeach().getGridLayers().get(wave.getClusterGroup());
 					for(int i = pairs.size()-1; i >= 0; i--) {
 						if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))) != null) {
@@ -280,7 +281,7 @@ public class Game3View extends JPanel implements KeyListener{
 				}
 				
 				//I don't think the -150 has to be dynamic. It's off the screen for all monitors, so it shouldn't' be an issue
-				else if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < frame.getWidth()+frameMap.get("SHORE").getWidth()) {
+				else if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < frame.getWidth()+frameMap.get(Frames.SHORE).getWidth()) {
 					if(wave.isLastWave()){
 						g.setColor(Color.green);
 						g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
@@ -382,9 +383,10 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	public void generateWaveCluster() {
 
-		int randCluster = WaveClusters.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((WaveClusters.CLUSTER_SEVEN.getWaveID() - WaveClusters.CLUSTER_ONE.getWaveID()) + 1));
+		int randCluster = WaveClusters.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((WaveClusters.CLUSTER_FIVE.getWaveID() - WaveClusters.CLUSTER_ONE.getWaveID()) + 1));
+		System.out.println("In here");
 		for(int i = 0; i < 250; i++) {
-			WaveModel wave = new WaveModel(randCluster);
+			WaveModel wave = new WaveModel(randCluster, frameMap);
 			if(i == 249) {
 				wave.setLastWave(true);
 			}

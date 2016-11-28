@@ -80,12 +80,6 @@ public class BeachModel {
 				case(4):
 					gridLayers.put(WaveClusters.CLUSTER_FIVE, tempLane);
 					break;
-				case(5):
-					gridLayers.put(WaveClusters.CLUSTER_SIX, tempLane);
-					break;
-				case(6):
-					gridLayers.put(WaveClusters.CLUSTER_SEVEN, tempLane);
-					break;
 			}
 			j++;
 			i++;

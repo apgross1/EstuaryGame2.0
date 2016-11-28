@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import Enums.Frames;
 import enums.Waves;
 import models.AnimalModelG3;
 import models.BeachModel;
@@ -71,8 +72,8 @@ public class Game3Controller implements KeyListener {
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
 		view = new Game3View(this, gameFrame);
-		this.getAnimal().setFrameWidth(view.getLayoutContainerComps().get("ANIMAL").getWidth());
-		this.getAnimal().setFrameHeight(view.getLayoutContainerComps().get("ANIMAL").getHeight());
+		this.getAnimal().setFrameWidth(view.getLayoutContainerComps().get(Frames.ANIMAL).getWidth());
+		this.getAnimal().setFrameHeight(view.getLayoutContainerComps().get(Frames.ANIMAL).getHeight());
 		System.out.println("Time panel width: " + this.view.getTimePanel().getWidth());
 		SunHurricaneModel sun = new SunHurricaneModel(this.view.getTimePanel());
 		sun.setInitialPosition(this.view.getTimePanel().getWidth()-20);

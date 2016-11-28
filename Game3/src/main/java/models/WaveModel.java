@@ -7,14 +7,13 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.HashMap;
 import java.util.Random;
 
-
-
-
+import javax.swing.JComponent;
 import javax.swing.Timer;
 
+import Enums.Frames;
 import Enums.WaveClusters;
 import enums.Waves;
 
@@ -28,11 +27,13 @@ public class WaveModel {
 	private WaveClusters clusterGroup;
 	private boolean lastWave;
 	private Double screenSizeX = Toolkit.getDefaultToolkit().getScreenSize().getWidth(); 
-	
+	private HashMap<Frames, JComponent> frames;
 
-	
-	public WaveModel(int clusterVal) {
+
+
+	public WaveModel(int clusterVal, HashMap<Frames, JComponent> f) {
 		movement = (screenSizeX*.00104);
+		frames = f;
 		this.randomSpawn(clusterVal);
 		this.move();
 	}
@@ -46,7 +47,35 @@ public class WaveModel {
 
 		//Change 250 to make it dynamic (should be width of the shore line)
 		location.setX((int)(screenSizeX - 250) + (int)(Math.random() * 500));
-		location.setY(waveEnum.getMinY() + (int)(Math.random() * (((waveEnum.getMaxY()) - waveEnum.getMinY()) + 1)));
+		
+		int beachHeight = frames.get(Frames.SHORE).getHeight();
+		int blockOneMin = 0, blockOneMax = beachHeight/7;
+		int blockTwoMin = blockOneMax+1, blockTwoMax = blockOneMax*2;
+		int blockThreeMin = blockTwoMax+1, blockThreeMax = blockOneMax*3;
+		int blockFourMin = blockThreeMax+1, blockFourMax = blockOneMax*4;
+		int blockFiveMin = blockFourMax+1, blockFiveMax = blockOneMax*5;
+		int blockSixMin = blockFiveMin+1, blockSixMax = blockOneMax*6;
+		int blockSevenMin = blockSixMin+1, blockSevenMax = blockOneMax*7;
+		
+		
+		switch(clusterGroup){
+			case CLUSTER_ONE:
+				location.setY(blockOneMin + (int)(Math.random() * (((blockOneMax - blockOneMin) + 1))));
+				break;
+			case CLUSTER_TWO:
+				location.setY(blockTwoMin + (int)(Math.random() * (((blockTwoMax - blockTwoMin) + 1))));
+				break;
+			case CLUSTER_THREE:
+				location.setY(blockThreeMin + (int)(Math.random() * (((blockThreeMax - blockThreeMin) + 1))));
+				break;
+			case CLUSTER_FOUR:
+				location.setY(blockFourMin + (int)(Math.random() * (((blockFourMax - blockFourMin) + 1))));
+				break;
+			case CLUSTER_FIVE:
+				location.setY(blockFiveMin + (int)(Math.random() * (((blockFiveMax - blockFiveMin) + 1))));
+				break;
+		}
+	
 	}
 
 	
@@ -173,4 +202,14 @@ public class WaveModel {
 		this.lastWave = lastWave;
 	}
 
+	public HashMap<Frames, JComponent> getFrames() {
+		return frames;
+	}
+
+
+
+	public void setFrames(HashMap<Frames, JComponent> frames) {
+		this.frames = frames;
+	}
+	
 }
