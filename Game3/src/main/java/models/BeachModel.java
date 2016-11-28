@@ -148,7 +148,7 @@ public class BeachModel {
 			tempConcr.setLocation(this.findPairInGrid(pair));
 			tempConcr.setActive(true);
 			beachGrid.get(this.findPairInGrid(pair)).setConcrPU(tempConcr);
-			System.out.println(pair.getX() + " " + pair.getY());
+			
 			positionGrid[pair.getX()][pair.getY()] = Walls.CONCRETE_GAME3.getValue();
 		}
 	}

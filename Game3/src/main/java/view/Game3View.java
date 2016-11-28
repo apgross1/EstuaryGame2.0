@@ -239,7 +239,7 @@ public class Game3View extends JPanel implements KeyListener{
 					}
 				}
 				
-				if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < frame.getWidth()+300) {
+				if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < frame.getWidth()+6000) {
 					if(wave.isLastWave()){
 						g.setColor(Color.green);
 						g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());

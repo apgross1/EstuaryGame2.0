@@ -25,8 +25,7 @@ public class WaveModel {
 	private int width = 30;
 	private Pair location;
 	private boolean receed = false;
-	private double accelerator = 1.01;
-	private double movement = 3;
+	private double movement;
 	private Waves clusterGroup;
 	private boolean lastWave;
 	private Double screenSizeX = Toolkit.getDefaultToolkit().getScreenSize().getWidth(); 
@@ -34,6 +33,7 @@ public class WaveModel {
 
 	
 	public WaveModel(int clusterVal) {
+		movement = (screenSizeX*.00104);
 		this.randomSpawn(clusterVal);
 		this.move();
 	}
@@ -45,7 +45,8 @@ public class WaveModel {
 		setClusterGroup(waveEnum);
 		location = new Pair(0,0);
 
-		location.setX((int)(screenSizeX - 250) + (int)(Math.random() * ((2000 - 900) + 1)));
+		//Change 250 to make it dynamic (should be width of the shore line)
+		location.setX((int)(screenSizeX - 250) + (int)(Math.random() * 500));
 		location.setY(waveEnum.getMinY() + (int)(Math.random() * (((waveEnum.getMaxY()) - waveEnum.getMinY()) + 1)));
 	}
 
@@ -58,18 +59,18 @@ public class WaveModel {
 		public void actionPerformed(ActionEvent e) {
 
 			if(!isReceed()) {
-
-				location.setX((int)(location.getX()-Math.pow(movement, accelerator)));
-				movement = Math.pow(movement, accelerator);
+				
+				int velocity = (int)((screenSizeX*.3125)/(movement));
+				
+				location.setX((int)(location.getX()-velocity));
+				
+				movement += 1;
 			}
 			else {
-				
-				if(accelerator > 0) {
-					accelerator = -1*accelerator;
-				}
-				location.setX((int)(location.getX()+Math.pow(movement, accelerator)));
+				int velocity = (int)((screenSizeX*.3125/(movement)));
+				location.setX((int)(location.getX()+velocity));
 				//accelerator = -1*accelerator;
-				movement = Math.pow(movement, accelerator);
+				movement -= 1; 
 				
 			}
 			Object time = e.getSource();
@@ -149,15 +150,6 @@ public class WaveModel {
 	public void setReceed(boolean receed) {
 		this.receed = receed;
 	}
-
-	public double getAccelerator() {
-		return accelerator;
-	}
-
-	public void setAccelerator(double accelerator) {
-		this.accelerator = accelerator;
-	}
-
 
 
 	public Waves getClusterGroup() {

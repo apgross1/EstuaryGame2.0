@@ -188,7 +188,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.beachLocation.setX(this.getLocX()/214);
 		//94 at edge maybe 95
 		this.beachLocation.setY(this.getLocY()/94);
-		System.out.println(this.getBeachLocation().getX() + "," + this.getBeachLocation().getY());
+		
 		
 	}
 }
