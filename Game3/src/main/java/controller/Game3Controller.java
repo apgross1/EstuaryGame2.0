@@ -72,6 +72,7 @@ public class Game3Controller implements KeyListener {
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
 		view = new Game3View(this, gameFrame);
+		this.getAnimal().setFrames(view.getFrameMap());
 		this.getAnimal().setFrameWidth(view.getLayoutContainerComps().get(Frames.ANIMAL).getWidth());
 		this.getAnimal().setFrameHeight(view.getLayoutContainerComps().get(Frames.ANIMAL).getHeight());
 		System.out.println("Time panel width: " + this.view.getTimePanel().getWidth());

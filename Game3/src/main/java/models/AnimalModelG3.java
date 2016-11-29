@@ -11,7 +11,9 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+import javax.swing.JComponent;
 
+import Enums.Frames;
 import enums.Direction;
 import view.Game3View.Animal;
 
@@ -29,6 +31,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private int frameHeight;
 	private boolean boundHit;
 	private Pair beachLocation = new Pair(0,0);
+	private HashMap<Frames, JComponent> frames;
 
 
 	
@@ -49,8 +52,8 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 			this.setLocY(this.getLocY() + speedY);
 			
 			//can do it it model or Controller
-			//FindBeachLocation();
-			//System.out.println(this.getBeachLocation().getX() + "," + this.getBeachLocation().getY());
+			FindBeachLocation();
+			System.out.println("Animal is on tile: (" + this.getBeachLocation().getX() + "," + this.getBeachLocation().getY() + ")");
 		}
 		
 	}
@@ -73,7 +76,20 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		
 	}
 	
+	public Rectangle getBounds() {
+		return (new Rectangle(this.getLocX(),this.getLocY(),this.getWidth(),this.getHeight()));
+	}
 	
+	public void FindBeachLocation() {
+		int tileHeight = (frames.get(Frames.ANIMAL).getHeight())/5;
+		int tileWidth = (frames.get(Frames.ANIMAL).getWidth())/6;
+		//214 at edge maybe 217
+		this.beachLocation.setX(this.getLocX()/tileWidth);
+		//94 at edge maybe 95
+		this.beachLocation.setY(this.getLocY()/tileHeight);
+		
+		
+	}
 	
 	@Override
 	public void healthUp() {
@@ -105,14 +121,13 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		return health;
 	}
 	
+	
 	//Body may need to be deleted
 	@Override
 	public void move() {
 		
 	}
 
-		
-	
 
 	public boolean isDead() {
 		return isDead;
@@ -122,9 +137,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.isDead = isDead;
 	}
 
-	public Rectangle getBounds() {
-		return (new Rectangle(this.getLocX(),this.getLocY(),this.getWidth(),this.getHeight()));
-	}
+
 	public int getHeight() {
 		return height;
 	}
@@ -183,12 +196,11 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		return beachLocation;
 	}
 
-	public void FindBeachLocation() {
-		//214 at edge maybe 217
-		this.beachLocation.setX(this.getLocX()/214);
-		//94 at edge maybe 95
-		this.beachLocation.setY(this.getLocY()/94);
-		
-		
+	public HashMap<Frames, JComponent> getFrames() {
+		return frames;
+	}
+
+	public void setFrames(HashMap<Frames, JComponent> frames) {
+		this.frames = frames;
 	}
 }

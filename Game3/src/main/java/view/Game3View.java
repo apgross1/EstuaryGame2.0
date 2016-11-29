@@ -62,6 +62,7 @@ public class Game3View extends JPanel implements KeyListener{
 	private ArrayList<GridTile> powerUps;
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	private JLayeredPane layoutContainer = new JLayeredPane();
+	
 	public Game3View(Game3Controller ctl, JFrame gameF){
 		frameMap = new HashMap<Frames, JComponent>();
 		controller = ctl;
@@ -498,6 +499,19 @@ public class Game3View extends JPanel implements KeyListener{
 	public void setLayoutContainerComps(HashMap<Frames, JComponent> layoutContainerComps) {
 		this.frameMap = layoutContainerComps;
 	}
+
+
+
+	public HashMap<Frames, JComponent> getFrameMap() {
+		return frameMap;
+	}
+
+
+
+	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
+		this.frameMap = frameMap;
+	}
+
 	
 	/*
 	public JFrame getFrame() {
