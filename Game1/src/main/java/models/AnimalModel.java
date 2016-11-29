@@ -1,5 +1,7 @@
 package models;
 
+import java.awt.Dimension;
+
 import controller.Game1Controller;
 import enums.Direction;
 
@@ -11,13 +13,15 @@ public class AnimalModel extends AnimalModelAbstract {
 	private int screenWidth = 0;
 	private int speedX = 0;
 	private int speedY = 0;
+	private Dimension screenSize;
 	
-	public AnimalModel(Game1Controller ctl) {
+	public AnimalModel(Dimension s) {
 		//Set screen resolution for movement
-		height = 100;
-		width = 100;
-		screenHeight = ctl.getDim().height;
-		screenWidth = ctl.getDim().width;
+		screenSize = s;
+		height = 100;//animal pic
+		width = 100;//animal pic
+		screenHeight = s.height;
+		screenWidth = s.width;
 		//Set initial location and direction
 		setLocX(500);
 		setLocY(500);

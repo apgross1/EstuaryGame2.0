@@ -18,7 +18,7 @@ public class main {
 		
 		g1.startGame();
 		//g2.startGame();
-		g3.runGame();
+		//g3.runGame();
 
 	}
 
