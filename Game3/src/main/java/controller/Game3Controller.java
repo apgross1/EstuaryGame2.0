@@ -116,7 +116,7 @@ public class Game3Controller implements KeyListener {
 			}
 			
 			//Controller for now but could be implemented in Model in tick function
-			animal.FindBeachLocation();
+			animal.FindPotentialMove();
 			
 			if(triggerSpawn == die.nextInt(700000)) {
 				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
@@ -306,18 +306,18 @@ public class Game3Controller implements KeyListener {
 	}
 	
 	public void collisionTile() {
-		/*Collection<GridBlock> sandPatches = this.getBeach().getBeachGrid().values();
-		for(GridBlock gb : sandPatches) {
-			//System.out.println("Location gb: " + "("+gb.getLocation().getX() + ","+gb.getLocation().getY() +")");
-			//System.out.println("Location animal: " + "(" + animal.getBounds().getX() + "," + animal.getBounds().getY() + ")");
-			if(this.getAnimal().getBounds().intersects(gb.getBounds())) {
-				if(gb.getWater().isActive()) {
-					System.out.println("It's a hit!");
-					this.getAnimal().setSpeedX(0);
-					this.getAnimal().setSpeedY(0);
-				}
-			}
-		}*/
+		int beachLocX = this.getAnimal().getPotentialMove().getX();
+		int beachLocY = this.getAnimal().getPotentialMove().getY();
+		
+		
+		
+		if(this.getBeach().getPositionGrid()[beachLocX][beachLocY] == 2) {
+			System.out.println("Value of tile animal wishes to enter: " + this.getBeach().getPositionGrid()[beachLocX][beachLocY]);
+			this.getAnimal().setWaterHit(true);
+		}
+		else {
+			this.getAnimal().setWaterHit(false);
+		}
 	}
 	
 	public void loadImages() {

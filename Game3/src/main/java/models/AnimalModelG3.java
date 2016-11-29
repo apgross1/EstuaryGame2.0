@@ -30,7 +30,8 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private int frameWidth;
 	private int frameHeight;
 	private boolean boundHit;
-	private Pair beachLocation = new Pair(0,0);
+	private boolean waterHit = false;
+	private Pair potentialMove = new Pair(0,0);
 	private HashMap<Frames, JComponent> frames;
 
 
@@ -46,14 +47,15 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	
 	public void tick(){
 		if (((getLocY() + speedY >= 0) & (this.getBounds().getMaxX() + speedX <= this.getFrameWidth())) && 
-		   ((this.getBounds().getMaxY() + speedY <= this.getFrameHeight()) & getLocX()+ speedX >= 0) ) {
+		   ((this.getBounds().getMaxY() + speedY <= this.getFrameHeight()) & getLocX()+ speedX >= 0)  &&
+		   (!this.isWaterHit())){
 				
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
 			
 			//can do it it model or Controller
-			FindBeachLocation();
-			System.out.println("Animal is on tile: (" + this.getBeachLocation().getX() + "," + this.getBeachLocation().getY() + ")");
+			FindPotentialMove();
+			//System.out.println("Animal is on tile: (" + this.getPotentialMove().getX() + "," + this.getPotentialMove().getY() + ")");
 		}
 		
 	}
@@ -80,13 +82,13 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		return (new Rectangle(this.getLocX(),this.getLocY(),this.getWidth(),this.getHeight()));
 	}
 	
-	public void FindBeachLocation() {
+	
+	public void FindPotentialMove() {
 		int tileHeight = (frames.get(Frames.ANIMAL).getHeight())/5;
 		int tileWidth = (frames.get(Frames.ANIMAL).getWidth())/6;
-		//214 at edge maybe 217
-		this.beachLocation.setX(this.getLocX()/tileWidth);
-		//94 at edge maybe 95
-		this.beachLocation.setY(this.getLocY()/tileHeight);
+		
+		this.potentialMove.setX((this.getLocX()+this.getSpeedX())/tileWidth);
+		this.potentialMove.setY((this.getLocY()+this.getSpeedY())/tileHeight);
 		
 		
 	}
@@ -192,8 +194,8 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.frameHeight = frameHeight;
 	}
 
-	public Pair getBeachLocation() {
-		return beachLocation;
+	public Pair getPotentialMove() {
+		return potentialMove;
 	}
 
 	public HashMap<Frames, JComponent> getFrames() {
@@ -202,5 +204,13 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 
 	public void setFrames(HashMap<Frames, JComponent> frames) {
 		this.frames = frames;
+	}
+
+	public boolean isWaterHit() {
+		return waterHit;
+	}
+
+	public void setWaterHit(boolean waterHit) {
+		this.waterHit = waterHit;
 	}
 }

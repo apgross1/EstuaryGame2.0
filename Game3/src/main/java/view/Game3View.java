@@ -315,6 +315,7 @@ public class Game3View extends JPanel implements KeyListener{
 	public class Animal extends JComponent {
 		@Override
 		public void paint(Graphics g) {
+			
 			g.drawImage(controller.getAnimal().getGraphics().get("MOVE").get(0), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
 		}
 	}
