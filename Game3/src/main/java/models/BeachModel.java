@@ -38,8 +38,10 @@ public class BeachModel {
 		ArrayList<Pair> pairList = this.generatePPUL();
 		Collections.sort(pairList, new PairComparator());
 		Iterator<Pair> it = pairList.iterator();
+	
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
+			System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
 			GridBlock g = new GridBlock(tempPair, this);
 			g.setLocation(tempPair);
 			beachGrid.put(tempPair, g);
@@ -57,27 +59,47 @@ public class BeachModel {
 		
 		int i = 0;
 		int j = 0;
-		while (i < 7) {
+		while (i < 5) {
 			List<Pair> tempLane = new ArrayList<Pair>();
 			while((j%8) < 7) {
-				
 				tempLane.add(new Pair((j%8),i));
 				j++;
 			}
 			switch(i) {
 				case(0):
+					System.out.println("Cluster 1");
+					for(Pair p : tempLane) {
+						
+						System.out.println("("+p.getX()+","+p.getY()+")");
+					}
 					gridLayers.put(WaveClusters.CLUSTER_ONE, tempLane);
 					break;
 				case(1):
+					System.out.println("Cluster 2");
+					for(Pair p : tempLane) {
+						System.out.println("("+p.getX()+","+p.getY()+")");
+					}
 					gridLayers.put(WaveClusters.CLUSTER_TWO, tempLane);
 					break;
 				case(2):
+					System.out.println("Cluster 3");
+					for(Pair p : tempLane) {
+						System.out.println("("+p.getX()+","+p.getY()+")");
+					}
 					gridLayers.put(WaveClusters.CLUSTER_THREE, tempLane);
 					break;
 				case(3):
+					System.out.println("Cluster 4");
+					for(Pair p : tempLane) {
+						System.out.println("("+p.getX()+","+p.getY()+")");
+					}
 					gridLayers.put(WaveClusters.CLUSTER_FOUR, tempLane);
 					break;
 				case(4):
+					System.out.println("Cluster 5");
+					for(Pair p : tempLane) {
+						System.out.println("("+p.getX()+","+p.getY()+")");
+					}
 					gridLayers.put(WaveClusters.CLUSTER_FIVE, tempLane);
 					break;
 			}
@@ -119,7 +141,7 @@ public class BeachModel {
 			tempGab.setLocation(this.findPairInGrid(pair));
 			tempGab.setIsActive(true);
 			beachGrid.get(this.findPairInGrid(pair)).setGabPU(tempGab);
-			positionGrid[pair.getX()][pair.getY()] = Walls.GABION_GAME3.getValue();
+			positionGrid[pair.getY()][pair.getX()] = Walls.GABION_GAME3.getValue();
 		}
 	}
 	
@@ -138,7 +160,7 @@ public class BeachModel {
 			tempConcr.setActive(true);
 			beachGrid.get(this.findPairInGrid(pair)).setConcrPU(tempConcr);
 			
-			positionGrid[pair.getX()][pair.getY()] = Walls.CONCRETE_GAME3.getValue();
+			positionGrid[pair.getY()][pair.getX()] = Walls.CONCRETE_GAME3.getValue();
 		}
 	}
 	
@@ -147,7 +169,7 @@ public class BeachModel {
 		beachGrid.get(this.findPairInGrid(pair)).setVacant(true);
 		setConcPair(new Pair(0,0));
 		
-		positionGrid[pair.getX()][pair.getY()] = 0;
+		positionGrid[pair.getY()][pair.getX()] = 0;
 	}
 	
 	public void removeGabPU(Pair pair) {
@@ -155,13 +177,13 @@ public class BeachModel {
 		beachGrid.get(this.findPairInGrid(pair)).setVacant(true);
 		setGabPair(new Pair(0,0));
 		
-		positionGrid[pair.getX()][pair.getY()] = 0;
+		positionGrid[pair.getY()][pair.getX()] = 0;
 	}
 	
 	public void removeSquare(Pair waterLoc) {
 		beachGrid.get(this.findPairInGrid(waterLoc)).setWater(new WaterModel(waterLoc), waterLoc);
 		
-		positionGrid[waterLoc.getX()][waterLoc.getY()] = Waves.WAVE_GAME3.getWaveID();
+		positionGrid[waterLoc.getY()][waterLoc.getX()] = Waves.WAVE_GAME3.getWaveID();
 	}
 	
 	

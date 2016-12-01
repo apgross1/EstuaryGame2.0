@@ -31,7 +31,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private int frameHeight;
 	private boolean boundHit;
 	private boolean waterHit = false;
-	private Pair potentialMove = new Pair(0,0);
+	private Pair beachLocation = new Pair(0,0);
 	private HashMap<Frames, JComponent> frames;
 
 
@@ -47,17 +47,12 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	
 	public void tick(){
 		if (((getLocY() + speedY >= 0) & (this.getBounds().getMaxX() + speedX <= this.getFrameWidth())) && 
-		   ((this.getBounds().getMaxY() + speedY <= this.getFrameHeight()) & getLocX()+ speedX >= 0)  &&
-		   (!this.isWaterHit())){
+		   ((this.getBounds().getMaxY() + speedY <= this.getFrameHeight()) & getLocX()+ speedX >= 0)){
+			//This condition isn't working:   && (!this.isWaterHit())
 				
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
-			
-			//can do it it model or Controller
-			FindPotentialMove();
-			//System.out.println("Animal is on tile: (" + this.getPotentialMove().getX() + "," + this.getPotentialMove().getY() + ")");
 		}
-		
 	}
 	
 	public void addPics(){
@@ -83,12 +78,12 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	}
 	
 	
-	public void FindPotentialMove() {
+	public void findBeachLocation() {
 		int tileHeight = (frames.get(Frames.ANIMAL).getHeight())/5;
 		int tileWidth = (frames.get(Frames.ANIMAL).getWidth())/6;
 		
-		this.potentialMove.setX((this.getLocX()+this.getSpeedX())/tileWidth);
-		this.potentialMove.setY((this.getLocY()+this.getSpeedY())/tileHeight);
+		this.beachLocation.setX((this.getLocX())/tileWidth);
+		this.beachLocation.setY((this.getLocY())/tileHeight);
 		
 		
 	}
@@ -195,7 +190,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	}
 
 	public Pair getPotentialMove() {
-		return potentialMove;
+		return beachLocation;
 	}
 
 	public HashMap<Frames, JComponent> getFrames() {

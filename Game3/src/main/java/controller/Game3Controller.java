@@ -65,12 +65,9 @@ public class Game3Controller implements KeyListener {
 	}
 	
 	public void runGame()  {
-		
-		
-		
-		
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
+		animal.addPics();
 		view = new Game3View(this, gameFrame);
 		this.getAnimal().setFrames(view.getFrameMap());
 		this.getAnimal().setFrameWidth(view.getLayoutContainerComps().get(Frames.ANIMAL).getWidth());
@@ -83,7 +80,9 @@ public class Game3Controller implements KeyListener {
 	
 		setSun(sun);
 		setHurricane(hurricane);
+		
 		this.loadImages();
+		
 		view.addSun();
 		view.addHurricane();
 		this.startTime();
@@ -116,7 +115,7 @@ public class Game3Controller implements KeyListener {
 			}
 			
 			//Controller for now but could be implemented in Model in tick function
-			animal.FindPotentialMove();
+			animal.findBeachLocation();
 			
 			if(triggerSpawn == die.nextInt(700000)) {
 				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
@@ -132,9 +131,9 @@ public class Game3Controller implements KeyListener {
 			
 			this.collisionTile();
 			this.view.repaintAll();
+			this.view.updateLoc();	
 			
 		}
-	
 	}
 
 	
@@ -308,20 +307,17 @@ public class Game3Controller implements KeyListener {
 	public void collisionTile() {
 		int beachLocX = this.getAnimal().getPotentialMove().getX();
 		int beachLocY = this.getAnimal().getPotentialMove().getY();
-		
-		
-		
-		if(this.getBeach().getPositionGrid()[beachLocX][beachLocY] == 2) {
-			System.out.println("Value of tile animal wishes to enter: " + this.getBeach().getPositionGrid()[beachLocX][beachLocY]);
-			this.getAnimal().setWaterHit(true);
-		}
-		else {
-			this.getAnimal().setWaterHit(false);
+
+		if(this.getBeach().getPositionGrid()[beachLocY][beachLocX] == 2) {
+			System.out.println("Value where animal hit water tile: " + this.getBeach().getPositionGrid()[beachLocY][beachLocX]);
+			System.out.println("Game over! Tidal pool was hit");
+			this.setGameActive(false);
 		}
 	}
 	
+	
+	
 	public void loadImages() {
-		animal.addPics();
 		sun.addPics();
 		hurricane.addPics();
 		

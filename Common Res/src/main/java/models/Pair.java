@@ -5,8 +5,8 @@ public class Pair {
 	private int b;
 	
 	public Pair(int num1, int num2) {
-		setY(num1);
-		setX(num2);
+		setX(num1);
+		setY(num2);
 	}
 
 	public Pair() {

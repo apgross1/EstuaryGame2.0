@@ -62,6 +62,7 @@ public class Game3View extends JPanel implements KeyListener{
 	private ArrayList<GridTile> powerUps;
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	private JLayeredPane layoutContainer = new JLayeredPane();
+	public JLabel animalPos;
 	
 	public Game3View(Game3Controller ctl, JFrame gameF){
 		frameMap = new HashMap<Frames, JComponent>();
@@ -111,12 +112,16 @@ public class Game3View extends JPanel implements KeyListener{
 			JPanel beachOverlay = new JPanel();
 			beachOverlay.setLayout(new OverlayLayout(beachOverlay));
 			
+			JLabel location = new JLabel();
+			//location.setText("("+currBlock.getX()+","+currBlock.getY()+")");
 			SandWater gridBlock = new SandWater(currBlock);
+			gridBlock.add(location);
 			GridTile powerUp = new GridTile(currBlock);
 			powerUps.add(powerUp);
 		    powerUp.setBounds((int)controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(currBlock)).getBounds().getX(), (int)controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(currBlock)).getBounds().getY(), 835, 605);
 			layoutContainer.add(powerUp, new Integer(2),-1);
 		    beachOverlay.add(gridBlock);
+		    //beachOverlay.add(location);
 		    beachOverlay.setBorder(BorderFactory.createLineBorder(Color.black));
 		    beachGrid.add(beachOverlay);
 		    
@@ -161,10 +166,22 @@ public class Game3View extends JPanel implements KeyListener{
     	frameMap.put(Frames.SHORE, water);
     	
    
-    	
+    	animalPos = new JLabel();
+		animalPos.setText("Animal is on tile: (" + this.getController().getAnimal().getPotentialMove().getX() + "," + this.controller.getAnimal().getPotentialMove().getY() + ")");
+		animalPos.setBounds(frameMap.get(Frames.TIMER).getWidth()/2, frameMap.get(Frames.TIMER).getHeight()/2, 200, 100);
+
+		
+		timePanel.add(animalPos);
+		animalPos.setVisible(true);
+		timePanel.revalidate();
+		frame.revalidate();
+	
 	}
  
 	
+	public void updateLoc() {
+		animalPos.setText("Animal is on tile: (" + this.getController().getAnimal().getPotentialMove().getX() + "," + this.controller.getAnimal().getPotentialMove().getY() + ")");
+	}
 	
 	public void addSun() {
 		Sun sun = new Sun(controller.getSun());
@@ -235,7 +252,7 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			if(!this.waveGone) {
 				if(wave.getBounds().intersects(controller.getAnimal().getBounds())) {
-					controller.setGameActive(false);
+					//controller.setGameActive(false);
 				}
 				for(GridTile gr : powerUps) {
 					ConcretePUModel conc = gr.getGridBlock().getConcrPU();
@@ -259,6 +276,12 @@ public class Game3View extends JPanel implements KeyListener{
 				
 				if ((wave.getLocation().getX() > frameMap.get(Frames.ANIMAL).getWidth()) && wave.isReceed() && wave.isLastWave()) {
 					List<Pair> pairs = controller.getBeach().getGridLayers().get(wave.getClusterGroup());
+					System.out.println("Printing out cluster group: "); 
+					Iterator it = pairs.iterator();
+					while(it.hasNext()) {
+						Pair tempPair = (Pair)it.next();
+						System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
+					}
 					for(int i = pairs.size()-1; i >= 0; i--) {
 						if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))) != null) {
 							if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).isVacant()) {
@@ -315,7 +338,6 @@ public class Game3View extends JPanel implements KeyListener{
 	public class Animal extends JComponent {
 		@Override
 		public void paint(Graphics g) {
-			
 			g.drawImage(controller.getAnimal().getGraphics().get("MOVE").get(0), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
 		}
 	}
@@ -335,16 +357,19 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 		@Override
 		public void paint(Graphics g) {
-			String coords = "("+grid.getViewLocation().getX()+","+grid.getViewLocation().getY()+")";
+			
+			
 			//g.drawString(coords, this.getWidth()/2, this.getHeight()/2);
 			if(grid.getWater().isActive() == false) {
 				g.setColor(Color.YELLOW);
 				g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}
 			else{
+				System.out.println("View's idea of where tidal pool is: (" + grid.getLocation().getX()+","+grid.getLocation().getY()+")");
 				g.setColor(Color.BLUE);
 				g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}
+			
 		}
 	}
 	
@@ -386,13 +411,12 @@ public class Game3View extends JPanel implements KeyListener{
 	public void generateWaveCluster() {
 
 		int randCluster = WaveClusters.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((WaveClusters.CLUSTER_FIVE.getWaveID() - WaveClusters.CLUSTER_ONE.getWaveID()) + 1));
-		System.out.println("In here");
 		for(int i = 0; i < 250; i++) {
-			WaveModel wave = new WaveModel(randCluster, frameMap);
+			WaveModel wave = new WaveModel(4, frameMap);
 			if(i == 249) {
 				wave.setLastWave(true);
 			}
-			addWave(wave, randCluster);
+			addWave(wave, 4);
 		}
 	}
 	

@@ -67,8 +67,8 @@ public class GridBlock {
 		//this.location = loc;
 		this.setVacant(false);
 		
-		beach.getPositionGrid()[loc.getX()][loc.getY()] = 2;
-		System.out.println("Value on grid at (" + loc.getX() + "," + loc.getY() + "): " + beach.getPositionGrid()[loc.getX()][loc.getY()]);
+		beach.getPositionGrid()[loc.getY()][loc.getX()] = 2;
+		System.out.println("Value on grid at (" + loc.getX() + "," + loc.getY() + "): " + beach.getPositionGrid()[loc.getY()][loc.getX()]);
 	}
 	
 	public Pair getLocation() {
