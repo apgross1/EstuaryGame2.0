@@ -398,7 +398,7 @@ public class Game3View extends JPanel implements KeyListener{
 				//g.setColor(Color.RED);
 				//g.fillRect((int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
 				if(gridBlock.getGabPU().isPickedUp()){
-					System.out.println("Here");
+					
 					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.WALL).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);
 				}
 				else{
@@ -412,11 +412,11 @@ public class Game3View extends JPanel implements KeyListener{
 
 		int randCluster = WaveClusters.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((WaveClusters.CLUSTER_FIVE.getWaveID() - WaveClusters.CLUSTER_ONE.getWaveID()) + 1));
 		for(int i = 0; i < 250; i++) {
-			WaveModel wave = new WaveModel(4, frameMap);
+			WaveModel wave = new WaveModel(randCluster, frameMap);
 			if(i == 249) {
 				wave.setLastWave(true);
 			}
-			addWave(wave, 4);
+			addWave(wave, randCluster);
 		}
 	}
 	

@@ -310,7 +310,7 @@ public class Game3Controller implements KeyListener {
 
 		if(this.getBeach().getPositionGrid()[beachLocY][beachLocX] == 2) {
 			System.out.println("Value where animal hit water tile: " + this.getBeach().getPositionGrid()[beachLocY][beachLocX]);
-			System.out.println("Game over! Tidal pool was hit");
+			System.out.println("Game over! Tidal pool was hit at: " + beachLocX +","+beachLocY);
 			this.setGameActive(false);
 		}
 	}

@@ -150,7 +150,6 @@ public class BeachModel {
 			return;
 		}
 		else{
-			System.out.println("Spawning concrete");
 			Random randLoc = new Random();
 			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
 			setConcPair(pair);
@@ -188,10 +187,12 @@ public class BeachModel {
 	
 	
 	public ArrayList<Pair> generatePPUL() {
+		int counter = 0;
 		ArrayList<Pair> ppulPair = new ArrayList<Pair>();
 		for(int i = 0; i < positionGrid.length; i++) {
 			for(int j = 0; j < positionGrid[i].length; j++) {
 				if (positionGrid[i][j] == 0) {
+					counter++;
 					ppulPair.add(new Pair(j,i));
 				}
 				else {
@@ -199,6 +200,7 @@ public class BeachModel {
 				}
 			}
 		}
+		System.out.println("Possible locations generated at initialization: " + counter);
 		return ppulPair;
 	}
 	
