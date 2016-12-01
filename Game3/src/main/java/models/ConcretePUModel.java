@@ -10,7 +10,9 @@ import java.util.HashMap;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.JComponent;
 
+import Enums.Frames;
 import models.GabionPUModel.GabPUState;
 
 public class ConcretePUModel extends WallModelAbstract {
@@ -21,6 +23,7 @@ public class ConcretePUModel extends WallModelAbstract {
 	private boolean isPickedUp;
 	private ConcPUState wallState;
 	private HashMap<ConcPUState,ArrayList<BufferedImage>> graphics;
+	private HashMap<Frames, JComponent> frameMap;
 	private BufferedImage powerUp;
 	private BufferedImage wall;
 	private Pair location;
@@ -40,7 +43,6 @@ public class ConcretePUModel extends WallModelAbstract {
 		this.location = new Pair(0,0);
 		this.viewLocation = new Pair(0,0);
 		graphics = new HashMap<ConcPUState,ArrayList<BufferedImage>>();
-		
 	}
 	public ConcretePUModel(Pair loc) {
 		location = loc;
@@ -167,11 +169,18 @@ public class ConcretePUModel extends WallModelAbstract {
 		return viewLocation;
 	}
 	public void setViewLocation(Pair viewLocation) {
-		Random rand = new Random();
-		this.viewLocation.setX((int)((this.location.getX()))*rand.nextInt(100));
-		this.viewLocation.setY((int)(this.location.getY())*rand.nextInt(70));
+		int tileWidth = (int)(frameMap.get(Frames.ANIMAL).getWidth()/7);
+		int tileHeight = (int)(frameMap.get(Frames.ANIMAL).getHeight()/7);
+		this.viewLocation.setX((int)((this.location.getX()))*tileWidth);
+		this.viewLocation.setY((int)(this.location.getY())*tileHeight);
 		System.out.println("Concrete at: (" + this.getViewLocation().getX() + "," + this.getViewLocation().getY() + ")");
 		
 		
+	}
+	public HashMap<Frames, JComponent> getFrameMap() {
+		return frameMap;
+	}
+	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
+		this.frameMap = frameMap;
 	}
 }

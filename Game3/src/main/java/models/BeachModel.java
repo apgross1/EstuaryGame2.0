@@ -7,9 +7,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
+import javax.swing.JComponent;
 import javax.swing.Timer;
 import enums.Walls;
 import enums.Waves;
+import Enums.Frames;
 import Enums.WaveClusters;
 
 public class BeachModel {
@@ -23,6 +26,7 @@ public class BeachModel {
 	private Pair gabPair = new Pair(0,0);
 	private Pair concPair = new Pair(0,0);
 	private Timer puTimer;
+	private HashMap<Frames, JComponent> frameMap;
 
 	
 	public BeachModel() {
@@ -137,6 +141,7 @@ public class BeachModel {
 			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
 			setGabPair(this.findPairInGrid(pair));
 			GabionPUModel tempGab = new GabionPUModel();
+			tempGab.setFrameMap(frameMap);
 			tempGab.addPics();
 			tempGab.setLocation(this.findPairInGrid(pair));
 			tempGab.setIsActive(true);
@@ -154,6 +159,7 @@ public class BeachModel {
 			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
 			setConcPair(pair);
 			ConcretePUModel tempConcr = new ConcretePUModel();
+			tempConcr.setFrameMap(frameMap);
 			tempConcr.addPics();
 			tempConcr.setLocation(this.findPairInGrid(pair));
 			tempConcr.setActive(true);
@@ -288,6 +294,14 @@ public class BeachModel {
 
 	public void setConcPair(Pair concPair) {
 		this.concPair = concPair;
+	}
+
+	public HashMap<Frames, JComponent> getFrameMap() {
+		return frameMap;
+	}
+
+	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
+		this.frameMap = frameMap;
 	}
 
 }

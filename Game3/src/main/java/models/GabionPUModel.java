@@ -11,7 +11,9 @@ import java.util.HashMap;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.JComponent;
 
+import Enums.Frames;
 import models.ConcretePUModel.ConcPUState;
 
 public class GabionPUModel extends WallModelAbstract {
@@ -21,6 +23,7 @@ public class GabionPUModel extends WallModelAbstract {
 	private Pair location;
 	private Pair viewLocation;
 	private HashMap<GabPUState, ArrayList<BufferedImage>> graphics;
+	private HashMap<Frames, JComponent> frameMap;
 	private BufferedImage powerUp;
 	private BufferedImage wall;
 	private GabPUState wallState;
@@ -182,10 +185,19 @@ public class GabionPUModel extends WallModelAbstract {
 	}
 
 	public void setViewLocation(Pair viewLocation) {
-		Random rand = new Random();
-		this.viewLocation.setX((int)((this.location.getX()*rand.nextInt(100))));
-		this.viewLocation.setY((int)(this.location.getY()*rand.nextInt(70)));
+		int tileWidth = (int)(frameMap.get(Frames.ANIMAL).getWidth()/7);
+		int tileHeight = (int)(frameMap.get(Frames.ANIMAL).getHeight()/7);
+		this.viewLocation.setX((int)((this.location.getX()))*tileWidth);
+		this.viewLocation.setY((int)(this.location.getY())*tileHeight);
 		System.out.println("Gabion at: (" + this.getViewLocation().getX() + "," + this.getViewLocation().getY() + ")");
+	}
+
+	public HashMap<Frames, JComponent> getFrameMap() {
+		return frameMap;
+	}
+
+	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
+		this.frameMap = frameMap;
 	}
 	
 	

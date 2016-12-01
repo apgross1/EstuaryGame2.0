@@ -69,6 +69,7 @@ public class Game3Controller implements KeyListener {
 		gameFrame.revalidate();
 		animal.addPics();
 		view = new Game3View(this, gameFrame);
+		this.getBeach().setFrameMap(view.getFrameMap());
 		this.getAnimal().setFrames(view.getFrameMap());
 		this.getAnimal().setFrameWidth(view.getLayoutContainerComps().get(Frames.ANIMAL).getWidth());
 		this.getAnimal().setFrameHeight(view.getLayoutContainerComps().get(Frames.ANIMAL).getHeight());
