@@ -19,6 +19,7 @@ import view.Game3View.Animal;
 
 public class AnimalModelG3 extends AnimalModelAbstract{
 	private HashMap<String,ArrayList<BufferedImage>> graphics;
+	private int graphicOnDeck;
 	private int health;
 
 	private int emptyHanded;
@@ -49,7 +50,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		if (((getLocY() + speedY >= 0) & (this.getBounds().getMaxX() + speedX <= this.getFrameWidth())) && 
 		   ((this.getBounds().getMaxY() + speedY <= this.getFrameHeight()) & getLocX()+ speedX >= 0)
 			&& (!this.isWallHit())) {
-				
+			graphicOnDeck = (graphicOnDeck+1) % graphics.get("MOVE").size();
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
 		}
@@ -66,6 +67,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		BufferedImage bufferedImage3 = ImageIO.read(new File("./Images/Game3/bluecrab_2.png"));
 		moveAnimations.add(bufferedImage3);
 		graphics.put("MOVE", moveAnimations);
+		graphicOnDeck = 0;
 		}
 		catch(IOException e) {
     		e.printStackTrace();
@@ -73,6 +75,14 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		
 	}
 	
+	public int getGraphicOnDeck() {
+		return graphicOnDeck;
+	}
+
+	public void setGraphicOnDeck(int graphicOnDeck) {
+		this.graphicOnDeck = graphicOnDeck;
+	}
+
 	public Rectangle getBounds() {
 		return (new Rectangle(this.getLocX(),this.getLocY(),this.getWidth(),this.getHeight()));
 	}
