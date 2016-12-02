@@ -79,12 +79,12 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	
 	
 	public void findBeachLocation() {
-		int tileHeight = (frames.get(Frames.ANIMAL).getHeight())/7;
-		int tileWidth = (frames.get(Frames.ANIMAL).getWidth())/7;
+		int tileHeight = ((frames.get(Frames.SHORE).getHeight()))/7;
+		int tileWidth = ((frames.get(Frames.ANIMAL).getWidth()+frames.get(Frames.SHORE).getWidth()))/7;
 		
 		
 		this.beachLocation.setX((int)(Math.floor(this.getLocX())/tileWidth));
-		this.beachLocation.setY((int)(Math.floor(this.getLocY())/tileHeight));
+		this.beachLocation.setY((int)(Math.ceil(this.getLocY())/tileHeight));
 		
 		
 	}

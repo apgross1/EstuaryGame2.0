@@ -276,12 +276,12 @@ public class Game3View extends JPanel implements KeyListener{
 				
 				if ((wave.getLocation().getX() > frameMap.get(Frames.ANIMAL).getWidth()) && wave.isReceed() && wave.isLastWave()) {
 					List<Pair> pairs = controller.getBeach().getGridLayers().get(wave.getClusterGroup());
-					System.out.println("Printing out cluster group: "); 
+					/*System.out.println("Printing out cluster group: "); 
 					Iterator it = pairs.iterator();
 					while(it.hasNext()) {
 						Pair tempPair = (Pair)it.next();
 						System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
-					}
+					}*/
 					for(int i = pairs.size()-1; i >= 0; i--) {
 						if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))) != null) {
 							if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).isVacant()) {

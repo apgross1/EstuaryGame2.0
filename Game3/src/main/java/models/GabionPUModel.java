@@ -185,8 +185,8 @@ public class GabionPUModel extends WallModelAbstract {
 	}
 
 	public void setViewLocation(Pair loc) {
-		int tileWidth = (int)(frameMap.get(Frames.ANIMAL).getWidth()/7);
-		int tileHeight = (int)(frameMap.get(Frames.ANIMAL).getHeight()/7);
+		int tileWidth = (int)((frameMap.get(Frames.ANIMAL).getWidth()+frameMap.get(Frames.SHORE).getWidth())/7);
+		int tileHeight = (int)((frameMap.get(Frames.ANIMAL).getWidth()+frameMap.get(Frames.SHORE).getWidth())/7);
 		this.viewLocation.setX((int)((loc.getX()))*tileWidth);
 		this.viewLocation.setY((int)(loc.getY())*tileHeight);
 	}

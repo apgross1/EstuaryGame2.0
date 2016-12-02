@@ -45,7 +45,7 @@ public class BeachModel {
 	
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
+			//System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
 			GridBlock g = new GridBlock(tempPair, this);
 			g.setLocation(tempPair);
 			beachGrid.put(tempPair, g);
