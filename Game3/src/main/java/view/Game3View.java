@@ -62,11 +62,23 @@ public class Game3View extends JPanel implements KeyListener{
 	private ArrayList<GridTile> powerUps;
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	private JLayeredPane layoutContainer = new JLayeredPane();
+	private BufferedImage shoreGraphic;
 	public JLabel animalPos;
+
 	
 	public Game3View(Game3Controller ctl, JFrame gameF){
+		//Adding shore graphic (only one which is not created in a model)
+		try {
+			shoreGraphic = ImageIO.read(new File("./Images/Game3/Creek.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 		frameMap = new HashMap<Frames, JComponent>();
 		controller = ctl;
+		
+		
 		
 		frame = gameF;
 		frame.dispose();
@@ -285,7 +297,12 @@ public class Game3View extends JPanel implements KeyListener{
 					for(int i = pairs.size()-1; i >= 0; i--) {
 						if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))) != null) {
 							if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).isVacant()) {
-								controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).setWater(new WaterModel(), controller.getBeach().findPairInGrid(pairs.get(i)));
+								if(i != pairs.size()-1) {
+									controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i+1))).getWater().setGraphicOnDeck(1);
+								}
+								WaterModel newWatMod = new WaterModel();
+								newWatMod.addPics();
+								controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).setWater(newWatMod, controller.getBeach().findPairInGrid(pairs.get(i)));
 					
 								layoutContainer.remove(waveComponentMap.get(this.hashCode()));
 								waveComponentMap.remove(this.hashCode());
@@ -338,15 +355,18 @@ public class Game3View extends JPanel implements KeyListener{
 	public class Animal extends JComponent {
 		@Override
 		public void paint(Graphics g) {
-			g.drawImage(controller.getAnimal().getGraphics().get("MOVE").get(0), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
+			g.drawImage(controller.getAnimal().getGraphics().get("MOVE").get(controller.getAnimal().getGraphicOnDeck()), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
 		}
 	}
 	
 	public class ShoreLine extends JComponent {
 		@Override
 		public void paint(Graphics g) {
-			g.setColor(Color.BLUE);
-			g.fillRect(0, 0, frameMap.get(Frames.SHORE).getWidth(), frameMap.get(Frames.SHORE).getHeight());
+			//g.setColor(Color.BLUE);
+			
+			g.drawImage(shoreGraphic, 0, 0, this);
+			frame.revalidate();
+			//g.fillRect(0, 0, frameMap.get(Frames.SHORE).getWidth(), frameMap.get(Frames.SHORE).getHeight());
 		}
 	}
 	
@@ -361,13 +381,16 @@ public class Game3View extends JPanel implements KeyListener{
 			
 			//g.drawString(coords, this.getWidth()/2, this.getHeight()/2);
 			if(grid.getWater().isActive() == false) {
-				g.setColor(Color.YELLOW);
-				g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
+				g.drawImage(grid.getSandGraphic(),0, 0, this);
+				//g.setColor(Color.YELLOW);
+				//g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}
 			else{
 				//System.out.println("View's idea of where tidal pool is: (" + grid.getLocation().getX()+","+grid.getLocation().getY()+")");
-				g.setColor(Color.BLUE);
-				g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
+				g.drawImage(grid.getWater().getWaterGraphics().get(grid.getWater().getGraphicOnDeck()),0, 0, this);
+				
+				//g.setColor(Color.BLUE);
+				//g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}
 			
 		}
@@ -387,7 +410,16 @@ public class Game3View extends JPanel implements KeyListener{
 				//g.setColor(Color.RED);
 				//g.fillRect((int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
 				if(gridBlock.getConcrPU().isPickedUp()){
-				g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.WALL).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+					g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.WALL).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+					int potentialX = controller.getAnimal().getLocX() + controller.getAnimal().getSpeedX();
+					int potentialY = controller.getAnimal().getLocY() + controller.getAnimal().getSpeedY();
+					Rectangle potentialAnimBounds = new Rectangle(potentialX, potentialY, controller.getAnimal().getWidth(), controller.getAnimal().getHeight());
+					if(potentialAnimBounds.intersects(gridBlock.getConcrPU().getBounds())) {
+						controller.getAnimal().setWallHit(true);
+					}
+					else {
+						controller.getAnimal().setWallHit(false);
+					}
 				}
 				else{
 					g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.POWER_UP).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
@@ -398,8 +430,16 @@ public class Game3View extends JPanel implements KeyListener{
 				//g.setColor(Color.RED);
 				//g.fillRect((int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
 				if(gridBlock.getGabPU().isPickedUp()){
-					
 					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.WALL).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);
+					int potentialX = controller.getAnimal().getLocX() + controller.getAnimal().getSpeedX();
+					int potentialY = controller.getAnimal().getLocY() + controller.getAnimal().getSpeedY();
+					Rectangle potentialAnimBounds = new Rectangle(potentialX, potentialY, controller.getAnimal().getWidth(), controller.getAnimal().getHeight());
+					if(potentialAnimBounds.intersects(gridBlock.getGabPU().getBounds())) {
+						controller.getAnimal().setWallHit(true);
+					}
+					else {
+						controller.getAnimal().setWallHit(false);
+					}
 				}
 				else{
 					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.POWER_UP).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);

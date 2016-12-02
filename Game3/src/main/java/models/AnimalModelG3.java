@@ -19,6 +19,7 @@ import view.Game3View.Animal;
 
 public class AnimalModelG3 extends AnimalModelAbstract{
 	private HashMap<String,ArrayList<BufferedImage>> graphics;
+	private int graphicOnDeck;
 	private int health;
 
 	private int emptyHanded;
@@ -30,7 +31,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private int frameWidth;
 	private int frameHeight;
 	private boolean boundHit;
-	private boolean waterHit = false;
+	private boolean wallHit = false;
 	private Pair beachLocation = new Pair(0,0);
 	private HashMap<Frames, JComponent> frames;
 
@@ -47,9 +48,9 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	
 	public void tick(){
 		if (((getLocY() + speedY >= 0) & (this.getBounds().getMaxX() + speedX <= this.getFrameWidth())) && 
-		   ((this.getBounds().getMaxY() + speedY <= this.getFrameHeight()) & getLocX()+ speedX >= 0)){
-			//This condition isn't working:   && (!this.isWaterHit())
-				
+		   ((this.getBounds().getMaxY() + speedY <= this.getFrameHeight()) & getLocX()+ speedX >= 0)
+			&& (!this.isWallHit())) {
+			graphicOnDeck = (graphicOnDeck+1) % graphics.get("MOVE").size();
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
 		}
@@ -66,6 +67,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		BufferedImage bufferedImage3 = ImageIO.read(new File("./Images/Game3/bluecrab_2.png"));
 		moveAnimations.add(bufferedImage3);
 		graphics.put("MOVE", moveAnimations);
+		graphicOnDeck = 0;
 		}
 		catch(IOException e) {
     		e.printStackTrace();
@@ -73,6 +75,14 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		
 	}
 	
+	public int getGraphicOnDeck() {
+		return graphicOnDeck;
+	}
+
+	public void setGraphicOnDeck(int graphicOnDeck) {
+		this.graphicOnDeck = graphicOnDeck;
+	}
+
 	public Rectangle getBounds() {
 		return (new Rectangle(this.getLocX(),this.getLocY(),this.getWidth(),this.getHeight()));
 	}
@@ -202,11 +212,12 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.frames = frames;
 	}
 
-	public boolean isWaterHit() {
-		return waterHit;
+	public boolean isWallHit() {
+		return wallHit;
 	}
 
-	public void setWaterHit(boolean waterHit) {
-		this.waterHit = waterHit;
+	public void setWallHit(boolean b) {
+		wallHit = b;
+		
 	}
 }
