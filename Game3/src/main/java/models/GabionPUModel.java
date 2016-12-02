@@ -184,12 +184,11 @@ public class GabionPUModel extends WallModelAbstract {
 		return viewLocation;
 	}
 
-	public void setViewLocation(Pair viewLocation) {
+	public void setViewLocation(Pair loc) {
 		int tileWidth = (int)(frameMap.get(Frames.ANIMAL).getWidth()/7);
 		int tileHeight = (int)(frameMap.get(Frames.ANIMAL).getHeight()/7);
-		this.viewLocation.setX((int)((this.location.getX()))*tileWidth);
-		this.viewLocation.setY((int)(this.location.getY())*tileHeight);
-		System.out.println("Gabion at: (" + this.getViewLocation().getX() + "," + this.getViewLocation().getY() + ")");
+		this.viewLocation.setX((int)((loc.getX()))*tileWidth);
+		this.viewLocation.setY((int)(loc.getY())*tileHeight);
 	}
 
 	public HashMap<Frames, JComponent> getFrameMap() {

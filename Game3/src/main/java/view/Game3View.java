@@ -103,7 +103,16 @@ public class Game3View extends JPanel implements KeyListener{
 		
 		JPanel beachGrid = new JPanel(new GridLayout(7,7));
 
+		ShoreLine water = new ShoreLine();
+	
 		
+		water.setPreferredSize(new Dimension((int)(frame.getWidth()*(.125)),frame.getHeight()));
+		
+		water.setVisible(true);
+		beachGrid.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		water.setBounds(0, 0, (int)(frame.getWidth()*(.125)), frame.getHeight());
+		
+		animalPane.setBounds(0, 0, frame.getWidth()-water.getWidth(), (int)(frame.getHeight()*(.75)));
 		
 		Collection<Pair> blocks = controller.getBeach().getOrderedPairs();
 		Iterator<Pair> it = blocks.iterator();
@@ -118,7 +127,7 @@ public class Game3View extends JPanel implements KeyListener{
 			gridBlock.add(location);
 			GridTile powerUp = new GridTile(currBlock);
 			powerUps.add(powerUp);
-		    powerUp.setBounds((int)controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(currBlock)).getBounds().getX(), (int)controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(currBlock)).getBounds().getY(), 835, 605);
+		    powerUp.setBounds(0,0,animalPane.getWidth(),animalPane.getHeight());
 			layoutContainer.add(powerUp, new Integer(2),-1);
 		    beachOverlay.add(gridBlock);
 		    //beachOverlay.add(location);
@@ -133,16 +142,7 @@ public class Game3View extends JPanel implements KeyListener{
 		timePanel.setBackground(Color.CYAN);
 		
 		
-		ShoreLine water = new ShoreLine();
-	
 		
-		water.setPreferredSize(new Dimension((int)(frame.getWidth()*(.125)),frame.getHeight()));
-		
-		water.setVisible(true);
-		beachGrid.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-		water.setBounds(0, 0, (int)(frame.getWidth()*(.125)), frame.getHeight());
-		
-		animalPane.setBounds(0, 0, frame.getWidth()-water.getWidth(), (int)(frame.getHeight()*(.75)));
 		layoutContainer.add(beachGrid, new Integer(1),0);
 		layoutContainer.add(animalPane, new Integer(2), 1);
 		play_ground.add(timePanel, BorderLayout.NORTH);
@@ -346,7 +346,7 @@ public class Game3View extends JPanel implements KeyListener{
 		@Override
 		public void paint(Graphics g) {
 			g.setColor(Color.BLUE);
-			g.fillRect(0, 0, 1000, frame.getWidth());
+			g.fillRect(0, 0, frameMap.get(Frames.SHORE).getWidth(), frameMap.get(Frames.SHORE).getHeight());
 		}
 	}
 	
@@ -365,7 +365,7 @@ public class Game3View extends JPanel implements KeyListener{
 				g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}
 			else{
-				System.out.println("View's idea of where tidal pool is: (" + grid.getLocation().getX()+","+grid.getLocation().getY()+")");
+				//System.out.println("View's idea of where tidal pool is: (" + grid.getLocation().getX()+","+grid.getLocation().getY()+")");
 				g.setColor(Color.BLUE);
 				g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}

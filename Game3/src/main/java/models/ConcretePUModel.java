@@ -173,9 +173,6 @@ public class ConcretePUModel extends WallModelAbstract {
 		int tileHeight = (int)(frameMap.get(Frames.ANIMAL).getHeight()/7);
 		this.viewLocation.setX((int)((this.location.getX()))*tileWidth);
 		this.viewLocation.setY((int)(this.location.getY())*tileHeight);
-		System.out.println("Concrete at: (" + this.getViewLocation().getX() + "," + this.getViewLocation().getY() + ")");
-		
-		
 	}
 	public HashMap<Frames, JComponent> getFrameMap() {
 		return frameMap;
