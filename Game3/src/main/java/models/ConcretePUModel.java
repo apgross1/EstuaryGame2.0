@@ -169,8 +169,8 @@ public class ConcretePUModel extends WallModelAbstract {
 		return viewLocation;
 	}
 	public void setViewLocation(Pair viewLocation) {
-		int tileWidth = (int)(frameMap.get(Frames.ANIMAL).getWidth()/7);
-		int tileHeight = (int)(frameMap.get(Frames.ANIMAL).getHeight()/7);
+		int tileWidth = (int)((frameMap.get(Frames.ANIMAL).getWidth()+frameMap.get(Frames.SHORE).getWidth())/7);
+		int tileHeight = (int)(frameMap.get(Frames.SHORE).getHeight()/7);
 		this.viewLocation.setX((int)((this.location.getX()))*tileWidth);
 		this.viewLocation.setY((int)(this.location.getY())*tileHeight);
 	}
