@@ -100,7 +100,7 @@ public class Game3Controller implements KeyListener {
 		int triggerSpawn = 4;
 		while(getgameActive()) {
 			long now = System.nanoTime();
-			delta += (now-lastTime)/ns;
+			delta += (now-lastTime)/ns *2;
 			lastTime=now;
 			if(delta>=1){
 				animal.tick();
