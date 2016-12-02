@@ -387,7 +387,16 @@ public class Game3View extends JPanel implements KeyListener{
 				//g.setColor(Color.RED);
 				//g.fillRect((int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
 				if(gridBlock.getConcrPU().isPickedUp()){
-				g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.WALL).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+					g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.WALL).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+					int potentialX = controller.getAnimal().getLocX() + controller.getAnimal().getSpeedX();
+					int potentialY = controller.getAnimal().getLocY() + controller.getAnimal().getSpeedY();
+					Rectangle potentialAnimBounds = new Rectangle(potentialX, potentialY, controller.getAnimal().getWidth(), controller.getAnimal().getHeight());
+					if(potentialAnimBounds.intersects(gridBlock.getConcrPU().getBounds())) {
+						controller.getAnimal().setWallHit(true);
+					}
+					else {
+						controller.getAnimal().setWallHit(false);
+					}
 				}
 				else{
 					g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.POWER_UP).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
@@ -398,8 +407,16 @@ public class Game3View extends JPanel implements KeyListener{
 				//g.setColor(Color.RED);
 				//g.fillRect((int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
 				if(gridBlock.getGabPU().isPickedUp()){
-					
 					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.WALL).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);
+					int potentialX = controller.getAnimal().getLocX() + controller.getAnimal().getSpeedX();
+					int potentialY = controller.getAnimal().getLocY() + controller.getAnimal().getSpeedY();
+					Rectangle potentialAnimBounds = new Rectangle(potentialX, potentialY, controller.getAnimal().getWidth(), controller.getAnimal().getHeight());
+					if(potentialAnimBounds.intersects(gridBlock.getGabPU().getBounds())) {
+						controller.getAnimal().setWallHit(true);
+					}
+					else {
+						controller.getAnimal().setWallHit(false);
+					}
 				}
 				else{
 					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.POWER_UP).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);

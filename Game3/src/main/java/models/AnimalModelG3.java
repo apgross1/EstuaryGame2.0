@@ -30,7 +30,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private int frameWidth;
 	private int frameHeight;
 	private boolean boundHit;
-	private boolean waterHit = false;
+	private boolean wallHit = false;
 	private Pair beachLocation = new Pair(0,0);
 	private HashMap<Frames, JComponent> frames;
 
@@ -47,8 +47,8 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	
 	public void tick(){
 		if (((getLocY() + speedY >= 0) & (this.getBounds().getMaxX() + speedX <= this.getFrameWidth())) && 
-		   ((this.getBounds().getMaxY() + speedY <= this.getFrameHeight()) & getLocX()+ speedX >= 0)){
-			//This condition isn't working:   && (!this.isWaterHit())
+		   ((this.getBounds().getMaxY() + speedY <= this.getFrameHeight()) & getLocX()+ speedX >= 0)
+			&& (!this.isWallHit())) {
 				
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
@@ -202,11 +202,12 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.frames = frames;
 	}
 
-	public boolean isWaterHit() {
-		return waterHit;
+	public boolean isWallHit() {
+		return wallHit;
 	}
 
-	public void setWaterHit(boolean waterHit) {
-		this.waterHit = waterHit;
+	public void setWallHit(boolean b) {
+		wallHit = b;
+		
 	}
 }
