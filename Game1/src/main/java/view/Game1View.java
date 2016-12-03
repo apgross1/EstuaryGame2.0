@@ -92,6 +92,9 @@ public class Game1View extends JPanel implements KeyListener{
 	BufferedImage clam;
 	BufferedImage ccc;
 	BufferedImage keypic;
+	BufferedImage grass;
+	BufferedImage wave;
+	
 	
     public void loadImgs(){
     	boolean check = new File("./images/testwallgrid.png").exists();
@@ -149,7 +152,17 @@ public class Game1View extends JPanel implements KeyListener{
 	    		keypic = ImageIO.read(new File("./Images/Game1/keyboard_directional.png"));
 	    		} catch (IOException e) {
 	    			e.printStackTrace();
-	    			}
+	    		}
+	    	try {
+	    		grass = ImageIO.read(new File("./Images/Game1/grasss.png"));
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		}
+	    	try {
+	    		wave = ImageIO.read(new File("./Images/Game1/whave.png"));
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		}
     	}
  
 	
@@ -163,6 +176,9 @@ public class Game1View extends JPanel implements KeyListener{
 				//Draw BG FIRST
 				((Graphics2D) g).setPaint(sandTexture);
 				g.fillRect(0, 0, controller.getDim().width, controller.getDim().height);
+				
+				//grass
+				g.drawImage(grass, 0, 0, controller.getDim().width, (int) ((controller.getDim().height)*.15), this);
 				
 				
 				//First draw bar
@@ -216,6 +232,10 @@ public class Game1View extends JPanel implements KeyListener{
 							g.drawImage(clam, tmp.getLocX(), tmp.getLocY(), 30, 20, this);
 						}
 					}
+				}
+				if(controller.isWave()){
+					//`System.out.println(controller.getWaveY());
+					g.drawImage(wave, 0, (controller.getWaveY() - 250), controller.getDim().width, 501, this);
 				}
 				if(controller.getInCountDown()){
 					//Print the timer mid screen.

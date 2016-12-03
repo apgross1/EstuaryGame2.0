@@ -42,10 +42,12 @@ public class Game1Controller{
 	private ArrayList<BufferedImage> gabSeq;// = new ArrayList<BufferedImage>(30);;
 	//private BufferedImage gabSeq;
 	int overallRound = 0;
+	int waveHeight = screenSize.height;
 	long gameTime;
 	long countDownTime;
 	long startTime;
 	boolean intro;
+	boolean wave;
 	boolean countdown; //if were in the three second count down mode at the end of round
 	
 	
@@ -77,6 +79,12 @@ public class Game1Controller{
 	}
 	public boolean isIntro(){
 		return intro;
+	}
+	public boolean isWave(){
+		return wave;
+	}
+	public int getWaveY(){
+		return waveHeight;
 	}
 	
 	//Setters
@@ -123,7 +131,7 @@ public class Game1Controller{
 		
 		long startTime = System.currentTimeMillis(); //fetch starting time
 		
-		while((System.currentTimeMillis()-startTime)<30000){
+		while((System.currentTimeMillis()-startTime)<5000){
 			if(!this.gameState) { //For testing purposes...just to close the game at will
 				return;
 			}
@@ -159,6 +167,26 @@ public class Game1Controller{
 			collisionDetectionLoop();
 			g1view.repaintFrame();
 		}
+		//Do wave
+		wave = true;
+		startTime = System.currentTimeMillis();
+		while((System.currentTimeMillis()-startTime)<3000){
+			int pct = ((int)(System.currentTimeMillis()-startTime)*100)/3000;
+			
+			float j = ((float) pct)/100;
+			
+			//System.out.println(j);
+			//System.out.println(pct);
+			//System.out.println(Math.ceil((pct/100)));//*screenSize.height));
+			
+			waveHeight = (int) (screenSize.height - (Math.ceil(j*screenSize.height)));
+			System.out.println(waveHeight);
+			g1view.repaint();
+		} //wait 3 seconds
+		wave = false;
+
+		
+		
 		gameTime = 30000; // Set the time to 30000 so the repaint says 0 time remaining.
 		//Caclulate score and then reset for round 2
 		//math fn 
