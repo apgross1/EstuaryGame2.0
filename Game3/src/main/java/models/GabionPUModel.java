@@ -187,8 +187,30 @@ public class GabionPUModel extends WallModelAbstract {
 	public void setViewLocation(Pair loc) {
 		int tileWidth = (int)((frameMap.get(Frames.ANIMAL).getWidth()+frameMap.get(Frames.SHORE).getWidth())/7);
 		int tileHeight = (int)(frameMap.get(Frames.SHORE).getHeight()/7);
-		this.viewLocation.setX((int)((loc.getX()))*tileWidth);
-		this.viewLocation.setY((int)(loc.getY())*tileHeight);
+		if(location.getX() == 0 && location.getY() == 0){
+			this.viewLocation.setX((int)(((location.getX()))*tileWidth) + 10);
+			this.viewLocation.setY((int)((location.getY())*tileHeight) + 10);
+		}
+		else if(location.getX() == 0){
+			this.viewLocation.setX((int)(((location.getX()))*tileWidth) + 1);
+			this.viewLocation.setY((int)(location.getY())*tileHeight);	
+		}
+		else if(loc.getY() == 0){
+			this.viewLocation.setX((int)((loc.getX()))*tileWidth);
+			this.viewLocation.setY((int)((loc.getY())*tileHeight) + 1);
+		}
+		/*else if(location.getX() == 6){
+			this.viewLocation.setX((int)(((location.getX()))*tileWidth) -50);
+			this.viewLocation.setY((int)(location.getY())*tileHeight);	
+		}
+		else if(location.getY() == 5){
+			this.viewLocation.setX((int)((location.getX()))*tileWidth);
+			this.viewLocation.setY((int)((location.getY())*tileHeight) -50);
+		}*/
+		else{
+			this.viewLocation.setX((int)((loc.getX()))*tileWidth);
+			this.viewLocation.setY((int)(loc.getY())*tileHeight);
+		}	
 	}
 
 	public HashMap<Frames, JComponent> getFrameMap() {
