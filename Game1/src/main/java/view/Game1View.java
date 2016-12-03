@@ -97,13 +97,13 @@ public class Game1View extends JPanel implements KeyListener{
     	System.out.println("This should be true.....: " + check);
     	
     		try {
-    			gabImg = ImageIO.read(new File("./Images/Game1/testwallgrid.png"));
+    			gabImg = ImageIO.read(new File("./Images/Game1/new_guy_test_one.png"));
     			concImg = ImageIO.read(new File("./Images/Game1/testwallgrid.png"));
     			
     	    	for(int i = 0; i < 30; i++){
     	    		//getSubimage(int x, int y, int w, int h)
-    	    		gabSeq.add(gabImg.getSubimage(0, 100*i, 1090, 100));
-    	    		concSeq.add(concImg.getSubimage(0, 100*i, 1090, 100));
+    	    		gabSeq.add(gabImg.getSubimage(0, 100*i, 1920, 100));
+    	    		concSeq.add(concImg.getSubimage(0, 100*i, 1000, 100));
     	    	}
     		} catch (IOException e) {
 	    		e.printStackTrace();

@@ -20,6 +20,7 @@ public class AnimalModel extends AnimalModelAbstract {
 		screenSize = s;
 		height = 100;//animal pic
 		width = 100;//animal pic
+		System.out.println(s);
 		screenHeight = s.height;
 		screenWidth = s.width;
 		//Set initial location and direction
