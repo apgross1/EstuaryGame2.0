@@ -21,12 +21,14 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import Enums.Frames;
+import Enums.AnimGraphics;
 import enums.Waves;
 import models.AnimalModelG3;
 import models.BeachModel;
 import models.ConcretePUModel.ConcPUState;
 import models.GridBlock;
 import models.SunHurricaneModel;
+import models.Tutorial;
 import models.WallModelAbstract;
 import models.WaterModel;
 import models.WaveModel;
@@ -42,16 +44,18 @@ public class Game3Controller implements KeyListener {
 	private WaterModel water;
 	private SunHurricaneModel sun;
 	private SunHurricaneModel hurricane;
+	private Tutorial tutorial;
 	private Timer timer;
 	private long startTime;
 	private int updates = 0;
 	private int frames = 0;
 	private JFrame gameFrame;
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private boolean tutorialActive;
 	
 	
 	public Game3Controller(JFrame gameF) {
-		
+		this.setTutorialActive(true);
 		gameFrame = gameF;
 		AnimalModelG3 a = new AnimalModelG3();
 		a.setLocX(250);
@@ -60,6 +64,7 @@ public class Game3Controller implements KeyListener {
 		setBeach(new BeachModel());
 		setSandPatch(new GridBlock(beach));
 		setWater(new WaterModel());
+		tutorial = new Tutorial();
 		
 		
 	}
@@ -68,6 +73,7 @@ public class Game3Controller implements KeyListener {
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
 		animal.addPics();
+		tutorial.addPics();
 		view = new Game3View(this, gameFrame);
 		this.getBeach().setFrameMap(view.getFrameMap());
 		this.getAnimal().setFrames(view.getFrameMap());
@@ -90,7 +96,7 @@ public class Game3Controller implements KeyListener {
 		this.activateSkyTimer();
 		
 		this.setGameActive(true);
-		
+		this.activateTutorial();
 		
 		startTime = System.currentTimeMillis();
 		long lastTime = System.nanoTime();
@@ -121,19 +127,22 @@ public class Game3Controller implements KeyListener {
 			//Controller for now but could be implemented in Model in tick function
 			animal.findBeachLocation();
 			
-			
-			if(triggerSpawn == die.nextInt(700000)) {
-				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
-					getBeach().spawnConcrPU(getBeach().generatePPUL());
-					getBeach().spawnGabPU(getBeach().generatePPUL());
-					this.powerUpSpawned();
-				}	
+			if(this.isTutorialActive()) {
+				
 			}
-			
-			if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair()))).getConcrPU().getIsActive() && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()); {
-				this.collisionPowerUps();
+			else{
+				if(triggerSpawn == die.nextInt(700000)) {
+					if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
+						getBeach().spawnConcrPU(getBeach().generatePPUL());
+						getBeach().spawnGabPU(getBeach().generatePPUL());
+						this.powerUpSpawned();
+					}	
+				}
+				
+				if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair()))).getConcrPU().getIsActive() && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()); {
+					this.collisionPowerUps();
+				}
 			}
-			
 			this.collisionTile();
 			this.view.repaintAll();
 			this.view.updateLoc();	
@@ -208,9 +217,41 @@ public class Game3Controller implements KeyListener {
 	};
 	
 	
+	ActionListener animalFreeMovement = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			animal.resetPos();
+			animal.setRestrictedMovement(true);
+		}
+	};
+	
+	ActionListener keyboardGraphicListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if((animal.getSpeedX() != 0) || (animal.getSpeedY()!=0)) {
+				tutorial.setKeyboardStop(true);
+				Timer animalMove = new Timer(3000, animalFreeMovement);
+				animalMove.setRepeats(false);
+				animalMove.start();
+				
+				Timer tempTime = (Timer) e.getSource();
+				tempTime.stop();
+			}
+			else {
+				tutorial.setKeyBoardPicOnDeck((tutorial.getKeyBoardPicOnDeck()+1)%(tutorial.getGraphicMap().get(AnimGraphics.KEYBOARD).size()));
+			}
+		}
+	};
+	
+	public void activateKeys() {
+		Timer keyTimer = new Timer(1000,keyboardGraphicListener);
+		keyTimer.setRepeats(true);
+		keyTimer.start();
+	}
+	
 	
 	public void activateSkyTimer() {
-		Timer skyTimer = new Timer(600, skyTimerListener);
+		Timer skyTimer = new Timer(1250, skyTimerListener);
 		skyTimer.setRepeats(true);
 		skyTimer.start();
 	}
@@ -307,7 +348,7 @@ public class Game3Controller implements KeyListener {
 			if(!gameActive) {
 				t.stop();
 			}
-			else {
+			else if (!isTutorialActive()) {
 				view.generateWaveCluster();
 			}
 		}
@@ -330,7 +371,11 @@ public class Game3Controller implements KeyListener {
 			this.setGameActive(false);
 		}
 	}
-	
+
+	public void activateTutorial() {
+		this.activateKeys();
+		
+	}
 	
 	
 	public void loadImages() {
@@ -432,4 +477,21 @@ public class Game3Controller implements KeyListener {
 	public Dimension getScreenSize() {
 		return screenSize;
 	}
+
+	public boolean isTutorialActive() {
+		return tutorialActive;
+	}
+
+	public void setTutorialActive(boolean tutorialActive) {
+		this.tutorialActive = tutorialActive;
+	}
+
+	public Tutorial getTutorial() {
+		return tutorial;
+	}
+
+	public void setTutorial(Tutorial tutorial) {
+		this.tutorial = tutorial;
+	}
+
 }

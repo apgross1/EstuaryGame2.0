@@ -31,6 +31,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private int frameWidth;
 	private int frameHeight;
 	private boolean boundHit;
+	private boolean restrictedMovement;
 	private boolean wallHit = false;
 	private Pair beachLocation = new Pair(0,0);
 	private HashMap<Frames, JComponent> frames;
@@ -43,13 +44,14 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.setWidth(60);
 		graphics = new HashMap<String, ArrayList<BufferedImage>>();
 		boundHit = false;
+		restrictedMovement = false;
 	
 	}
 	
 	public void tick(){
 		if (((getLocY() + speedY >= 0) & (this.getBounds().getMaxX() + speedX <= this.getFrameWidth())) && 
 		   ((this.getBounds().getMaxY() + speedY <= this.getFrameHeight()) & getLocX()+ speedX >= 0)
-			&& (!this.isWallHit())) {
+			&& (!this.isWallHit()) && (!isRestrictedMovement())) {
 			graphicOnDeck = (graphicOnDeck+1) % graphics.get("MOVE").size();
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
@@ -97,6 +99,13 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.beachLocation.setY((int)(Math.ceil(this.getLocY())/tileHeight));
 		
 		
+	}
+	
+	public void resetPos() {
+		this.setLocX(250);
+		this.setLocY(250);
+		this.setSpeedX(0);
+		this.setSpeedY(0);
 	}
 	
 	@Override
@@ -219,5 +228,13 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	public void setWallHit(boolean b) {
 		wallHit = b;
 		
+	}
+	
+	public boolean isRestrictedMovement() {
+		return restrictedMovement;
+	}
+
+	public void setRestrictedMovement(boolean restrictedMovement) {
+		this.restrictedMovement = restrictedMovement;
 	}
 }

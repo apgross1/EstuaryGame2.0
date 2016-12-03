@@ -40,6 +40,7 @@ import javax.swing.JSplitPane;
 import javax.swing.OverlayLayout;
 import javax.swing.border.Border;
 
+import Enums.AnimGraphics;
 import Enums.Frames;
 import Enums.WaveClusters;
 import controller.Game3Controller;
@@ -68,6 +69,7 @@ public class Game3View extends JPanel implements KeyListener{
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	private JLayeredPane layoutContainer = new JLayeredPane();
 	private BufferedImage shoreGraphic;
+	
 	public JLabel animalPos;
 	public int brightLevel;
 	public Color skyColor;
@@ -118,8 +120,9 @@ public class Game3View extends JPanel implements KeyListener{
     	//Panes
 		//For animal movement
 		
-		Animal animalPane = new Animal();
+		JTutorial tutorialPane = new JTutorial();
 		
+		Animal animalPane = new Animal();
 		animalPane.setPreferredSize(new Dimension((int)(frame.getWidth()*(.875)),(int)(frame.getHeight()*(0.75))));
 		
 		JPanel beachGrid = new JPanel(new GridLayout(7,7));
@@ -134,7 +137,7 @@ public class Game3View extends JPanel implements KeyListener{
 		water.setBounds(0, 0, (int)(frame.getWidth()*(.125)), frame.getHeight());
 		
 		animalPane.setBounds(0, 0, frame.getWidth()-water.getWidth(), (int)(frame.getHeight()*(.75)));
-		
+		tutorialPane.setBounds(0, 0, frame.getWidth(),frame.getHeight());
 		Collection<Pair> blocks = controller.getBeach().getOrderedPairs();
 		Iterator<Pair> it = blocks.iterator();
 		while(it.hasNext()) {
@@ -166,6 +169,7 @@ public class Game3View extends JPanel implements KeyListener{
 		
 		layoutContainer.add(beachGrid, new Integer(1),0);
 		layoutContainer.add(animalPane, new Integer(2), 1);
+		layoutContainer.add(tutorialPane, new Integer(3),1);
 		play_ground.add(timePanel, BorderLayout.NORTH);
 		play_ground.add(water, BorderLayout.EAST);
 		play_ground.add(layoutContainer, BorderLayout.CENTER);
@@ -239,6 +243,19 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 	}
 	
+	
+	public class JTutorial extends JComponent {
+		@Override
+		public void paint(Graphics g) {
+			if(!controller.getTutorial().isKeyboardStop()) {
+				drawKeyboard(g);
+			}
+		}
+		
+		public void drawKeyboard(Graphics g) {
+			g.drawImage((controller.getTutorial().getGraphicMap().get(AnimGraphics.KEYBOARD).get(controller.getTutorial().getKeyBoardPicOnDeck())), (int)(frame.getWidth()*.60), (int)(frame.getHeight()*.40), this);
+		}
+	}
 	
 	public class Hurricane extends JComponent {
 		SunHurricaneModel hurricane;
@@ -386,7 +403,16 @@ public class Game3View extends JPanel implements KeyListener{
 		@Override
 		public void paint(Graphics g) {
 			g.drawImage(controller.getAnimal().getGraphics().get("MOVE").get(controller.getAnimal().getGraphicOnDeck()), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
+			if(controller.isTutorialActive()) {
+				drawKeyboard(g);
+			}
+			
 		}
+		
+		public void drawKeyboard(Graphics g) {
+			
+		}
+		
 	}
 	
 	public class ShoreLine extends JComponent {
@@ -613,9 +639,10 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	public void brightenSky() {
 		this.setBrightLevel(this.getBrightLevel()-1);
-		this.setSkyColor(new Color((int)((this.getSkyColor().getBlue()*0.4)),(int)((this.getSkyColor().getBlue()*(.698))),(int)this.getSkyColor().getBlue()+3,(int)this.getBrightLevel()));
+		this.setSkyColor(new Color((int)((this.getSkyColor().getBlue()*0.4)),(int)((this.getSkyColor().getBlue()*(.698))),(int)this.getSkyColor().getBlue()+2,(int)this.getBrightLevel()));
+		
 		this.getTimePanel().setBackground(this.getSkyColor());
-		System.out.println(this.getSkyColor().getAlpha());
+		System.out.println(this.getSkyColor().getBlue());
 	}
 
 
@@ -636,6 +663,12 @@ public class Game3View extends JPanel implements KeyListener{
 
 	public void setBrightLevel(int brightLevel) {
 		this.brightLevel = brightLevel;
+	}
+
+
+	public void activateTutorial() {
+		
+		
 	}
 	
 	/*
