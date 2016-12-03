@@ -504,9 +504,15 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 	}
 	
-	public void generateWaveCluster() {
+	public void generateWaveCluster(boolean isTutorial) {
 
-		int randCluster = WaveClusters.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((WaveClusters.CLUSTER_FIVE.getWaveID() - WaveClusters.CLUSTER_ONE.getWaveID()) + 1));
+		int randCluster;
+		if(isTutorial) {
+			randCluster = 3;
+		}
+		else {
+			randCluster = WaveClusters.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((WaveClusters.CLUSTER_FIVE.getWaveID() - WaveClusters.CLUSTER_ONE.getWaveID()) + 1));
+		}
 		for(int i = 0; i < 250; i++) {
 			WaveModel wave = new WaveModel(randCluster, frameMap);
 			if(i == 249) {

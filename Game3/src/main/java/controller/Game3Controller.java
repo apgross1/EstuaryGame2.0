@@ -158,6 +158,12 @@ public class Game3Controller implements KeyListener {
 		}
 	};
 	
+	public void activateSkyTimer() {
+		Timer skyTimer = new Timer(1250, skyTimerListener);
+		skyTimer.setRepeats(true);
+		skyTimer.start();
+	}
+	
 	ActionListener powerUpSpawnTimerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -217,44 +223,11 @@ public class Game3Controller implements KeyListener {
 	};
 	
 	
-	ActionListener animalFreeMovement = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			animal.resetPos();
-			animal.setRestrictedMovement(true);
-		}
-	};
-	
-	ActionListener keyboardGraphicListener = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if((animal.getSpeedX() != 0) || (animal.getSpeedY()!=0)) {
-				tutorial.setKeyboardStop(true);
-				Timer animalMove = new Timer(3000, animalFreeMovement);
-				animalMove.setRepeats(false);
-				animalMove.start();
-				
-				Timer tempTime = (Timer) e.getSource();
-				tempTime.stop();
-			}
-			else {
-				tutorial.setKeyBoardPicOnDeck((tutorial.getKeyBoardPicOnDeck()+1)%(tutorial.getGraphicMap().get(AnimGraphics.KEYBOARD).size()));
-			}
-		}
-	};
-	
-	public void activateKeys() {
-		Timer keyTimer = new Timer(1000,keyboardGraphicListener);
-		keyTimer.setRepeats(true);
-		keyTimer.start();
-	}
 	
 	
-	public void activateSkyTimer() {
-		Timer skyTimer = new Timer(1250, skyTimerListener);
-		skyTimer.setRepeats(true);
-		skyTimer.start();
-	}
+	
+	
+	
 	//Duration for which power-up is available to be picked up
 	public void powerUpSpawned() {
 		timer = new Timer(3000, powerUpSpawnTimerListener);
@@ -349,7 +322,7 @@ public class Game3Controller implements KeyListener {
 				t.stop();
 			}
 			else if (!isTutorialActive()) {
-				view.generateWaveCluster();
+				view.generateWaveCluster(false);
 			}
 		}
 	};
@@ -372,9 +345,55 @@ public class Game3Controller implements KeyListener {
 		}
 	}
 
+	ActionListener animalFreeMovement = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			animal.resetPos();
+			animal.setRestrictedMovement(true);
+			generateSingleWave();
+		}
+	};
+	
+	ActionListener keyboardGraphicListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if((animal.getSpeedX() != 0) || (animal.getSpeedY()!=0)) {
+				tutorial.setKeyboardStop(true);
+				Timer animalMove = new Timer(3000, animalFreeMovement);
+				animalMove.setRepeats(false);
+				animalMove.start();
+				
+				Timer tempTime = (Timer) e.getSource();
+				tempTime.stop();
+			}
+			else {
+				tutorial.setKeyBoardPicOnDeck((tutorial.getKeyBoardPicOnDeck()+1)%(tutorial.getGraphicMap().get(AnimGraphics.KEYBOARD).size()));
+			}
+		}
+	};
+	
+	ActionListener genSingleWaveListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			view.generateWaveCluster(true);
+		}
+	};
+	
+	public void activateKeys() {
+		Timer keyTimer = new Timer(1000,keyboardGraphicListener);
+		keyTimer.setRepeats(true);
+		keyTimer.start();
+	}
+
+	
+	public void generateSingleWave() {
+		Timer waveTimer = new Timer(2000, genSingleWaveListener);
+		waveTimer.setRepeats(false);
+		waveTimer.start();
+	}
+	
 	public void activateTutorial() {
-		this.activateKeys();
-		
+		this.activateKeys();	
 	}
 	
 	
