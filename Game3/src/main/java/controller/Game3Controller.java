@@ -90,6 +90,8 @@ public class Game3Controller implements KeyListener {
 		this.activateSkyTimer();
 		
 		this.setGameActive(true);
+		
+		
 		startTime = System.currentTimeMillis();
 		long lastTime = System.nanoTime();
 		final double ammountOfTicks = 60.0;	
@@ -118,6 +120,7 @@ public class Game3Controller implements KeyListener {
 			
 			//Controller for now but could be implemented in Model in tick function
 			animal.findBeachLocation();
+			
 			
 			if(triggerSpawn == die.nextInt(700000)) {
 				if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
