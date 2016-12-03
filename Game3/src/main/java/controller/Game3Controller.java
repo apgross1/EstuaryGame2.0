@@ -87,6 +87,7 @@ public class Game3Controller implements KeyListener {
 		view.addSun();
 		view.addHurricane();
 		this.startTime();
+		this.activateSkyTimer();
 		
 		this.setGameActive(true);
 		startTime = System.currentTimeMillis();
@@ -100,7 +101,7 @@ public class Game3Controller implements KeyListener {
 		int triggerSpawn = 4;
 		while(getgameActive()) {
 			long now = System.nanoTime();
-			delta += (now-lastTime)/ns ;
+			delta += (now-lastTime)/ns;
 			lastTime=now;
 			if(delta>=1){
 				animal.tick();
@@ -133,12 +134,17 @@ public class Game3Controller implements KeyListener {
 			this.collisionTile();
 			this.view.repaintAll();
 			this.view.updateLoc();	
-			
 		}
 	}
 
 	
 	
+	ActionListener skyTimerListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			view.brightenSky();
+		}
+	};
 	
 	ActionListener powerUpSpawnTimerListener = new ActionListener() {
 		@Override
@@ -200,7 +206,11 @@ public class Game3Controller implements KeyListener {
 	
 	
 	
-	
+	public void activateSkyTimer() {
+		Timer skyTimer = new Timer(600, skyTimerListener);
+		skyTimer.setRepeats(true);
+		skyTimer.start();
+	}
 	//Duration for which power-up is available to be picked up
 	public void powerUpSpawned() {
 		timer = new Timer(3000, powerUpSpawnTimerListener);

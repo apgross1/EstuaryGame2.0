@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class SunHurricaneModel {
@@ -23,9 +24,9 @@ public class SunHurricaneModel {
 	private int firstZero;
 	private int secondZero;
 	
-	public SunHurricaneModel(JPanel p) {
+	public SunHurricaneModel(JPanel jPanel) {
 		graphics = new HashMap<String, ArrayList<BufferedImage>>();
-		panel = p;
+		panel = jPanel;
 		firstZero = 0;
 		secondZero = panel.getWidth();
 		location = new Pair(0,0);

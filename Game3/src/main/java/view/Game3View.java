@@ -6,11 +6,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -25,6 +27,8 @@ import java.util.List;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -65,9 +69,13 @@ public class Game3View extends JPanel implements KeyListener{
 	private JLayeredPane layoutContainer = new JLayeredPane();
 	private BufferedImage shoreGraphic;
 	public JLabel animalPos;
+	public int brightLevel;
+	public Color skyColor;
 
 	
 	public Game3View(Game3Controller ctl, JFrame gameF){
+		brightLevel = 255;
+		skyColor = new Color((int)0,(int)0,(int)0, (int)this.getBrightLevel());
 		//Adding shore graphic (only one which is not created in a model)
 		try {
 			shoreGraphic = ImageIO.read(new File("./Images/Game3/Creek.png"));
@@ -94,7 +102,7 @@ public class Game3View extends JPanel implements KeyListener{
 		play_ground.setSize(frame.getWidth(),frame.getHeight());
 		
 		timePanel.setLayout(null);
-		
+
 		waveComponentMap = new HashMap<Integer,Wave>();
     	frame.setBackground(Color.gray);
 
@@ -152,7 +160,7 @@ public class Game3View extends JPanel implements KeyListener{
 		
 		timePanel.setPreferredSize(new Dimension(frame.getWidth(), (int)(frame.getHeight()*.25)));
 		timePanel.setBounds(0, 0, frame.getWidth(), (int)(frame.getHeight()*.25));
-		timePanel.setBackground(Color.CYAN);
+		timePanel.setBackground(this.getSkyColor());
 		
 		
 		
@@ -196,6 +204,7 @@ public class Game3View extends JPanel implements KeyListener{
 		animalPos.setText("Animal is on tile: (" + this.getController().getAnimal().getPotentialMove().getX() + "," + this.controller.getAnimal().getPotentialMove().getY() + ")");
 	}
 	
+	
 	public void addSun() {
 		Sun sun = new Sun(controller.getSun());
 		sun.setBounds(0, 0, frame.getWidth(), frame.getHeight());
@@ -221,6 +230,15 @@ public class Game3View extends JPanel implements KeyListener{
 		frame.repaint();
 	}
 	
+	public class TimerGradient extends JComponent {
+		@Override
+		public void paint(Graphics g) {
+        g.fillRect(0, 0, timePanel.getWidth(), timePanel.getHeight());
+        g.setColor(Color.BLACK);
+        System.out.println("Painting");
+		}
+	}
+	
 	
 	public class Hurricane extends JComponent {
 		SunHurricaneModel hurricane;
@@ -234,7 +252,7 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			//g.setColor(Color.GREEN);
 			//g.fillOval(hurricane.getLocation().getX(), hurricane.getLocation().getY(), hurricane.getWidth(), hurricane.getHeight());
-			g.drawImage((hurricane.getGraphics().get("HURRICANE")).get(0), hurricane.getLocation().getX(), hurricane.getLocation().getY(), Color.CYAN, this);
+			g.drawImage((hurricane.getGraphics().get("HURRICANE")).get(0), hurricane.getLocation().getX(), hurricane.getLocation().getY(), this);
 		}
 	}
 	
@@ -249,7 +267,7 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			//g.setColor(Color.YELLOW);
 			//g.fillOval(sun.getLocation().getX(), sun.getLocation().getY(), sun.getWidth(), sun.getHeight());
-			g.drawImage(sun.getGraphics().get("SUN").get(0), sun.getLocation().getX(), sun.getLocation().getY(), Color.CYAN, this);
+			g.drawImage(sun.getGraphics().get("SUN").get(0), sun.getLocation().getX(), sun.getLocation().getY(), this);
 		}
 	}
 	
@@ -546,6 +564,7 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	}
 
+	 
 
 
 	@Override
@@ -591,6 +610,33 @@ public class Game3View extends JPanel implements KeyListener{
 		this.frameMap = frameMap;
 	}
 
+	
+	public void brightenSky() {
+		this.setBrightLevel(this.getBrightLevel()-1);
+		this.setSkyColor(new Color((int)((this.getSkyColor().getBlue()*0.4)),(int)((this.getSkyColor().getBlue()*(.698))),(int)this.getSkyColor().getBlue()+3,(int)this.getBrightLevel()));
+		this.getTimePanel().setBackground(this.getSkyColor());
+		System.out.println(this.getSkyColor().getAlpha());
+	}
+
+
+	public Color getSkyColor() {
+		return skyColor;
+	}
+
+
+	public void setSkyColor(Color skyColor) {
+		this.skyColor = skyColor;
+	}
+
+
+	public int getBrightLevel() {
+		return brightLevel;
+	}
+
+
+	public void setBrightLevel(int brightLevel) {
+		this.brightLevel = brightLevel;
+	}
 	
 	/*
 	public JFrame getFrame() {
