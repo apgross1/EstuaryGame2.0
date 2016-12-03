@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -259,13 +260,16 @@ public class Game3View extends JPanel implements KeyListener{
 		public Wave(WaveModel wave) {
 			this.wave = wave;
 			waveGone = false;
+			setOpaque(false);
 		}
 		@Override
 		public void paint(Graphics g) {
 			if(!this.waveGone) {
 				if(wave.getBounds().intersects(controller.getAnimal().getBounds())) {
 					//controller.setGameActive(false);
+					return;
 				}
+	
 				for(GridTile gr : powerUps) {
 					ConcretePUModel conc = gr.getGridBlock().getConcrPU();
 					GabionPUModel gab = gr.getGridBlock().getGabPU();
@@ -288,26 +292,36 @@ public class Game3View extends JPanel implements KeyListener{
 				
 				if ((wave.getLocation().getX() > frameMap.get(Frames.ANIMAL).getWidth()) && wave.isReceed() && wave.isLastWave()) {
 					List<Pair> pairs = controller.getBeach().getGridLayers().get(wave.getClusterGroup());
-					/*System.out.println("Printing out cluster group: "); 
+					System.out.println("Printing out cluster group: "); 
 					Iterator it = pairs.iterator();
 					while(it.hasNext()) {
 						Pair tempPair = (Pair)it.next();
 						System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
-					}*/
+					}
 					for(int i = pairs.size()-1; i >= 0; i--) {
-						if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))) != null) {
-							if(controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).isVacant()) {
+						GridBlock tempGrid = controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i)));
+						if(tempGrid != null) {
+							if(!tempGrid.getWater().isActive()) {
+								if(tempGrid.getGabPU().getIsActive()) {
+									tempGrid.getGabPU().setIsActive(false);
+								}
+								if(tempGrid.getConcrPU().getIsActive()) {
+									tempGrid.getConcrPU().setActive(false);
+								}
+								
 								if(i != pairs.size()-1) {
 									controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i+1))).getWater().setGraphicOnDeck(1);
 								}
 								WaterModel newWatMod = new WaterModel();
 								newWatMod.addPics();
-								controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i))).setWater(newWatMod, controller.getBeach().findPairInGrid(pairs.get(i)));
+								tempGrid.setWater(newWatMod, controller.getBeach().findPairInGrid(pairs.get(i)));
 					
 								layoutContainer.remove(waveComponentMap.get(this.hashCode()));
 								waveComponentMap.remove(this.hashCode());
 								wave = null;
 								this.waveGone = true;
+								g.dispose();
+								frame.revalidate();
 								return;
 							}
 							
@@ -319,6 +333,8 @@ public class Game3View extends JPanel implements KeyListener{
 					waveComponentMap.remove(this.hashCode());
 					wave = null;
 					this.waveGone = true;
+					g.dispose();
+					frame.revalidate();
 				}
 				
 				//I don't think the -150 has to be dynamic. It's off the screen for all monitors, so it shouldn't' be an issue
@@ -326,17 +342,11 @@ public class Game3View extends JPanel implements KeyListener{
 					if(wave.isLastWave()){
 						g.setColor(Color.green);
 						g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
+						
 					}
-					else{
-					g.setColor(Color.BLUE);
-					g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
-					/*try {
-						g.drawImage(ImageIO.read(new File("./Images/Game3/watersplash_sideblast_1.png")), (int)wave.getBounds().getX(), (int)wave.getBounds().getY(), Color.blue, this);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
-					}
+					
+						g.setColor(Color.BLUE);
+						g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
 				}
 				
 				else {
@@ -344,6 +354,8 @@ public class Game3View extends JPanel implements KeyListener{
 					waveComponentMap.remove(this.hashCode());
 					wave = null;
 					this.waveGone = true;
+					g.dispose();
+					frame.revalidate();
 				}
 			}
 		}
@@ -468,6 +480,8 @@ public class Game3View extends JPanel implements KeyListener{
 		waveComponentMap.put(wave.hashCode(), wave);
 		this.layoutContainer.add(wave, new Integer(2), 1);
 	}
+	
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 	    int keyCode = e.getKeyCode();

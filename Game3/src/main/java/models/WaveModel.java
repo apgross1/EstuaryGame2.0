@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JComponent;
@@ -19,8 +20,8 @@ import enums.Waves;
 
 public class WaveModel {
 
-	private int height = 30;
-	private int width = 30;
+	private int height = 25;
+	private int width = 25;
 	private Pair location;
 	private boolean receed = false;
 	private double movement;
@@ -77,9 +78,8 @@ public class WaveModel {
 		}
 	
 	}
-
 	
-
+	
 	ActionListener movementTimer = new ActionListener() {
 
 		@Override
