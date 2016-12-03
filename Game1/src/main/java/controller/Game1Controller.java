@@ -45,6 +45,7 @@ public class Game1Controller{
 	long gameTime;
 	long countDownTime;
 	long startTime;
+	boolean intro;
 	boolean countdown; //if were in the three second count down mode at the end of round
 	
 	
@@ -74,6 +75,9 @@ public class Game1Controller{
 	public Dimension getDim(){
 		return screenSize;
 	}
+	public boolean isIntro(){
+		return intro;
+	}
 	
 	//Setters
 	public void reset() {
@@ -87,8 +91,13 @@ public class Game1Controller{
 	
 	public void startGame(){
 		gameState = true;
-		//Load walls in in view
-		//gabSeq = g1view.getGabSeq();
+		//Draw into screen.
+		startTime = System.currentTimeMillis();
+		intro = true;
+		while((System.currentTimeMillis()-startTime)<5000){
+			g1view.repaintFrame();
+		}
+		intro = false;
 		while(overallRound < 3 && (gameState == true)){
 			System.out.println(this.gameState);
 			round();
