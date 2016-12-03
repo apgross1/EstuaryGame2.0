@@ -91,6 +91,7 @@ public class Game1View extends JPanel implements KeyListener{
 	BufferedImage crabImg;
 	BufferedImage clam;
 	BufferedImage ccc;
+	BufferedImage keypic;
 	
     public void loadImgs(){
     	boolean check = new File("./images/testwallgrid.png").exists();
@@ -144,77 +145,120 @@ public class Game1View extends JPanel implements KeyListener{
 				e.printStackTrace();
 				//add a blank bg image.
 			}
+	    	try {
+				keypic = ImageIO.read(new File("./Images/Game1/keyboard_directional.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
     	}
  
 	
 	 public class Animation extends JComponent {
 			@Override
 			public void paint(Graphics g) {
-				if(controller.getAnimalModel().isMoving()){
-					picNum = (picNum + 1) % frameCount;
-				}
-				//Draw BG FIRST
-				((Graphics2D) g).setPaint(sandTexture);
-				g.fillRect(0, 0, controller.getDim().width, controller.getDim().height);
-				
-				
-				//First draw bar
-				g.setColor(Color.BLACK);
-				g.fillRect(0, 0, controller.getDim().width, (int) ((controller.getDim().height)*.05)); //top bar 5% of screen
-
-				
-				//Draw animal at current position
-				g.drawImage(animalSeq.get(picNum), controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(), controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight(),this);
-				
-				//Draw score data and timer and health
-				g.setFont(new Font("Haettenschweiler", Font.PLAIN, 30)); 
-				g.setColor(Color.WHITE);
-				g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), (int)(.15*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
-				g.setColor(Color.RED);
-				g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), (int)(.25*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
-				g.setColor(Color.GREEN);
-				g.drawString("Time Left: "+ controller.getTime(), (int)(.65*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
-				
-				g.drawString("Health: " + controller.getBarModel().getStatus(), (int)(.35*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
-				
-				g.drawRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), 200, 20); //Behind health bar doesn't change
-				
-				g.setColor(Color.RED);
-				int health = (controller.getBarModel().getStatus()*2);
-				g.fillRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), health, 20);
-				
-				//Draw wall sprites (First this gives an ugly error, second can we set the bg of the jpannel rather than paint on jframe?)
-				g.drawImage(gabSeq.get(controller.getGabionWallModel().getCurrentOysters()), 0, (int)(controller.getDim().height * .15), controller.getDim().width, (int)(controller.getDim().height * .15), this);
-				g.drawImage(concSeq.get(controller.getWallModel().getCurrentBlocks()), 0, (int)(controller.getDim().height * .30), controller.getDim().width, (int)(controller.getDim().height * .15), this);
-				
-				if(!controller.getInCountDown()){
-					//Draw all the chunks that are active.
-					Collection<ConcreteChunk> concreteChunkTemp = controller.getWallModel().getChunks();
-					Collection<GabionChunk> GabionChunkTemp = controller.getGabionWallModel().getChunks();
-					Iterator<GabionChunk> git = GabionChunkTemp.iterator();
-					Iterator<ConcreteChunk> it = concreteChunkTemp.iterator();
-					while(it.hasNext()){
-						ConcreteChunk tmp = it.next();
-						if(tmp.isActive()){
-							//g.setColor(Color.RED);
-							//g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
-							g.drawImage(ccc, tmp.getLocX(), tmp.getLocY(), 30, 20, this);
-						}
+				if(!controller.isIntro()){
+					if(controller.getAnimalModel().isMoving()){
+						picNum = (picNum + 1) % frameCount;
 					}
-					while (git.hasNext()){
-						GabionChunk tmp = git.next();
-						if(tmp.isActive()){
-							//g.setColor(Color.WHITE);
-							//g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
-							g.drawImage(clam, tmp.getLocX(), tmp.getLocY(), 30, 20, this);
-						}
-					}
-				}
-				if(controller.getInCountDown()){
-					//Print the timer mid screen.
-					g.setFont(new Font("Rockwell", Font.PLAIN, 400)); 
+					//Draw BG FIRST
+					((Graphics2D) g).setPaint(sandTexture);
+					g.fillRect(0, 0, controller.getDim().width, controller.getDim().height);
+					
+					
+					//First draw bar
 					g.setColor(Color.BLACK);
-					g.drawString("" + controller.getIntermTime(), (int)(.5 *(controller.getDim().width)), (int)(.5 *(controller.getDim().height)));
+					g.fillRect(0, 0, controller.getDim().width, (int) ((controller.getDim().height)*.05)); //top bar 5% of screen
+	
+					
+					//Draw animal at current position
+					g.drawImage(animalSeq.get(picNum), controller.getAnimalModel().getLocX(),controller.getAnimalModel().getLocY(), controller.getAnimalModel().getWidth(),controller.getAnimalModel().getHeight(),this);
+					
+					//Draw score data and timer and health
+					g.setFont(new Font("Haettenschweiler", Font.PLAIN, 30)); 
+					g.setColor(Color.WHITE);
+					g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), (int)(.15*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
+					g.setColor(Color.RED);
+					g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), (int)(.25*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
+					g.setColor(Color.GREEN);
+					g.drawString("Time Left: "+ controller.getTime(), (int)(.65*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
+					
+					g.drawString("Health: " + controller.getBarModel().getStatus(), (int)(.35*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
+					
+					g.drawRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), 200, 20); //Behind health bar doesn't change
+					
+					g.setColor(Color.RED);
+					int health = (controller.getBarModel().getStatus()*2);
+					g.fillRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), health, 20);
+					
+					//Draw wall sprites (First this gives an ugly error, second can we set the bg of the jpannel rather than paint on jframe?)
+					g.drawImage(gabSeq.get(controller.getGabionWallModel().getCurrentOysters()), 0, (int)(controller.getDim().height * .15), controller.getDim().width, (int)(controller.getDim().height * .15), this);
+					g.drawImage(concSeq.get(controller.getWallModel().getCurrentBlocks()), 0, (int)(controller.getDim().height * .30), controller.getDim().width, (int)(controller.getDim().height * .15), this);
+					
+					if(!controller.getInCountDown()){
+						//Draw all the chunks that are active.
+						Collection<ConcreteChunk> concreteChunkTemp = controller.getWallModel().getChunks();
+						Collection<GabionChunk> GabionChunkTemp = controller.getGabionWallModel().getChunks();
+						Iterator<GabionChunk> git = GabionChunkTemp.iterator();
+						Iterator<ConcreteChunk> it = concreteChunkTemp.iterator();
+						while(it.hasNext()){
+							ConcreteChunk tmp = it.next();
+							if(tmp.isActive()){
+								//g.setColor(Color.RED);
+								//g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
+								g.drawImage(ccc, tmp.getLocX(), tmp.getLocY(), 30, 20, this);
+							}
+						}
+						while (git.hasNext()){
+							GabionChunk tmp = git.next();
+							if(tmp.isActive()){
+								//g.setColor(Color.WHITE);
+								//g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
+								g.drawImage(clam, tmp.getLocX(), tmp.getLocY(), 30, 20, this);
+							}
+						}
+					}
+					if(controller.getInCountDown()){
+						//Print the timer mid screen.
+						g.setFont(new Font("Rockwell", Font.PLAIN, 400)); 
+						g.setColor(Color.BLACK);
+						g.drawString("" + controller.getIntermTime(), (int)(.5 *(controller.getDim().width)), (int)(.5 *(controller.getDim().height)));
+						
+					}
+				}else{
+					//Is in intro mode, paint basic stuff and tutorial
+					//Draw BG FIRST
+					((Graphics2D) g).setPaint(sandTexture);
+					g.fillRect(0, 0, controller.getDim().width, controller.getDim().height);
+					
+					
+					//First draw bar
+					g.setColor(Color.BLACK);
+					g.fillRect(0, 0, controller.getDim().width, (int) ((controller.getDim().height)*.05)); //top bar 5% of screen
+	
+					
+					//Draw score data and timer and health
+					g.setFont(new Font("Haettenschweiler", Font.PLAIN, 30)); 
+					g.setColor(Color.WHITE);
+					g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), (int)(.15*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
+					g.setColor(Color.RED);
+					g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), (int)(.25*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
+					g.setColor(Color.GREEN);
+					g.drawString("Time Left: "+ controller.getTime(), (int)(.65*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
+					
+					g.drawString("Health: " + controller.getBarModel().getStatus(), (int)(.35*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
+					
+					g.drawRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), 200, 20); //Behind health bar doesn't change
+					
+					g.setColor(Color.RED);
+					int health = (controller.getBarModel().getStatus()*2);
+					g.fillRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), health, 20);
+
+					//Draw tutorial.
+					g.setColor(Color.BLACK);
+					g.drawString("Quick! Collect either gabbions or concrete chuncks to protect the estuary! You decide whats more effective.", (int)(.2*(controller.getDim().width)), (int)(.5*(controller.getDim().height)));
+					g.drawImage(keypic, (int)(controller.getDim().width * .5)-182, (int)(controller.getDim().height * .6), 364, 164, this);
+					//g.drawImage(img, x, y, width, height, observer)
+					
 					
 				}
 			}
