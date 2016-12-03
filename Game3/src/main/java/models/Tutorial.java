@@ -14,11 +14,13 @@ public class Tutorial {
 	private HashMap<AnimGraphics, ArrayList<BufferedImage>> graphicMap;
 	private int keyBoardPicOnDeck;
 	private boolean keyboardStop;
+	private boolean waveWarning;
 	
 
 	public Tutorial() {
 		graphicMap = new HashMap<AnimGraphics,ArrayList<BufferedImage>>();
 		keyBoardPicOnDeck = 0;
+		waveWarning = false;
 	}
 	
 	public void addPics() {
@@ -36,8 +38,13 @@ public class Tutorial {
 			keyBoardPics.add(key_pic_3);
 			keyBoardPics.add(key_pic_4);
 			
-			graphicMap.put(AnimGraphics.KEYBOARD, keyBoardPics);
+			//Adding 'X'
+			ArrayList<BufferedImage> xPic = new ArrayList<BufferedImage>();
+			BufferedImage x = ImageIO.read(new File("./Images/Game3/x.png"));
+			xPic.add(x);
 			
+			graphicMap.put(AnimGraphics.KEYBOARD, keyBoardPics);
+			graphicMap.put(AnimGraphics.BIG_X, xPic);
 			}
 			catch(IOException e) {
 	    		e.printStackTrace();
@@ -66,6 +73,14 @@ public class Tutorial {
 
 	public void setKeyboardStop(boolean keyboardStop) {
 		this.keyboardStop = keyboardStop;
+	}
+
+	public boolean isWaveWarning() {
+		return waveWarning;
+	}
+
+	public void setWaveWarning(boolean waveWarning) {
+		this.waveWarning = waveWarning;
 	}
 
 }

@@ -137,7 +137,7 @@ public class Game3View extends JPanel implements KeyListener{
 		water.setBounds(0, 0, (int)(frame.getWidth()*(.125)), frame.getHeight());
 		
 		animalPane.setBounds(0, 0, frame.getWidth()-water.getWidth(), (int)(frame.getHeight()*(.75)));
-		tutorialPane.setBounds(0, 0, frame.getWidth(),frame.getHeight());
+		tutorialPane.setBounds(0, 0, animalPane.getWidth(),animalPane.getHeight());
 		Collection<Pair> blocks = controller.getBeach().getOrderedPairs();
 		Iterator<Pair> it = blocks.iterator();
 		while(it.hasNext()) {
@@ -247,13 +247,20 @@ public class Game3View extends JPanel implements KeyListener{
 	public class JTutorial extends JComponent {
 		@Override
 		public void paint(Graphics g) {
-			if(!controller.getTutorial().isKeyboardStop()) {
-				drawKeyboard(g);
-			}
+			drawKeyboard(g);
+			drawX(g);
 		}
 		
 		public void drawKeyboard(Graphics g) {
-			g.drawImage((controller.getTutorial().getGraphicMap().get(AnimGraphics.KEYBOARD).get(controller.getTutorial().getKeyBoardPicOnDeck())), (int)(frame.getWidth()*.60), (int)(frame.getHeight()*.40), this);
+			if(!controller.getTutorial().isKeyboardStop()) {
+				g.drawImage((controller.getTutorial().getGraphicMap().get(AnimGraphics.KEYBOARD).get(controller.getTutorial().getKeyBoardPicOnDeck())), (int)(frame.getWidth()*.60), (int)(frame.getHeight()*.40), this);
+			}
+		}
+		
+		public void drawX(Graphics g) {
+			if(controller.getAnimal().isWaveHit()) {
+				g.drawImage((controller.getTutorial().getGraphicMap().get(AnimGraphics.BIG_X).get(0)), controller.getAnimal().getLocX(),controller.getAnimal().getLocY(), this);
+			}
 		}
 	}
 	
@@ -301,8 +308,21 @@ public class Game3View extends JPanel implements KeyListener{
 		public void paint(Graphics g) {
 			if(!this.waveGone) {
 				if(wave.getBounds().intersects(controller.getAnimal().getBounds())) {
-					//controller.setGameActive(false);
+					if(controller.isTutorialActive()) {
+						controller.getAnimal().setWaveHit(true);
+					}
+					else {
+						controller.getAnimal().setWaveHit(true);
+						controller.setGameActive(false);
+					}
+					
 					return;
+				}
+				
+				if(controller.getAnimal().isWaveHit()) {
+					if(controller.isTutorialActive()) {
+						wave.pauseWave();
+					}
 				}
 	
 				for(GridTile gr : powerUps) {
@@ -508,7 +528,7 @@ public class Game3View extends JPanel implements KeyListener{
 
 		int randCluster;
 		if(isTutorial) {
-			randCluster = 3;
+			randCluster = 1;
 		}
 		else {
 			randCluster = WaveClusters.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((WaveClusters.CLUSTER_FIVE.getWaveID() - WaveClusters.CLUSTER_ONE.getWaveID()) + 1));

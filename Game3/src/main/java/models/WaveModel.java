@@ -25,15 +25,18 @@ public class WaveModel {
 	private Pair location;
 	private boolean receed = false;
 	private double movement;
+	private int velocity;
 	private WaveClusters clusterGroup;
 	private boolean lastWave;
 	private Double screenSizeX = Toolkit.getDefaultToolkit().getScreenSize().getWidth(); 
 	private HashMap<Frames, JComponent> frames;
+	private boolean wavePause;
 
 
 
 	public WaveModel(int clusterVal, HashMap<Frames, JComponent> f) {
 		movement = (screenSizeX*.00104);
+		wavePause = false;
 		frames = f;
 		this.randomSpawn(clusterVal);
 		this.move();
@@ -87,15 +90,24 @@ public class WaveModel {
 		public void actionPerformed(ActionEvent e) {
 
 			if(!isReceed()) {
-				
-				int velocity = (int)((screenSizeX*.3125)/(movement));
-				
-				location.setX((int)(location.getX()-velocity));
+				if(wavePause) {
+					setVelocity(0);
+				}
+				else{
+					setVelocity((int)((screenSizeX*.3125)/(movement)));
+				}
+				location.setX((int)(location.getX()-getVelocity()));
 				
 				movement += 1;
 			}
 			else {
-				int velocity = (int)((screenSizeX*.3125/(movement)));
+				if(wavePause) {
+					setVelocity(0);
+				}
+				else{
+					setVelocity((int)((screenSizeX*.3125/(movement))));
+				}
+				
 				location.setX((int)(location.getX()+velocity));
 				//accelerator = -1*accelerator;
 				movement -= 1; 
@@ -114,9 +126,22 @@ public class WaveModel {
 		timer.setRepeats(true);
 		timer.start();
 	}
-
 	
+	
+	public void pauseWave() {
+		this.wavePause = true;
+	}
 
+	public void resumeWave() {
+		this.wavePause = false;
+	}
+	
+	public void resetWave() {
+		this.resumeWave();
+		this.setReceed(true);
+		location.setX(frames.get(Frames.ANIMAL).getWidth()+frames.get(Frames.SHORE).getWidth());
+	}
+	
 	public Rectangle getBounds() {
 
 		return new Rectangle(location.getX(),location.getY(), this.getWidth(), this.getHeight());
@@ -210,6 +235,18 @@ public class WaveModel {
 
 	public void setFrames(HashMap<Frames, JComponent> frames) {
 		this.frames = frames;
+	}
+
+
+
+	public int getVelocity() {
+		return velocity;
+	}
+
+
+
+	public void setVelocity(int velocity) {
+		this.velocity = velocity;
 	}
 	
 }

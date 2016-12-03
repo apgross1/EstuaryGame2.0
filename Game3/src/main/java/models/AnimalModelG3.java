@@ -33,6 +33,7 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private boolean boundHit;
 	private boolean restrictedMovement;
 	private boolean wallHit = false;
+	private boolean waveHit = false;
 	private Pair beachLocation = new Pair(0,0);
 	private HashMap<Frames, JComponent> frames;
 
@@ -236,5 +237,13 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 
 	public void setRestrictedMovement(boolean restrictedMovement) {
 		this.restrictedMovement = restrictedMovement;
+	}
+
+	public boolean isWaveHit() {
+		return waveHit;
+	}
+
+	public void setWaveHit(boolean waveHit) {
+		this.waveHit = waveHit;
 	}
 }
