@@ -24,8 +24,8 @@ public class AnimalModel extends AnimalModelAbstract {
 		screenHeight = s.height;
 		screenWidth = s.width;
 		//Set initial location and direction
-		setLocX(500);
-		setLocY(500);
+		setLocX((s.width/2)-50);
+		setLocY((int) (.85*s.height));
 		setCurrDir(Direction.NORTH);
 	}
 	
