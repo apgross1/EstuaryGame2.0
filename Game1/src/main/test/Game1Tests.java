@@ -236,6 +236,7 @@ public class Game1Tests {
 		
 		//myGabWall.setCurrentOysters(50);
 		//int damage2 = myGabWall.breakDown();
+		System.out.println(bar.getStatus());
 		
 		assertTrue("Should be 40", bar.getStatus() == 40);
 	}
@@ -295,6 +296,7 @@ public class Game1Tests {
 		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
 		models.AnimalModel myAnimal = new models.AnimalModel(screenSize);
 		Game1Controller process = new Game1Controller(gameFrame);
+		
 		
 		myGabWall.setMaxOysters(100);
 		myGabWall.setCurrentOysters(99);

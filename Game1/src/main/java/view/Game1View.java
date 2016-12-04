@@ -119,7 +119,7 @@ public class Game1View extends JPanel implements KeyListener{
 					//add a blank bg image.
 				}
 	    	try {
-					ccc = ImageIO.read(new File("./Images/Game1/ccChunk.png"));
+					ccc = ImageIO.read(new File("./Images/Game1/concrete3.jpg"));
 				} catch (IOException e) {
 					e.printStackTrace();
 					//
@@ -306,22 +306,22 @@ public class Game1View extends JPanel implements KeyListener{
 		        case KeyEvent.VK_UP:
 		            // handle up 
 		        	controller.getAnimalModel().setCurrDir(Direction.NORTH);
-		        	controller.getAnimalModel().setSpeedY(-7);
+		        	controller.getAnimalModel().setSpeedY(-5);
 		            break;
 		        case KeyEvent.VK_DOWN:
 		            // handle down 
 		        	controller.getAnimalModel().setCurrDir(Direction.SOUTH);
-		        	controller.getAnimalModel().setSpeedY(7);
+		        	controller.getAnimalModel().setSpeedY(5);
 		            break;
 		        case KeyEvent.VK_LEFT:
 		            // handle left
 		        	controller.getAnimalModel().setCurrDir(Direction.WEST);
-		        	controller.getAnimalModel().setSpeedX(-7);
+		        	controller.getAnimalModel().setSpeedX(-5);
 		            break;
 		        case KeyEvent.VK_RIGHT :
 		            // handle right
 		        	controller.getAnimalModel().setCurrDir(Direction.EAST);
-		        	controller.getAnimalModel().setSpeedX(7);
+		        	controller.getAnimalModel().setSpeedX(5);
 		            break;
 		        case KeyEvent.VK_ESCAPE :
 		            // handle escape (to minimize game)

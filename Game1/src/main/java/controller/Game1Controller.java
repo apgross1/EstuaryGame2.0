@@ -246,7 +246,7 @@ public class Game1Controller{
 	}
 	
 	boolean collisionOccured(AnimalModel a, Object chunk){
-		//Logic for seing if a collision has occurred (swift has this built in so I've been told?)
+		//Logic for seeing if a collision has occurred (swift has this built in so I've been told?)
 		
 		Rectangle chunk_rect = null;
 		Rectangle animal_rect = new Rectangle(a.getLocX(), a.getLocY(), a.getWidth(), a.getHeight());
