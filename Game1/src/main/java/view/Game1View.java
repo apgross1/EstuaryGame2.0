@@ -173,7 +173,7 @@ public class Game1View extends JPanel implements KeyListener{
 				g.fillRect(0, 0, controller.getDim().width, controller.getDim().height);
 				
 				//grass
-				g.drawImage(grass, 0, 0, controller.getDim().width, (int) ((controller.getDim().height)*.15), this);
+				g.drawImage(grass, 0, (int) ((controller.getDim().height)*.05), controller.getDim().width, (int) ((controller.getDim().height)*.10), this);
 				
 				
 				//First draw bar

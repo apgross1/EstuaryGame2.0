@@ -71,7 +71,7 @@ public class Game1Controller{
 		return gabionModel;
 	}
 	public long getTime(){
-		return (30 -(gameTime/1000));
+		return (29 -(gameTime/1000));
 	}
 	public long getIntermTime(){
 		return (3 -(countDownTime/1000));
