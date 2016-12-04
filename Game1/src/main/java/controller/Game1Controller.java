@@ -48,6 +48,8 @@ public class Game1Controller{
 	long startTime;
 	boolean intro;
 	boolean wave;
+	boolean gameOneWon = false;
+	boolean gameOver = false;
 	boolean countdown; //if were in the three second count down mode at the end of round
 	
 	
@@ -86,6 +88,15 @@ public class Game1Controller{
 	public int getWaveY(){
 		return waveHeight;
 	}
+	public boolean getIsGameOver(){
+		return gameOver;
+	}
+	public boolean isWin(){
+		return gameOneWon;
+	}
+	public int getRound(){
+		return overallRound;
+	}
 	
 	//Setters
 	public void reset() {
@@ -107,7 +118,8 @@ public class Game1Controller{
 		}
 		intro = false;
 		while(overallRound < 3 && (gameState == true)){
-			System.out.println(this.gameState);
+			//System.out.println(this.gameState);
+			overallRound++;
 			round();
 		}
 		gameState = false;
@@ -131,7 +143,7 @@ public class Game1Controller{
 		
 		long startTime = System.currentTimeMillis(); //fetch starting time
 		
-		while((System.currentTimeMillis()-startTime)<5000){
+		while((System.currentTimeMillis()-startTime)<30000){
 			if(!this.gameState) { //For testing purposes...just to close the game at will
 				return;
 			}
@@ -196,6 +208,23 @@ public class Game1Controller{
 		g1view.repaintFrame();
 		startTime = System.currentTimeMillis();
 		countdown = true;
+		/*
+		if(overallRound != 3 & bar.getStatus() > 0){
+			//Do nothig
+		}else{
+		*/
+			System.out.println("Why is this not 3 and over 0:" + overallRound + " : " + bar.getStatus());
+			if(overallRound == 3 & bar.getStatus() > 0){
+				//paint you win.
+				System.out.println("You won.");
+				gameOneWon = true;
+				gameOver = true;
+			}else if(bar.getStatus() <= 0){
+				//you lose.
+				gameOneWon = false;
+				gameOver = true;
+			}
+		
 		while((System.currentTimeMillis()-startTime)<3000){ //Print the timer mid screen
 			countDownTime = (System.currentTimeMillis() - startTime); //Used to print mid screen
 			g1view.repaintFrame();
@@ -205,7 +234,7 @@ public class Game1Controller{
 		//reset vars
 		reset();
 		//set game round to 2/3
-		overallRound++;
+		//overallRound++;
 	}
 	
 	public boolean getInCountDown(){
