@@ -233,10 +233,11 @@ public class Game1View extends JPanel implements KeyListener{
 						}
 					}
 				}
-				if(controller.isWave()){
-					//`System.out.println(controller.getWaveY());
+				
+				
+				System.out.println("Here" + controller.getWaveY());
 					g.drawImage(wave, 0, (controller.getWaveY() - 250), controller.getDim().width, 501, this);
-				}
+					
 				if(controller.getInCountDown()){
 					//Print the timer mid screen.
 					g.setFont(new Font("Rockwell", Font.PLAIN, 400)); 
