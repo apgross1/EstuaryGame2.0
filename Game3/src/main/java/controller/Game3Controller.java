@@ -134,7 +134,7 @@ public class Game3Controller implements KeyListener {
 				if(triggerSpawn == die.nextInt(700000)) {
 					if(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive() == false && beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive() == false) {
 						getBeach().spawnConcrPU(getBeach().generatePPUL());
-						getBeach().spawnGabPU(getBeach().generatePPUL());
+						getBeach().spawnGabPU(getBeach().generatePPUL(), false);
 						this.powerUpSpawned();
 					}	
 				}
@@ -346,12 +346,20 @@ public class Game3Controller implements KeyListener {
 	}
 
 	
+	ActionListener singleGabSpawnListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			getBeach().spawnGabPU(getBeach().generatePPUL(), isTutorialActive());
+		}
+	};
+	
 	ActionListener tutorialResetListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("I'm in the listener for tutorial reset");
 			getAnimal().resetPos();
 			getTutorial().setWaveWarning(false);
-			
+			generateSingleGab();
 		}
 	};
 	
@@ -387,6 +395,7 @@ public class Game3Controller implements KeyListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			view.generateWaveCluster(true);
+			resetTutorial();
 		}
 	};
 	
@@ -396,6 +405,12 @@ public class Game3Controller implements KeyListener {
 		keyTimer.start();
 	}
 
+	public void resetTutorial() {
+		Timer resetTimer = new Timer(1000, tutorialResetListener);
+		resetTimer.setRepeats(false);
+		resetTimer.start();
+		
+	}
 	
 	public void generateSingleWave() {
 		Timer waveTimer = new Timer(2000, genSingleWaveListener);
@@ -403,9 +418,17 @@ public class Game3Controller implements KeyListener {
 		waveTimer.start();
 	}
 	
+	public void generateSingleGab() {
+		System.out.println("In timer for gab spawner!");
+		Timer gabTimer = new Timer(6000, singleGabSpawnListener);
+		gabTimer.setRepeats(false);
+		gabTimer.start();
+	}
+	
 	public void activateTutorial() {
 		this.activateKeys();	
 	}
+	
 	
 	
 	public void loadImages() {

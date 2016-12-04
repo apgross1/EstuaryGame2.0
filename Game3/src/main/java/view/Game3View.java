@@ -316,7 +316,7 @@ public class Game3View extends JPanel implements KeyListener{
 		};
 		
 		public void removeWaveFromPauseTimer() {
-			Timer t = new Timer(5000, removeWaveFromPauseListener);
+			Timer t = new Timer(3000, removeWaveFromPauseListener);
 			t.setRepeats(false);
 			t.start();
 		}
@@ -329,6 +329,7 @@ public class Game3View extends JPanel implements KeyListener{
 				waveComponentMap.remove(this.hashCode());
 				this.waveGone = true;
 				frame.revalidate();
+				controller.getAnimal().setWaveHit(false);
 				return;
 			}
 			
@@ -349,7 +350,6 @@ public class Game3View extends JPanel implements KeyListener{
 					if(controller.isTutorialActive()) {
 						wave.pauseWave();
 						removeWaveFromPauseTimer();
-						controller.tut
 					}
 				}
 				
@@ -453,16 +453,7 @@ public class Game3View extends JPanel implements KeyListener{
 		@Override
 		public void paint(Graphics g) {
 			g.drawImage(controller.getAnimal().getGraphics().get("MOVE").get(controller.getAnimal().getGraphicOnDeck()), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
-			if(controller.isTutorialActive()) {
-				drawKeyboard(g);
-			}
-			
 		}
-		
-		public void drawKeyboard(Graphics g) {
-			
-		}
-		
 	}
 	
 	public class ShoreLine extends JComponent {
@@ -698,7 +689,6 @@ public class Game3View extends JPanel implements KeyListener{
 		this.setSkyColor(new Color((int)((this.getSkyColor().getBlue()*0.4)),(int)((this.getSkyColor().getBlue()*(.698))),(int)this.getSkyColor().getBlue()+2,(int)this.getBrightLevel()));
 		
 		this.getTimePanel().setBackground(this.getSkyColor());
-		System.out.println(this.getSkyColor().getBlue());
 	}
 
 
