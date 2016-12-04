@@ -13,6 +13,7 @@ import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -38,6 +39,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.OverlayLayout;
+import javax.swing.Timer;
 import javax.swing.border.Border;
 
 import Enums.AnimGraphics;
@@ -304,8 +306,32 @@ public class Game3View extends JPanel implements KeyListener{
 			waveGone = false;
 			setOpaque(false);
 		}
+		
+		ActionListener removeWaveFromPauseListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				wave.resetWave();
+				
+			}
+		};
+		
+		public void removeWaveFromPauseTimer() {
+			Timer t = new Timer(5000, removeWaveFromPauseListener);
+			t.setRepeats(false);
+			t.start();
+		}
+		
 		@Override
 		public void paint(Graphics g) {
+			if(wave.isDeleteWave()) {
+				g.dispose();
+				layoutContainer.remove(waveComponentMap.get(this.hashCode()));
+				waveComponentMap.remove(this.hashCode());
+				this.waveGone = true;
+				frame.revalidate();
+				return;
+			}
+			
 			if(!this.waveGone) {
 				if(wave.getBounds().intersects(controller.getAnimal().getBounds())) {
 					if(controller.isTutorialActive()) {
@@ -322,9 +348,13 @@ public class Game3View extends JPanel implements KeyListener{
 				if(controller.getAnimal().isWaveHit()) {
 					if(controller.isTutorialActive()) {
 						wave.pauseWave();
+						removeWaveFromPauseTimer();
+						controller.tut
 					}
 				}
-	
+				
+				
+				
 				for(GridTile gr : powerUps) {
 					ConcretePUModel conc = gr.getGridBlock().getConcrPU();
 					GabionPUModel gab = gr.getGridBlock().getGabPU();

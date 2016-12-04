@@ -31,7 +31,7 @@ public class WaveModel {
 	private Double screenSizeX = Toolkit.getDefaultToolkit().getScreenSize().getWidth(); 
 	private HashMap<Frames, JComponent> frames;
 	private boolean wavePause;
-
+	private boolean deleteWave = false;
 
 
 	public WaveModel(int clusterVal, HashMap<Frames, JComponent> f) {
@@ -137,9 +137,10 @@ public class WaveModel {
 	}
 	
 	public void resetWave() {
-		this.resumeWave();
+		/*this.resumeWave();
 		this.setReceed(true);
-		location.setX(frames.get(Frames.ANIMAL).getWidth()+frames.get(Frames.SHORE).getWidth());
+		location.setX(frames.get(Frames.ANIMAL).getWidth()+frames.get(Frames.SHORE).getWidth());*/
+		this.setDeleteWave(true);
 	}
 	
 	public Rectangle getBounds() {
@@ -247,6 +248,18 @@ public class WaveModel {
 
 	public void setVelocity(int velocity) {
 		this.velocity = velocity;
+	}
+
+
+
+	public boolean isDeleteWave() {
+		return deleteWave;
+	}
+
+
+
+	public void setDeleteWave(boolean deleteWave) {
+		this.deleteWave = deleteWave;
 	}
 	
 }

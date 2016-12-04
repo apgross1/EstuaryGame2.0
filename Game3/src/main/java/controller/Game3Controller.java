@@ -345,6 +345,17 @@ public class Game3Controller implements KeyListener {
 		}
 	}
 
+	
+	ActionListener tutorialResetListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			getAnimal().resetPos();
+			getTutorial().setWaveWarning(false);
+			
+		}
+	};
+	
+	
 	ActionListener animalFreeMovement = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
