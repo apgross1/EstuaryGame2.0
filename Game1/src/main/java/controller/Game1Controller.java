@@ -48,6 +48,7 @@ public class Game1Controller{
 	long startTime;
 	boolean intro;
 	boolean wave;
+	boolean storm;
 	boolean gameOneWon = false;
 	boolean gameOver = false;
 	boolean countdown; //if were in the three second count down mode at the end of round
@@ -84,6 +85,9 @@ public class Game1Controller{
 	}
 	public boolean isWave(){
 		return wave;
+	}
+	public boolean isStorm(){
+		return storm;
 	}
 	public int getWaveY(){
 		return waveHeight;
