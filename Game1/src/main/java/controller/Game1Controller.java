@@ -147,7 +147,7 @@ public class Game1Controller{
 		
 		long startTime = System.currentTimeMillis(); //fetch starting time
 		
-		while((System.currentTimeMillis()-startTime)<30000){
+		while((System.currentTimeMillis()-startTime)<3000){
 			if(!this.gameState) { //For testing purposes...just to close the game at will
 				return;
 			}
@@ -188,15 +188,18 @@ public class Game1Controller{
 		startTime = System.currentTimeMillis();
 		while((System.currentTimeMillis()-startTime)<3000){
 			int pct = ((int)(System.currentTimeMillis()-startTime)*100)/3000;
-			
 			float j = ((float) pct)/100;
+			
+			//int pct = ((int)(System.currentTimeMillis()-startTime)*100)/3000;
+			//float j = ((float) pct)/100;
 			
 			//System.out.println(j);
 			//System.out.println(pct);
 			//System.out.println(Math.ceil((pct/100)));//*screenSize.height));
 			
-			waveHeight = (int) (screenSize.height - (Math.ceil(j*screenSize.height)));
-			//System.out.println(waveHeight);
+			//waveHeight = (int) ((screenSize.height) - (Math.ceil(j*screenSize.height)));
+			waveHeight = (int) ((screenSize.height) - (Math.ceil(j*(screenSize.height+500))));
+			
 			g1view.repaintFrame();
 		} //wait 3 seconds
 		wave = false;
@@ -217,7 +220,6 @@ public class Game1Controller{
 			//Do nothig
 		}else{
 		*/
-			System.out.println("Why is this not 3 and over 0:" + overallRound + " : " + bar.getStatus());
 			if(overallRound == 3 & bar.getStatus() > 0){
 				//paint you win.
 				System.out.println("You won.");
