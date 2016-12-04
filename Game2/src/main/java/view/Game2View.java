@@ -1,7 +1,9 @@
 package view;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -9,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
@@ -37,10 +40,28 @@ public class Game2View extends JPanel implements KeyListener{
 	BufferedImage background;
 	BufferedImage character;
 	BufferedImage algaeImg;
-    //final static int frameWidth = 800;
-    //final static int frameHeight = 800;
+	BufferedImage algaeImgMed;
+	BufferedImage algaeImgBad;
+	BufferedImage catFish1;
+	BufferedImage catFish2;
+	BufferedImage catFish3;
+	BufferedImage storm1;
+	BufferedImage storm2;
+	BufferedImage storm3;
+	BufferedImage storm4;
+	int width;
+	int height;
+	int changeCount=0;
+	int frameCount= 0;
 	
-	public Game2View(Game2Controller ctl, JFrame gamef){
+	
+	Random rand = new Random();
+	int randomStorm = rand.nextInt((3 - 1) + 1) + 1;
+	
+	public Game2View(Game2Controller ctl, JFrame gamef, Dimension size){
+		
+		height = (int) size.getHeight();
+		width = (int) size.getWidth();
 		oxyBar = new BarModelG2(200);
 		controller = ctl;
 		frame = gamef;
@@ -50,53 +71,34 @@ public class Game2View extends JPanel implements KeyListener{
 	    
 		loadImages();
     
-		/*
-		algaeWater.setSize(1000, 500);
-		algaeWater.setBackground(Color.BLUE);
-		algaeWater.setVisible(false);
 		
-		shallowWater.setSize(1000, 500);
-		shallowWater.setBackground(Color.CYAN);
-		shallowWater.setVisible(false);
-    	
-    	//Panes
-    	JSplitPane view = new  JSplitPane();
-    	view.setSize(1000, 550);
-    	view.setDividerSize(5);
-    	view.setDividerLocation(100);
-    	view.setEnabled(false);
-    	
-    	
-    	
-    	view.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-    	view.setDividerSize(0);
-    	view.setRightComponent(algaeWater);
-    	view.setLeftComponent(shallowWater);*/
-		
-	     
-	      
-	      
-    	//frame.add(view);
-    	
-    	//addKeyListener
     	frame.addKeyListener(this);
+    	
+		
+		
 	}
-   
     
+	
+	
     
 	public void addController(Game2Controller cont) {
 		controller = cont;
 	}
 	public void repaintFrame(){
 		frame.repaint();
+		
 	}
 	public void loadImages(){
 		try {
-			background = ImageIO.read(new File("./Images/Game2/waterBackgroundG2.png"));
+			background = ImageIO.read(new File("./Images/Game2/background.png"));
 			character = ImageIO.read(new File("./Images/Game2/hsCrab.png"));
-			algaeImg = ImageIO.read(new File("./Images/Game2/Grass.png"));
-			
-			
+			algaeImg = ImageIO.read(new File("./Images/Game2/algae.png"));
+			algaeImgMed = ImageIO.read(new File("./Images/Game2/algaeMedium.png"));
+			algaeImgBad = ImageIO.read(new File("./Images/Game2/algaeBad.png"));
+			storm1 = ImageIO.read(new File("./Images/Game2/storm1.png"));
+			storm2 = ImageIO.read(new File("./Images/Game2/storm2.png"));
+			storm3 = ImageIO.read(new File("./Images/Game2/storm3.png"));
+			storm4 = ImageIO.read(new File("./Images/Game2/storm4.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 	  
@@ -104,33 +106,99 @@ public class Game2View extends JPanel implements KeyListener{
 	}
 	
 	public class Animation extends JComponent {
+		
 		@Override
 		public void paint(Graphics g) {
-			//Draw animal at current position
+			if(controller.getNumMissed()==oxyBar.getDamagePercent()){
+				
+				
+				if(changeCount==1){
+					algaeImg = algaeImgBad;
+				}
+				
+				else{
+				oxyBar.updateDamagePercent();
+				changeCount++;
+				algaeImg=algaeImgMed;
+				}
+			}
 			
-			g.drawImage(background, 0, 0, this);
-			//g.setColor(Color.ORANGE);
-			//g.fillRect(controller.getAnimalModelG2().getLocX(),controller.getAnimalModelG2().getY(),controller.getAnimalModelG2().getWidth(),controller.getAnimalModelG2().getHeight());
+			
+			
+			
+			g.drawImage(background, 0, 0, width, height, this);
+			
+			
+			
 			g.drawImage(character, controller.getAnimalModelG2().getLocX(),controller.getAnimalModelG2().getY(),controller.getAnimalModelG2().getWidth(),controller.getAnimalModelG2().getHeight(), this);		
-			//Draw score data and timer and health
+			
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
 			g.setColor(Color.WHITE);
 			
 			if(controller.getStormStatus()==true){
-				g.setFont(g.getFont().deriveFont(Font.BOLD));
-				g.drawString("It's Storming!" , 700, 50);
-				g.setFont(g.getFont().deriveFont(Font.PLAIN));
+				
+				frameCount++;
+				g.drawImage(storm1, width/3, 0, 300, 300, this);
+				if(randomStorm == 1){
+					if(frameCount>120 && frameCount< 130){
+						g.drawImage(storm4, width/3, 0, 300, 300, this);
+					}
+					 else if(frameCount>120 &&frameCount <140){
+						 g.drawImage(storm3, width/3, 0, 300, 300, this);
+					 }
+					 else if(frameCount>120 &&frameCount <150){
+						 g.drawImage(storm2, width/3, 0, 300, 300, this);
+					 }
+					 else if( frameCount>160){
+						 frameCount=0;
+						 randomStorm = rand.nextInt((3 - 1) + 1) + 1;
+					 }
+				}
+				else if(randomStorm == 2){
+					if(frameCount>120 && frameCount< 130){
+						g.drawImage(storm2, width/3, 0, 300, 300, this);
+					}
+					 else if(frameCount>120 &&frameCount <140){
+						 g.drawImage(storm3, width/3, 0, 300, 300, this);
+					 }
+					 else if(frameCount>120 &&frameCount <150){
+						 g.drawImage(storm4, width/3, 0, 300, 300, this);
+					 }
+					 else if( frameCount>160){
+						 frameCount=0;
+						 randomStorm = rand.nextInt((3 - 1) + 1) + 1;
+					 }
+				}
+				else if(randomStorm == 3){
+					if(frameCount>120 && frameCount< 130){
+						g.drawImage(storm3, width/3, 0, 300, 300, this);
+					}
+					 else if(frameCount>120 &&frameCount <140){
+						 g.drawImage(storm2, width/3, 0, 300, 300, this);
+					 }
+					 else if(frameCount>120 &&frameCount <150){
+						 g.drawImage(storm4, width/3, 0, 300, 300, this);
+					 }
+					 else if( frameCount>160){
+						 frameCount=0;
+						 randomStorm = rand.nextInt((3 - 1) + 1) + 1;
+					 }
+				}
+				 
+				
+				
 			}
-			//temp condition
-			g.drawString("Time: " +controller.getGameTime(), 700, 25);
 			
-			 if(controller.getNumMissed()*10 ==200){
-				 controller.setGameActive(false);
-			 }
-			g.fillRect(400, 18, oxyBar.getMaxLevel()-(controller.getNumMissed()*oxyBar.getDamage()), oxyBar.getWidth());
+			g.drawString("Time: " +controller.getGameTime(), 10, 25);
+			
+			 
+			g.fillRect(150, 45, oxyBar.getMaxLevel()-(controller.getNumMissed()*oxyBar.getDamage()), oxyBar.getWidth());
 			g.setColor(Color.BLACK);
-			g.drawString("Oxygen Level: ", 250, 35);
-			g.drawString("Algae Missed : "+ controller.getNumMissed(), 250, 65);
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
+			 g.setColor(Color.WHITE);
+			g.drawString("Oxygen Level: ", 0, 65);
+			
+			
 			Collection<AlgaeModel> algaeTemp = controller.getAlgaeList();
 			Iterator<AlgaeModel> it = algaeTemp.iterator();
 			
@@ -139,14 +207,36 @@ public class Game2View extends JPanel implements KeyListener{
 				AlgaeModel tmp = it.next();
 				if(tmp.isActive()){
 					g.drawImage(algaeImg, tmp.getLocX(), tmp.getLocY(), tmp.getWidth(), tmp.getHeight(), this);
-					//g.setColor(Color.GREEN);
-					//g.fillRect(tmp.getLocX(), tmp.getLocY(), tmp.getWidth(), tmp.getHeight());
+					if(controller.getStormStatus()==true){
+						g.drawImage(algaeImg, tmp.getRiverAlgaeX(), tmp.getRiverAlgaeY(), algae.getWidth(), algae.getHeight(), this);
+						tmp.moveRiverAlgae();
+					}
+					
 					tmp.move();
+					
 					
 				}
 				
 			
-			
+				if(controller.getNumMissed()*oxyBar.getDamage() >=200){
+					 Font gameLose = new Font("TimesRoman", Font.BOLD, 100);
+					 g.setFont(gameLose);
+					 g.setColor(Color.BLACK);
+					 g.drawString("You have lost ", width/4, height/2);
+					 g.setFont(gameLose);
+					 controller.setGameActive(false);
+					 
+				 }
+				else if(controller.getGameTime()==60){
+					
+						Font gameLose = new Font("TimesRoman", Font.BOLD, 100);
+						 g.setFont(gameLose);
+						 g.setColor(Color.BLACK);
+						 g.drawString("You have won!", width/4, height/2);
+						 g.setFont(gameLose);
+						 controller.setGameActive(false);
+					
+				}
 			
 			
 			}
@@ -179,15 +269,9 @@ public class Game2View extends JPanel implements KeyListener{
 			
 		case KeyEvent.VK_SPACE:
 			
-			/*
-			if(controller.getStormStatus()==true){
-				controller.deactivateStorm();
-			}
-			else{
-				controller.activateStorm();
-			}
-			*/
+			
 			controller.setGameActive(false);
+			frame.dispose();
 		
 		
 		break;
@@ -198,6 +282,10 @@ public class Game2View extends JPanel implements KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		controller.getAnimalModelG2().setSpeed(0);
+		
+	}
+	public void win(){
+		 
 		
 	}
 }

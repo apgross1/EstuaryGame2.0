@@ -1,6 +1,8 @@
 package models;
 
 import java.util.Random;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -9,21 +11,31 @@ public class AlgaeModel {
 	private int locY;
 	private int health;
 	private boolean isActive;
-	private int height = 40;
-	private int width = 40;
-	private int speed = 1;
+	
+	private int speed = 2;
 	private int randomYBound = 0;
 	Random rand = new Random();
-
-	int algaeXBoundMax = 1000;
-	int algaeYBoundMax = 600;
-	int algaeYBoundMin = 100;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int screenWidth = (int) screenSize.getWidth();
+	int screenHeight = (int) screenSize.getHeight();
+	private int height = (int) (screenHeight*.15);
+	private int width = (int) (screenHeight*.15);
+	int algaeXBoundMax = screenWidth;
+	int algaeYBoundMax = (int) (screenHeight-(screenHeight*.1));
+	int algaeYBoundMin = (int) (screenHeight*.32);
 	int maxAlgaeNum = 100;
+	int riverSpawnX ;
+	int riverSpawnY ;
 	
 	
 
 	public AlgaeModel() {
+		
 		randomYBound = rand.nextInt((algaeYBoundMax - algaeYBoundMin) + 1) + algaeYBoundMin;
+
+		riverSpawnX = (int) (screenWidth*.87);
+	    riverSpawnY = (int) (screenHeight*.11);
+	    
 	}
 	
 
@@ -35,13 +47,22 @@ public class AlgaeModel {
 	public int getWidth() {
 		return width;
 	}
-
+	
 	public int getRandomYLocation() {
 		return randomYBound;
 	}
 
 	public void move() {
 		this.setLocX(getLocX() - speed);
+	}
+	public void moveRiverAlgae() {
+		riverSpawnX += speed;
+	}
+	public int getRiverAlgaeY(){
+		return riverSpawnY;
+	}
+	public int getRiverAlgaeX(){
+		return riverSpawnX;
 	}
 
 	public void eaten() {
@@ -51,7 +72,7 @@ public class AlgaeModel {
 	public void spawnAlgaeModel() {
 
 		this.setActive(true);
-		setLocX(950);
+		setLocX((int) (screenWidth+(screenWidth*.1)));
 		setLocY(getRandomYLocation());
 	}
 

@@ -5,6 +5,7 @@ public class BarModelG2 extends BarModelAbstract{
 	private int maxLevel;
 	private int width;
 	private int damage;
+	private int damagePercent;
 	public BarModelG2(){
 		
 	}
@@ -12,6 +13,7 @@ public class BarModelG2 extends BarModelAbstract{
 		this.maxLevel = maxLevel;
 		this.width =20;
 		damage = 10;
+		damagePercent = (getMaxLevel()/getDamage())/3;
 	}
 	public int getDamage(){
 		return damage;
@@ -41,6 +43,12 @@ public class BarModelG2 extends BarModelAbstract{
 	}
 	public void setMaxLevel(int maxLevel) {
 		this.maxLevel = maxLevel;
+	}
+	public int getDamagePercent(){
+		return damagePercent;
+	}
+	public int updateDamagePercent(){
+		return damagePercent += damagePercent;
 	}
 
 }

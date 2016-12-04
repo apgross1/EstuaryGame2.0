@@ -1,5 +1,6 @@
 package models;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,25 +15,32 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 	private boolean isDead;
 	private int height, width;
 	private int y;
-	
-	public AnimalModelG2() {
-		this.height = 75;
-		this.width = 75;
-		this.setHealth(100);
-		this.setLocY(275);
-		this.setLocX(10);
-		this.setSpeed(100);
+	Dimension size;
+	int screenWidth = 0;
+	int screenHeight =0;
+	int charYBoundMin = 0;
+	int charYBoundMax = 0;
+	public AnimalModelG2(Dimension s) {
+		size = s;
+		screenWidth = (int) size.getWidth();
+		screenHeight = (int) size.getHeight();
+		charYBoundMin = (int) (screenHeight-(screenHeight*.1));
+		charYBoundMax = (int) (screenHeight*.32);
+		this.height = (int) (screenHeight*.15);
+		this.width = (int) (screenHeight*.15);
+		
+		
 		this.isDead = false;
 		this.speed = 0;
 		
-		this.y = 275;
+		y = screenHeight/2;
 	}
 	public void tick(){
-		if(y>5 && speed<0)
+		if(y>charYBoundMax  && speed<0)
 		{
 		y+=speed;
 		}
-		else if( y<590 && speed>0 ){
+		else if( y<charYBoundMin && speed>0 ){
 			y+=speed;
 		}
 		

@@ -1,4 +1,4 @@
-import static org.junit.Assert.*;
+/*import static org.junit.Assert.*;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class Game1Tests {
 		myAnimal.move();
 		assertTrue("X should be 0...", myAnimal.getLocX() == 0);
 		
-		/*
+		
 		//Combinations (NE,NW,SE,SW)
 		//NE from (0,1)
 		myAnimal.setLocX(0);
@@ -95,7 +95,7 @@ public class Game1Tests {
 		myAnimal.setCurrDir(enums.Direction.SOUTH_WEST);
 		myAnimal.move();
 		assertTrue("X should be 0 and y should be 1...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 1));
-		*/
+		
 		
 		//Edge cases
 		//West (0,0)
@@ -206,7 +206,7 @@ public class Game1Tests {
 		
 	}
 	
-	/*
+	
 	
 	@Test
 	public void testCalculateDamage() {
@@ -328,6 +328,6 @@ public class Game1Tests {
 				
 			}
 			
-			*/
+			
 
-}
+}*/

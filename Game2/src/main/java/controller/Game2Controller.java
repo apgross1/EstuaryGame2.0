@@ -1,7 +1,9 @@
 package controller;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -36,13 +38,16 @@ public class Game2Controller {
 	
 	int spawnDelay = 2000; //in milliseconds
 	boolean isStorming = false;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int width = (int) screenSize.getWidth();
+	int height = (int) screenSize.getHeight();
 	
 	public Game2Controller(JFrame gamef) {
 		gameFrame = gamef;
-		animal = new AnimalModelG2();
+		animal = new AnimalModelG2(screenSize);
 		water = new WaterModelG2();
 		algae = new AlgaeModel();
-		algaeEater = new AlgaeEaterModel();
+		//algaeEater = new AlgaeEaterModel();
 		
 	}
 
@@ -51,7 +56,7 @@ public class Game2Controller {
 	public void startGame() {
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
-		view = new Game2View(this, gameFrame);
+		view = new Game2View(this, gameFrame, screenSize);
 		view.addController(this);
     	gameFrame.getContentPane().add(view.new Animation());
     	gameFrame.setBackground(Color.GRAY);
@@ -104,10 +109,14 @@ public class Game2Controller {
 				spawnTime = System.currentTimeMillis();
 				
 				}
+				
+			}
+			else{
+				view.win();
 			}
 		}
-	}
 	
+	}
 	
 	public boolean getStormStatus(){
 		return isStorming;
@@ -115,12 +124,12 @@ public class Game2Controller {
 	public void activateStorm(){
 	
 		isStorming = true;
-		setSpawnDelay(getSpawnDelay()-1500);
+		setSpawnDelay(getSpawnDelay()-1700);
 	}
 	public void deactivateStorm(){
 		
 		isStorming = false;
-		setSpawnDelay(getSpawnDelay()+1500);
+		setSpawnDelay(getSpawnDelay()+1700);
 	}
 	public int getSpawnDelay(){
 		return spawnDelay;

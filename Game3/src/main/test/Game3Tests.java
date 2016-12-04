@@ -1,4 +1,4 @@
-import models.AnimalModelG3;
+/*import models.AnimalModelG3;
 import models.BeachModel;
 import models.Pair;
 import models.ConcretePUModel;
@@ -26,18 +26,18 @@ import controller.Game3Controller;
 import enums.Walls;
 import enums.Waves;
 
-/**
+*//**
  * @author Jacob
  *
- */
+ *//*
 
 //UML Changes that need to be made
-	/*
+	
 	 * Gabion model attribute: boolean isActive()
 	 * Concrete model attribute: boolean isActive()
 	 * remove render(Graphics g) from controller, move to view
 	 * added counter to beach model for squares
-	 */
+	 
 public class Game3Tests {
 	//ConcretePUModel
 	//Spawn power-up
@@ -219,3 +219,4 @@ public class Game3Tests {
 		
 	}
 }
+*/

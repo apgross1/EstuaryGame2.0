@@ -12,7 +12,7 @@ public class AlgaeEaterModel {
 	private AnimalModelG2 animalModel ;
 	
 	public AlgaeEaterModel() {
-		animalModel = new AnimalModelG2();
+		//animalModel = new AnimalModelG2();
 		this.setLocX(animalModel.getLocX());
 		this.setLocY(animalModel.getLocY());
 		this.setHealth(100);
