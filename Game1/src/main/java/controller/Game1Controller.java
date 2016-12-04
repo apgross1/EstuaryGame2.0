@@ -201,7 +201,7 @@ public class Game1Controller{
 			waveHeight = (int) ((screenSize.height) - (Math.ceil(j*(screenSize.height+500))));
 			
 			g1view.repaintFrame();
-		} //wait 3 seconds
+		}//wait 3 seconds
 		wave = false;
 		waveHeight = screenSize.height;
 
