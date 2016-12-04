@@ -128,7 +128,7 @@ public class Game3Controller implements KeyListener {
 			animal.findBeachLocation();
 			
 			if(this.isTutorialActive()) {
-				
+				this.collisionPowerUps();
 			}
 			else{
 				if(triggerSpawn == die.nextInt(700000)) {
@@ -322,7 +322,7 @@ public class Game3Controller implements KeyListener {
 				t.stop();
 			}
 			else if (!isTutorialActive()) {
-				view.generateWaveCluster(false);
+				view.generateWaveCluster(false, 0);
 			}
 		}
 	};
@@ -350,13 +350,14 @@ public class Game3Controller implements KeyListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getBeach().spawnGabPU(getBeach().generatePPUL(), isTutorialActive());
+			getAnimal().setRestrictedMovement(false);
+			generateLastWave();
 		}
 	};
 	
 	ActionListener tutorialResetListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("I'm in the listener for tutorial reset");
 			getAnimal().resetPos();
 			getTutorial().setWaveWarning(false);
 			generateSingleGab();
@@ -394,8 +395,15 @@ public class Game3Controller implements KeyListener {
 	ActionListener genSingleWaveListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			view.generateWaveCluster(true);
+			view.generateWaveCluster(true, 1);
 			resetTutorial();
+		}
+	};
+	
+	ActionListener genLastWaveListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			view.generateWaveCluster(true, 2);
 		}
 	};
 	
@@ -406,10 +414,16 @@ public class Game3Controller implements KeyListener {
 	}
 
 	public void resetTutorial() {
-		Timer resetTimer = new Timer(1000, tutorialResetListener);
+		Timer resetTimer = new Timer(3000, tutorialResetListener);
 		resetTimer.setRepeats(false);
 		resetTimer.start();
 		
+	}
+	
+	public void generateLastWave() {
+		Timer lastWaveTimer = new Timer(3000,genLastWaveListener);
+		lastWaveTimer.setRepeats(false);
+		lastWaveTimer.start();
 	}
 	
 	public void generateSingleWave() {
@@ -419,7 +433,6 @@ public class Game3Controller implements KeyListener {
 	}
 	
 	public void generateSingleGab() {
-		System.out.println("In timer for gab spawner!");
 		Timer gabTimer = new Timer(6000, singleGabSpawnListener);
 		gabTimer.setRepeats(false);
 		gabTimer.start();

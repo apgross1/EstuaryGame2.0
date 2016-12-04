@@ -501,8 +501,16 @@ public class Game3View extends JPanel implements KeyListener{
 		public GridBlock getGridBlock() {
 			return gridBlock;
 		}
+		
+		public void drawArrow(Graphics g) {
+			if(controller.isTutorialActive() && gridBlock.getGabPU().getIsActive()) {
+				g.drawImage(controller.getTutorial().getGraphicMap().get(AnimGraphics.ARROW).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY()+40, this);
+			}
+		}
+		
 		@Override
 		public void paint(Graphics g) {
+			drawArrow(g);
 			if(gridBlock.getConcrPU().getIsActive()) {
 				//g.setColor(Color.RED);
 				//g.fillRect((int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
@@ -545,11 +553,11 @@ public class Game3View extends JPanel implements KeyListener{
 		}
 	}
 	
-	public void generateWaveCluster(boolean isTutorial) {
+	public void generateWaveCluster(boolean isTutorial, int clusterVal) {
 
 		int randCluster;
 		if(isTutorial) {
-			randCluster = 1;
+			randCluster = clusterVal;
 		}
 		else {
 			randCluster = WaveClusters.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((WaveClusters.CLUSTER_FIVE.getWaveID() - WaveClusters.CLUSTER_ONE.getWaveID()) + 1));

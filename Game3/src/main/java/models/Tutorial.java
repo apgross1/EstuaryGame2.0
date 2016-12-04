@@ -43,8 +43,14 @@ public class Tutorial {
 			BufferedImage x = ImageIO.read(new File("./Images/Game3/x.png"));
 			xPic.add(x);
 			
+			//Adding arrow
+			ArrayList<BufferedImage> arrowPic = new ArrayList<BufferedImage>();
+			BufferedImage arrow = ImageIO.read(new File("./Images/Game3/green_arrow.png"));
+			arrowPic.add(arrow);
+			
 			graphicMap.put(AnimGraphics.KEYBOARD, keyBoardPics);
 			graphicMap.put(AnimGraphics.BIG_X, xPic);
+			graphicMap.put(AnimGraphics.ARROW, arrowPic);
 			}
 			catch(IOException e) {
 	    		e.printStackTrace();
