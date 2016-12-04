@@ -236,7 +236,7 @@ public class Game1View extends JPanel implements KeyListener{
 				
 				
 				System.out.println("Here" + controller.getWaveY());
-					g.drawImage(wave, 0, (controller.getWaveY() - 250), controller.getDim().width, 501, this);
+					g.drawImage(wave, 0, (controller.getWaveY() /*- 250*/), controller.getDim().width, 2000, this);
 					
 				if(controller.getInCountDown()){
 					//Print the timer mid screen.
@@ -276,7 +276,7 @@ public class Game1View extends JPanel implements KeyListener{
 
 				//Draw tutorial.
 				g.setColor(Color.BLACK);
-				g.drawString("Quick! Collect either gabbions or concrete chuncks to protect the estuary! You decide whats more effective.", (int)(.2*(controller.getDim().width)), (int)(.5*(controller.getDim().height)));
+				g.drawString("Quick! Collect either gabbions or concrete chuncks to protect the estuary! You decide what is more effective.", (int)(.2*(controller.getDim().width)), (int)(.5*(controller.getDim().height)));
 				g.drawImage(keypic, (int)(controller.getDim().width * .5)-182, (int)(controller.getDim().height * .6), 364, 164, this);
 				//g.drawImage(img, x, y, width, height, observer)
 				
