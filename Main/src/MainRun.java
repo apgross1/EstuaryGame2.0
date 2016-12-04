@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.TexturePaint;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -25,7 +27,11 @@ public class MainRun extends JPanel implements KeyListener{
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	static JFrame gameFrame = new JFrame();
 	static boolean gameStarted = false;
+	JPanel button_pannel = new JPanel();
+	JPanel bgp = new JPanel();
 	JButton start = new JButton("Start");
+	
+	private TexturePaint backG;
 	
 	
 	//Game1Controller g1 = new Game1Controller(gameFrame);
@@ -36,11 +42,9 @@ public class MainRun extends JPanel implements KeyListener{
 	
 	public MainRun(){
 		//System.out.println("Here");
-		start.setSize(new Dimension(40, 40));
-		//start.setLocation(new Point(50,50));
+		button_pannel.add(start);
 		
 		gameFrame.getContentPane().add(new MainScreen());
-		gameFrame.getContentPane().add(start);
 		gameFrame.setBackground(Color.gray);
 		
         
@@ -53,9 +57,11 @@ public class MainRun extends JPanel implements KeyListener{
 		gameFrame.setVisible(true);
 		gameFrame.setResizable(false);
 		
+		
 		//Load images 
 		try{
 			bg = ImageIO.read(new File("./Images/2D_estuary.jpg"));
+			backG = new TexturePaint(bg, new Rectangle(0, 0, screenSize.width, screenSize.height));
 			
 		}catch(Exception e){
 			//
@@ -63,17 +69,27 @@ public class MainRun extends JPanel implements KeyListener{
         
         //addKeyListener
 		gameFrame.addKeyListener(this);
+		System.out.println("First");
+		gameFrame.add(button_pannel);
+		gameFrame.revalidate();
     }
 	public void repaintFrame(){
 		gameFrame.repaint();
 	}
-	
+	public void addButtons(){
+		System.out.print("Second");
+		gameFrame.add(button_pannel);
+		gameFrame.revalidate();
+	}
 	
 	public class MainScreen extends JComponent {
 		@Override
 		public void paint(Graphics g) {
-			System.out.println("Here");
-			g.drawImage(bg, 0,0, screenSize.width, screenSize.height, this);
+			
+			((Graphics2D) g).setPaint(backG);
+			g.fillRect(0, 0, screenSize.width, screenSize.height);
+			
+			//addButtons();
 		}
 	}
 	

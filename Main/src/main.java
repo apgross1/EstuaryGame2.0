@@ -18,10 +18,7 @@ public class main {
 		
 		MainRun game = new MainRun();
 		
-		//game.start();
-		
-		while(true){
 			game.repaintFrame();
-		}
+			
 	}
 }
