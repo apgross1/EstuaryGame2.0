@@ -37,6 +37,14 @@ public class BeachModel {
 		this.initializeBeach();
 	}
 	
+	public void reset() {
+		beachGrid = new HashMap<Pair,GridBlock>();
+		gridLayers = new HashMap<WaveClusters, List<Pair>>();
+		positionGrid = new int[7][7];
+		orderedPairs = new ArrayList<Pair>();
+		this.initializeBeach();
+	}
+	
 	public void initializeBeach() {
 		
 		ArrayList<Pair> pairList = this.generatePPUL();

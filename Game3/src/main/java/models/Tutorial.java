@@ -15,12 +15,14 @@ public class Tutorial {
 	private int keyBoardPicOnDeck;
 	private boolean keyboardStop;
 	private boolean waveWarning;
+	private boolean dialogueOn;
 	
 
 	public Tutorial() {
 		graphicMap = new HashMap<AnimGraphics,ArrayList<BufferedImage>>();
 		keyBoardPicOnDeck = 0;
 		waveWarning = false;
+		dialogueOn = false;
 	}
 	
 	public void addPics() {
@@ -48,9 +50,15 @@ public class Tutorial {
 			BufferedImage arrow = ImageIO.read(new File("./Images/Game3/green_arrow.png"));
 			arrowPic.add(arrow);
 			
+			//Adding final dialogue
+			ArrayList<BufferedImage> dialoguePic = new ArrayList<BufferedImage>();
+			BufferedImage dialogue = ImageIO.read(new File("./Images/Game3/Dialogue2.png"));
+			dialoguePic.add(dialogue);
+			
 			graphicMap.put(AnimGraphics.KEYBOARD, keyBoardPics);
 			graphicMap.put(AnimGraphics.BIG_X, xPic);
 			graphicMap.put(AnimGraphics.ARROW, arrowPic);
+			graphicMap.put(AnimGraphics.DIALOGUE, dialoguePic);
 			}
 			catch(IOException e) {
 	    		e.printStackTrace();
@@ -87,6 +95,14 @@ public class Tutorial {
 
 	public void setWaveWarning(boolean waveWarning) {
 		this.waveWarning = waveWarning;
+	}
+
+	public boolean isDialogueOn() {
+		return dialogueOn;
+	}
+
+	public void setDialogueOn(boolean dialogueOn) {
+		this.dialogueOn = dialogueOn;
 	}
 
 }

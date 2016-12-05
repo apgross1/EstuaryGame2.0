@@ -74,7 +74,7 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	public JLabel animalPos;
 	public int brightLevel;
-	public Color skyColor;
+	public Color skyColor; 
 
 	
 	public Game3View(Game3Controller ctl, JFrame gameF){
@@ -180,7 +180,6 @@ public class Game3View extends JPanel implements KeyListener{
 
 		frame.add(play_ground);
 		frame.setVisible(true);
-    	
     	//addKeyListener
     	frame.addKeyListener(this);
     	frame.pack();
@@ -191,6 +190,7 @@ public class Game3View extends JPanel implements KeyListener{
     	frameMap.put(Frames.ANIMAL, animalPane);
     	frameMap.put(Frames.TIMER, timePanel);
     	frameMap.put(Frames.SHORE, water);
+    	frameMap.put(Frames.TUTORIAL, tutorialPane);
     	
    
     	animalPos = new JLabel();
@@ -202,6 +202,7 @@ public class Game3View extends JPanel implements KeyListener{
 		animalPos.setVisible(true);
 		timePanel.revalidate();
 		frame.revalidate();
+		
 	
 	}
  
@@ -247,10 +248,15 @@ public class Game3View extends JPanel implements KeyListener{
 	
 	
 	public class JTutorial extends JComponent {
+
 		@Override
 		public void paint(Graphics g) {
-			drawKeyboard(g);
-			drawX(g);
+			if(controller.isTutorialActive()) {
+				drawKeyboard(g);
+				drawX(g);
+				drawDialogue(g);
+			}
+			
 		}
 		
 		public void drawKeyboard(Graphics g) {
@@ -264,6 +270,14 @@ public class Game3View extends JPanel implements KeyListener{
 				g.drawImage((controller.getTutorial().getGraphicMap().get(AnimGraphics.BIG_X).get(0)), controller.getAnimal().getLocX(),controller.getAnimal().getLocY(), this);
 			}
 		}
+		
+		public void drawDialogue(Graphics g) {
+			if(controller.getTutorial().isDialogueOn()) {
+				g.drawImage((controller.getTutorial().getGraphicMap().get(AnimGraphics.DIALOGUE).get(0)), (int)(frameMap.get(Frames.ANIMAL).getWidth()*.6), (int)(frameMap.get(Frames.ANIMAL ).getHeight()*.30), this);
+			}
+		}
+		
+	
 	}
 	
 	public class Hurricane extends JComponent {
@@ -340,7 +354,7 @@ public class Game3View extends JPanel implements KeyListener{
 					}
 					else {
 						controller.getAnimal().setWaveHit(true);
-						controller.setGameActive(false);
+						//controller.setGameActive(false);
 					}
 					
 					return;
@@ -560,6 +574,7 @@ public class Game3View extends JPanel implements KeyListener{
 			randCluster = clusterVal;
 		}
 		else {
+			System.out.println("Generating non-tutorial clusters");
 			randCluster = WaveClusters.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((WaveClusters.CLUSTER_FIVE.getWaveID() - WaveClusters.CLUSTER_ONE.getWaveID()) + 1));
 		}
 		for(int i = 0; i < 250; i++) {
@@ -690,13 +705,19 @@ public class Game3View extends JPanel implements KeyListener{
 	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
 		this.frameMap = frameMap;
 	}
-
 	
 	public void brightenSky() {
 		this.setBrightLevel(this.getBrightLevel()-1);
-		this.setSkyColor(new Color((int)((this.getSkyColor().getBlue()*0.4)),(int)((this.getSkyColor().getBlue()*(.698))),(int)this.getSkyColor().getBlue()+2,(int)this.getBrightLevel()));
+		if((this.getSkyColor().getBlue()+4) < 256) {
+			this.setSkyColor(new Color((int)((this.getSkyColor().getBlue()*0.4)),(int)((this.getSkyColor().getBlue()*(.698))),(int)this.getSkyColor().getBlue()+4,(int)this.getBrightLevel()));
+		}
+		
 		
 		this.getTimePanel().setBackground(this.getSkyColor());
+	}
+	
+	public void resetSky() {
+		setSkyColor(new Color(0,0,0));
 	}
 
 

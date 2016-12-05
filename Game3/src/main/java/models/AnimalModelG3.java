@@ -102,6 +102,17 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		
 	}
 	
+	public void reset() {
+		this.setLocX(250);
+		this.setLocY(250);
+		this.setSpeedX(0);
+		this.setSpeedY(0);
+		boundHit = false;
+		restrictedMovement = false;
+		wallHit = false;
+		waveHit = false;
+	}
+	
 	public void resetPos() {
 		this.setLocX(250);
 		this.setLocY(250);
