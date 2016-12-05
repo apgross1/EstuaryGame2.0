@@ -4,7 +4,8 @@ public enum Frames {
 	TIMER(0),
 	ANIMAL(1),
 	SHORE(2),
-	BEACH_GRID(3);
+	BEACH_GRID(3), 
+	TUTORIAL(4);
 	
 	private final int frameID;
 	

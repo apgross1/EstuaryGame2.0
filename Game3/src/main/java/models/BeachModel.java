@@ -37,6 +37,14 @@ public class BeachModel {
 		this.initializeBeach();
 	}
 	
+	public void reset() {
+		beachGrid = new HashMap<Pair,GridBlock>();
+		gridLayers = new HashMap<WaveClusters, List<Pair>>();
+		positionGrid = new int[7][7];
+		orderedPairs = new ArrayList<Pair>();
+		this.initializeBeach();
+	}
+	
 	public void initializeBeach() {
 		
 		ArrayList<Pair> pairList = this.generatePPUL();
@@ -133,21 +141,36 @@ public class BeachModel {
 		this.gridLayers = gridLayers;
 	}
 
-	public void spawnGabPU(ArrayList<Pair> ppul) {
+	public void spawnGabPU(ArrayList<Pair> ppul, boolean isTutorial) {
 		if(ppul.size() == 0) {
 			return;
 		}
 		else{
-			Random randLoc = new Random();
-			Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
-			setGabPair(this.findPairInGrid(pair));
-			GabionPUModel tempGab = new GabionPUModel();
-			tempGab.setFrameMap(frameMap);
-			tempGab.addPics();
-			tempGab.setLocation(this.findPairInGrid(pair));
-			tempGab.setIsActive(true);
-			beachGrid.get(this.findPairInGrid(pair)).setGabPU(tempGab);
-			positionGrid[pair.getY()][pair.getX()] = Walls.GABION_GAME3.getValue();
+			
+			if(isTutorial) {
+				
+				Pair pair = new Pair(2,2);
+				setGabPair(this.findPairInGrid(pair));
+				GabionPUModel tempGab = new GabionPUModel();
+				tempGab.setFrameMap(frameMap);
+				tempGab.addPics();
+				tempGab.setLocation(this.findPairInGrid(pair));
+				tempGab.setIsActive(true);
+				beachGrid.get(this.findPairInGrid(pair)).setGabPU(tempGab);
+				positionGrid[pair.getY()][pair.getX()] = Walls.GABION_GAME3.getValue();
+			}
+			else{
+				Random randLoc = new Random();
+				Pair pair = ppul.get(randLoc.nextInt(ppul.size()));
+				setGabPair(this.findPairInGrid(pair));
+				GabionPUModel tempGab = new GabionPUModel();
+				tempGab.setFrameMap(frameMap);
+				tempGab.addPics();
+				tempGab.setLocation(this.findPairInGrid(pair));
+				tempGab.setIsActive(true);
+				beachGrid.get(this.findPairInGrid(pair)).setGabPU(tempGab);
+				positionGrid[pair.getY()][pair.getX()] = Walls.GABION_GAME3.getValue();
+			}
 		}
 	}
 	
