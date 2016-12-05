@@ -204,6 +204,14 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		return beachLocation;
 	}
 
+	public Pair getBeachLocation() {
+		return beachLocation;
+	}
+
+	public void setBeachLocation(Pair beachLocation) {
+		this.beachLocation = beachLocation;
+	}
+
 	public HashMap<Frames, JComponent> getFrames() {
 		return frames;
 	}
