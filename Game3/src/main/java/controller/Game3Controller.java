@@ -225,7 +225,7 @@ public class Game3Controller implements KeyListener {
 					beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).setVacant(true);
 				}
 				
-				System.out.println("Wall Timer stopped");
+				//System.out.println("Wall Timer stopped");
 			}
 			Object time = e.getSource();
 			Timer myTime = (Timer) time;
