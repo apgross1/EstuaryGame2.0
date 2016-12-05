@@ -93,8 +93,11 @@ public class Game1View extends JPanel implements KeyListener{
 	BufferedImage clam;
 	BufferedImage ccc;
 	BufferedImage keypic;
-	BufferedImage grass;
+	//BufferedImage grass;
 	BufferedImage wave;
+	BufferedImage grassone;
+	BufferedImage grasstwo;
+	BufferedImage grassthree;
 	
 	
     public void loadImgs(){
@@ -149,16 +152,26 @@ public class Game1View extends JPanel implements KeyListener{
 	    		} catch (IOException e) {
 	    			e.printStackTrace();
 	    		}
+	    	/*
 	    	try {
 	    		grass = ImageIO.read(new File("./Images/Game1/grasss.png"));
 	    		} catch (IOException e) {
 	    			e.printStackTrace();
 	    		}
+	    		*/
 	    	try {
 	    		wave = ImageIO.read(new File("./Images/Game1/whave.png"));
 	    		} catch (IOException e) {
 	    			e.printStackTrace();
 	    		}
+	    	try {
+	    		grassone = ImageIO.read(new File("./Images/Game1/healthy.png"));
+	    		grasstwo = ImageIO.read(new File("./Images/Game1/lesshealthy.png"));
+	    		grassthree = ImageIO.read(new File("./Images/Game1/nothealthy.png"));
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		}
+	    	
     	}
     
     public void drawCenteredString(Graphics g, String text, Font font) {
@@ -189,8 +202,21 @@ public class Game1View extends JPanel implements KeyListener{
 				g.fillRect(0, 0, controller.getDim().width, controller.getDim().height);
 				
 				//grass
-				g.drawImage(grass, 0, (int) ((controller.getDim().height)*.05), controller.getDim().width, (int) ((controller.getDim().height)*.10), this);
-				
+				//g.drawImage(grass, 0, (int) ((controller.getDim().height)*.05), controller.getDim().width, (int) ((controller.getDim().height)*.10), this);
+				int grass_to_print = controller.getDim().width / grassone.getWidth();
+				if(controller.getBarModel().getStatus() > 75){
+					for(int i=0; i< grass_to_print; i++){
+						g.drawImage(grassone, (grassone.getWidth() * i), (int) ((controller.getDim().height)*.05), (controller.getDim().width/ grass_to_print), (int) ((controller.getDim().height)*.10), this);
+					}
+				}else if(controller.getBarModel().getStatus() > 50){
+					for(int i=0; i< grass_to_print; i++){
+						g.drawImage(grasstwo, (grassone.getWidth() * i), (int) ((controller.getDim().height)*.05), (controller.getDim().width/ grass_to_print), (int) ((controller.getDim().height)*.10), this);
+					}
+				}else{//health below 50
+					for(int i=0; i< grass_to_print; i++){
+						g.drawImage(grassthree, (grassone.getWidth() * i), (int) ((controller.getDim().height)*.05), (controller.getDim().width/ grass_to_print), (int) ((controller.getDim().height)*.10), this);
+					}
+				}
 				
 				//First draw bar
 				g.setColor(Color.BLACK);
