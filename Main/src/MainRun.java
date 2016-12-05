@@ -44,7 +44,6 @@ public class MainRun extends JPanel implements KeyListener{
 		this.frame.setUndecorated(true);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setResizable(false);
-		this.frame.setBackground(Color.BLACK);
 		
 		
 		//Assigning layouts to each panel/frame
