@@ -208,7 +208,8 @@ public class Game1View extends JPanel implements KeyListener{
 					g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), (int)(.25*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
 					g.setColor(Color.GREEN);
 					g.drawString("Time Left: "+ controller.getTime(), (int)(.65*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
-					
+
+					/*
 					g.drawString("Health: " + controller.getBarModel().getStatus(), (int)(.35*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
 					
 					g.drawRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), 200, 20); //Behind health bar doesn't change
@@ -216,10 +217,21 @@ public class Game1View extends JPanel implements KeyListener{
 					g.setColor(Color.RED);
 					int health = (controller.getBarModel().getStatus()*2);
 					g.fillRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), health, 20);
+					*/
 					
 					g.drawString("Round: " + controller.getRound() + " / 3", (int)(.9*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
 					
 				}
+				g.setFont(new Font("Haettenschweiler", Font.PLAIN, 30)); 
+				g.setColor(Color.GREEN);
+				g.drawString("Health: " + controller.getBarModel().getStatus(), (int)(.35*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
+				
+				g.drawRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), 200, 20); //Behind health bar doesn't change
+				
+				g.setColor(Color.RED);
+				int health = (controller.getBarModel().getStatus()*2);
+				g.fillRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), health, 20);
+				
 				
 				//Draw wall sprites (First this gives an ugly error, second can we set the bg of the jpannel rather than paint on jframe?)
 				//g.drawImage(gabSeq.get(controller.getGabionWallModel().getCurrentOysters()), 0, (int)(controller.getDim().height * .15), controller.getDim().width, (int)(controller.getDim().height * .15), this);
