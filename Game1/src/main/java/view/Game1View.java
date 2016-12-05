@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Paint;
 import java.awt.GradientPaint;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -159,6 +160,21 @@ public class Game1View extends JPanel implements KeyListener{
 	    			e.printStackTrace();
 	    		}
     	}
+    
+    public void drawCenteredString(Graphics g, String text, Font font) {
+        // Get the FontMetrics
+        FontMetrics metrics = g.getFontMetrics(font);
+        // Determine the X coordinate for the text
+        int x = (controller.getDim().width - metrics.stringWidth(text)) / 2;
+        // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
+        int y = ((controller.getDim().height - metrics.getHeight()) / 2) + metrics.getAscent();
+        // Set the font
+        g.setFont(font);
+        // Draw the String
+        g.drawString(text, x, y);
+        // Dispose the Graphics
+        g.dispose();
+    }
  
 	
     public class Animation extends JComponent {
@@ -257,20 +273,23 @@ public class Game1View extends JPanel implements KeyListener{
 				if(controller.getInCountDown()){
 					if(controller.getIsGameOver() & !controller.isWin()){
 						//lose
-						g.setFont(new Font("Haettenschweiler", Font.PLAIN, 50));
+						//g.setFont(new Font("Haettenschweiler", Font.PLAIN, 50));
 						g.setColor(Color.RED);
-						g.drawString("Unfortunatly you were unable to protect the estuary, next time try using more gabbions.", (int)(.15*(controller.getDim().width)), (int)(.5*(controller.getDim().height)));
+						drawCenteredString(g, "Unfortunatly you were unable to protect the estuary, next time try using more gabbions.", new Font("Haettenschweiler", Font.PLAIN, 50));
+						//g.drawString("Unfortunatly you were unable to protect the estuary, next time try using more gabbions.", (int)(.15*(controller.getDim().width)), (int)(.5*(controller.getDim().height)));
 						
 					}else if(controller.getIsGameOver() & controller.isWin()){
-						g.setFont(new Font("Haettenschweiler", Font.PLAIN, 50));
+						//g.setFont(new Font("Haettenschweiler", Font.PLAIN, 50));
 						g.setColor(Color.GREEN);
-						g.drawString("Great Job! You were able to protect the estuary from the hurricane!", (int)(.2*(controller.getDim().width)), (int)(.5*(controller.getDim().height)));
+						drawCenteredString(g, "Great Job! You were able to protect the estuary from the hurricane!", new Font("Haettenschweiler", Font.PLAIN, 50));
+						//g.drawString("Great Job! You were able to protect the estuary from the hurricane!", (int)(.2*(controller.getDim().width)), (int)(.5*(controller.getDim().height)));
 						
 					}else{
 						//Just a regular count down.
-						g.setFont(new Font("Rockwell", Font.PLAIN, 400)); 
+						//g.setFont(new Font("Rockwell", Font.PLAIN, 400)); 
 						g.setColor(Color.BLACK);
-						g.drawString("" + controller.getIntermTime(), (int)(.5 *(controller.getDim().width)), (int)(.5 *(controller.getDim().height)));
+						//g.drawString("" + controller.getIntermTime(), (int)(.5 *(controller.getDim().width)), (int)(.5 *(controller.getDim().height)));
+						drawCenteredString(g, "" + controller.getIntermTime(), new Font("Rockwell", Font.PLAIN, 400));
 					}
 				}
 			}else{
@@ -290,8 +309,10 @@ public class Game1View extends JPanel implements KeyListener{
 				
 				//Draw tutorial.
 				g.setColor(Color.BLACK);
-				g.drawString("Quick! Collect either gabbions or concrete chuncks to protect the estuary! You decide what is more effective.", (int)(.2*(controller.getDim().width)), (int)(.5*(controller.getDim().height)));
+				
+				//g.drawString("Quick! Collect either gabbions or concrete chuncks to protect the estuary! You decide what is more effective.", (int)(.2*(controller.getDim().width)), (int)(.5*(controller.getDim().height)));
 				g.drawImage(keypic, (int)(controller.getDim().width * .5)-182, (int)(controller.getDim().height * .6), 364, 164, this);
+				drawCenteredString(g, "Quick! Collect either gabbions or concrete chuncks to protect the estuary! You decide what is more effective.", new Font("Haettenschweiler", Font.PLAIN, 50));
 				//g.drawImage(img, x, y, width, height, observer)
 				
 				
