@@ -1,8 +1,13 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
@@ -13,9 +18,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Game1Controller;
@@ -23,79 +30,60 @@ import controller.Game2Controller;
 import controller.Game3Controller;
 
 public class MainRun extends JPanel implements KeyListener{
-	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	static JFrame gameFrame = new JFrame();
 	static boolean gameStarted = false;
-	JPanel button_pannel = new JPanel();
-	JPanel bgp = new JPanel();
-	JButton start = new JButton("Start");
+	JButton startButton = new JButton("Start Game");
+	JLabel backGround = new JLabel();
+	JFrame frame;
 	
-	private TexturePaint backG;
+	public MainRun(JFrame frame){
+		//Initializing frame
+		this.frame = frame;
+		this.frame.setSize(screenSize.width, screenSize.height); 
+		this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		this.frame.setUndecorated(true);
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.frame.setResizable(false);
+		this.frame.setBackground(Color.BLACK);
+		
+		
+		//Assigning layouts to each panel/frame
+		this.frame.setLayout(new GridBagLayout());
+		this.backGround.setLayout(new GridBagLayout());
+		
+		//Defining constraint for start button
+		startButton.setPreferredSize(new Dimension(400,100));
+		GridBagConstraints b1c = new GridBagConstraints();
+		b1c.gridx = (int)(this.backGround.getWidth()/2.5);
+		b1c.gridy = (int)(this.backGround.getHeight()/2);
 	
-	
-	//Game1Controller g1 = new Game1Controller(gameFrame);
-	//Game2Controller g2 = new Game2Controller(gameFrame);
-	//Game3Controller g3 = new Game3Controller(gameFrame);
+		
+		//Defining constraint for background
+		backGround.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
+		ImageIcon icon = new ImageIcon("./Images/2D_estuary.jpg"); 
+		backGround.setIcon(icon);
+		GridBagConstraints bRc = new GridBagConstraints();
+		bRc.gridx = 0;
+		bRc.gridy = 0;
+		bRc.gridwidth = frame.getWidth();
+		bRc.gridheight = frame.getHeight();
 
-	BufferedImage bg;
-	
-	public MainRun(){
-		//System.out.println("Here");
-		button_pannel.add(start);
+		//Adding panels/components
+		backGround.add(startButton, b1c);
+		frame.add(backGround, bRc);
 		
-		gameFrame.getContentPane().add(new MainScreen());
-		gameFrame.setBackground(Color.gray);
-		
-        
-        //Full screen
-		gameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		gameFrame.setUndecorated(true);
- 
-		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		gameFrame.setSize(screenSize.width, screenSize.height); 
-		gameFrame.setVisible(true);
-		gameFrame.setResizable(false);
-		
-		
-		//Load images 
-		try{
-			bg = ImageIO.read(new File("./Images/2D_estuary.jpg"));
-			backG = new TexturePaint(bg, new Rectangle(0, 0, screenSize.width, screenSize.height));
-			
-		}catch(Exception e){
-			//
-		}
-        
         //addKeyListener
-		gameFrame.addKeyListener(this);
+		this.frame.addKeyListener(this);
 		System.out.println("First");
-		gameFrame.add(button_pannel);
-		gameFrame.revalidate();
+
+		this.frame.revalidate();
+		this.frame.setVisible(true);
     }
+	
 	public void repaintFrame(){
-		gameFrame.repaint();
+		frame.repaint();
 	}
-	public void addButtons(){
-		System.out.print("Second");
-		gameFrame.add(button_pannel);
-		gameFrame.revalidate();
-	}
-	
-	public class MainScreen extends JComponent {
-		@Override
-		public void paint(Graphics g) {
-			
-			((Graphics2D) g).setPaint(backG);
-			g.fillRect(0, 0, screenSize.width, screenSize.height);
-			
-			//addButtons();
-		}
-	}
-	
-	
-	
-	
+
 	
 	//For clicking on the screen when the user wants to start / load / etc.
 	@Override

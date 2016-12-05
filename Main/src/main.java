@@ -15,10 +15,14 @@ import view.Game1View.Animation;
 public class main {
 	
 	public static void main(String[] args) {
+		JFrame gameFrame = new JFrame();
 		
-		MainRun game = new MainRun();
-		
+		MainRun game = new MainRun(gameFrame);
+		while(true) {
+			
 			game.repaintFrame();
+		}
+			
 			
 	}
 }
