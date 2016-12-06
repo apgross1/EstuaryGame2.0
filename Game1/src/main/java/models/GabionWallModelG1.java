@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import models.ConcreteWallModelG1.ConcreteChunk;
-
 public class GabionWallModelG1 extends WallModelAbstract{
 	private int maxOysters;
 	private int currentOysters;

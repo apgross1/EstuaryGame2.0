@@ -1,24 +1,16 @@
 import static org.junit.Assert.*;
 
 import java.awt.Dimension;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 import org.junit.Test;
 
-import models.AnimalModel;
 import models.GabionWallModelG1.GabionChunk;
 import models.ConcreteWallModelG1;
 import models.ConcreteWallModelG1.ConcreteChunk;
-import models.GabionWallModelG1;
-import models.BarModel;
 import controller.Game1Controller;
 
 public class Game1Tests {
@@ -45,8 +37,6 @@ public class Game1Tests {
 	//Low-level testing
 	//AnimalModel
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	private int screenHeight = 0;
-	private int screenWidth = 0;
 	JFrame gameFrame = new JFrame();
 	
 	@Test
@@ -267,7 +257,7 @@ public class Game1Tests {
 		Wall.setMaxBlocks(20);
 		Wall.setactiveBlocksOnBoard(0);
 
-		int BeforeSpawn = Wall.getActiveBlocks();
+		//int BeforeSpawn = Wall.getActiveBlocks();
 
 		Wall.spawnChunk(200, 200);
 		assertTrue("Should be 1", Wall.getChunks().size() == 1);
@@ -309,9 +299,9 @@ public class Game1Tests {
 	@Test
 	public void testCollision(){
 		//models.AnimalModel myAnimal = new models.AnimalModel(screenSize);
-		Game1Controller process = new Game1Controller();
-		Rectangle chunk_rect = null;
-		Rectangle animal_rect = new Rectangle(process.getAnimalModel().getLocX(), process.getAnimalModel().getLocY(),process.getAnimalModel().getWidth(), process.getAnimalModel().getHeight());
+		//Game1Controller process = new Game1Controller();
+		//Rectangle chunk_rect = null;
+		//Rectangle animal_rect = new Rectangle(process.getAnimalModel().getLocX(), process.getAnimalModel().getLocY(),process.getAnimalModel().getWidth(), process.getAnimalModel().getHeight());
 	}
 	
 	//wave hit

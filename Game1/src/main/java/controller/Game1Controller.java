@@ -1,17 +1,9 @@
 package controller;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
-import enums.Direction;
 import models.AnimalModel;
 import models.BarModel;
 import models.ConcreteWallModelG1;
@@ -24,7 +16,6 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
-import javax.swing.Timer;
 
 public class Game1Controller{
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -39,8 +30,6 @@ public class Game1Controller{
 	//Vars
 	private boolean gameState;
 	
-	private ArrayList<BufferedImage> gabSeq;// = new ArrayList<BufferedImage>(30);;
-	//private BufferedImage gabSeq;
 	int overallRound = 0;
 	int waveHeight = screenSize.height;
 	long gameTime;
@@ -126,7 +115,6 @@ public class Game1Controller{
 		}
 		intro = false;
 		while(overallRound < 3 && (gameState == true)){
-			//System.out.println(this.gameState);
 			overallRound++;
 			round();
 		}
@@ -136,18 +124,11 @@ public class Game1Controller{
 	
 	
 	public void round() {
-		
-		//Add intro animation here....
-		
-		
 		startTime = System.currentTimeMillis();
 		long lastTime = System.nanoTime();
 		final double ammountOfTicks = 60.0;	
 		double ns = 1000000000 /ammountOfTicks;
 		double delta = 0;
-		//long timer = System.currentTimeMillis();
-		
-		
 		
 		long startTime = System.currentTimeMillis(); //fetch starting time
 		
@@ -194,14 +175,6 @@ public class Game1Controller{
 			int pct = ((int)(System.currentTimeMillis()-startTime)*100)/3000;
 			float j = ((float) pct)/100;
 			
-			//int pct = ((int)(System.currentTimeMillis()-startTime)*100)/3000;
-			//float j = ((float) pct)/100;
-			
-			//System.out.println(j);
-			//System.out.println(pct);
-			//System.out.println(Math.ceil((pct/100)));//*screenSize.height));
-			
-			//waveHeight = (int) ((screenSize.height) - (Math.ceil(j*screenSize.height)));
 			waveHeight = (int) ((screenSize.height) - (Math.ceil(j*(screenSize.height+500))));
 			
 			g1view.repaintFrame();
@@ -219,11 +192,7 @@ public class Game1Controller{
 		g1view.repaintFrame();
 		startTime = System.currentTimeMillis();
 		countdown = true;
-		/*
-		if(overallRound != 3 & bar.getStatus() > 0){
-			//Do nothig
-		}else{
-		*/
+		
 			if(overallRound == 3 & bar.getStatus() > 0){
 				//paint you win.
 				System.out.println("You won.");

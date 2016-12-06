@@ -6,6 +6,7 @@ import controller.Game2Controller;
 import controller.Game3Controller;
 
 public class main {
+	main(){}
 	
 	public static void main(String[] args) {
 		JFrame gameFrame = new JFrame();

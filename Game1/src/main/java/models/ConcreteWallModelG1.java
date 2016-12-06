@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import models.GabionWallModelG1.GabionChunk;
-
 public class ConcreteWallModelG1 extends WallModelAbstract {
 	private int maxBlocks;
 	private int currentBlocks;
@@ -117,17 +115,14 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	@Override
 	public void spawn(boolean gameStart, int numChunksRemoved) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void setMaxBlocks(int i) {
 	maxBlocks = i;
-		
 	}
 
 	public void setCurrentBlocks(int i) {
 		currentBlocks = i;
-		
 	}
 	public void setactiveBlocksOnBoard(int i){
 		activeBlocksOnBoard = i;

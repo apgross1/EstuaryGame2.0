@@ -1,18 +1,12 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Paint;
-import java.awt.GradientPaint;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -21,20 +15,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import java.awt.BasicStroke;
-import java.awt.Shape;
-import java.awt.font.GlyphVector;
-import java.awt.geom.AffineTransform;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
 
 import java.io.File;
 import controller.Game1Controller;
@@ -43,7 +27,12 @@ import models.ConcreteWallModelG1.ConcreteChunk;
 import models.GabionWallModelG1.GabionChunk;
 
 public class Game1View extends JPanel implements KeyListener{
-    private Game1Controller controller;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private Game1Controller controller;
     private JFrame frame;
     private TexturePaint sandTexture;
     BufferedImage[][] pics;
@@ -176,6 +165,11 @@ public class Game1View extends JPanel implements KeyListener{
  
 	
     public class Animation extends JComponent {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		@Override
 		public void paint(Graphics g) {
 			if(!controller.isIntro()){

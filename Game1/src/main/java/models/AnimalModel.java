@@ -1,10 +1,7 @@
 package models;
 
 import java.awt.Dimension;
-
-import controller.Game1Controller;
 import enums.Direction;
-
 
 public class AnimalModel extends AnimalModelAbstract {
 	
@@ -14,11 +11,9 @@ public class AnimalModel extends AnimalModelAbstract {
 	private int screenWidth = 0;
 	private int speedX = 0;
 	private int speedY = 0;
-	private Dimension screenSize;
 	
 	public AnimalModel(Dimension s) {
 		//Set screen resolution for movement
-		screenSize = s;
 		height = 100;//animal pic
 		width = 100;//animal pic
 		System.out.println(s);
@@ -56,7 +51,6 @@ public class AnimalModel extends AnimalModelAbstract {
 	
 	@Override
 	public void move() {
-		//System.out.println(getLocY());
 		if(getCurrDir() == Direction.EAST){
 			if(getLocX() < (screenWidth-width) + speedX){
 			this.setLocX(this.getLocX() + speedX);
