@@ -29,7 +29,7 @@ import javax.swing.Timer;
 public class Game1Controller{
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	//Models
-	private AnimalModel animal = new AnimalModel(this);
+	private AnimalModel animal = new AnimalModel(screenSize);
 	ConcreteWallModelG1 wallModel = new ConcreteWallModelG1();
 	GabionWallModelG1 gabionModel = new GabionWallModelG1();
 	BarModel bar = new BarModel();
@@ -42,15 +42,24 @@ public class Game1Controller{
 	private ArrayList<BufferedImage> gabSeq;// = new ArrayList<BufferedImage>(30);;
 	//private BufferedImage gabSeq;
 	int overallRound = 0;
+	int waveHeight = screenSize.height;
 	long gameTime;
 	long countDownTime;
 	long startTime;
 	boolean intro;
+	boolean wave;
+	boolean storm;
+	boolean gameOneWon = false;
+	boolean gameOver = false;
 	boolean countdown; //if were in the three second count down mode at the end of round
 	
 	
 	public Game1Controller(JFrame gameF) {
 		g1view = new Game1View(this, gameF);
+	}
+	//for testing purposes
+	public Game1Controller(){
+		
 	}
 	
 	//Getters
@@ -67,7 +76,7 @@ public class Game1Controller{
 		return gabionModel;
 	}
 	public long getTime(){
-		return (30 -(gameTime/1000));
+		return (29 -(gameTime/1000));
 	}
 	public long getIntermTime(){
 		return (3 -(countDownTime/1000));
@@ -77,6 +86,24 @@ public class Game1Controller{
 	}
 	public boolean isIntro(){
 		return intro;
+	}
+	public boolean isWave(){
+		return wave;
+	}
+	public boolean isStorm(){
+		return storm;
+	}
+	public int getWaveY(){
+		return waveHeight;
+	}
+	public boolean getIsGameOver(){
+		return gameOver;
+	}
+	public boolean isWin(){
+		return gameOneWon;
+	}
+	public int getRound(){
+		return overallRound;
 	}
 	
 	//Setters
@@ -99,7 +126,8 @@ public class Game1Controller{
 		}
 		intro = false;
 		while(overallRound < 3 && (gameState == true)){
-			System.out.println(this.gameState);
+			//System.out.println(this.gameState);
+			overallRound++;
 			round();
 		}
 		gameState = false;
@@ -159,6 +187,30 @@ public class Game1Controller{
 			collisionDetectionLoop();
 			g1view.repaintFrame();
 		}
+		//Do wave
+		wave = true;
+		startTime = System.currentTimeMillis();
+		while((System.currentTimeMillis()-startTime)<3000){
+			int pct = ((int)(System.currentTimeMillis()-startTime)*100)/3000;
+			float j = ((float) pct)/100;
+			
+			//int pct = ((int)(System.currentTimeMillis()-startTime)*100)/3000;
+			//float j = ((float) pct)/100;
+			
+			//System.out.println(j);
+			//System.out.println(pct);
+			//System.out.println(Math.ceil((pct/100)));//*screenSize.height));
+			
+			//waveHeight = (int) ((screenSize.height) - (Math.ceil(j*screenSize.height)));
+			waveHeight = (int) ((screenSize.height) - (Math.ceil(j*(screenSize.height+500))));
+			
+			g1view.repaintFrame();
+		}//wait 3 seconds
+		wave = false;
+		waveHeight = screenSize.height;
+
+		
+		
 		gameTime = 30000; // Set the time to 30000 so the repaint says 0 time remaining.
 		//Caclulate score and then reset for round 2
 		//math fn 
@@ -167,6 +219,22 @@ public class Game1Controller{
 		g1view.repaintFrame();
 		startTime = System.currentTimeMillis();
 		countdown = true;
+		/*
+		if(overallRound != 3 & bar.getStatus() > 0){
+			//Do nothig
+		}else{
+		*/
+			if(overallRound == 3 & bar.getStatus() > 0){
+				//paint you win.
+				System.out.println("You won.");
+				gameOneWon = true;
+				gameOver = true;
+			}else if(bar.getStatus() <= 0){
+				//you lose.
+				gameOneWon = false;
+				gameOver = true;
+			}
+		
 		while((System.currentTimeMillis()-startTime)<3000){ //Print the timer mid screen
 			countDownTime = (System.currentTimeMillis() - startTime); //Used to print mid screen
 			g1view.repaintFrame();
@@ -176,7 +244,7 @@ public class Game1Controller{
 		//reset vars
 		reset();
 		//set game round to 2/3
-		overallRound++;
+		//overallRound++;
 	}
 	
 	public boolean getInCountDown(){
@@ -184,7 +252,7 @@ public class Game1Controller{
 	}
 	
 	boolean collisionOccured(AnimalModel a, Object chunk){
-		//Logic for seing if a collision has occurred (swift has this built in so I've been told?)
+		//Logic for seeing if a collision has occurred (swift has this built in so I've been told?)
 		
 		Rectangle chunk_rect = null;
 		Rectangle animal_rect = new Rectangle(a.getLocX(), a.getLocY(), a.getWidth(), a.getHeight());
@@ -243,7 +311,8 @@ public class Game1Controller{
 		
 		//Prevent health going up
 		if(protection <= 100){
-			new_status = (bar.getStatus() - (bar.getMaxLevel() - protection));
+			//changed this because it wasn't correct
+			new_status = (bar.getStatus() - protection);
 		}else{
 			new_status = (bar.getStatus() - (bar.getMaxLevel() - 100));
 		}
