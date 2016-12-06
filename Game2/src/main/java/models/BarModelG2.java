@@ -18,19 +18,32 @@ public class BarModelG2 extends BarModelAbstract{
 	public int getDamage(){
 		return damage;
 	}
+	public void setDamage(int d){
+		damage=d;
+	}
 	public int getWidth(){
 		return width;
 	}
-	@Override
-	public void decrease(int i){
+	public void setWidth(int w) {
+		width = w;
 		
 	}
 	@Override
+	public void decrease(int i){
+		width -=i;
+	}
+	@Override
 	public boolean isEmpty(){
-		return false;
+		if(width == 0){
+		return true;
+		}
+		else{
+			return false;
+		}
 	}
 	@Override
 	public void increase(int i) {
+		damage =+ i;
 	}
 	public int getStatus() {
 		return status;
@@ -50,5 +63,6 @@ public class BarModelG2 extends BarModelAbstract{
 	public int updateDamagePercent(){
 		return damagePercent += damagePercent;
 	}
+	
 
 }

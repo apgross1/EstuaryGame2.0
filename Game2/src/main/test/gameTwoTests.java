@@ -1,386 +1,499 @@
-//
-//import static org.junit.Assert.*;
-//
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
-//import java.util.ArrayList;
-//
-//import javax.swing.Timer;
-//
-//import org.junit.Test;
-//
-//import controller.Game2Controller;
-//import models.AlgaeEaterModel;
-//import models.AlgaeModel;
-//import models.AnimalModelG2;
-//import models.BarModelG2;
-//import models.WaterModelG2;
-//
-//
-///*
-////
-//////Functions to test:
-/////*
-//// * AlgaeModel Eater Model:
-//// *	void healthUp()
-//// *	void healthDown()
-//// *	
-//// *
-//// *AnimalModelG2 Model:
-//// *	void speedUP()
-//// *	void speedDown()
-//// * 
-//// *
-//// *BarModelG2 Model:
-//// *	void increase()
-//// *	void decrease()
-//// *	bool isEmpty()
-//// * 
-//// *
-//// *WaterModelG2 Model:
-//// *	void incConcentration()
-//// *	void decOxyg()
-//// *	
-//// *AlgaeModel Model:
-//// *	void eaten();
-//// */
-////public class gameTwoTests {
-////	
-////	//First model
-////	@Test
-////	public void testAEHealthUp() {
-////		AnimalModelG2 a = new AnimalModelG2(); //Default crab.
-////		AlgaeEaterModel eater = new AlgaeEaterModel(a.getLocX(), a.getLocY());
-////		eater.setHealth(90);
-////		eater.healthUp(); // Increase 10.
-////		assertEquals(eater.getHealth(), 100);
-////	}
-////	@Test
-////	public void testAEHealthDown(){
-////		AnimalModelG2 a = new AnimalModelG2();
-////		AlgaeEaterModel eater = new AlgaeEaterModel(a.getLocX(), a.getLocY());
-////		eater.setHealth(100);
-////		eater.healthDown(); //decrease 10
-////		assertEquals(eater.getHealth(), 90);
-////	}
-////	
-////	@Test
-////	public void testincConcentration(){
-////		//if AlgaeModel gets through, incConcentration
-////		WaterModelG2 w = new WaterModelG2();
-////		w.setAlgConcentration(0);
-////		w.incrAlgConcentration();
-////		assertEquals(w.getAlgConcentration(), 25);
-////		
-////	}
-////	
-////	@Test
-////	public void testdecOxyg(){
-////		//if AlgaeModel gets through, decrease Oxygen
-////		WaterModelG2 w = new WaterModelG2();
-////		w.setHealth(100);
-////		w.decOxygen();
-////		assertEquals(w.getOxLevel(), 75); //starts at 100, decrements by 25?
-////		
-////	}
-////	
-////	@Test
-////	public void testDecreaseBarModelG2(){
-////		//if AlgaeModel gets through decreaseBarModelG2 will be called
-////		BarModelG2 b = new BarModelG2(50);// 50 is initial health
-////		b.decrease(1);//Assume decreases by one.(status--)
-////		assertEquals(b.getStatus(), 49);
-////	}
-////	
-////	@Test
-////	public void testInrecaseBarModelG2(){
-////		//if AlgaeModel gets through increaseBarModelG2 will be called
-////		BarModelG2 b = new BarModelG2(49);// 49 is initial health
-////		b.increase(1);//Assume increase by one.(status++)
-////		assertEquals(b.getStatus(), 50);
-////	}
-////	
-////	@Test
-////	public void testisEmpty(){
-////		BarModelG2 b = new BarModelG2(0);
-////		assertEquals(b.isEmpty(), 0);
-////	}
-////	
-////	@Test
-////	public void testisEmpty2(){
-////		BarModelG2 b = new BarModelG2(100);
-////		assertEquals(b.isEmpty(), 1);
-////	}
-////	
-////	
-////	@Test
-////	public void testdecreaseSpeed(){
-////		AnimalModelG2 a = new AnimalModelG2();
-////		a.setSpeed(100);
-////		a.decreaseSpeed();
-////		assertEquals(a.getSpeed(), 75);
-////	}
-////	
-////	@Test
-////	public void testIncreaseSpeed(){
-////		AnimalModelG2 a = new AnimalModelG2();
-////		a.setSpeed(75);
-////		a.increaseSpeed();
-////		assertEquals(a.getSpeed(), 100);
-////	}
-////	
-////	
-////	@Test
-////	public void testeaten(){
-////		AlgaeModel a = new AlgaeModel();
-////		a.eaten();
-////		assertEquals(a.isActive(), 0);
-////	}
-////	
-////	@Test
-////	public void testeaten2(){
-////		AlgaeModel a = new AlgaeModel();
-////		assertEquals(a.isActive(), 1);
-////	}
-////	
-////	@Test
-////	public void testAnimalModelG2Movement() {
-////		AnimalModelG2 myAnimalModelG2 = new AnimalModelG2();
-////		myAnimalModelG2.setLocX(0);;
-////		myAnimalModelG2.setLocY(0);
-////		
-////		//Basic cardinal directions with no edge cases
-////		//South from origin
-////		myAnimalModelG2.setCurrDir(enums.Direction.SOUTH);
-////		myAnimalModelG2.move();
-////		assertTrue("Y should be 1... ", myAnimalModelG2.getLocY()==1);
-////		
-////		//North from 1 down from origin (to avoid edge case)
-////		myAnimalModelG2.setCurrDir(enums.Direction.NORTH);
-////		myAnimalModelG2.move();
-////		assertTrue("Y should be 0...", myAnimalModelG2.getLocY() == 0);
-////		
-////	}
-////
-/////*
-//// * 
-//// * BEGIN TEST FOR CONTROLLER
-//// * 
-////*/
-/////*
-//// * Update in UML:
-//// * 	- Change touchEater and touchAlgaeModel to one void detectCollision(obj a, obj b)
-//// * 	- Move create storm in controller to view.
-//// * 	- Remove pickedUp() as nothing is ever being picked up in game 2
-//// * 	- Remove duplicate createStorm()(both of them) and remove activateStorm().
-//// * 	- Remove all the getters for quarter, half, full etc.
-//// * 	- Remove takeDamadge because it will be handeled in the collision detection.
-//// * 	- Remove isDead because its just a getter and not needed in the controller.
-//// * 	- Remove BarModelG2Full and BarModelG2Empty as they are just getters..
-//// * 	- Remove decrease speed as that is taken care of by the collision detection ie the WaterModelG2s health goes down as does speed.
-//// * 	- Update start / end game to listener to one gameStateListener
-//// * 	- Remove addobj and removobj functions
-//// * 
-//// * 
-//// * - Isnt it redundant to have a addObject(obj j) function because arraylist has its own library?
-//// * 		- We left it in the UML and tests below but I dont think its necessary
-//// 
-////	
-////	//Case when AlgaeModel hits AlgaeModel eater
-////	@Test
-////	public void testdetectCollisionSuccess(){
-////		//Is this function called once a collision is already detected.... or 
-////		//does it listen for action event. and then update something in the model.
-////		//Either way, this one function consolidates the two functions in the UML
-////		//touchEater() and touchAlgaeModel()
-////		AlgaeEaterModel eater = new AlgaeEaterModel(50, 30);
-////		AlgaeModel alg = new AlgaeModel(50, 30);
-////		
-////		
-////		Game2Controller.detectCollision(eater, alg); //Listener should see they are touching
-////		//Should update alg.isActive() in model
-////		assertEquals(alg.isActive(), 0); //Now dead.
-////	}
-////	
-////	//Case when AlgaeModel is not touching either the eater or the sanctuary
-////	@Test
-////	public void testdetectCollisionFail(){
-////		AlgaeEaterModel eater = new AlgaeEaterModel(20, 70);
-////		AlgaeModel alg = new AlgaeModel(50, 30);
-////		
-////		
-////		Game2Controller.detectCollision(eater, alg); //Listener should see they are touching
-////		//Should not update alg.isActive() in model
-////		assertEquals(alg.isActive(), 1); //Alg should still be alive.
-////	}
-////	
-////	
-////	//This will 1) kill the AlgaeModel, 2) it will decrease the health of the WaterModelG2 (which is also the speed attribute).
-////	@Test
-////	public void testdetectCollisionWithSanctuary(){
-////		AlgaeModel alg = new AlgaeModel(1, 1);
-////		WaterModelG2 w = new WaterModelG2();
-////		
-////		
-////		Game2Controller.detectCollision(w, alg); // Should kill the AlgaeModel, and decrease the sanctuary (WaterModelG2) health.
-////		assertEquals(alg.isActive(), 0);
-////		assertEquals(w.getHealth(), 90); // Assuming that perfect health is 100 and that a collision deducts 10
-////	}
-////	
-////	@Test
-////	public void testincLvl(){
-////		//Action event when AlgaeModel collides?
-////		//not sure what this function does.
-////	}
-////	
-////	@Test
-////	public void testdecLvl(){
-////		//Same as above, don't understand its purpose
-////	}
-////	
-////	@Test
-////	public void testRenderGraphics(){
-////		//This is likely not testable as this communicates the picture to the view.
-////	}
-////
-////	/*@Test
-////	public void testGameStateListener(){
-////		ActionListener actionListener = new ActionListener() {
-////			@Override
-////			public void actionPerformed(ActionEvent e) {
-////				endGameListener();
-////			}
-////		};
-////	    
-////		Timer time = new Timer(2000, actionListener);
-////		
-////		// Pretend this is our games timer
-////		
-////		 //In a constant loop?
-////		
-////		
-////		//1) Ends timer / stops loops
-////		//2) Triggers end animation?
-////	}
-////}
-////*/
-//
-//public class gameTwoTests {
-//	@Test
-//	public void testAEHealthUp() {
-//		AnimalModelG2 a = new AnimalModelG2(); //Default crab.
-//		AlgaeEaterModel eater = new AlgaeEaterModel(a.getLocX(), a.getLocY());
-//		eater.setHealth(90);
-//		eater.healthUp(); // Increase 10.
-//		assertEquals(eater.getHealth(), 100);
-//	}
-//	@Test
-//	public void testAEHealthDown(){
-//		AnimalModelG2 a = new AnimalModelG2();
-//		AlgaeEaterModel eater = new AlgaeEaterModel(a.getLocX(), a.getLocY());
-//		eater.setHealth(100);
-//		eater.healthDown(); //decrease 10
-//		assertEquals(eater.getHealth(), 90);
-//	}
-//	
-//	@Test
-//	public void testincConcentration(){
-//		//if AlgaeModel gets through, incConcentration
-//		WaterModelG2 w = new WaterModelG2();
-//		w.setAlgConcentration(0);
-//		w.incrAlgConcentration();
-//		assertEquals(w.getAlgConcentration(), 25);
-//		
-//	}
-//	
-//	@Test
-//	public void testdecOxyg(){
-//		//if AlgaeModel gets through, decrease Oxygen
-//		WaterModelG2 w = new WaterModelG2();
-//		w.setHealth(100);
-//		w.decOxygen();
-//		assertEquals(w.getOxLevel(), 75); //starts at 100, decrements by 25?
-//		
-//	}
-//	
-//	@Test
-//	public void testDecreaseBarModelG2(){
-//		//if AlgaeModel gets through decreaseBarModelG2 will be called
-//		BarModelG2 b = new BarModelG2(50);// 50 is initial health
-//		b.decrease(1);//Assume decreases by one.(status--)
-//		assertEquals(b.getStatus(), 49);
-//	}
-//	
-//	@Test
-//	public void testInrecaseBarModelG2(){
-//		//if AlgaeModel gets through increaseBarModelG2 will be called
-//		BarModelG2 b = new BarModelG2(49);// 49 is initial health
-//		b.increase(1);//Assume increase by one.(status++)
-//		assertEquals(b.getStatus(), 50);
-//	}
-//	
-//	@Test
-//	public void testisEmpty(){
-//		BarModelG2 b = new BarModelG2(0);
-//		assertEquals(b.isEmpty(), 0);
-//	}
-//	
-//	@Test
-//	public void testisEmpty2(){
-//		BarModelG2 b = new BarModelG2(100);
-//		assertEquals(b.isEmpty(), 1);
-//	}
-//	
-//	
-//	@Test
-//	public void testdecreaseSpeed(){
-//		AnimalModelG2 a = new AnimalModelG2();
-//		a.setSpeed(100);
-//		a.decreaseSpeed();
-//		assertEquals(a.getSpeed(), 75);
-//	}
-//	
-//	@Test
-//	public void testIncreaseSpeed(){
-//		AnimalModelG2 a = new AnimalModelG2();
-//		a.setSpeed(75);
-//		a.increaseSpeed();
-//		assertEquals(a.getSpeed(), 100);
-//	}
-//	
-//	@Test
-//	public void testeaten(){
-//		AlgaeModel a = new AlgaeModel();
-//		a.eaten();
-//		assertEquals(a.isActive(), 0);
-//	}
-//	
-//	@Test
-//	public void testeaten2(){
-//		AlgaeModel a = new AlgaeModel();
-//		assertEquals(a.isActive(), 1);
-//	}
-//	
-//	@Test
-//	public void testAnimalModelG2Movement() {
-//		AnimalModelG2 myAnimalModelG2 = new AnimalModelG2();
-//		myAnimalModelG2.setLocX(50);
-//		myAnimalModelG2.setLocY(250);
-//		
-//		myAnimalModelG2.setCurrDir(enums.Direction.NORTH);
-//		myAnimalModelG2.move();
-//		assertTrue( myAnimalModelG2.getLocY()==250-myAnimalModelG2.getSpeed());
-//		
-//	}
-//	@Test
-//	public void testAnimalModelG2MovementSouth() {
-//		AnimalModelG2 myAnimalModelG2 = new AnimalModelG2();
-//		myAnimalModelG2.setLocX(50);
-//		myAnimalModelG2.setLocY(250);
-//		
-//		myAnimalModelG2.setCurrDir(enums.Direction.SOUTH);
-//		myAnimalModelG2.move();
-//		assertTrue( myAnimalModelG2.getLocY()==250+myAnimalModelG2.getSpeed());
-//		
-//	}
-//}
+
+import static org.junit.Assert.*;
+
+import javax.swing.JFrame;
+
+import org.junit.Test;
+import controller.Game2Controller;
+
+import models.AlgaeModel;
+import models.AnimalModelG2;
+import models.BarModelG2;
+
+
+
+
+
+public class gameTwoTests {
+	//Animal Tests
+	@Test
+	public void testAnimalMove(){
+		AnimalModelG2 a = new AnimalModelG2();
+		int y = a.getLocY();
+		a.move();
+		assertEquals(y+a.getVelocity(), a.getLocY());
+	}
+	
+	@Test
+	public void testSetLocY(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setLocY(50);
+		
+		assertEquals(50, a.getLocY());
+	}
+	
+	@Test
+	public void testGetLocY(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setLocY(100);
+		
+		assertEquals(100, a.getLocY());
+	}
+	@Test
+	public void testSetHealth(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setHealth(-10);
+		assertEquals(-10, a.getHealth());
+	}
+	@Test
+	public void testGetHealth(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setHealth(0);
+		assertEquals(0, a.getHealth());
+	}
+	
+	@Test
+	public void testHealthUp(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setHealth(99);
+		a.healthUp();
+		assertEquals(100, a.getHealth());
+	}
+	@Test
+	public void testHealthDown(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setHealth(10000);
+		a.healthDown();
+		assertEquals(9999, a.getHealth());
+	}
+	@Test
+	public void testSetHeight(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setHeight(-7);
+		assertEquals(-7, a.getHeight());
+	}
+	@Test
+	public void testGetHeight(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setHeight(1000);
+		assertEquals(1000, a.getHeight());
+	}
+	
+	@Test
+	public void testSetWidth(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setWidth(500);
+		assertEquals(500, a.getWidth());
+	}
+	@Test
+	public void testGetWidth(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setWidth(19876);
+		assertEquals(19876, a.getWidth());
+	}
+	@Test
+	public void testSetVelocity(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setVelocity(-10);
+		assertEquals(-10, a.getVelocity());
+	}
+	@Test
+	public void testGetVelocity(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setVelocity(75);
+		assertEquals(75, a.getVelocity());
+	}
+	@Test
+	public void testIncreaseVelocity(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setVelocity(10);
+		a.increaseVelocity();
+		assertEquals(11, a.getVelocity());
+	}
+	@Test
+	public void testDecreaseVelocity(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setVelocity(0);
+		a.decreaseVelocity();
+		assertEquals(-1, a.getVelocity());
+	}
+	
+	@Test
+	public void testSetIsDead(){
+		AnimalModelG2 a = new AnimalModelG2();
+		a.setIsDead(true);
+		
+		assertEquals(true, a.getIsDead());
+	}
+	@Test
+	public void testGetIsDead(){
+		AnimalModelG2 a = new AnimalModelG2();
+		
+		assertEquals(false, a.getIsDead());
+	}
+	
+	
+	
+	
+	
+	//Algae Tests
+	@Test
+	public void testSetAlgaeHeight(){
+		AlgaeModel a = new AlgaeModel();
+		a.setHeight(100);
+		assertEquals(100, a.getHeight());
+	}
+	
+	@Test
+	public void testGetAlgaeHeight(){
+		AlgaeModel a = new AlgaeModel();
+		a.setHeight(0);
+		assertEquals(0, a.getHeight());
+	}
+	
+	@Test
+	public void testSetAlgaeWidth(){
+		AlgaeModel a = new AlgaeModel();
+		a.setWidth(150);
+		assertEquals(150, a.getWidth());
+	}
+	
+	@Test
+	public void testGetAlgaeWidth(){
+		AlgaeModel a = new AlgaeModel();
+		a.setWidth(5);
+		assertEquals(5, a.getWidth());
+	}
+	
+	@Test
+	public void testSetRiverAlgaeY(){
+		AlgaeModel a = new AlgaeModel();
+		a.setRiverAlgaeY(100);
+		assertEquals(100, a.getRiverAlgaeY());
+	}
+	@Test
+	public void testGetRiverAlgaeY(){
+		AlgaeModel a = new AlgaeModel();
+		a.setRiverAlgaeY(-590);
+		assertEquals(-590, a.getRiverAlgaeY());
+	}
+	
+	@Test
+	public void testSetRiverAlgaeX(){
+		AlgaeModel a = new AlgaeModel();
+		a.setRiverAlgaeX(0);
+		assertEquals(0, a.getRiverAlgaeX());
+	}
+	@Test
+	public void testGetRiverAlgaeX(){
+		AlgaeModel a = new AlgaeModel();
+		a.setRiverAlgaeX(-2340);
+		assertEquals(-2340, a.getRiverAlgaeX());
+	}
+	@Test
+	public void testSetMaxAlage(){
+		AlgaeModel a = new AlgaeModel();
+		a.setMaxAlgae(1000);
+		assertEquals(1000, a.getMaxAlgae());
+	}
+	
+	@Test
+	public void testGetMaxAlgae(){
+		AlgaeModel a = new AlgaeModel();
+		a.setMaxAlgae(-23);
+		assertEquals(-23, a.getMaxAlgae());
+	}
+	
+	@Test
+	public void testSetAlgLocY(){
+		AlgaeModel a = new AlgaeModel();
+		a.setLocY(-60);
+		assertEquals(-60, a.getLocY());
+	}
+	
+	@Test
+	public void testGetAlgLocY(){
+		AlgaeModel a = new AlgaeModel();
+		a.setLocY(50);
+		assertEquals(50, a.getLocY());
+	}
+	
+	@Test
+	public void testSetAlgLocX(){
+		AlgaeModel a = new AlgaeModel();
+		a.setLocX(-100);
+		assertEquals(-100, a.getLocX());
+	}
+	
+	@Test
+	public void testGetAlgLocX(){
+		AlgaeModel a = new AlgaeModel();
+		a.setLocX(0);
+		assertEquals(0, a.getLocX());
+	}
+	
+	@Test
+	public void testAlgSetVelocity(){
+		AlgaeModel a = new AlgaeModel();
+		a.setVelocity(-10);
+		assertEquals(-10, a.getVelocity());
+	}
+	@Test
+	public void testAlgGetVelocity(){
+		AlgaeModel a = new AlgaeModel();
+		a.setVelocity(75);
+		assertEquals(75, a.getVelocity());
+	}
+	
+	
+	@Test
+	public void testIsActive(){
+		AlgaeModel a = new AlgaeModel();
+		a.spawnAlgaeModel();
+		assertEquals(true, a.isActive());
+	}
+	@Test
+	public void testSetActive(){
+		AlgaeModel a = new AlgaeModel();
+		a.spawnAlgaeModel();
+		a.setActive(false);
+		assertEquals(false, a.isActive());
+	}
+	
+	@Test
+	public void testGetYMax(){
+		AlgaeModel a = new AlgaeModel();
+		a.setYMax(100);
+		assertEquals(100, a.getYMax());
+	}
+	@Test
+	public void testSetYMax(){
+		AlgaeModel a = new AlgaeModel();
+		a.setYMax(-1);
+		assertEquals(-1, a.getYMax());
+	}
+	
+	@Test
+	public void testGetXMax(){
+		AlgaeModel a = new AlgaeModel();
+		a.setXMax(56);
+		assertEquals(56, a.getXMax());
+	}
+	@Test
+	public void testSetXMax(){
+		AlgaeModel a = new AlgaeModel();
+		a.setXMax(-50);
+		assertEquals(-50, a.getXMax());
+	}
+	
+	@Test
+	public void testGetYMin(){
+		AlgaeModel a = new AlgaeModel();
+		a.setYMin(-10);
+		assertEquals(-10, a.getYMin());
+	}
+	@Test
+	public void testSetYMin(){
+		AlgaeModel a = new AlgaeModel();
+		a.setYMin(170);
+		assertEquals(170, a.getYMin());
+	}
+	
+	
+	
+	@Test
+	public void testGetRandomYLocation(){
+		AlgaeModel a = new AlgaeModel();
+		int randY = a.getRandomYLocation();
+		assertEquals(true, (randY <a.getYMax()&& randY>a.getYMin()));
+		
+	}
+	
+	@Test
+	public void testAlgaeMoveRiverAlgae(){
+		AlgaeModel a = new AlgaeModel();
+		
+		int x = a.getRiverAlgaeX();
+		a.moveRiverAlgae();
+		assertEquals(x+a.getVelocity(), a.getRiverAlgaeX());
+	}
+	
+	
+	
+	
+	@Test
+	public void testAlgaeMove(){
+		AlgaeModel a = new AlgaeModel();
+		int x = a.getLocX();
+		a.move();
+		assertEquals(x-a.getVelocity(), a.getLocX());
+	}
+	@Test
+	public void testAlgaeEaten(){
+		AlgaeModel a = new AlgaeModel();
+		a.spawnAlgaeModel();
+		assertEquals(true, a.isActive());
+		a.eaten();
+		assertEquals(false, a.isActive());
+		
+	}
+	@Test
+	public void testAlgaeSpawn(){
+		AlgaeModel a = new AlgaeModel();
+		a.spawnAlgaeModel();
+		assertEquals(true, a.getLocY()<a.getYMax()&& a.getLocY()>a.getYMin());
+		
+		
+	}
+	
+	
+	
+	//Bar Model Tests
+	
+	@Test
+	public void testBarConstructor(){
+		BarModelG2 b = new BarModelG2(100);
+		
+		assertEquals(100, b.getMaxLevel());
+		
+		
+		
+	}
+	@Test
+	public void testUpdatePercentage(){
+		BarModelG2 b = new BarModelG2();
+		int damage = b.getDamagePercent()+b.getDamagePercent();
+		b.updateDamagePercent();
+		assertEquals(damage, b.getDamagePercent());
+		
+		
+		
+	}
+	@Test
+	public void testGetMaxLevel(){
+		BarModelG2 b = new BarModelG2();
+		b.setMaxLevel(100);
+		assertEquals(100, b.getMaxLevel());
+		
+		
+		
+	}
+	
+	@Test
+	public void testGetStatus(){
+		BarModelG2 b = new BarModelG2();
+		b.setStatus(-1);
+		assertEquals(-1, b.getStatus());
+		
+		
+		
+	}
+	
+	@Test
+	public void testIncrease(){
+		BarModelG2 b = new BarModelG2();
+		int damage = b.getDamage();
+		b.increase(10);
+		assertEquals(damage+10, b.getDamage());
+		
+		
+		
+	}
+	@Test
+	public void testisEmpty(){
+		BarModelG2 b = new BarModelG2();
+		b.setWidth(0);
+		assertEquals(true, b.isEmpty());
+		b.setWidth(10);
+		assertEquals(false, b.isEmpty());
+		
+		
+	}
+	@Test
+	public void testDecrease(){
+		BarModelG2 b = new BarModelG2();
+		b.setWidth(10);
+		b.decrease(7);
+		assertEquals(3, b.getWidth());
+		
+		
+		
+	}
+	@Test
+	public void testGetDamage(){
+		BarModelG2 b = new BarModelG2();
+		b.setDamage(10);
+		assertEquals(10, b.getDamage());
+		
+		
+		
+	}
+	//Controller Tests
+
+	@Test
+	public void testActivateStorm(){
+		JFrame frame = new JFrame();
+		Game2Controller c = new Game2Controller(frame);
+		c.activateStorm();
+		assertEquals(true, c.getStormStatus());
+		
+	}
+	@Test
+	public void testDeactivateStorm(){
+		JFrame frame = new JFrame();
+		Game2Controller c = new Game2Controller(frame);
+		c.deactivateStorm();
+		assertEquals(false, c.getStormStatus());
+		
+	}
+	@Test
+	public void testaddNumMissed(){
+		JFrame frame = new JFrame();
+		Game2Controller c = new Game2Controller(frame);
+		int num = c.getNumMissed();
+		c.addNumMissed();
+		assertEquals(c.getNumMissed(), num+1);
+		
+	}
+	@Test
+	public void testspawnAlgae(){
+		JFrame frame = new JFrame();
+		Game2Controller c = new Game2Controller(frame);
+		int num = c.getAlgaeNum();
+		c.spawnAlgae();
+		assertEquals(num+1, c.getAlgaeNum());
+		
+	}
+	@Test
+	public void testcollisionOccured(){
+		AnimalModelG2 animal = new AnimalModelG2();
+		AlgaeModel algae = new AlgaeModel();
+		JFrame frame = new JFrame();
+		Game2Controller c = new Game2Controller(frame);
+		animal.setLocX(10);
+		animal.setLocY(10);
+		algae.setLocX(10);
+		algae.setLocY(10);
+		
+		assertEquals(true, c.collisionOccured(animal, algae));
+		
+	}
+	
+	@Test
+	public void testshallowWaterCollision(){
+		
+		AlgaeModel algae = new AlgaeModel();
+		JFrame frame = new JFrame();
+		Game2Controller c = new Game2Controller(frame);
+		algae.setLocX(0);
+		
+		
+		assertEquals(true, c.shallowWaterCollision(algae));
+		algae.setLocX(100);
+		assertEquals(false, c.shallowWaterCollision(algae));
+		
+	}
+	
+	
+	
+}

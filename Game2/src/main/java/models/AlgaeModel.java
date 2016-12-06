@@ -12,7 +12,7 @@ public class AlgaeModel {
 	private int health;
 	private boolean isActive;
 	
-	private int speed = 2;
+	private int velocity = 2;
 	private int randomYBound = 0;
 	Random rand = new Random();
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -32,18 +32,24 @@ public class AlgaeModel {
 	public AlgaeModel() {
 		
 		randomYBound = rand.nextInt((algaeYBoundMax - algaeYBoundMin) + 1) + algaeYBoundMin;
-
+		
 		riverSpawnX = (int) (screenWidth*.87);
 	    riverSpawnY = (int) (screenHeight*.11);
 	    
 	}
 	
-
+	public void setHeight(int h){
+		height = h;
+	}
 
 	public int getHeight() {
 		return height;
 	}
-
+	
+	public void setWidth(int w){
+		width = w;
+	}
+	
 	public int getWidth() {
 		return width;
 	}
@@ -53,14 +59,24 @@ public class AlgaeModel {
 	}
 
 	public void move() {
-		this.setLocX(getLocX() - speed);
+		this.setLocX(getLocX() - velocity);
 	}
 	public void moveRiverAlgae() {
-		riverSpawnX += speed;
+		riverSpawnX += velocity;
 	}
+	
+	public void setRiverAlgaeY(int rY){
+		riverSpawnY =rY;
+	}
+	
 	public int getRiverAlgaeY(){
 		return riverSpawnY;
 	}
+	
+	public void setRiverAlgaeX(int rX){
+		riverSpawnX =rX;
+	}
+	
 	public int getRiverAlgaeX(){
 		return riverSpawnX;
 	}
@@ -75,18 +91,15 @@ public class AlgaeModel {
 		setLocX((int) (screenWidth+(screenWidth*.1)));
 		setLocY(getRandomYLocation());
 	}
-
+	public void setMaxAlgae(int max) {
+		maxAlgaeNum = max;
+	}
+	
 	public int getMaxAlgae() {
 		return maxAlgaeNum;
 	}
-
-	public int getHealth() {
-		return health;
-	}
-
-	public void setHealth(int health) {
-		this.health = health;
-	}
+	
+	
 
 	public int getLocY() {
 		return locY;
@@ -111,4 +124,37 @@ public class AlgaeModel {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+
+	public int getVelocity() {
+		
+		return velocity;
+	}
+	public void setVelocity(int v) {
+		
+		velocity = v;
+	}
+	public void setYMax(int yMax){
+		 algaeYBoundMax = yMax;
+	}
+	public int getYMax(){
+		return algaeYBoundMax;
+	}
+	
+	
+	public int getXMax(){
+		return algaeXBoundMax;
+	}
+	public void setXMax(int xM){
+		algaeXBoundMax = xM;
+	}
+	
+	
+	public int getYMin(){
+		return algaeYBoundMin;
+	}
+	
+	public void setYMin(int yMin){
+		algaeYBoundMin = yMin;
+	}
+	
 }

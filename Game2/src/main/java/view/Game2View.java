@@ -19,11 +19,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import models.AlgaeEaterModel;
+
 import models.AlgaeModel;
 import models.AnimalModelG2;
 import models.BarModelG2;
-import models.WaterModelG2;
+
 import controller.Game2Controller;
 import enums.Direction;
 
@@ -33,8 +33,7 @@ public class Game2View extends JPanel implements KeyListener{
 	private Game2Controller controller;
 	private JFrame frame = new JFrame();
 	//private JPanel action_pannel = new JPanel();
-	private JPanel algaeWater = new JPanel();
-	private JPanel shallowWater = new JPanel();
+	
 	AlgaeModel algae = new AlgaeModel();
 	BarModelG2 oxyBar;
 	BufferedImage background;
@@ -130,7 +129,7 @@ public class Game2View extends JPanel implements KeyListener{
 			
 			
 			
-			g.drawImage(character, controller.getAnimalModelG2().getLocX(),controller.getAnimalModelG2().getY(),controller.getAnimalModelG2().getWidth(),controller.getAnimalModelG2().getHeight(), this);		
+			g.drawImage(character, controller.getAnimalModelG2().getLocX(),controller.getAnimalModelG2().getLocY(),controller.getAnimalModelG2().getWidth(),controller.getAnimalModelG2().getHeight(), this);		
 			
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
 			g.setColor(Color.WHITE);
@@ -255,7 +254,7 @@ public class Game2View extends JPanel implements KeyListener{
 		switch(keyCode){
 		case KeyEvent.VK_DOWN:
 			
-				controller.getAnimalModelG2().setSpeed(5);
+				controller.getAnimalModelG2().setVelocity(5);
 			
 			
 			break;
@@ -263,7 +262,7 @@ public class Game2View extends JPanel implements KeyListener{
 		case KeyEvent.VK_UP:
 			
 			
-				controller.getAnimalModelG2().setSpeed(-5);
+				controller.getAnimalModelG2().setVelocity(-5);
 			
 			break;
 			
@@ -281,11 +280,8 @@ public class Game2View extends JPanel implements KeyListener{
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
-		controller.getAnimalModelG2().setSpeed(0);
+		controller.getAnimalModelG2().setVelocity(0);
 		
 	}
-	public void win(){
-		 
-		
-	}
+	
 }

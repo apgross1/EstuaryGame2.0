@@ -13,10 +13,10 @@ import java.util.Iterator;
 
 import javax.swing.JFrame;
 
-import models.AlgaeEaterModel;
+
 import models.AlgaeModel;
 import models.AnimalModelG2;
-import models.WaterModelG2;
+
 
 import view.Game2View;
 import view.Game2View.Animation;
@@ -25,10 +25,10 @@ public class Game2Controller {
 	private boolean gameActive;
 	private Game2View view;
 	private AnimalModelG2 animal;
-	private AlgaeEaterModel algaeEater;
+	
 	private AlgaeModel algae;
 	private Collection<AlgaeModel> algaeList = new ArrayList<AlgaeModel>();
-	private WaterModelG2 water;
+	
 	private JFrame gameFrame;
 	long spawnTime=0;
 	int numMissed = 0;
@@ -44,10 +44,10 @@ public class Game2Controller {
 	
 	public Game2Controller(JFrame gamef) {
 		gameFrame = gamef;
-		animal = new AnimalModelG2(screenSize);
-		water = new WaterModelG2();
+		animal = new AnimalModelG2();
+		
 		algae = new AlgaeModel();
-		//algaeEater = new AlgaeEaterModel();
+		
 		
 	}
 
@@ -80,7 +80,7 @@ public class Game2Controller {
 			delta += (now-lastTime)/ns;
 			lastTime=now;
 			if(delta>=1){
-				animal.tick();
+				animal.move();
 				view.repaintFrame();
 				updates++;
 				delta--;
@@ -111,9 +111,7 @@ public class Game2Controller {
 				}
 				
 			}
-			else{
-				view.win();
-			}
+			
 		}
 	
 	}
@@ -170,7 +168,7 @@ public class Game2Controller {
 	public boolean collisionOccured(AnimalModelG2 animal, AlgaeModel algae){
 		
 		Rectangle algae_rect = new Rectangle(algae.getLocX(), algae.getLocY(), algae.getWidth(), algae.getHeight());
-		Rectangle animal_rect = new Rectangle(animal.getLocX(), animal.getY(), animal.getWidth(), animal.getHeight());
+		Rectangle animal_rect = new Rectangle(animal.getLocX(), animal.getLocY(), animal.getWidth(), animal.getHeight());
 		
 		if(animal_rect.getBounds().intersects(algae_rect)){
 			return true;
@@ -220,13 +218,6 @@ public class Game2Controller {
 
 	
 
-	public WaterModelG2 getWater() {
-		return water;
-	}
-
-	public void setWater(WaterModelG2 water) {
-		this.water = water;
-	}
 	
 	public AlgaeModel getAlgae() {
 		return algae;
@@ -235,13 +226,10 @@ public class Game2Controller {
 	public void setAlgae(AlgaeModel algae) {
 		this.algae = algae;
 	}
-	public AlgaeEaterModel getAlgaeEater() {
-		return algaeEater;
+	public int getAlgaeNum(){
+		return algaeList.size();
 	}
-
-	public void setAlgaeEater(AlgaeEaterModel ae) {
-		this.algaeEater = ae;
-	}
+	
 
 	public AnimalModelG2 getAnimalModelG2() {
 		return this.animal;
