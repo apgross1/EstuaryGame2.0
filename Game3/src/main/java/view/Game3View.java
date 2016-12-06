@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -31,6 +33,7 @@ import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -71,10 +74,12 @@ public class Game3View extends JPanel implements KeyListener{
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	private JLayeredPane layoutContainer = new JLayeredPane();
 	private BufferedImage shoreGraphic;
+	private JLabel animalPos;
+	private int brightLevel;
+	private Color skyColor;
+	private JLabel endScreen;
+	private JButton menuButton;
 	
-	public JLabel animalPos;
-	public int brightLevel;
-	public Color skyColor; 
 
 	
 	public Game3View(Game3Controller ctl, JFrame gameF){
@@ -529,7 +534,7 @@ public class Game3View extends JPanel implements KeyListener{
 				//g.setColor(Color.RED);
 				//g.fillRect((int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
 				if(gridBlock.getConcrPU().isPickedUp()){
-					g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.WALL).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+					g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.WALL).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), this);
 					int potentialX = controller.getAnimal().getLocX() + controller.getAnimal().getSpeedX();
 					int potentialY = controller.getAnimal().getLocY() + controller.getAnimal().getSpeedY();
 					Rectangle potentialAnimBounds = new Rectangle(potentialX, potentialY, controller.getAnimal().getWidth(), controller.getAnimal().getHeight());
@@ -541,7 +546,7 @@ public class Game3View extends JPanel implements KeyListener{
 					}
 				}
 				else{
-					g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.POWER_UP).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), Color.yellow, this);
+					g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.POWER_UP).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), this);
 				}
 			}
 			
@@ -549,7 +554,7 @@ public class Game3View extends JPanel implements KeyListener{
 				//g.setColor(Color.RED);
 				//g.fillRect((int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
 				if(gridBlock.getGabPU().isPickedUp()){
-					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.WALL).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);
+					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.WALL).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), this);
 					int potentialX = controller.getAnimal().getLocX() + controller.getAnimal().getSpeedX();
 					int potentialY = controller.getAnimal().getLocY() + controller.getAnimal().getSpeedY();
 					Rectangle potentialAnimBounds = new Rectangle(potentialX, potentialY, controller.getAnimal().getWidth(), controller.getAnimal().getHeight());
@@ -561,7 +566,7 @@ public class Game3View extends JPanel implements KeyListener{
 					}
 				}
 				else{
-					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.POWER_UP).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), Color.yellow, this);
+					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.POWER_UP).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), this);
 				}
 			}
 		}
@@ -740,10 +745,25 @@ public class Game3View extends JPanel implements KeyListener{
 		this.brightLevel = brightLevel;
 	}
 
-
-	public void activateTutorial() {
+	public void startEndScreen() {
+		endScreen = new JLabel();
+		endScreen.setLayout(new GridBagLayout());
 		
+		menuButton.setPreferredSize(new Dimension(400,100));
+		GridBagConstraints b1c = new GridBagConstraints();
+		b1c.gridx = (int)(this.endScreen.getWidth()/2.5);
+		b1c.gridy = (int)(this.endScreen.getHeight()/2);
+	
 		
+		//Defining constraint for background
+		endScreen.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
+		ImageIcon icon = new ImageIcon("./Images/2D_estuary.jpg"); 
+		endScreen.setIcon(icon);
+		GridBagConstraints bRc = new GridBagConstraints();
+		bRc.gridx = 0;
+		bRc.gridy = 0;
+		bRc.gridwidth = frame.getWidth();
+		bRc.gridheight = frame.getHeight();
 	}
 	
 	/*
