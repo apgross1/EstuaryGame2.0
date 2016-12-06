@@ -47,9 +47,12 @@ public class GabionWallModelG1 extends WallModelAbstract{
 		activeClamsOnBoard++;
 	}
 	
+	
+	
 	public int getActiveClams(){
 		return activeClamsOnBoard;
 	}
+	
 	
 	public class GabionChunk {
 		private int locX;

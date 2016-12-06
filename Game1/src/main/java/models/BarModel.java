@@ -18,7 +18,7 @@ public class BarModel extends BarModelAbstract {
 			}
 		}
 	}
-	
+
 	
 	/*
 	 * Dont think we need stuff below this line
