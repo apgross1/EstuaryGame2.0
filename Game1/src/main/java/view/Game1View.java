@@ -28,7 +28,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -53,11 +52,20 @@ public class Game1View extends JPanel implements KeyListener{
     final static int imgHeight = 165;
     int picNum = 0;
     
-    //Load in sprites
-    private ArrayList<BufferedImage> gabSeq = new ArrayList<BufferedImage>();
-    private ArrayList<BufferedImage> concSeq = new ArrayList<BufferedImage>();
-    private ArrayList<BufferedImage> animalSeq = new ArrayList<BufferedImage>();
+	BufferedImage gabImg;
+	BufferedImage concImg;
+	BufferedImage bg;
+	BufferedImage crabImg;
+	BufferedImage clam;
+	BufferedImage ccc;
+	BufferedImage keypic;
+	BufferedImage wave;
+	BufferedImage grassone;
+	BufferedImage grasstwo;
+	BufferedImage grassthree;
     
+    //Load in sprites
+    private ArrayList<BufferedImage> animalSeq = new ArrayList<BufferedImage>();
 
 	public Game1View(Game1Controller ctl, JFrame gameF){
         controller = ctl;
@@ -75,30 +83,10 @@ public class Game1View extends JPanel implements KeyListener{
         frame.setSize(controller.getDim().width, controller.getDim().height); 
         frame.setVisible(true);
         frame.setResizable(false);
-        
-
        
         //addKeyListener
         frame.addKeyListener(this);
     }
-	
-	public void repaintFrame(){
-		frame.repaint();
-	}
-	
-	BufferedImage gabImg;
-	BufferedImage concImg;
-	BufferedImage bg;
-	BufferedImage crabImg;
-	BufferedImage clam;
-	BufferedImage ccc;
-	BufferedImage keypic;
-	//BufferedImage grass;
-	BufferedImage wave;
-	BufferedImage grassone;
-	BufferedImage grasstwo;
-	BufferedImage grassthree;
-	
 	
     public void loadImgs(){
     	boolean check = new File("./images/testwallgrid.png").exists();
@@ -152,13 +140,6 @@ public class Game1View extends JPanel implements KeyListener{
 	    		} catch (IOException e) {
 	    			e.printStackTrace();
 	    		}
-	    	/*
-	    	try {
-	    		grass = ImageIO.read(new File("./Images/Game1/grasss.png"));
-	    		} catch (IOException e) {
-	    			e.printStackTrace();
-	    		}
-	    		*/
 	    	try {
 	    		wave = ImageIO.read(new File("./Images/Game1/whave.png"));
 	    		} catch (IOException e) {
@@ -171,8 +152,11 @@ public class Game1View extends JPanel implements KeyListener{
 	    		} catch (IOException e) {
 	    			e.printStackTrace();
 	    		}
-	    	
     	}
+	
+	public void repaintFrame(){
+		frame.repaint();
+	}
     
     public void drawCenteredString(Graphics g, String text, Font font) {
         // Get the FontMetrics
@@ -229,28 +213,18 @@ public class Game1View extends JPanel implements KeyListener{
 					//Draw score data and timer and health
 					g.setFont(new Font("Haettenschweiler", Font.PLAIN, 30)); 
 					g.setColor(Color.WHITE);
-					g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), (int)(.15*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
+					g.drawString("Gabion: " + controller.getGabionWallModel().getCurrentOysters(), (int)(.10*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
 					g.setColor(Color.RED);
-					g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), (int)(.25*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
+					g.drawString("Concrete: " + controller.getWallModel().getCurrentBlocks(), (int)(.20*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
 					g.setColor(Color.GREEN);
 					g.drawString("Time Left: "+ controller.getTime(), (int)(.65*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
 
-					/*
-					g.drawString("Health: " + controller.getBarModel().getStatus(), (int)(.35*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
-					
-					g.drawRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), 200, 20); //Behind health bar doesn't change
-					
-					g.setColor(Color.RED);
-					int health = (controller.getBarModel().getStatus()*2);
-					g.fillRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), health, 20);
-					*/
-					
 					g.drawString("Round: " + controller.getRound() + " / 3", (int)(.9*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
 					
 				}
 				g.setFont(new Font("Haettenschweiler", Font.PLAIN, 30)); 
 				g.setColor(Color.GREEN);
-				g.drawString("Health: " + controller.getBarModel().getStatus(), (int)(.35*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
+				g.drawString("Health: " + controller.getBarModel().getStatus(), (int)(.30*(controller.getDim().width)), (int)(.03*(controller.getDim().height)));
 				
 				g.drawRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), 200, 20); //Behind health bar doesn't change
 				
@@ -259,11 +233,7 @@ public class Game1View extends JPanel implements KeyListener{
 				g.fillRect((int)(.41*(controller.getDim().width)), (int)(.01*(controller.getDim().height)), health, 20);
 				
 				
-				//Draw wall sprites (First this gives an ugly error, second can we set the bg of the jpannel rather than paint on jframe?)
-				//g.drawImage(gabSeq.get(controller.getGabionWallModel().getCurrentOysters()), 0, (int)(controller.getDim().height * .15), controller.getDim().width, (int)(controller.getDim().height * .15), this);
-				//g.drawImage(concSeq.get(controller.getWallModel().getCurrentBlocks()), 0, (int)(controller.getDim().height * .30), controller.getDim().width, (int)(controller.getDim().height * .15), this);
-				
-				//System.out.println("Here +:" + controller.getGabionWallModel().getCurrentOysters());
+				//Draw walls
 				for(int i=0; i< controller.getGabionWallModel().getCurrentOysters(); i++){
 					if(i < 15){
 						g.drawImage(gabImg, (int)(controller.getDim().width / 15*i), (int)(controller.getDim().height * .15), (controller.getDim().width/15),  (int)(controller.getDim().height * .075), this);
@@ -335,7 +305,6 @@ public class Game1View extends JPanel implements KeyListener{
 				//Draw BG FIRST
 				((Graphics2D) g).setPaint(sandTexture);
 				g.fillRect(0, 0, controller.getDim().width, controller.getDim().height);
-				
 				
 				//First draw bar
 				g.setColor(Color.BLACK);
