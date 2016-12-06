@@ -14,13 +14,9 @@ import javax.swing.JFrame;
 public class main {
 
 	public static void main(String[] args) {
-		JFrame gameFrame = new JFrame();
 		/*
-		//Controller
-		Game1Controller ctlr = new Game1Controller();
-		
-		ctlr.startGame();
-		*/
+		JFrame gameFrame = new JFrame();
+
 		Game1Controller g1 = new Game1Controller(gameFrame);
 		//Game2Controller g2 = new Game2Controller(gameFrame);
 		//Game3Controller g3 = new Game3Controller(gameFrame);
@@ -29,6 +25,7 @@ public class main {
 		//g2.startGame();
 		//g3.runGame();
 		
+	*/
 	}
 
 }
