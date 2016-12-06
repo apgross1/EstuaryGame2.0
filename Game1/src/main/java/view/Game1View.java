@@ -334,22 +334,22 @@ public class Game1View extends JPanel implements KeyListener{
 		        case KeyEvent.VK_UP:
 		            // handle up 
 		        	controller.getAnimalModel().setCurrDir(Direction.NORTH);
-		        	controller.getAnimalModel().setSpeedY(-5);
+		        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 200)*-1);
 		            break;
 		        case KeyEvent.VK_DOWN:
 		            // handle down 
 		        	controller.getAnimalModel().setCurrDir(Direction.SOUTH);
-		        	controller.getAnimalModel().setSpeedY(5);
+		        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 200));
 		            break;
 		        case KeyEvent.VK_LEFT:
 		            // handle left
 		        	controller.getAnimalModel().setCurrDir(Direction.WEST);
-		        	controller.getAnimalModel().setSpeedX(-5);
+		        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 200)*-1);
 		            break;
 		        case KeyEvent.VK_RIGHT :
 		            // handle right
 		        	controller.getAnimalModel().setCurrDir(Direction.EAST);
-		        	controller.getAnimalModel().setSpeedX(5);
+		        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 200));
 		            break;
 		        case KeyEvent.VK_ESCAPE :
 		            // handle escape (to minimize game)

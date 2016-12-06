@@ -151,7 +151,7 @@ public class Game1Controller{
 		
 		long startTime = System.currentTimeMillis(); //fetch starting time
 		
-		while((System.currentTimeMillis()-startTime)<30000){
+		while((System.currentTimeMillis()-startTime)<3000){
 			if(!this.gameState) { //For testing purposes...just to close the game at will
 				return;
 			}
@@ -311,8 +311,8 @@ public class Game1Controller{
 		
 		//Prevent health going up
 		if(protection <= 100){
-			//changed this because it wasn't correct
-			new_status = (bar.getStatus() - protection);
+			new_status = (bar.getStatus() - (bar.getMaxLevel() - protection));
+			//new_status = (bar.getStatus() - protection);
 		}else{
 			new_status = (bar.getStatus() - (bar.getMaxLevel() - 100));
 		}
