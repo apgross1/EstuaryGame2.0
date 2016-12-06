@@ -1,16 +1,9 @@
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 import controller.Game1Controller;
 import controller.Game2Controller;
 import controller.Game3Controller;
-import view.Game1View.Animation;
 
 public class main {
 	
@@ -18,11 +11,10 @@ public class main {
 		JFrame gameFrame = new JFrame();
 		
 		MainRun game = new MainRun(gameFrame);
-		while(true) {
-			
+		while(!game.isStartPressed()){
 			game.repaintFrame();
 		}
-			
-			
+		//Once the start game button is pressed well get here.
+		System.out.println("Yup, were good.");
 	}
 }

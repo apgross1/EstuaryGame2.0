@@ -12,6 +12,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -34,6 +36,7 @@ public class MainRun extends JPanel implements KeyListener{
 	static boolean gameStarted = false;
 	JButton startButton = new JButton("Start Game");
 	JLabel backGround = new JLabel();
+	boolean startPressed = false;
 	JFrame frame;
 	
 	public MainRun(JFrame frame){
@@ -77,7 +80,18 @@ public class MainRun extends JPanel implements KeyListener{
 
 		this.frame.revalidate();
 		this.frame.setVisible(true);
+		
+		startButton.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) {
+				  System.out.println("Start Button Pressed!");
+				  startPressed = true;
+				  }});
+		
     }
+	
+	public boolean isStartPressed(){
+		return startPressed;
+	}
 	
 	public void repaintFrame(){
 		frame.repaint();
