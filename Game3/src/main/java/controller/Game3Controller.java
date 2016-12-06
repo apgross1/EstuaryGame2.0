@@ -166,6 +166,9 @@ public class Game3Controller implements KeyListener {
 			this.view.repaintAll();
 			this.view.updateLoc();	
 		}
+		
+		
+		view.startEndScreen();
 	}
 
 	

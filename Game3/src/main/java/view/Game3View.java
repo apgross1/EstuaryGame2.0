@@ -359,7 +359,8 @@ public class Game3View extends JPanel implements KeyListener{
 					}
 					else {
 						controller.getAnimal().setWaveHit(true);
-						//controller.setGameActive(false);
+						controller.setGameActive(false);
+						
 					}
 					
 					return;
@@ -749,6 +750,7 @@ public class Game3View extends JPanel implements KeyListener{
 		endScreen = new JLabel();
 		endScreen.setLayout(new GridBagLayout());
 		
+		menuButton = new JButton("Return to main menu");
 		menuButton.setPreferredSize(new Dimension(400,100));
 		GridBagConstraints b1c = new GridBagConstraints();
 		b1c.gridx = (int)(this.endScreen.getWidth()/2.5);
@@ -759,11 +761,15 @@ public class Game3View extends JPanel implements KeyListener{
 		endScreen.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
 		ImageIcon icon = new ImageIcon("./Images/2D_estuary.jpg"); 
 		endScreen.setIcon(icon);
-		GridBagConstraints bRc = new GridBagConstraints();
-		bRc.gridx = 0;
-		bRc.gridy = 0;
-		bRc.gridwidth = frame.getWidth();
-		bRc.gridheight = frame.getHeight();
+		endScreen.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		
+		
+		
+		frame.getContentPane().removeAll();
+		endScreen.add(menuButton, b1c);
+		frame.add(endScreen);
+		frame.revalidate();
+		frame.repaint();
 	}
 	
 	/*
