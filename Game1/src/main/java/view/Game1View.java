@@ -93,8 +93,8 @@ public class Game1View extends JPanel implements KeyListener{
     	System.out.println("This should be true.....: " + check);
     	
     		try {
-    			gabImg = ImageIO.read(new File("./Images/Game1/le_gab.png"));
-    			concImg = ImageIO.read(new File("./Images/Game1/conc.jpg"));
+    			gabImg = ImageIO.read(new File("./images/le_gab.png"));
+    			concImg = ImageIO.read(new File("./images/conc.jpg"));
 
     		} catch (IOException e) {
 	    		e.printStackTrace();
@@ -105,23 +105,23 @@ public class Game1View extends JPanel implements KeyListener{
 		    	}
 	    	}
 	    	try {
-					clam = ImageIO.read(new File("./Images/Game1/clam_back_0.png"));
+					clam = ImageIO.read(new File("./images/clam_back_0.png"));
 				} catch (IOException e) {
 					e.printStackTrace();
 					//add a blank bg image.
 				}
 	    	try {
-					ccc = ImageIO.read(new File("./Images/Game1/concrete3.jpg"));
+					ccc = ImageIO.read(new File("./images/concrete3.jpg"));
 				} catch (IOException e) {
 					e.printStackTrace();
 					//
 				}
 	    	try{
-				crabImg = ImageIO.read(new File("./Images/Game1/bluecrab_0.png"));
+				crabImg = ImageIO.read(new File("./images/bluecrab_0.png"));
 				animalSeq.add(crabImg);
-				crabImg = ImageIO.read(new File("./Images/Game1/bluecrab_1.png"));
+				crabImg = ImageIO.read(new File("./images/bluecrab_1.png"));
 				animalSeq.add(crabImg);
-				crabImg = ImageIO.read(new File("./Images/Game1/bluecrab_2.png"));
+				crabImg = ImageIO.read(new File("./images/bluecrab_2.png"));
 				animalSeq.add(crabImg);
 	    	}catch(Exception e){
 	    		e.printStackTrace();
@@ -129,26 +129,26 @@ public class Game1View extends JPanel implements KeyListener{
 	    	}
 	    	
 	    	try {
-				bg = ImageIO.read(new File("./Images/Game1/sandy.jpg"));
+				bg = ImageIO.read(new File("./images/sandy.jpg"));
 				sandTexture = new TexturePaint(bg, new Rectangle(0, 0, 1000, 1000));
 			} catch (IOException e) {
 				e.printStackTrace();
 				//add a blank bg image.
 			}
 	    	try {
-	    		keypic = ImageIO.read(new File("./Images/Game1/keyboard_directional.png"));
+	    		keypic = ImageIO.read(new File("./images/keyboard_directional.png"));
 	    		} catch (IOException e) {
 	    			e.printStackTrace();
 	    		}
 	    	try {
-	    		wave = ImageIO.read(new File("./Images/Game1/whave.png"));
+	    		wave = ImageIO.read(new File("./images/whave.png"));
 	    		} catch (IOException e) {
 	    			e.printStackTrace();
 	    		}
 	    	try {
-	    		grassone = ImageIO.read(new File("./Images/Game1/healthy.png"));
-	    		grasstwo = ImageIO.read(new File("./Images/Game1/lesshealthy.png"));
-	    		grassthree = ImageIO.read(new File("./Images/Game1/nothealthy.png"));
+	    		grassone = ImageIO.read(new File("./images/healthy.png"));
+	    		grasstwo = ImageIO.read(new File("./images/lesshealthy.png"));
+	    		grassthree = ImageIO.read(new File("./images/nothealthy.png"));
 	    		} catch (IOException e) {
 	    			e.printStackTrace();
 	    		}
