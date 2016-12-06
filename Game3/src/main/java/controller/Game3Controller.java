@@ -54,11 +54,12 @@ public class Game3Controller implements KeyListener {
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private boolean tutorialActive;
 	private Timer puWallLinkTimer;
+	private boolean gameWin;
 	
 	
 	
 	public Game3Controller(JFrame gameF, boolean tutorialOn) {
-		this.setTutorialActive(true);
+		this.setTutorialActive(false);
 		gameFrame = gameF;
 		AnimalModelG3 a = new AnimalModelG3();
 		a.setLocX(250);
@@ -168,7 +169,7 @@ public class Game3Controller implements KeyListener {
 		}
 		
 		
-		view.startEndScreen();
+		view.startEndScreen(this.isGameWin());
 	}
 
 	
@@ -326,13 +327,14 @@ public class Game3Controller implements KeyListener {
 		public void actionPerformed(ActionEvent e) {
 			Timer t = (Timer) e.getSource();
 			timeElapsed += t.getDelay();
-			if (timeElapsed < 150000) {
+			if ((timeElapsed < 150000) & getgameActive()) {
 				System.out.println("Time Elapsed: " + timeElapsed);
 				sun.move();
 				hurricane.move();
 			}
 			else {
-				gameActive = false;
+				setGameActive(false);
+				setGameWin(true);
 				t.stop();
 			}
 		}
@@ -377,6 +379,7 @@ public class Game3Controller implements KeyListener {
 			System.out.println("Value where animal hit water tile: " + this.getBeach().getPositionGrid()[beachLocY][beachLocX]);
 			System.out.println("Game over! Tidal pool was hit at: " + beachLocX +","+beachLocY);
 			this.setGameActive(false);
+			this.setGameWin(false);
 		}
 	}
 
@@ -641,6 +644,14 @@ public class Game3Controller implements KeyListener {
 
 	public void setPowerUpListenerStop(boolean powerUpListenerStop) {
 		this.powerUpListenerStop = powerUpListenerStop;
+	}
+
+	public boolean isGameWin() {
+		return gameWin;
+	}
+
+	public void setGameWin(boolean gameWin) {
+		this.gameWin = gameWin;
 	}
 
 }

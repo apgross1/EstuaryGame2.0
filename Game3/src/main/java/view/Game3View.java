@@ -360,6 +360,7 @@ public class Game3View extends JPanel implements KeyListener{
 					else {
 						controller.getAnimal().setWaveHit(true);
 						controller.setGameActive(false);
+						controller.setGameWin(false);
 						
 					}
 					
@@ -625,6 +626,7 @@ public class Game3View extends JPanel implements KeyListener{
 	        case KeyEvent.VK_SPACE :
 	        	System.out.println("This is a temp key event to end the game (set bool gameActive in controller to false)");
 	        	controller.setGameActive(false);
+	        	controller.setGameWin(false);
 	        	frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	            break;
 	    }
@@ -746,30 +748,78 @@ public class Game3View extends JPanel implements KeyListener{
 		this.brightLevel = brightLevel;
 	}
 
-	public void startEndScreen() {
+	public void startEndScreen(boolean gameWin) {
 		endScreen = new JLabel();
 		endScreen.setLayout(new GridBagLayout());
-		
-		menuButton = new JButton("Return to main menu");
-		menuButton.setPreferredSize(new Dimension(400,100));
-		GridBagConstraints b1c = new GridBagConstraints();
-		b1c.gridx = (int)(this.endScreen.getWidth()/2.5);
-		b1c.gridy = (int)(this.endScreen.getHeight()/2);
-	
-		
 		//Defining constraint for background
-		endScreen.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
-		ImageIcon icon = new ImageIcon("./Images/2D_estuary.jpg"); 
-		endScreen.setIcon(icon);
+		ImageIcon backgroundIcon = new ImageIcon("./Images/2D_estuary.jpg"); 
+		endScreen.setIcon(backgroundIcon);
 		endScreen.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		
 		
-		
-		frame.getContentPane().removeAll();
+		//Creating menu button
+		menuButton = new JButton("Return to main menu");
+		menuButton.setPreferredSize(new Dimension((int)(this.frame.getWidth()*.26),(int)(this.frame.getHeight()*.22)));
+		GridBagConstraints b1c = new GridBagConstraints();
+		b1c.gridx = 0;
+		b1c.gridy = 1;
+		b1c.weightx = .1;
+		b1c.weighty = .1;
+		menuButton.addActionListener(new ReturnToMain());
 		endScreen.add(menuButton, b1c);
+		
+		
+		//Creating exit button
+		JButton exitButton = new JButton("Exit game");
+		exitButton.addActionListener(new ExitGame());
+		exitButton.setPreferredSize(new Dimension((int)(this.frame.getWidth()*.26),(int)(this.frame.getHeight()*.22)));
+		GridBagConstraints b2c = new GridBagConstraints();
+		b2c.gridx = 2;
+		b2c.gridy = 1;
+		b2c.weightx = .1;
+		b2c.weighty = .1;
+		endScreen.add(exitButton, b2c);
+		
+		
+		//Creating message
+		JLabel resultMessage = new JLabel();
+		ImageIcon resultIcon;
+		if(gameWin) {
+			resultIcon = new ImageIcon("./Images/Game3/gameWin.png");
+		}
+		else {
+			resultIcon = new ImageIcon("./Images/Game3/gameLose.png");
+		}
+		resultMessage.setIcon(resultIcon);
+		GridBagConstraints rmC = new GridBagConstraints();
+		
+		rmC.gridx = 1;
+		rmC.gridy = 0;
+		rmC.weighty = 0;
+		endScreen.add(resultMessage, rmC);
+		
+		
+		
+		
+
+		frame.getContentPane().removeAll();
 		frame.add(endScreen);
 		frame.revalidate();
 		frame.repaint();
+	}
+	
+	public class ReturnToMain implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Returning to main menu!");
+		}
+	}
+	
+	public class ExitGame implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+		}
 	}
 	
 	/*
