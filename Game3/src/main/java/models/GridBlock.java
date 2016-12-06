@@ -13,7 +13,7 @@ public class GridBlock {
 	private Pair location;
 	private GabionPUModel gabPU = new GabionPUModel();
 	private ConcretePUModel concrPU = new ConcretePUModel();
-	private WaterModel water = new WaterModel();
+	private WaterModel water;
 	private boolean vacant;
 	private int height;
 	private int width;
@@ -22,6 +22,7 @@ public class GridBlock {
 	private BufferedImage sandGraphic;
 	
 	public GridBlock(BeachModel b) {
+		water = new WaterModel();
 		gabPU.setIsActive(false);
 		concrPU.setActive(false);
 		height = 200;
@@ -31,6 +32,21 @@ public class GridBlock {
 	}
 	
 	public GridBlock(Pair loc, BeachModel b) {
+		water = new WaterModel();
+
+		gabPU = new GabionPUModel();
+		gabPU.setIsActive(false);
+		beach = b;
+		concrPU = new ConcretePUModel();
+		concrPU.setActive(false);
+		location = loc;
+		this.setViewLocation(location);
+		height = 200;
+		width = 200;
+		vacant = true;
+	}
+	
+	public GridBlock(Pair loc, BeachModel b, String Test) {
 		gabPU = new GabionPUModel();
 		gabPU.setIsActive(false);
 		beach = b;
@@ -45,17 +61,19 @@ public class GridBlock {
 	
 
 	public GridBlock(ConcretePUModel powerUp, Pair loc) {
-		
+		water = new WaterModel();
+
 		gabPU.setIsActive(false);
 		concrPU.setActive(false);
-		powerUp.setLocation(loc);
+		powerUp.setLocation(loc,"Game");
 		this.setConcrPU(powerUp);
 		this.location = loc;
 		this.setViewLocation(location);
 		this.setVacant(false);
 	}
 	public GridBlock(GabionPUModel powerUp, Pair loc) {
-		
+		water = new WaterModel();
+
 		gabPU.setIsActive(false);
 		concrPU.setActive(false);
 		powerUp.setLocation(loc);
@@ -65,18 +83,33 @@ public class GridBlock {
 		this.setVacant(false);
 	}
 	
-	public void setWater(WaterModel water, Pair loc) {
-		gabPU.setIsActive(false);
-		concrPU.setActive(false);
-		water.setLocation(loc);
-		this.water = water;
-		this.water.setActive(true);
-		//this.location = loc;
-		this.setVacant(false);
-		
-		beach.getPositionGrid()[loc.getY()][loc.getX()] = 2;
-		water.addPics();
-		System.out.println("Value on grid at (" + loc.getX() + "," + loc.getY() + "): " + beach.getPositionGrid()[loc.getY()][loc.getX()]);
+	public void setWater(WaterModel water, Pair loc, String test) {
+		if(test == "test"){
+			gabPU.setIsActive(false);
+			concrPU.setActive(false);
+			water.setLocation(loc);
+			this.water = water;
+			this.water.setActive(true);
+			//this.location = loc;
+			this.setVacant(false);
+			
+			beach.getPositionGrid()[loc.getY()][loc.getX()] = 2;
+			System.out.println("Value on grid at (" + loc.getX() + "," + loc.getY() + "): " + beach.getPositionGrid()[loc.getY()][loc.getX()]);
+			
+		}
+		else{
+			gabPU.setIsActive(false);
+			concrPU.setActive(false);
+			water.setLocation(loc);
+			this.water = water;
+			this.water.setActive(true);
+			// this.location = loc;
+			this.setVacant(false);
+
+			beach.getPositionGrid()[loc.getY()][loc.getX()] = 2;
+			water.addPics();
+			System.out.println("Value on grid at (" + loc.getX() + "," + loc.getY() + "): " + beach.getPositionGrid()[loc.getY()][loc.getX()]);
+		}
 	}
 	
 	

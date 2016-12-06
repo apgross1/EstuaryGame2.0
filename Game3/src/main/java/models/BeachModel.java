@@ -37,6 +37,14 @@ public class BeachModel {
 		this.initializeBeach();
 	}
 	
+	//Testing purposes
+	public BeachModel(String test) {
+		beachGrid = new HashMap<Pair,GridBlock>();
+		gridLayers = new HashMap<WaveClusters, List<Pair>>();
+		positionGrid = new int[7][7];
+		orderedPairs = new ArrayList<Pair>();
+	}
+	
 	public void reset() {
 		beachGrid = new HashMap<Pair,GridBlock>();
 		gridLayers = new HashMap<WaveClusters, List<Pair>>();
@@ -185,7 +193,7 @@ public class BeachModel {
 			ConcretePUModel tempConcr = new ConcretePUModel();
 			tempConcr.setFrameMap(frameMap);
 			tempConcr.addPics();
-			tempConcr.setLocation(this.findPairInGrid(pair));
+			tempConcr.setLocation(this.findPairInGrid(pair), "game");
 			tempConcr.setActive(true);
 			beachGrid.get(this.findPairInGrid(pair)).setConcrPU(tempConcr);
 			
@@ -209,10 +217,19 @@ public class BeachModel {
 		positionGrid[pair.getY()][pair.getX()] = 0;
 	}
 	
-	public void removeSquare(Pair waterLoc) {
-		beachGrid.get(this.findPairInGrid(waterLoc)).setWater(new WaterModel(waterLoc), waterLoc);
+	public void removeSquare(Pair waterLoc, String test) {
+		if(test == "test" || test == "Test"){
+			beachGrid.get(this.findPairInGrid(waterLoc)).setWater(new WaterModel(waterLoc), waterLoc,"test");
+			
+			positionGrid[waterLoc.getY()][waterLoc.getX()] = Waves.WAVE_GAME3.getWaveID();
+			
+		}
+		else{
+			
+		beachGrid.get(this.findPairInGrid(waterLoc)).setWater(new WaterModel(waterLoc), waterLoc, "Game");
 		
 		positionGrid[waterLoc.getY()][waterLoc.getX()] = Waves.WAVE_GAME3.getWaveID();
+		}
 	}
 	
 	

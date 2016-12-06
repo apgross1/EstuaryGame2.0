@@ -418,7 +418,7 @@ public class Game3View extends JPanel implements KeyListener{
 								}
 								WaterModel newWatMod = new WaterModel();
 								newWatMod.addPics();
-								tempGrid.setWater(newWatMod, controller.getBeach().findPairInGrid(pairs.get(i)));
+								tempGrid.setWater(newWatMod, controller.getBeach().findPairInGrid(pairs.get(i)), "");
 					
 								layoutContainer.remove(waveComponentMap.get(this.hashCode()));
 								waveComponentMap.remove(this.hashCode());

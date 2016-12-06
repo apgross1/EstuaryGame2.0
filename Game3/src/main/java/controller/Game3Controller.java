@@ -70,6 +70,14 @@ public class Game3Controller implements KeyListener {
 		tutorial = new Tutorial();
 	}
 	
+	//For testing purposes
+	public Game3Controller(){
+		AnimalModelG3 a = new AnimalModelG3();
+		a.setLocX(0);
+		a.setLocY(0);
+		setAnimal(a);
+	}
+	
 	public void runGame()  {
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();

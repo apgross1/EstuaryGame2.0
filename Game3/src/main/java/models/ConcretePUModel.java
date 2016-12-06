@@ -89,9 +89,19 @@ public class ConcretePUModel extends WallModelAbstract {
 	public Pair getLocation() {
 		return location;
 	}
-	public void setLocation(Pair location) {
+	public void setLocation(Pair location, String test) {
+		if(test == "test"){
+			this.location = location;
+		}
+		else{
+			this.location = location;
+			this.setViewLocation(location);
+		}
+	}
+	
+	//Testing purposes
+	public void setLocationTest(Pair location) {
 		this.location = location;
-		this.setViewLocation(location);
 	}
 	
 	

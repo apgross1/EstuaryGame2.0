@@ -131,6 +131,11 @@ public class GabionPUModel extends WallModelAbstract {
 		this.setViewLocation(location);
 	}
 	
+	//For testing purposes
+	public void setLocationTest(Pair location) {
+		this.location = location;
+	}
+	
 	public void setBounds(int x, int y, int width, int height) {
 		this.bounds = new Rectangle(x,y,width,height);
 	}
