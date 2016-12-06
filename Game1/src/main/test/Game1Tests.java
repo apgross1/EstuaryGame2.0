@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -222,23 +223,21 @@ public class Game1Tests {
 	
 	@Test
 	public void testCalculateDamage() {
-		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
-		models.ConcreteWallModelG1 myConcWall = new models.ConcreteWallModelG1();
-		controller.Game1Controller gabby = new controller.Game1Controller(gameFrame);
-		BarModel bar = new BarModel();
-		bar.setStatus(100);
-		myGabWall.setMaxOysters(30);
-		myGabWall.setCurrentOysters(10);
-		myConcWall.setMaxBlocks(30);
-		myConcWall.setCurrentBlocks(10);
-		gabby.takeDamage();
+		//models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
+		//models.ConcreteWallModelG1 myConcWall = new models.ConcreteWallModelG1();
+		//JFrame j = new JFrame();
+		Game1Controller process = new Game1Controller();
+	
+		process.getBarModel().setStatus(100);
+		process.getGabionWallModel().setMaxOysters(30);
+		process.getGabionWallModel().setCurrentOysters(10);
+		process.getWallModel().setMaxBlocks(30);
+		process.getWallModel().setCurrentBlocks(10);
+		process.takeDamage();	
 		
+		//System.out.println(process.getBarModel().getStatus());
+		assertTrue("Should be 40", process.getBarModel().getStatus() == 40);
 		
-		//myGabWall.setCurrentOysters(50);
-		//int damage2 = myGabWall.breakDown();
-		System.out.println(bar.getStatus());
-		
-		assertTrue("Should be 40", bar.getStatus() == 40);
 	}
 	
 	@Test
@@ -290,28 +289,35 @@ public class Game1Tests {
 
 	}
 	
-	//High Level Tests (Involving multiple classes)
-	@Test
+	/*@Test
 	public void testPickUpEvent() {
 		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
 		models.AnimalModel myAnimal = new models.AnimalModel(screenSize);
-		Game1Controller process = new Game1Controller(gameFrame);
+		//Game1Controller process = new Game1Controller(gameFrame);
 		
 		
 		myGabWall.setMaxOysters(100);
 		myGabWall.setCurrentOysters(99);
 		myGabWall.setactiveClamsOnBoard(1);
+		//myAnimal.GabPickUp();
 		
 		
 		
 		assertTrue("None should be on beach...", myGabWall.getActiveClams() == 0);
 		assertTrue("All should be in wall...", myGabWall.getCurrentOysters() == 100);
+	}*/
+	@Test
+	public void testCollision(){
+		//models.AnimalModel myAnimal = new models.AnimalModel(screenSize);
+		Game1Controller process = new Game1Controller();
+		Rectangle chunk_rect = null;
+		Rectangle animal_rect = new Rectangle(process.getAnimalModel().getLocX(), process.getAnimalModel().getLocY(),process.getAnimalModel().getWidth(), process.getAnimalModel().getHeight());
 	}
 	
 	//wave hit
-			@Test
+		/*	@Test
 			public void testTakeDamage(){
-				Game1Controller process = new Game1Controller(gameFrame);
+				//Game1Controller process = new Game1Controller(gameFrame);
 				//Game1Controller clock = new Game1Controller(gameFrame);
 				ConcreteWallModelG1 wall = new ConcreteWallModelG1();
 				//GabionWallModelG1 gwall = new GabionWallModelG1();
@@ -331,11 +337,11 @@ public class Game1Tests {
 				//float time2 = clock.getTime();
 				//assertTrue("Should be equal", time1 == time2);
 				
-				/*//removing from wall
+				//removing from wall
 				wall.calculateAmountRemoved();
 				assertTrue("Should be 12", wall.amountRemoved(50) == 12);
 				wall.removeChunk(wall.amountRemoved(50));
-				assertTrue("Should be 13", wall.getCurrentBlocks() == 13);*/
+				assertTrue("Should be 13", wall.getCurrentBlocks() == 13);
 				
 				//tests if bar is updated
 				assertTrue("Should be less than 100", bar.getStatus() < 100);
@@ -350,7 +356,7 @@ public class Game1Tests {
 				bar.setStatus(0);
 				assertTrue("Should be true", process.isGameState() == true);
 				
-			}
+			}*/
 			
 			
 			

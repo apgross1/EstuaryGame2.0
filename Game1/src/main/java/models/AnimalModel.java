@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import controller.Game1Controller;
 import enums.Direction;
 
+
 public class AnimalModel extends AnimalModelAbstract {
 	
 	private int height = 0;
@@ -52,7 +53,6 @@ public class AnimalModel extends AnimalModelAbstract {
 		}
 		return false;
 	}
-	
 	
 	@Override
 	public void move() {

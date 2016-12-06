@@ -57,6 +57,10 @@ public class Game1Controller{
 	public Game1Controller(JFrame gameF) {
 		g1view = new Game1View(this, gameF);
 	}
+	//for testing purposes
+	public Game1Controller(){
+		
+	}
 	
 	//Getters
 	public AnimalModel getAnimalModel(){
@@ -307,7 +311,8 @@ public class Game1Controller{
 		
 		//Prevent health going up
 		if(protection <= 100){
-			new_status = (bar.getStatus() - (bar.getMaxLevel() - protection));
+			//changed this because it wasn't correct
+			new_status = (bar.getStatus() - protection);
 		}else{
 			new_status = (bar.getStatus() - (bar.getMaxLevel() - 100));
 		}
