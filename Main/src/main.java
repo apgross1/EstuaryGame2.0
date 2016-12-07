@@ -24,11 +24,11 @@ public class main {
 
 		Game1Controller g1 = new Game1Controller(gameFrame);
 		//Game2Controller g2 = new Game2Controller(gameFrame);
-		//Game3Controller g3 = new Game3Controller(gameFrame, true);
+		Game3Controller g3 = new Game3Controller(true);
 		
 		g1.startGame();
 		//g2.startGame();
-		//g3.runGame();
+		g3.runGame();
 		 
 		 
 	}

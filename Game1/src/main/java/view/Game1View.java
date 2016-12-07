@@ -68,7 +68,7 @@ public class Game1View extends JPanel implements KeyListener{
 	 * @param ctl an instance of the controller
 	 * @param gameF the jframe that the view uses to paint on
 	 */
-	public Game1View(Game1Controller ctl, JFrame gameF){
+	public Game1View(Game1Controller ctl){
         controller = ctl;
         //Load all pictures in the view
         loadImgs();

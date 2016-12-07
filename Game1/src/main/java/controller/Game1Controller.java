@@ -49,7 +49,7 @@ public class Game1Controller{
 	 * 
 	 */
 	public Game1Controller(JFrame gameF) {
-		g1view = new Game1View(this, gameF);
+		g1view = new Game1View(this);
 	}
 	//for testing purposes
 	/**
