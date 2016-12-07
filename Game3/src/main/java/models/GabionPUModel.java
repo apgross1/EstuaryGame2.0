@@ -91,7 +91,7 @@ public class GabionPUModel extends WallModelAbstract {
 		
 		try{
 			ArrayList<BufferedImage> wallGraphic = new ArrayList<BufferedImage>();
-			BufferedImage gabionWall = ImageIO.read(new File("./Images/Game3/GabionPU.png"));
+			BufferedImage gabionWall = ImageIO.read(new File("./Images/Game3/GabionWall.png"));
 			wallGraphic.add(gabionWall);
 			
 			ArrayList<BufferedImage> puGraphic = new ArrayList<BufferedImage>();
