@@ -12,25 +12,21 @@ public class main {
 		JFrame gameFrame = new JFrame();
 		
 		
-		MainRun game = new MainRun(gameFrame);
+		/*MainRun game = new MainRun(gameFrame);
 		while(!game.isStartPressed()){
 			game.repaintFrame();
-		}
+		}*/
 		//Once the start game button is pressed well get here.
 		System.out.println("Yup, were good.");
 	
 		
-		Game1Controller g1 = new Game1Controller(gameFrame);
-<<<<<<< HEAD
+		//Game1Controller g1 = new Game1Controller(gameFrame);
 		//Game2Controller g2 = new Game2Controller(gameFrame);
-		//Game3Controller g3 = new Game3Controller(gameFrame);
-=======
-		Game2Controller g2 = new Game2Controller(gameFrame);
 		Game3Controller g3 = new Game3Controller(gameFrame, true);
->>>>>>> refs/remotes/origin/Game3
+
 		
-		g1.startGame();
+		//g1.startGame();
 		//g2.startGame();
-		//g3.runGame();
+		 g3.runGame();
 	}
 }
