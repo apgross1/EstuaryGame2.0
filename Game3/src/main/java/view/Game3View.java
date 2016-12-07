@@ -724,6 +724,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		//Defining constraint for background
 		ImageIcon backgroundIcon = new ImageIcon("./Images/2D_estuary.jpg"); 
 		endScreen.setIcon(backgroundIcon);
+		System.out.println(frame.getWidth() + " " + frame.getHeight());
 		endScreen.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		
 		
@@ -821,8 +822,6 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 			}
 			JButton button = (JButton) e.getSource();
 			button.setIcon(new ImageIcon(exitGame_1));
-
-			//frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 		}
 	}
 
@@ -856,6 +855,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		else {
 			button.setIcon(new ImageIcon(this.getMainMenuPics().get(0)));
 			System.out.println("Returning to main screen!");
+			
 		}
 	}
 

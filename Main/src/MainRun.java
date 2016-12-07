@@ -93,6 +93,9 @@ public class MainRun extends JPanel implements KeyListener{
 		return startPressed;
 	}
 	
+	public void setStartPressed(boolean startPress) {
+		startPressed = startPress;
+	}
 	public void repaintFrame(){
 		frame.repaint();
 	}
