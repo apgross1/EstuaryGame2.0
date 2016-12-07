@@ -1,6 +1,8 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -70,7 +72,7 @@ public class Game1View extends JPanel implements KeyListener{
         controller = ctl;
         //Load all pictures in the view
         loadImgs();
-        frame = gameF;
+        frame = new JFrame();
         /*
         frame = gameF;
         frame.getContentPane().add(new Animation());
@@ -91,10 +93,14 @@ public class Game1View extends JPanel implements KeyListener{
     }
 	public void setUp(){
 		frame.getContentPane().removeAll();
-		frame.dispose();
+		//frame.dispose();
 		//frame
 		
-        frame.getContentPane().add(new Animation());
+		JPanel tempPanel = new JPanel(new BorderLayout());
+		tempPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		tempPanel.setSize(new Dimension(frame.getWidth(),frame.getHeight()));
+		tempPanel.add(new Animation());
+        frame.add(tempPanel);
         frame.setBackground(Color.gray);
         
         //Full screen
@@ -103,13 +109,16 @@ public class Game1View extends JPanel implements KeyListener{
  
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(controller.getDim().width, controller.getDim().height); 
-        frame.setVisible(true);
-        frame.setResizable(false);
        
-        frame.validate();
+        
+       
+       
         
         //addKeyListener
         frame.addKeyListener(this);
+        frame.setResizable(false);
+        frame.validate();
+        frame.setVisible(true);
 	}
 	
     /**
@@ -219,9 +228,9 @@ public class Game1View extends JPanel implements KeyListener{
      */
     public class Animation extends JComponent {
 		private static final long serialVersionUID = 1L;
-
+		
 		@Override
-		public void paint(Graphics g) {
+		public void paint(Graphics g) {	    
 			if(!controller.isIntro()){
 				if(controller.getAnimalModel().isMoving()){
 					picNum = (picNum + 1) % frameCount;
@@ -399,9 +408,9 @@ public class Game1View extends JPanel implements KeyListener{
 		        case KeyEvent.VK_ESCAPE :
 		            // handle escape (to minimize game)
 		        	frame.setExtendedState(JFrame.ICONIFIED);
-		            break;		            
-		    }
+		            break;
 		}
+	}
 	 
 		@Override
 		public void keyReleased(KeyEvent e) {
@@ -426,6 +435,11 @@ public class Game1View extends JPanel implements KeyListener{
 		    }
 			
 		}
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
 
 	 
 	 /*
@@ -434,7 +448,5 @@ public class Game1View extends JPanel implements KeyListener{
 	  */
 
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-	}
+
 }

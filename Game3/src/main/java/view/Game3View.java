@@ -745,7 +745,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		b1c.gridx = 0;
 		b1c.gridy = 1;
 		b1c.weightx = .1;
-		b1c.weighty = .1;
+		b1c.weighty = 0.1;
 		menuButton.addMouseListener(this);
 		endScreen.add(menuButton, b1c);
 		
@@ -787,7 +787,8 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		
 		rmC.gridx = 1;
 		rmC.gridy = 0;
-		rmC.weighty = 0;
+		rmC.weighty = .05;
+		rmC.weightx = .5;
 		endScreen.add(resultMessage, rmC);
 
 		frame.getContentPane().removeAll();
