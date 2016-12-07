@@ -71,6 +71,8 @@ public class Game1View extends JPanel implements KeyListener{
         //Load all pictures in the view
         loadImgs();
         frame = gameF;
+        /*
+        frame = gameF;
         frame.getContentPane().add(new Animation());
         frame.setBackground(Color.gray);
         
@@ -85,7 +87,30 @@ public class Game1View extends JPanel implements KeyListener{
        
         //addKeyListener
         frame.addKeyListener(this);
+        */
     }
+	public void setUp(){
+		frame.getContentPane().removeAll();
+		frame.dispose();
+		//frame
+		
+        frame.getContentPane().add(new Animation());
+        frame.setBackground(Color.gray);
+        
+        //Full screen
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        frame.setUndecorated(true);
+ 
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(controller.getDim().width, controller.getDim().height); 
+        frame.setVisible(true);
+        frame.setResizable(false);
+       
+        frame.validate();
+        
+        //addKeyListener
+        frame.addKeyListener(this);
+	}
 	
     /**
      * a method that loads in all the images the view will use
