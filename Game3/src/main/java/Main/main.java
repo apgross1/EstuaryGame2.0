@@ -1,3 +1,4 @@
+package Main;
 import java.util.Random;
 
 import controller.Game3Controller;

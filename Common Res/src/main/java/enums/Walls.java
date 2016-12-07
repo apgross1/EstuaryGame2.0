@@ -1,10 +1,10 @@
 package enums;
 
 public enum Walls {
-	CONCRETE_GAME1(1),
-	CONCRETE_GAME3(2),
-	GABION_GAME1(3),
-	GABION_GAME3(4);
+	CONCRETE_GAME1(0),
+	CONCRETE_GAME3(1),
+	GABION_GAME1(2),
+	GABION_GAME3(3);
 	
 	private final int value;
     private Walls(int value) {
