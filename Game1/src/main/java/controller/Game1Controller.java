@@ -7,9 +7,9 @@ import java.util.Random;
 import models.AnimalModel;
 import models.BarModel;
 import models.ConcreteWallModelG1;
-import models.ConcreteWallModelG1.ConcreteChunk;
+import models.ConcreteChunk;
 import models.GabionWallModelG1;
-import models.GabionWallModelG1.GabionChunk;
+import models.GabionChunk;
 import view.Game1View;
 
 import java.awt.Rectangle;
@@ -37,65 +37,126 @@ public class Game1Controller{
 	long startTime;
 	boolean intro;
 	boolean wave;
-	boolean storm;
 	boolean gameOneWon = false;
 	boolean gameOver = false;
 	boolean countdown; //if were in the three second count down mode at the end of round
 	
 	
+	/**
+	 * creates an instance of the view for the controller to use
+	 * doesn't return anything but creates a view
+	 * @param jframe common jframe to link all games
+	 * 
+	 */
 	public Game1Controller(JFrame gameF) {
 		g1view = new Game1View(this, gameF);
 	}
 	//for testing purposes
+	/**
+	 * makes an instance of Game1Controller strictly for
+	 * testing purposes
+	 */
 	public Game1Controller(){
 		
 	}
 	
 	//Getters
+	/**
+	 * creates an instance of the animal model for the controller to use
+	 * @return instance of the animal model 
+	 */
 	public AnimalModel getAnimalModel(){
 		return animal;
 	}
+	/**
+	 * creates an instance of the bar model for the controller to use
+	 * @return instance of the bar model
+	 */
 	public BarModel getBarModel(){
 		return bar;
 	}
+	/**
+	 * creates an instance of the concrete wall model for the controller to use
+	 * @return instance of the concrete wall model
+	 */
 	public ConcreteWallModelG1 getWallModel(){
 		return wallModel;
 	}
+	/**
+	 * creates an instance of the gabion wall model for the controller to use
+	 * @return instance of the gabion wall model
+	 */
 	public GabionWallModelG1 getGabionWallModel(){
 		return gabionModel;
 	}
+	/**
+	 * gets the time of the game during rounds in the appropriate format (seconds)
+	 * @return a long value with the time
+	 */
 	public long getTime(){
 		return (29 -(gameTime/1000));
 	}
+	/**
+	 * gets the time between rounds in the appropriate format (seconds)
+	 * @return a long value with the middle time
+	 */
 	public long getIntermTime(){
 		return (3 -(countDownTime/1000));
 	}
+	/**
+	 * gets the size of someones screen so that the game is dynamic in size
+	 * @return a Dimension of the size of the screen
+	 */
 	public Dimension getDim(){
 		return screenSize;
 	}
+	/**
+	 * tells whether it is the introduction tutorial or not
+	 * @return a boolean of whether its the intro or not
+	 */
 	public boolean isIntro(){
 		return intro;
 	}
+	/**
+	 * tells whether it is after the round when a wave appears
+	 * @return a boolean of whether the wave is happening or not
+	 */
 	public boolean isWave(){
 		return wave;
 	}
-	public boolean isStorm(){
-		return storm;
-	}
+	/**
+	 * shows what height the wave is at as it travles the screen
+	 * @return an integer of where the wave is on y axis
+	 */
 	public int getWaveY(){
 		return waveHeight;
 	}
+	/**
+	 * tells whether the game is over or not
+	 * @return a boolean of whether the game is done or not
+	 */
 	public boolean getIsGameOver(){
 		return gameOver;
 	}
+	/**
+	 * tells whether the game is over and you have won the game
+	 * @return a boolean of whether you have won or not
+	 */
 	public boolean isWin(){
 		return gameOneWon;
 	}
+	/**
+	 * tells what round is currently happening
+	 * @return an int of what round it is
+	 */
 	public int getRound(){
 		return overallRound;
 	}
 	
 	//Setters
+	/**
+	 * resets all of the variables that aren't the bar model and timer
+	 */
 	public void reset() {
 		//This should reset all variables (except the bar), timer and all as we're going to have 3 sub rounds in game 1
 		wallModel.reset();
@@ -105,6 +166,9 @@ public class Game1Controller{
 	
 	}
 	
+	/**
+	 * this starts the game and the timer that goes along with it, runs the entire game and updates gamestate
+	 */
 	public void startGame(){
 		gameState = true;
 		//Draw into screen.
@@ -122,6 +186,12 @@ public class Game1Controller{
 		return;
 	}
 	
+	
+	/**
+	 * provides the timer for each round, also spawns oyesters at 
+	 * the beginning of each round, also starts the wave at the end of
+	 * each round and provides win and loss screens
+	 */
 	
 	public void round() {
 		startTime = System.currentTimeMillis();
@@ -216,11 +286,22 @@ public class Game1Controller{
 		//overallRound++;
 	}
 	
+	/**
+	 * tells wether the countodwn between rounds is happening
+	 * @return a bool of wether the coutdown is happening or not
+	 */
 	public boolean getInCountDown(){
 		return countdown;
 	}
 	
-	boolean collisionOccured(AnimalModel a, Object chunk){
+	/**
+	 * method that takes in the animal and a chunk (gabion or concrete)
+	 * and determines if the animal and the chunk collide or not 
+	 * @param a the animal itself
+	 * @param chunk which is either a gabion or concrete chunk
+	 * @return a boolean that tells if a collision occurred or not
+	 */
+	public boolean collisionOccured(AnimalModel a, Object chunk){
 		//Logic for seeing if a collision has occurred (swift has this built in so I've been told?)
 		
 		Rectangle chunk_rect = null;
@@ -246,6 +327,10 @@ public class Game1Controller{
 		return false;
 	}
 	
+	/**
+	 * uses the collision occurred method to tell if a collision occurred, and if it did
+	 * add whichever chunk (gabion or concrete) is hit, add it to the wall
+	 */
 	public void collisionDetectionLoop(){
 		//In this loop collision detection for (crab +gabion), and (crab + wall) will be handled.
 		Collection<GabionChunk> gabionChunkTemp = gabionModel.getChunks();
@@ -269,6 +354,9 @@ public class Game1Controller{
 	}
 	
 	//This is called at the end of the round to determine mathamatically what damage is done to the health of the estuary.
+	/**
+	 * determines how much damage the overall health takes at the end of the round
+	 */
 	public void takeDamage() {
 		//Get Vars
 		int gabbionsCollected = gabionModel.getCurrentOysters();
@@ -300,10 +388,18 @@ public class Game1Controller{
 		gabionModel.breakDown();
 	}
 	
+	/**
+	 * is a getter for what the game state is (in game one or not)
+	 * @return a boolean to tell whether the game is on or not
+	 */
 	public boolean isGameState() {
 		return gameState;
 	}
 
+	/**
+	 * takes in a game state and uses it to set the overall gameState
+	 * @param gameState of game 1 
+	 */
 	public void setGameState(boolean gameState) {
 		this.gameState = gameState;
 	}
