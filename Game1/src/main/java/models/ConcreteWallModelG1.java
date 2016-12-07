@@ -41,10 +41,15 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 		activeBlocksOnBoard--;
 	}
 	
+	/**
+	 * Simple math function that breaks down the concrete walls to 10% 
+	 * of what the player was able to collect.
+	 */
 	@Override
 	public void breakDown() {
 		currentBlocks = (int) (.1*currentBlocks);
 	}
+	
 	/**
 	 * takes in 2 locations and uses them to randomly spawn a chunk on the board, adds
 	 * a new chunk to the array of chunks and updates the number of blocks on the board 
@@ -60,6 +65,7 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 		activeBlocksOnBoard++;
 		
 	}
+	
 	/**
 	 * getter to get the active amount of blocks you can pick up on the board
 	 * @return an int of the number of possible pick ups
@@ -67,6 +73,7 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	public int getActiveBlocks(){
 		return activeBlocksOnBoard;
 	}
+	
 	/**
 	 * a getter that gets the max amount of blocks that can be used in the wall
 	 * @return an int of the max amount of blocks able to be used in the wall
@@ -74,6 +81,7 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	public int getMaxBlocks() {
 		return maxBlocks;
 	}
+	
 	/**
 	 * a getter to get the current number of blocks in the wall
 	 * @return an int of the current number of blocks in the wall
@@ -81,6 +89,7 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	public int getCurrentBlocks() {
 		return currentBlocks;
 	}
+	
 	/**
 	 * returns the number of chunks that are in the collection of chunk, which is 
 	 * used for the chunks in the wall and the number on the board
@@ -89,11 +98,11 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	public Collection<ConcreteChunk> getChunks() {
 		return chunks;
 	}
-
 	
 	/*
-	 * Dont think we need stuff below this line
+	 * Below are method used in tests but not in the actual game
 	 */
+	
 	/**
 	 * a setter for the max amount of blocks that can be collected for the wall
 	 * @param i an int that is the number of blocks that can be collected for the wall
@@ -115,10 +124,13 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	public void setactiveBlocksOnBoard(int i){
 		activeBlocksOnBoard = i;
 	}
-
+	
+	/*
+	 * Functions below this line are to be removed from common resources once branches
+	 * are combined
+	 */
 	@Override
-	public void spawn(boolean gameStart, int numChunksRemoved) {
-		// TODO Auto-generated method stub
-		
+	public void spawn(boolean gameStart, int numChunksRemoved) {		
 	}
+	
 }

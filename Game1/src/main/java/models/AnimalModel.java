@@ -15,7 +15,7 @@ public class AnimalModel extends AnimalModelAbstract {
 	/**
 	 * constructor for the animal model that sets the spawn location, and also
 	 * takes in the dimensions of the screen to help with said spawning
-	 * @param s the dimentions of the screen
+	 * @param s the dimensions of the screen
 	 */
 	public AnimalModel(Dimension s) {
 		//Set screen resolution for movement
@@ -91,7 +91,7 @@ public class AnimalModel extends AnimalModelAbstract {
 	}
 	
 	/**
-	 * used to show wether the animal is moving or not
+	 * used to show if the animal is moving or not
 	 * @return a boolean that shows if the animal is moving or not
 	 */
 	public boolean isMoving(){
@@ -101,6 +101,9 @@ public class AnimalModel extends AnimalModelAbstract {
 		return false;
 	}
 	
+	/**
+	 * Updates the actual location of the animal.
+	 */
 	@Override
 	public void move() {
 		if(getCurrDir() == Direction.EAST){
@@ -128,16 +131,13 @@ public class AnimalModel extends AnimalModelAbstract {
 	
 	
 	/*
-	 * Don't think we need stuff below this line
+	 * These are functions to be removed from Common Res once all branches are combined.
 	 */
 	
 	@Override
-	public void healthUp() {
-	}
+	public void healthUp() {}
 	@Override
-	public void healthDown() {
-	}
+	public void healthDown() {}
 	@Override
-	public void pickUp() {
-	}
+	public void pickUp() {}
 }

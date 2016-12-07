@@ -10,7 +10,6 @@ public class GabionWallModelG1 extends WallModelAbstract{
 	private int activeClamsOnBoard;
 	private Collection<GabionChunk> chunks = new ArrayList<GabionChunk>();
 	
-	
 	/**
 	 * creates an instance of the model that sets the max amount of oyesters
 	 * that can be used in the walls
@@ -44,6 +43,10 @@ public class GabionWallModelG1 extends WallModelAbstract{
 		activeClamsOnBoard--;
 	}
 
+	/**
+	 * Mathematical function that sets current Oysters (what is displayed on the wall)
+	 * to 85% of what the player collected.
+	 */
 	@Override
 	public void breakDown() {
 		currentOysters = (int) (.85*currentOysters);
@@ -63,8 +66,6 @@ public class GabionWallModelG1 extends WallModelAbstract{
 		chunks.add(gc);
 		activeClamsOnBoard++;
 	}
-	
-	
 	
 	/**
 	 * getter to get the active amount of clams you can pick up on the board
@@ -98,14 +99,9 @@ public class GabionWallModelG1 extends WallModelAbstract{
 		return chunks;
 	}
 	
-	
-	
 	/*
-	 * Dont think we need stuff below this line
+	 * Below are method used in tests but not in the actual game
 	 */
-
-	
-
 	/**
 	 * a setter for the max amount of oysters that can be collected for the wall
 	 * @param i an int that is the number of oysters that can be collected for the wall
@@ -132,12 +128,12 @@ public class GabionWallModelG1 extends WallModelAbstract{
 		activeClamsOnBoard = i;
 		
 	}
-
-	@Override
-	public void spawn(boolean gameStart, int numChunksRemoved) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
+	/*
+	 * Methods below this line are to be removed from common resources 
+	 * once braches are pulled to master.
+	 */
+	@Override
+	public void spawn(boolean gameStart, int numChunksRemoved) {		
+	}
 }

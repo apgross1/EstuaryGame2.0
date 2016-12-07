@@ -9,10 +9,10 @@ import javax.swing.JFrame;
 
 import org.junit.Test;
 
-import models.GabionChunk;
-import models.AnimalModel;
-import models.ConcreteWallModelG1;
 import models.ConcreteChunk;
+import models.ConcreteWallModelG1;
+import models.GabionChunk;
+import models.GabionWallModelG1;
 import controller.Game1Controller;
 
 public class Game1Tests {
@@ -43,6 +43,7 @@ public class Game1Tests {
 	
 	@Test
 	public void testAnimalMovement() {
+		
 		models.AnimalModel myAnimal = new models.AnimalModel(screenSize);
 		screenSize.height = 10;
 		screenSize.width = 10;
@@ -183,6 +184,7 @@ public class Game1Tests {
 		myGabWall.spawnChunk(10, 100);
 		assertEquals(2, myGabWall.getActiveClams());
 	}
+	
 	@Test 
 	public void testGabChunkSize(){
 		models.GabionChunk myChunk = new models.GabionChunk();
@@ -241,32 +243,26 @@ public class Game1Tests {
 	
 	@Test
 	public void testConcAddPiece(){
-		models.ConcreteWallModelG1 myConWall = new models.ConcreteWallModelG1();
-		models.ConcreteChunk chunk = new models.ConcreteChunk();
-		myConWall.setMaxBlocks(100);
-		myConWall.setactiveBlocksOnBoard(1);
-		myConWall.setCurrentBlocks(1);
-		myConWall.spawnChunk(50,50);
-		Collection<models.ConcreteChunk> ccc = myConWall.getChunks();
-		assertTrue("Should be 1...", ccc.size() == 1);
-		myConWall.addPiece(chunk);
-		assertTrue("Should be 1.....", myConWall.getActiveBlocks() == 0);
-		assertTrue("Should be 2", myConWall.getCurrentBlocks() == 2);
+		ConcreteWallModelG1 cwm = new ConcreteWallModelG1();
+		ConcreteChunk c = new ConcreteChunk();
+		
+		c.setLocX(50);
+		c.setLocY(50);
+		cwm.addPiece(c);
+		
+		assertTrue("Should be 1..", cwm.getCurrentBlocks() == 1);
 	}
 	
 	@Test
 	public void testGabAddPiece() {
-		models.GabionWallModelG1 myGabWall = new models.GabionWallModelG1();
-		models.GabionChunk chunk = new models.GabionChunk();
-		myGabWall.setMaxOysters(100);
-		myGabWall.setactiveClamsOnBoard(1);
-		myGabWall.setCurrentOysters(1);
-		myGabWall.spawnChunk(50,50);
-		Collection<models.GabionChunk> gcc = myGabWall.getChunks();
-		assertTrue("Should be 1...", gcc.size() == 1);
-		myGabWall.addPiece(chunk);
-		assertTrue("Should be 1..", myGabWall.getActiveClams() == 0);
-		assertTrue("Should be 1..", myGabWall.getCurrentOysters() == 2);
+		GabionWallModelG1 gwm = new GabionWallModelG1();
+		GabionChunk c = new GabionChunk();
+		
+		c.setLocX(50);
+		c.setLocY(50);
+		gwm.addPiece(c);
+		
+		assertTrue("Should be 1..", gwm.getCurrentOysters() == 1);
 		
 	}
 	
@@ -434,13 +430,14 @@ public class Game1Tests {
 	@Test
 	public void testCollision(){
 		models.AnimalModel myAnimal = new models.AnimalModel(screenSize);
+		GabionWallModelG1 gwm = new GabionWallModelG1();
 		Game1Controller process = new Game1Controller();
-		Object GabChunk = new Object();
-		Rectangle chunk_rect = new Rectangle(5, 5, 5, 5);
-		Rectangle animal_rect = new Rectangle(5, 5, 5, 5);
 		
+		myAnimal.setLocX(100);
+		myAnimal.setLocY(100);
+		gwm.spawnChunk(100, 100);
 		
-		assertTrue("Should be true", process.collisionOccured(myAnimal, GabChunk));
+		assertTrue("Should be true", process.collisionOccured(myAnimal, (gwm.getChunks().iterator()).next()));
 	}
 	
 	//wave hit
