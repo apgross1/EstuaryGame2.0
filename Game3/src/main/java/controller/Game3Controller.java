@@ -59,7 +59,7 @@ public class Game3Controller implements KeyListener {
 	
 	
 	public Game3Controller(JFrame gameF, boolean tutorialOn) {
-		this.setTutorialActive(false);
+		this.setTutorialActive(true);
 		gameFrame = gameF;
 		AnimalModelG3 a = new AnimalModelG3();
 		a.setLocX(250);
@@ -89,8 +89,6 @@ public class Game3Controller implements KeyListener {
 		
 		this.getBeach().setFrameMap(view.getFrameMap());
 		this.getAnimal().setFrames(view.getFrameMap());
-		this.getAnimal().setFrameWidth(view.getLayoutContainerComps().get(Frames.ANIMAL).getWidth());
-		this.getAnimal().setFrameHeight(view.getLayoutContainerComps().get(Frames.ANIMAL).getHeight());
 		System.out.println("Time panel width: " + this.view.getTimePanel().getWidth());
 		SunHurricaneModel sun = new SunHurricaneModel(this.view.getTimePanel());
 		sun.setInitialPosition(this.view.getTimePanel().getWidth()-20);

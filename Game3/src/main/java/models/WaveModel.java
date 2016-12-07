@@ -34,6 +34,11 @@ public class WaveModel {
 	private boolean deleteWave = false;
 
 
+	/**
+	 * Constructor for this element
+	 * @param clusterVal the number cluster with which this wave is associated
+	 * @param f the frame map used to perform dynamic scaling
+	 */
 	public WaveModel(int clusterVal, HashMap<Frames, JComponent> f) {
 		movement = (screenSizeX*.00104);
 		wavePause = false;
@@ -44,6 +49,11 @@ public class WaveModel {
 
 	
 
+	/**
+	 * Assigns this element to a wave cluster group. The location of the wave
+	 * is dependent on what cluster it belongs to.
+	 * @param clusterVal
+	 */
 	public void randomSpawn(int clusterVal) {
 		WaveClusters waveEnum = WaveClusters.values()[clusterVal];
 		setClusterGroup(waveEnum);
@@ -83,12 +93,13 @@ public class WaveModel {
 	}
 	
 	
+	/**
+	 * ActionListener to handle movement of this element. It is
+	 * meant to replicate the natural motion of a wave.
+	 */
 	ActionListener movementTimer = new ActionListener() {
-
 		@Override
-
 		public void actionPerformed(ActionEvent e) {
-
 			if(!isReceed()) {
 				if(wavePause) {
 					setVelocity(0);
@@ -120,144 +131,206 @@ public class WaveModel {
 
 	
 
+	/**
+	 * Timer used to move wave in 50 millisecond intervals based
+	 * on movement defined in movementTimer.
+	 */
 	public void move() {
-
 		Timer timer = new Timer(50, movementTimer);
 		timer.setRepeats(true);
 		timer.start();
 	}
 	
 	
+	/**
+	 * Turns wavePause true. If this occurs, the wave will become motionless
+	 * at its current location. This method is used primarily in the tutorial.
+	 */
 	public void pauseWave() {
 		this.wavePause = true;
 	}
 
+	/**
+	 * Called after pauseWave() to resume movement of this element.
+	 * This method is used primarily in the tutorial.
+	 */
 	public void resumeWave() {
 		this.wavePause = false;
 	}
 	
+	/**
+	 * Prepares to delete the wave. This method is used
+	 * primarily in the tutorial.
+	 */
 	public void resetWave() {
-		/*this.resumeWave();
-		this.setReceed(true);
-		location.setX(frames.get(Frames.ANIMAL).getWidth()+frames.get(Frames.SHORE).getWidth());*/
 		this.setDeleteWave(true);
 	}
 	
+	/**
+	 * Gets the bounds of the wave for collision detection purposes.
+	 * @return Rectangle the bounds of the wave
+	 */
 	public Rectangle getBounds() {
-
 		return new Rectangle(location.getX(),location.getY(), this.getWidth(), this.getHeight());
-
 	}
 
-	
-
+	/**
+	 * Gets the height of the wave
+	 * @return height int, height of the wave
+	 */
 	public int getHeight() {
-
 		return height;
-
 	}
 
-
-
+	/**
+	 * Sets the height of the wave
+	 * @param height int, height of the wave
+	 */
 	public void setHeight(int height) {
-
 		this.height = height;
-
 	}
 
-
-
+	/**
+	 * Gets the width of the wave
+	 * @return width int, width of the wave
+	 */
 	public int getWidth() {
-
 		return width;
-
 	}
 
-
-
+	/**
+	 * Sets the width of the wave
+	 * @param width int, width of the wave
+	 */
 	public void setWidth(int width) {
-
 		this.width = width;
-
 	}
 
-
-
+	/**
+	 * Gets the location of the wave.
+	 * @return location Pair, location of the wave
+	 */
 	public Pair getLocation() {
-
 		return location;
-
 	}
 
-
-
+	/**
+	 * Sets the location of the wave
+	 * @param location Pair, location of the wave
+	 */
 	public void setLocation(Pair location) {
-
 		this.location = location;
-
 	}
 
+	/**
+	 * Flag telling the movement listener to reverse movement of wave.
+	 * @return recede boolean, 1 if the wave is receding, 0 otherwise
+	 */
 	public boolean isReceed() {
 		return receed;
 	}
 
+	/**
+	 * Sets the value of the flag telling the movement listener to reverse movement of wave to false.
+	 * This will have the wave continue in its original direction.
+	 * @param receed boolean, 1 if the wave is receding, 0 otherwise
+	 */
 	public void setReceed(boolean receed) {
 		this.receed = receed;
 	}
 
 
+	/**
+	 * Get the wave cluster group of which this element is a member
+	 * @return clusterGroup WaveClusters determining which cluster this member is a part of (Cluster 1 to 5)
+	 */
 	public WaveClusters getClusterGroup() {
 		return clusterGroup;
 	}
 
 
-
+	/**
+	 * Set the wave cluster group of which this element is a member
+	 * @param clusterGroup WaveClusters determining which cluster this member is a part of (Cluster 1 to 5)
+	 */
 	public void setClusterGroup(WaveClusters waveEnum) {
 		this.clusterGroup = waveEnum;
 	}
 
 
 
+	/**
+	 * Determines if this element is the last wave in a cluster. This is used
+	 * to signal to the View that a grid block is ready to be turned to water
+	 * @return lastWave boolean, 1 if this element is the last wave, 0 otherwise
+	 */
 	public boolean isLastWave() {
 		return lastWave;
 	}
 
 
-
+	/**
+	 * Sets this element as the last wave in a cluster. This is used
+	 * to signal to the View that a grid block is ready to be turned to water
+	 * @return lastWave boolean, 1 if this element is the last wave, 0 otherwise
+	 */
 	public void setLastWave(boolean lastWave) {
 		this.lastWave = lastWave;
 	}
 
+	/**
+	 * Gets the frame map used mainly to set dimensions/borders relative to the screen size
+	 * @return frameMap a boolean
+	 */
 	public HashMap<Frames, JComponent> getFrames() {
 		return frames;
 	}
 
 
-
+	/**
+	 * Sets the frame map
+	 * @param frameMap a
+	 */
 	public void setFrames(HashMap<Frames, JComponent> frames) {
 		this.frames = frames;
 	}
 
 
 
+	/**
+	 * Gets the velocity of this element at a single point in time
+	 * @return velocity int, the velocity of this element
+	 */
 	public int getVelocity() {
 		return velocity;
 	}
 
 
-
+	/**
+	 * Sets the velocity of this element at a single point in time
+	 * @return velocity int, the velocity of this element
+	 */
 	public void setVelocity(int velocity) {
 		this.velocity = velocity;
 	}
 
 
 
+	/**
+	 * Determines if this element should be deleted. This is primarily used
+	 * in the tutorial.
+	 * @return deleteWave boolean, 1 if this element should be deleted, 0 otherwise
+	 */
 	public boolean isDeleteWave() {
 		return deleteWave;
 	}
 
 
-
+	/**
+	 * Sets this element as one to be deleted. This is primarily used
+	 * in the tutorial.
+	 * @return deleteWave boolean, 1 if this element should be deleted, 0 otherwise
+	 */
 	public void setDeleteWave(boolean deleteWave) {
 		this.deleteWave = deleteWave;
 	}
