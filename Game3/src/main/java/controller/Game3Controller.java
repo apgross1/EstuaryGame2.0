@@ -464,10 +464,7 @@ public class Game3Controller implements KeyListener {
 		public void actionPerformed(ActionEvent e) {
 			//Turning off dialogue box
 			getTutorial().setDialogueOn(false);
-			//Reseting models
-			getAnimal().reset();
 			setTutorialActive(false);
-			
 		}
 	};
 	
@@ -485,7 +482,7 @@ public class Game3Controller implements KeyListener {
 	}
 	
 	public void generateLastWave() {
-		Timer lastWaveTimer = new Timer(100,genLastWaveListener);
+		Timer lastWaveTimer = new Timer(1000,genLastWaveListener);
 		lastWaveTimer.setRepeats(true);
 		lastWaveTimer.start();
 	}
@@ -497,7 +494,7 @@ public class Game3Controller implements KeyListener {
 	}
 	
 	public void generateSingleGab() {
-		Timer gabTimer = new Timer(6000, singleGabSpawnListener);
+		Timer gabTimer = new Timer(4000, singleGabSpawnListener);
 		gabTimer.setRepeats(false);
 		gabTimer.start();
 	}

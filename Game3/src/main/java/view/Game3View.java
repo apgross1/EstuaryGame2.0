@@ -18,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -64,7 +66,7 @@ import models.WaterModel;
 import models.WaveModel;
 
 
-public class Game3View extends JPanel implements KeyListener{
+public class Game3View extends JPanel implements KeyListener, MouseListener {
 	private Game3Controller controller;
 	private HashMap<Integer, Wave> waveComponentMap;
 	private HashMap<Frames, JComponent> frameMap;
@@ -79,10 +81,47 @@ public class Game3View extends JPanel implements KeyListener{
 	private Color skyColor;
 	private JLabel endScreen;
 	private JButton menuButton;
+	private ArrayList<BufferedImage> mainMenuPics = new ArrayList<BufferedImage>();
+	private ArrayList<BufferedImage> exitGamePics = new ArrayList<BufferedImage>();
+
 	
 
 	
 	public Game3View(Game3Controller ctl, JFrame gameF){
+		//Adding end menu button images
+		BufferedImage exitGame_0 = null;
+		BufferedImage exitGame_1 = null;
+		BufferedImage returnMain_0 = null;
+		BufferedImage returnMain_1 = null;
+		try {
+			exitGame_0 = ImageIO.read(new File("./Images/Game3/exitGame_0.png"));
+		} catch (IOException excep) {
+			excep.printStackTrace();
+		}
+		try {
+			exitGame_1 = ImageIO.read(new File("./Images/Game3/exitGame_1.png"));
+		} catch (IOException excep) {
+			excep.printStackTrace();
+		}
+		try {
+			returnMain_0= ImageIO.read(new File("./Images/Game3/returnMain_0.png"));
+		} catch (IOException excep) {
+			excep.printStackTrace();
+		}
+		try {
+			returnMain_1 = ImageIO.read(new File("./Images/Game3/returnMain_1.png"));
+		} catch (IOException excep) {
+			excep.printStackTrace();
+		}
+		
+		this.getMainMenuPics().add(returnMain_0);
+		this.getMainMenuPics().add(returnMain_1);
+		this.getExitGamePics().add(exitGame_0);
+		this.getExitGamePics().add(exitGame_1);
+		
+		
+		
+		
 		brightLevel = 255;
 		skyColor = new Color((int)0,(int)0,(int)0, (int)this.getBrightLevel());
 		//Adding shore graphic (only one which is not created in a model)
@@ -758,28 +797,49 @@ public class Game3View extends JPanel implements KeyListener{
 		
 		
 		//Creating menu button
-		menuButton = new JButton("Return to main menu");
-		menuButton.setPreferredSize(new Dimension((int)(this.frame.getWidth()*.26),(int)(this.frame.getHeight()*.22)));
+		BufferedImage returnMain_0 = null;
+		try {
+			returnMain_0 = ImageIO.read(new File("./Images/Game3/returnMain_0.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		menuButton = new JButton(new ImageIcon(returnMain_0));
+		menuButton.setName("menu");
+		menuButton.setBorder(BorderFactory.createEmptyBorder());
+		menuButton.setContentAreaFilled(false);
+		menuButton.setPreferredSize(new Dimension(returnMain_0.getWidth(), returnMain_0.getHeight()));
 		GridBagConstraints b1c = new GridBagConstraints();
 		b1c.gridx = 0;
 		b1c.gridy = 1;
 		b1c.weightx = .1;
 		b1c.weighty = .1;
-		menuButton.addActionListener(new ReturnToMain());
+		menuButton.addMouseListener(this);
 		endScreen.add(menuButton, b1c);
 		
 		
 		//Creating exit button
-		JButton exitButton = new JButton("Exit game");
-		exitButton.addActionListener(new ExitGame());
-		exitButton.setPreferredSize(new Dimension((int)(this.frame.getWidth()*.26),(int)(this.frame.getHeight()*.22)));
+		BufferedImage exitGame_0 = null;
+		
+		try {
+			exitGame_0 = ImageIO.read(new File("./Images/Game3/exitGame_0.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		JButton exitButton = new JButton(new ImageIcon(exitGame_0));
+		exitButton.setBorder(BorderFactory.createEmptyBorder());
+		exitButton.setContentAreaFilled(false);
+		exitButton.setName("exit");
+		exitButton.addMouseListener(this);
+		exitButton.setPreferredSize(new Dimension((int)(exitGame_0.getWidth()),exitGame_0.getHeight()));
 		GridBagConstraints b2c = new GridBagConstraints();
 		b2c.gridx = 2;
 		b2c.gridy = 1;
 		b2c.weightx = .1;
 		b2c.weighty = .1;
 		endScreen.add(exitButton, b2c);
-		
+
 		
 		//Creating message
 		JLabel resultMessage = new JLabel();
@@ -797,10 +857,6 @@ public class Game3View extends JPanel implements KeyListener{
 		rmC.gridy = 0;
 		rmC.weighty = 0;
 		endScreen.add(resultMessage, rmC);
-		
-		
-		
-		
 
 		frame.getContentPane().removeAll();
 		frame.add(endScreen);
@@ -811,6 +867,14 @@ public class Game3View extends JPanel implements KeyListener{
 	public class ReturnToMain implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			BufferedImage returnMain_1 = null;
+			try {
+				returnMain_1 = ImageIO.read(new File("./Images/Game3/returnMain_1.png"));
+			} catch (IOException excep) {
+				excep.printStackTrace();
+			}
+			JButton button = (JButton) e.getSource();
+			button.setIcon(new ImageIcon(returnMain_1));
 			System.out.println("Returning to main menu!");
 		}
 	}
@@ -818,17 +882,83 @@ public class Game3View extends JPanel implements KeyListener{
 	public class ExitGame implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+			BufferedImage exitGame_1 = null;
+			try {
+				exitGame_1 = ImageIO.read(new File("./Images/Game3/exitGame_1.png"));
+			} catch (IOException excep) {
+				excep.printStackTrace();
+			}
+			JButton button = (JButton) e.getSource();
+			button.setIcon(new ImageIcon(exitGame_1));
+
+			//frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 		}
 	}
-	
-	/*
-	public JFrame getFrame() {
-		return frame;
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		JButton button = (JButton) e.getSource();
+		if(button.getName() == "exit") {
+			button.setIcon(new ImageIcon(this.getExitGamePics().get(1)));
+		}
+		
+		else {
+			button.setIcon(new ImageIcon(this.getMainMenuPics().get(1)));
+		}
 	}
-	*/
-	
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		JButton button = (JButton) e.getSource();
+		if(button.getName() == "exit") {
+			button.setIcon(new ImageIcon(this.getExitGamePics().get(0)));
+			frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+		}
+		else {
+			button.setIcon(new ImageIcon(this.getMainMenuPics().get(0)));
+			System.out.println("Returning to main screen!");
+		}
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public ArrayList<BufferedImage> getMainMenuPics() {
+		return mainMenuPics;
+	}
+
+
+	public void setMainMenuPics(ArrayList<BufferedImage> mainMenuPics) {
+		this.mainMenuPics = mainMenuPics;
+	}
+
+
+	public ArrayList<BufferedImage> getExitGamePics() {
+		return exitGamePics;
+	}
+
+
+	public void setExitGamePics(ArrayList<BufferedImage> exitGamePics) {
+		this.exitGamePics = exitGamePics;
+	}
 }
