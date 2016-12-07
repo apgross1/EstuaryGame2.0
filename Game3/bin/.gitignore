@@ -1,22 +1,8 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-/controller/
-/models/
-/view/
-/main.class
-=======
+/Enums/
 /Game3Tests$1.class
 /Game3Tests$2.class
 /Game3Tests.class
-=======
->>>>>>> refs/remotes/origin/Game3
-/controller/
-/view/
-<<<<<<< HEAD
->>>>>>> branch 'master' of https://github.com/apgross1/EstuaryGame2.0.git
-=======
-/Enums/
 /Main/
+/controller/
 /models/
-/Game3Tests$2.class
->>>>>>> refs/remotes/origin/Game3
+/view/
