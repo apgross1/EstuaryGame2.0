@@ -3,11 +3,18 @@ package models;
 
 public class BarModel extends BarModelAbstract {
 	
+	/**
+	 * constructor for the bar model that updates the max level of the bar
+	 * (how high it can go) and also sets the health at that level 
+	 */
 	public BarModel() {
 		setMaxLevel(100);
 		setStatus(getMaxLevel());
 	}
 
+	/**
+	 * A function that calls setStatus(int) to decreases the health.
+	 */
 	@Override
 	public void decrease(int damage) {
 		if(getStatus() > 0){
@@ -19,13 +26,11 @@ public class BarModel extends BarModelAbstract {
 		}
 	}
 	
+	
 	/*
-	 * Dont think we need stuff below this line
+	 * These are functions to be removed from Common Res once all branches are combined.
 	 */
-
-
 	@Override
 	public void increase(int i) {
-		//Never used but has to be implemented because abstract class
 	}
 }

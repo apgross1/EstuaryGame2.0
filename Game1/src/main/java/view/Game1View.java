@@ -23,9 +23,13 @@ import javax.swing.JPanel;
 import java.io.File;
 import controller.Game1Controller;
 import enums.Direction;
-import models.ConcreteWallModelG1.ConcreteChunk;
-import models.GabionWallModelG1.GabionChunk;
+import models.ConcreteChunk;
+import models.GabionChunk;
 
+/**
+ * @author Tinytimmmy
+ *
+ */
 public class Game1View extends JPanel implements KeyListener{
     /**
 	 * 
@@ -56,6 +60,12 @@ public class Game1View extends JPanel implements KeyListener{
     //Load in sprites
     private ArrayList<BufferedImage> animalSeq = new ArrayList<BufferedImage>();
 
+	/**
+	 * constructor for the view that takes in an instance of the controller and the
+	 * overall jframe used by all games, sets up to frame that the view will use
+	 * @param ctl an instance of the controller
+	 * @param gameF the jframe that the view uses to paint on
+	 */
 	public Game1View(Game1Controller ctl, JFrame gameF){
         controller = ctl;
         //Load all pictures in the view
@@ -77,6 +87,9 @@ public class Game1View extends JPanel implements KeyListener{
         frame.addKeyListener(this);
     }
 	
+    /**
+     * a method that loads in all the images the view will use
+     */
     public void loadImgs(){
     	//boolean check = new File("./Images/Game1/testwallgrid.png").exists();
     	boolean check = new File("./Images/Game1/Game1/testwallgrid.png").exists();
@@ -144,10 +157,19 @@ public class Game1View extends JPanel implements KeyListener{
 	    		}
     	}
 	
+	/**
+	 * used to repaint the jframe
+	 */
 	public void repaintFrame(){
 		frame.repaint();
 	}
     
+    /**
+     * this method is used to center any of the text used by the view
+     * @param g the graphic that contains where the text will go
+     * @param text the actual text that is being printed
+     * @param font the font used by the string when printed
+     */
     public void drawCenteredString(Graphics g, String text, Font font) {
         // Get the FontMetrics
         FontMetrics metrics = g.getFontMetrics(font);
@@ -164,10 +186,13 @@ public class Game1View extends JPanel implements KeyListener{
     }
  
 	
+    /**
+     * this method paints all of the different components of the jframe, such as the background and 
+     * the health bar that is used, also repaints whenever there is an update to any information on the screen like
+     * number of gabions or concrete blocks
+     *
+     */
     public class Animation extends JComponent {
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -278,7 +303,7 @@ public class Game1View extends JPanel implements KeyListener{
 						//lose
 						//g.setFont(new Font("Haettenschweiler", Font.PLAIN, 50));
 						g.setColor(Color.RED);
-						drawCenteredString(g, "Unfortunatly you were unable to protect the estuary, next time try using more gabbions.", new Font("Haettenschweiler", Font.PLAIN, 50));
+						drawCenteredString(g, "Unfortunatly you were unable to protect the estuary, next time try using more oyesters.", new Font("Haettenschweiler", Font.PLAIN, 50));
 						//g.drawString("Unfortunatly you were unable to protect the estuary, next time try using more gabbions.", (int)(.15*(controller.getDim().width)), (int)(.5*(controller.getDim().height)));
 						
 					}else if(controller.getIsGameOver() & controller.isWin()){
@@ -322,7 +347,7 @@ public class Game1View extends JPanel implements KeyListener{
 		}
  }
 	 
-	 @Override
+	@Override
 		public void keyPressed(KeyEvent e) {
 		    int keyCode = e.getKeyCode();
 		    switch( keyCode ) {

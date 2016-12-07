@@ -12,6 +12,11 @@ public class AnimalModel extends AnimalModelAbstract {
 	private int speedX = 0;
 	private int speedY = 0;
 	
+	/**
+	 * constructor for the animal model that sets the spawn location, and also
+	 * takes in the dimensions of the screen to help with said spawning
+	 * @param s the dimensions of the screen
+	 */
 	public AnimalModel(Dimension s) {
 		//Set screen resolution for movement
 		height = 100;//animal pic
@@ -26,22 +31,69 @@ public class AnimalModel extends AnimalModelAbstract {
 	}
 	
 	
+	/**
+	 * getter for the height of the animal
+	 * @return an int with the measure of the height
+	 */
 	public int getHeight(){
 		return height;
 	}
-	
+	/**
+	 * getter for the width of the animal
+	 * @return an int with the measure of the width
+	 */
 	public int getWidth(){
 		return width;
 	}
+	/**
+	 * setter to set the height of the animal
+	 * @param height an integer 
+	 */
+	public void setHeight(int height){
+		this.height = height;
+	}
 	
+	/**
+	 * setter to set the width of the animal
+	 * @param width an integer
+	 */
+	public void setWidth(int width){
+		this.width = width;
+	}
+	
+	/**
+	 * setter to set the speed of the animal in X direction
+	 * @param speed an integer of the speed
+	 */
 	public void setSpeedX(int speed) {
 		this.speedX = speed;
 	}
-	
+	/**
+	 * setter to set the speed of the animal in Y direction
+	 * @param speed an integer of the speed
+	 */
 	public void setSpeedY(int speed) {
 		this.speedY = speed;
 	}
+	/**
+	 * getter to get the speed of the animal in the x direction
+	 * @return an int will the speed in the x direction
+	 */
+	public int getSpeedX() {
+		return speedX;
+	}
+	/**
+	 * getter to get the speed of the animal in the y direction
+	 * @return an int will the speed in the y direction
+	 */
+	public int getSpeedY() {
+		return speedY;
+	}
 	
+	/**
+	 * used to show if the animal is moving or not
+	 * @return a boolean that shows if the animal is moving or not
+	 */
 	public boolean isMoving(){
 		if(speedX != 0 || speedY != 0){
 			return true;
@@ -49,6 +101,9 @@ public class AnimalModel extends AnimalModelAbstract {
 		return false;
 	}
 	
+	/**
+	 * Updates the actual location of the animal.
+	 */
 	@Override
 	public void move() {
 		if(getCurrDir() == Direction.EAST){
@@ -76,16 +131,13 @@ public class AnimalModel extends AnimalModelAbstract {
 	
 	
 	/*
-	 * Don't think we need stuff below this line
+	 * These are functions to be removed from Common Res once all branches are combined.
 	 */
 	
 	@Override
-	public void healthUp() {
-	}
+	public void healthUp() {}
 	@Override
-	public void healthDown() {
-	}
+	public void healthDown() {}
 	@Override
-	public void pickUp() {
-	}
+	public void pickUp() {}
 }
