@@ -1,52 +1,27 @@
 package controller;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.Timer;
-
-import Enums.Frames;
 import Enums.AnimGraphics;
-import enums.Waves;
 import models.AnimalModelG3;
 import models.BeachModel;
-import models.ConcretePUModel.ConcPUState;
-import models.GridBlock;
-import models.Pair;
 import models.SunHurricaneModel;
 import models.Tutorial;
-import models.WallModelAbstract;
-import models.WaterModel;
-import models.WaveModel;
 import models.GabionPUModel.GabPUState;
 import view.Game3View;
 
-public class Game3Controller implements KeyListener {
+public class Game3Controller {
 	private boolean gameActive;
 	private Game3View view;
 	private AnimalModelG3 animal;
 	private BeachModel beach;
-	private GridBlock sandPatch;
-	private WaterModel water;
 	private SunHurricaneModel sun;
 	private SunHurricaneModel hurricane;
 	private Tutorial tutorial;
-	private boolean powerUpListenerStop;
 	private long startTime;
 	private int updates = 0;
 	private int frames = 0;
@@ -58,6 +33,11 @@ public class Game3Controller implements KeyListener {
 	
 	
 	
+	/**
+	 * Constructor for this element. Initializes models. Sets tutorial on/off
+	 * @param gameF JFrame to be used
+	 * @param tutorialOn boolean that determines if the tutorial should be played
+	 */
 	public Game3Controller(JFrame gameF, boolean tutorialOn) {
 		this.setTutorialActive(true);
 		gameFrame = gameF;
@@ -66,19 +46,17 @@ public class Game3Controller implements KeyListener {
 		a.setLocY(250);
 		setAnimal(a);
 		setBeach(new BeachModel());
-		setSandPatch(new GridBlock(beach));
-		setWater(new WaterModel());
+		
 		tutorial = new Tutorial();
 	}
 	
-	//For testing purposes
-	public Game3Controller(){
-		AnimalModelG3 a = new AnimalModelG3();
-		a.setLocX(0);
-		a.setLocY(0);
-		setAnimal(a);
-	}
 	
+	
+	/**
+	 * Central run loop. This method initializes the game, adds graphics, starts game timers, and
+	 * enters a game loop that repaints the frame and checks for collision.
+	 * The loop is broken once the player wins/loses.
+	 */
 	public void runGame()  {
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
@@ -172,6 +150,10 @@ public class Game3Controller implements KeyListener {
 
 	
 	
+	/**
+	 * Listener for the sky timer. Cyclically brightens the sky over the
+	 * course of the game to indicate the passing of the hurricane.
+	 */
 	ActionListener skyTimerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -179,12 +161,20 @@ public class Game3Controller implements KeyListener {
 		}
 	};
 	
+	/**
+	 * Timer for the changing color of the sky.
+	 */
 	public void activateSkyTimer() {
 		Timer skyTimer = new Timer(1250, skyTimerListener);
 		skyTimer.setRepeats(true);
 		skyTimer.start();
 	}
 	
+	/**
+	 * Listener used to remove previously spawned gabion/concrete power-ups on the beach
+	 * after they have been spawned for an alloted time. The tile on which they
+	 * were placed will revert back to being vacant.
+	 */
 	ActionListener powerUpSpawnTimerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -211,6 +201,11 @@ public class Game3Controller implements KeyListener {
 		}
 	};
 	
+	/**
+	 * Listener used to remove previously spawned gabion/concrete walls on the beach 
+	 * after they have been spawned for an alloted time. The tile on which they
+	 * were placed will revert back to being vacant.
+	 */
 	ActionListener powerUpWallTimerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -223,8 +218,6 @@ public class Game3Controller implements KeyListener {
 				if(!beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getWater().isActive()) {
 					beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).setVacant(true);
 				}
-				
-				System.out.println("Wall Timer stopped");
 			}
 			else {
 				animal.setWallHit(false);
@@ -235,35 +228,30 @@ public class Game3Controller implements KeyListener {
 					beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).setVacant(true);
 				}
 				
-				//System.out.println("Wall Timer stopped");
 			}
 			Object time = e.getSource();
 			Timer myTime = (Timer) time;
 			myTime.stop();
 		}
 	};
-	
-	
-	
-	
-	
-	
-	
-	//Duration for which power-up is available to be picked up
+
+	/**
+	 * Timer that indicates the duration for which gabion/concrete power-ups
+	 * are available to be picked up.
+	 */
 	public void powerUpSpawned() {
 		puWallLinkTimer = new Timer(3000, powerUpSpawnTimerListener);
-		System.out.println("Gabion is at: (" + beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getViewLocation().getX() +", " + beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getViewLocation().getY() + ")");
-		System.out.println("Concrete is at:(" + beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getViewLocation().getX() +", " + beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getViewLocation().getY() + ")");
-		
 		puWallLinkTimer.setRepeats(true);
 		puWallLinkTimer.start();
-		System.out.println("Spawn timer started");
 	}
 	
 	
-	
-	
-	//Duration for which power-up is in wall form
+	/**
+	 * Timer that indicates the duration for which gabion/concrete power-up
+	 * is in wall form. The gabion wall spawns longer than the concrete
+	 * to indicate the relative strength of the gabion wall compared
+	 * to a concrete wall. 
+	 */
 	public void powerUpPickedUp() {
 		Timer timer = new Timer(5000,powerUpWallTimerListener);
 		if (beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getWallState() == GabPUState.WALL) { 
@@ -271,23 +259,23 @@ public class Game3Controller implements KeyListener {
 			timer.setInitialDelay(5000);
 			timer.setRepeats(true);
 			timer.start();
-			System.out.println("Setting delay to 5000 seconds");
 		}
 		else {
-			System.out.println("Setting delay to 3000 seconds");
 			timer.setInitialDelay(3000);
 			timer.setDelay(3000);
 			timer.setRepeats(true);
 			timer.start();
 		}
-		
-		System.out.println("Wall timer started");
 	}
 	
+	/**
+	 * Collision detection method to detect a collision between the animal and gabion/concrete power-up.
+	 * If a collision is detected, the power-up will turn into a wall and the power-up that was not
+	 * collided with the animal disappears.
+	 */
 	public void collisionPowerUps(){
 		if ((beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getIsActive()) & beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().isPickedUp() == false) {
 			if (animal.getBounds().contains(beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().getBounds())) {
-				System.out.println("Intersection between concrete and animal");
 				puWallLinkTimer.stop();
 				beach.getBeachGrid().get(beach.findPairInGrid(beach.getConcPair())).getConcrPU().setPickedUp(true);
 				beach.removeGabPU(beach.findPairInGrid(beach.getGabPair()));
@@ -301,7 +289,6 @@ public class Game3Controller implements KeyListener {
 		}
 		if((beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getIsActive()) &  beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().isPickedUp() == false) {
 			if (animal.getBounds().contains(beach.getBeachGrid().get(beach.findPairInGrid(beach.getGabPair())).getGabPU().getBounds())) {
-				System.out.println("Intersection between gab and animal");
 				if(!this.isTutorialActive()) {
 					puWallLinkTimer.stop();
 				}
@@ -318,6 +305,10 @@ public class Game3Controller implements KeyListener {
 		}
 	}
 	
+	/**
+	 * Tracks how long the game should run (2.5 minutes).
+	 * When time has elapsed the player is sent to the "winner" end screen.
+	 */
 	ActionListener gameTimerListener = new ActionListener() {
 		public int timeElapsed;
 
@@ -340,6 +331,9 @@ public class Game3Controller implements KeyListener {
 	
 	
 	
+	/**
+	 * Starts the game timer.
+	 */
 	public void startTime() {
 		Timer timer = new Timer(250, gameTimerListener);
 		
@@ -347,7 +341,10 @@ public class Game3Controller implements KeyListener {
 		timer.start();
 	}
 
-	//Can change later for different levels of difficulty
+
+	/**
+	 * Generates a wave cluster while the game is active.
+	 */
 	ActionListener genWaveTimer = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -356,32 +353,40 @@ public class Game3Controller implements KeyListener {
 				t.stop();
 			}
 			else if (!isTutorialActive()) {
-				System.out.println("Generating clusters?");
 				view.generateWaveCluster(false, 0);
 			}
 		}
 	};
 	
+	/**
+	 * Sets wave clusters to spawn every 6 seconds
+	 */
 	public void genWaveTimer() {
 		Timer waveTimer = new Timer(6000, genWaveTimer);
-		
 		waveTimer.setRepeats(true);
 		waveTimer.start();
 	}
 	
+	/**
+	 * Collision detection between an animal and a water tile. If 
+	 * the animal interacts with the water tile the game ends.
+	 */
 	public void collisionTile() {
 		int beachLocX = this.getAnimal().getPotentialMove().getX();
 		int beachLocY = this.getAnimal().getPotentialMove().getY();
 
-		if(this.getBeach().getPositionGrid()[beachLocY][beachLocX] == 2) {
-			System.out.println("Value where animal hit water tile: " + this.getBeach().getPositionGrid()[beachLocY][beachLocX]);
-			System.out.println("Game over! Tidal pool was hit at: " + beachLocX +","+beachLocY);
+		if(this.getBeach().getPositionGrid()[beachLocY][beachLocX] == 2) { //2 indicates a water tile
 			this.setGameActive(false);
 			this.setGameWin(false);
 		}
 	}
 
 	
+	/**
+	 * Spawns a single gabion power-up and allows
+	 * the animal to move towards it. This listener is used for
+	 * the tutorial.
+	 */
 	ActionListener singleGabSpawnListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -391,6 +396,11 @@ public class Game3Controller implements KeyListener {
 		}
 	};
 	
+	/**
+	 * Listener used to reset tutorial to its original state
+	 * where animal movement is restricted and no wave warning exists,
+	 * at which point a gabion power-up is requested to be spawned.
+	 */
 	ActionListener tutorialResetListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -401,7 +411,12 @@ public class Game3Controller implements KeyListener {
 	};
 	
 	
-	ActionListener animalFreeMovement = new ActionListener() {
+	/**
+	 * Restricts the movement of the animal and requests a single
+	 * wave cluster to be generated. This listener is used in the
+	 * tutorial.
+	 */
+	ActionListener animalRestrictedMovement = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			animal.resetPos();
@@ -410,12 +425,16 @@ public class Game3Controller implements KeyListener {
 		}
 	};
 	
+	/**
+	 * Listener used to animate the keyboard to mimic pressing of the keys.
+	 * This listener is used in the tutorial.
+	 */
 	ActionListener keyboardGraphicListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if((animal.getSpeedX() != 0) || (animal.getSpeedY()!=0)) {
 				tutorial.setKeyboardStop(true);
-				Timer animalMove = new Timer(3000, animalFreeMovement);
+				Timer animalMove = new Timer(3000, animalRestrictedMovement);
 				animalMove.setRepeats(false);
 				animalMove.start();
 				
@@ -428,6 +447,10 @@ public class Game3Controller implements KeyListener {
 		}
 	};
 	
+	/**
+	 * Generates a single wave in the same lane as the animal to represent 
+	 * the danger of waves in the game. This listener is used in the tutorial.
+	 */
 	ActionListener genSingleWaveListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -436,6 +459,11 @@ public class Game3Controller implements KeyListener {
 		}
 	};
 	
+	/**
+	 * Generates the last wave in the tutorial that will be
+	 * repelled by a  gabion wall to emphasize the use of
+	 * power-ups. This listener is used in the tutorial.
+	 */
 	ActionListener genLastWaveListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -449,6 +477,9 @@ public class Game3Controller implements KeyListener {
 		}
 	};
 	
+	/**
+	 * Creates dialogue box to give final instructions in the tutorial.
+	 */
 	ActionListener dialTimerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -457,6 +488,9 @@ public class Game3Controller implements KeyListener {
 		}
 	};
 	
+	/**
+	 * Ends the tutorial and proceeds to the actual game.
+	 */
 	ActionListener initializeGameListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -466,12 +500,18 @@ public class Game3Controller implements KeyListener {
 		}
 	};
 	
+	/**
+	 * Activates the timer for the keyboard graphic animation in the tutorial.
+	 */
 	public void activateKeys() {
 		Timer keyTimer = new Timer(1000,keyboardGraphicListener);
 		keyTimer.setRepeats(true);
 		keyTimer.start();
 	}
 
+	/**
+	 * Activates the timer that requests a reset of the tutorial.
+	 */
 	public void resetTutorial() {
 		Timer resetTimer = new Timer(3000, tutorialResetListener);
 		resetTimer.setRepeats(false);
@@ -479,174 +519,219 @@ public class Game3Controller implements KeyListener {
 		
 	}
 	
+	/**
+	 * Activates timer that requests generation of the final wave
+	 * in the tutorial.
+	 */
 	public void generateLastWave() {
 		Timer lastWaveTimer = new Timer(1000,genLastWaveListener);
 		lastWaveTimer.setRepeats(true);
 		lastWaveTimer.start();
 	}
 	
+	
+	/**
+	 * Activates timer that requests generation of a single wave
+	 * in the tutorial.
+	 */
 	public void generateSingleWave() {
 		Timer waveTimer = new Timer(2000, genSingleWaveListener);
 		waveTimer.setRepeats(false);
 		waveTimer.start();
 	}
 	
+	/**
+	 * Activates timer that requests generation of a single
+	 * gabion power-up in the tutorial.
+	 */
 	public void generateSingleGab() {
 		Timer gabTimer = new Timer(4000, singleGabSpawnListener);
 		gabTimer.setRepeats(false);
 		gabTimer.start();
 	}
 	
+	/**
+	 * Activates timer that requests the display of instructions box
+	 * in the tutorial.
+	 */
 	public void displayDialogue() {
 		Timer dialTimer = new Timer(6000, dialTimerListener);
 		dialTimer.setRepeats(false);
 		dialTimer.start();
 	}
 	
-	//Start the game after tutorial is over
+
+	/**
+	 * Activates timer that requests the start of gameplay after the tutorial has ended.
+	 */
 	public void initializeGamePlay() {
 		Timer timer = new Timer(6000, initializeGameListener);
 		timer.setRepeats(false);
 		timer.start();
 	}
 	
+	/**
+	 * Calls a series of timers/action listeners that run through the tutorial.
+	 */
 	public void activateTutorial() {
 		this.activateKeys();	
 	}
 	
 	
-	
-	
+	/**
+	 *Loads the graphics for the sun and hurricane which will serve as visual representations of
+	 *these game objects 
+	 */
 	public void loadImages() {
 		sun.addPics();
 		hurricane.addPics();
-		
-	}
-
-	public void collisionDetectionLoop(){
-		
 	}
 	
-	
-	
-	public void stopTime() {
-		
-	}
-
-	
+	/**
+	 * Getter to determine if the game is still running
+	 * @return gameActive boolean, 1 if game is still active, 0 otherwise
+	 */
 	public boolean getgameActive() {
 		return gameActive;
 	}
+	
+	/**
+	 * Sets if the game is still running
+	 * @param active boolean, 1 if game is still active, 0 otherwise
+	 */
 	public void setGameActive(boolean active) {
 		gameActive = active; 
-
-}
-
-	public int setTime(int i) {
-		return i;
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	/**
+	 * Gets the animal model that is to be used in the game.
+	 * @return animal AnimalModelG3, an instance of an animal
+	 */
 	public AnimalModelG3 getAnimal() {
 		return animal;
 	}
 
+	/**
+	 * Sets the animal model that is to be used in the game.
+	 * @param animal AnimalModelG3, an instance of an animal
+	 */
 	public void setAnimal(AnimalModelG3 animal) {
 		this.animal = animal;
 	}
 
-
-	public WaterModel getWater() {
-		return water;
-	}
-
-	public void setWater(WaterModel water) {
-		this.water = water;
-	}
-
+	/**
+	 * Gets the beach that is used in the game.
+	 * @return beach BeachModel, an instance of the beach
+	 */
 	public BeachModel getBeach() {
 		return beach;
 	}
 
+	/**
+	 * Sets the beach that is used in the game.
+	 * @param beach BeachModel, an instance of the beach
+	 */
 	public void setBeach(BeachModel beach) {
 		this.beach = beach;
 	}
 	
-	public GridBlock getSandPatch() {
-		return sandPatch;
-	}
-
-	public void setSandPatch(GridBlock sandPatch) {
-		this.sandPatch = sandPatch;
-	}
-
+	/**
+	 * Gets the sun that will be used in the game as a visualization of the timer.
+	 * @return sun SunHurricaneModel, the sun which will be used in the game
+	 */
 	public SunHurricaneModel getSun() {
 		return sun;
 	}
 
+	/**
+	 * Sets the sun that will be used in the game as a visualization of the timer.
+	 * @param sun SunHurricaneMode, the sun which will be used in the game
+	 */
 	public void setSun(SunHurricaneModel sun) {
 		this.sun = sun;
 	}
 
+	/**
+	 * Gets the hurricane that will be used in the game as a visualization of the timer.
+	 * @return hurricane SunHurricaneModel, the hurricane which will be used in the game
+	 */
 	public SunHurricaneModel getHurricane() {
 		return hurricane;
 	}
 
+	/**
+	 * Sets the hurricane that will be used in the game as a visualization of the timer.
+	 * @param hurricane SunHurricaneMode, the hurricane which will be used in the game
+	 */
 	public void setHurricane(SunHurricaneModel hurricane) {
 		this.hurricane = hurricane;
 	}
 
+	/**
+	 * Gets the dimensions of the screen.
+	 * @return screenSize Dimension, dimensions of the screen
+	 */
 	public Dimension getScreenSize() {
 		return screenSize;
 	}
 
+	/**
+	 * Determines if the game is currently in the tutorial. If so, it triggers special
+	 * functionality of certain functions to comply with the tutorial animations.
+	 * @return
+	 */
 	public boolean isTutorialActive() {
 		return tutorialActive;
 	}
 
+	
+	/**
+	 * Sets whether or not the game is still in the tutorial.
+	 * @param tutorialActive boolean, 1 if game is still in tutorial, 0 otherwise
+	 */
 	public void setTutorialActive(boolean tutorialActive) {
 		this.tutorialActive = tutorialActive;
 	}
 
+	/**
+	 * Gets the tutorial object which contains getters and setters
+	 * to determine if tutorial events are completed.
+	 * @return tutorial Tutorial, an instance of the tutorial
+	 */
 	public Tutorial getTutorial() {
 		return tutorial;
 	}
 
+	/**
+	 * Sets the tutorial object which contains getters and setters
+	 * to determine if tutorial events are completed.
+	 * @param tutorial Tutorial, an instance of the tutorial
+	 */
 	public void setTutorial(Tutorial tutorial) {
 		this.tutorial = tutorial;
 	}
 
-	public boolean isPowerUpListenerStop() {
-		return powerUpListenerStop;
-	}
-
-	public void setPowerUpListenerStop(boolean powerUpListenerStop) {
-		this.powerUpListenerStop = powerUpListenerStop;
-	}
-
+	/**
+	 * Determines if player won the game
+	 * @return gameWin boolean, 1 if player won the game, 0 if player lost the game
+	 */
 	public boolean isGameWin() {
 		return gameWin;
 	}
 
+	/**
+	 * Set if player won the game
+	 * @param gameWin boolean, 1 if player won the game, 0 if player lost the game
+	 */
 	public void setGameWin(boolean gameWin) {
 		this.gameWin = gameWin;
 	}
 
+	//For testing purposes
+		public Game3Controller(){
+			AnimalModelG3 a = new AnimalModelG3();
+			a.setLocX(0);
+			a.setLocY(0);
+			setAnimal(a);
+		}
 }
