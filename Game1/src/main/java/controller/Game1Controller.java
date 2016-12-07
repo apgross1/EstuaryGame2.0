@@ -173,6 +173,7 @@ public class Game1Controller{
 		gameState = true;
 		//Draw into screen.
 		g1view.setUp();
+		
 		startTime = System.currentTimeMillis();
 		intro = true;
 		while((System.currentTimeMillis()-startTime)<5000){
