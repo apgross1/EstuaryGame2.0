@@ -3,16 +3,26 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import Enums.AnimGraphics;
 import models.AnimalModelG3;
 import models.BeachModel;
+import models.ConcretePUModel;
+import models.GabionPUModel;
+import models.GridBlock;
+import models.Pair;
 import models.SunHurricaneModel;
 import models.Tutorial;
+import models.WaterModel;
+import models.WaveModel;
 import models.GabionPUModel.GabPUState;
 import view.Game3View;
+import view.Game3View.GridTile;
 
 public class Game3Controller {
 	private boolean gameActive;
@@ -305,6 +315,73 @@ public class Game3Controller {
 		}
 	}
 	
+	public void collisionWaveAnimal(WaveModel w) {
+		if(w.getBounds().intersects(this.getAnimal().getBounds())) {
+			if(this.isTutorialActive()) {
+				this.getAnimal().setWaveHit(true);
+			}
+			else {
+				this.getAnimal().setWaveHit(true);
+				this.setGameActive(false);
+				this.setGameWin(false);
+			}
+			return;
+		}
+	}
+	
+	public void collisionWavePowerUps(WaveModel w, ArrayList<GridTile> tiles) {
+		for(GridTile gr : tiles) {
+			ConcretePUModel conc = gr.getGridBlock().getConcrPU();
+			GabionPUModel gab = gr.getGridBlock().getGabPU();
+			if(conc.getIsActive() & conc.isPickedUp()) {
+				if(conc.getBounds().intersects(w.getBounds())) {
+					w.setReceed(true);
+				}
+			}
+			else if (gab.getIsActive() & gab.isPickedUp()) {
+				if(gab.getBounds().intersects(w.getBounds())) {
+					w.setReceed(true);
+				}
+			}
+			else if(w.getBounds().getX() < 10) {
+				w.setReceed(true);
+			}
+		}
+	}
+	
+	public void fillWaterTile(WaveModel w) {
+		List<Pair> pairs = this.getBeach().getGridLayers().get(w.getClusterGroup());
+		
+		for(int i = pairs.size()-1; i >= 0; i--) {
+			GridBlock tempGrid = this.getBeach().getBeachGrid().get(this.getBeach().findPairInGrid(pairs.get(i)));
+			if(tempGrid != null) {
+				if(!tempGrid.getWater().isActive()) {
+					if(tempGrid.getGabPU().getIsActive()) {
+						tempGrid.getGabPU().setIsActive(false);
+					}
+					if(tempGrid.getConcrPU().getIsActive()) {
+						tempGrid.getConcrPU().setActive(false);
+					}
+					
+					if(i != pairs.size()-1) {
+						this.getBeach().getBeachGrid().get(this.getBeach().findPairInGrid(pairs.get(i+1))).getWater().setGraphicOnDeck(1);
+					}
+					WaterModel newWatMod = new WaterModel();
+					newWatMod.addPics();
+					tempGrid.setWater(newWatMod, this.getBeach().findPairInGrid(pairs.get(i)), "");
+		
+					view.getLayoutContainerComps().remove(view.getWaveComponentMap().get(w.hashCode()));
+					view.getWaveComponentMap().remove(w.hashCode());
+					w = null;
+					this.gameFrame.revalidate();
+					return;
+				}
+				
+			}
+		}
+	}
+	
+	
 	/**
 	 * Tracks how long the game should run (2.5 minutes).
 	 * When time has elapsed the player is sent to the "winner" end screen.
@@ -559,6 +636,7 @@ public class Game3Controller {
 		dialTimer.setRepeats(false);
 		dialTimer.start();
 	}
+	
 	
 
 	/**

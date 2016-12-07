@@ -87,6 +87,11 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	
 
 	
+	/**
+	 * Constructor for this element
+	 * @param ctl instance of Game3Controller
+	 * @param gameF instance of the JFrame shared between all 3 games
+	 */
 	public Game3View(Game3Controller ctl, JFrame gameF){
 		//Adding end menu button images
 		BufferedImage exitGame_0 = null;
@@ -95,25 +100,13 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		BufferedImage returnMain_1 = null;
 		try {
 			exitGame_0 = ImageIO.read(new File("./Images/Game3/exitGame_0.png"));
-		} catch (IOException excep) {
-			excep.printStackTrace();
-		}
-		try {
 			exitGame_1 = ImageIO.read(new File("./Images/Game3/exitGame_1.png"));
-		} catch (IOException excep) {
-			excep.printStackTrace();
-		}
-		try {
 			returnMain_0= ImageIO.read(new File("./Images/Game3/returnMain_0.png"));
-		} catch (IOException excep) {
-			excep.printStackTrace();
-		}
-		try {
 			returnMain_1 = ImageIO.read(new File("./Images/Game3/returnMain_1.png"));
 		} catch (IOException excep) {
 			excep.printStackTrace();
 		}
-		
+	
 		this.getMainMenuPics().add(returnMain_0);
 		this.getMainMenuPics().add(returnMain_1);
 		this.getExitGamePics().add(exitGame_0);
@@ -143,10 +136,6 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 	
 		frame.setSize((int)controller.getScreenSize().getWidth(), (int)controller.getScreenSize().getHeight());
-		
-		
-		
-		//frame.setSize(this.getFrameHeight(), frame.getWidth());
 		play_ground.setSize(frame.getWidth(),frame.getHeight());
 		
 		timePanel.setLayout(null);
@@ -246,8 +235,6 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		animalPos.setVisible(true);
 		timePanel.revalidate();
 		frame.revalidate();
-		
-	
 	}
  
 	
@@ -256,6 +243,9 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	}
 	
 	
+	/**
+	 * Adds sun component to the JFrame (more specifically the panel where the timer is placed)
+	 */
 	public void addSun() {
 		Sun sun = new Sun(controller.getSun());
 		sun.setBounds(0, 0, frame.getWidth(), frame.getHeight());
@@ -266,8 +256,10 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		
 	}
 	
+	/**
+	 * Adds hurricane component to the JFrame (more specifically the panel where the timer is placed)
+	 */
 	public void addHurricane() {
-		System.out.println("Hurricane spawned");
 		Hurricane hurricane = new Hurricane(controller.getHurricane());
 		hurricane.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		hurricane.setVisible(true);
@@ -277,22 +269,19 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		
 	}
 
+	/**
+	 * Repaint the JFrame and its components. Mainly used in the controller.
+	 */
 	public void repaintAll(){
 		frame.repaint();
 	}
 	
-	public class TimerGradient extends JComponent {
-		@Override
-		public void paint(Graphics g) {
-        g.fillRect(0, 0, timePanel.getWidth(), timePanel.getHeight());
-        g.setColor(Color.BLACK);
-        System.out.println("Painting");
-		}
-	}
-	
-	
+	/**
+	 * @author Andrew
+	 *Component class for the game tutorial. Handles all of the visual
+	 *representation related to the tutorial.
+	 */
 	public class JTutorial extends JComponent {
-
 		@Override
 		public void paint(Graphics g) {
 			if(controller.isTutorialActive()) {
@@ -300,32 +289,49 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 				drawX(g);
 				drawDialogue(g);
 			}
-			
 		}
-		
+		/**
+		 * Paints the keyboard graphic
+		 * @param g Graphics, assigned the current keyboard image
+		 */
 		public void drawKeyboard(Graphics g) {
 			if(!controller.getTutorial().isKeyboardStop()) {
 				g.drawImage((controller.getTutorial().getGraphicMap().get(AnimGraphics.KEYBOARD).get(controller.getTutorial().getKeyBoardPicOnDeck())), (int)(frame.getWidth()*.60), (int)(frame.getHeight()*.40), this);
 			}
 		}
 		
+		
+		/**
+		 * Paints the "X" when the animal collides with a wave during the tutorial.
+		 * @param g Graphics, assigned the "X" image
+		 */
 		public void drawX(Graphics g) {
 			if(controller.getAnimal().isWaveHit()) {
 				g.drawImage((controller.getTutorial().getGraphicMap().get(AnimGraphics.BIG_X).get(0)), controller.getAnimal().getLocX(),controller.getAnimal().getLocY(), this);
 			}
 		}
 		
+		/**
+		 * Paints the dialogue box at the end of the tutorial.
+		 * @param g , Graphics, assigned the dialogue box image
+		 */
 		public void drawDialogue(Graphics g) {
 			if(controller.getTutorial().isDialogueOn()) {
 				g.drawImage((controller.getTutorial().getGraphicMap().get(AnimGraphics.DIALOGUE).get(0)), (int)(frameMap.get(Frames.ANIMAL).getWidth()*.6), (int)(frameMap.get(Frames.ANIMAL ).getHeight()*.30), this);
 			}
 		}
-		
-	
 	}
 	
+	/**
+	 * @author Andrew
+	 *Component class for the hurricane. Used to visually represent the hurricane in the time panel.
+	 */
 	public class Hurricane extends JComponent {
-		SunHurricaneModel hurricane;
+		private SunHurricaneModel hurricane;
+		/**
+		 * Constructor for this element. Sets the location of the hurricane on the screen.
+		 * @param s SunHurricaneModel, the instance of the hurricane to be passed in
+		 */
 		public Hurricane(SunHurricaneModel s) {
 			hurricane = s;
 			hurricane.getLocation().setX(hurricane.getPanel().getWidth()/2);
@@ -340,8 +346,16 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		}
 	}
 	
+	/**
+	 * @author Andrew
+	 *Component class for the sun. Used to visually represent the sun in the time panel.
+	 */
 	public class Sun extends JComponent {
-		SunHurricaneModel sun;
+		private SunHurricaneModel sun;
+		/**
+		 * Constructor for this element. Sets the location of the sun.
+		 * @param s
+		 */
 		public Sun(SunHurricaneModel s) {
 			sun = s;
 			sun.getLocation().setX(sun.getPanel().getWidth());
@@ -349,20 +363,32 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		}
 		@Override
 		public void paint(Graphics g) {
-			//g.setColor(Color.YELLOW);
-			//g.fillOval(sun.getLocation().getX(), sun.getLocation().getY(), sun.getWidth(), sun.getHeight());
 			g.drawImage(sun.getGraphics().get("SUN").get(0), sun.getLocation().getX(), sun.getLocation().getY(), this);
 		}
 	}
 	
 	
+	/**
+	 * @author Andrew
+	 * Component class for a wave particle. The component class handles all of the 
+	 */
 	public class Wave extends JComponent {
-		public WaveModel wave;
-		public boolean waveGone;
+		private WaveModel wave;
+		private boolean waveGone;
+		
 		public Wave(WaveModel wave) {
 			this.wave = wave;
 			waveGone = false;
 			setOpaque(false);
+		}
+		
+		public void disposeWave(Graphics g) {
+			g.dispose();
+			layoutContainer.remove(waveComponentMap.get(this.hashCode()));
+			waveComponentMap.remove(this.hashCode());
+			this.waveGone = true;
+			frame.revalidate();
+			controller.getAnimal().setWaveHit(false);
 		}
 		
 		ActionListener removeWaveFromPauseListener = new ActionListener() {
@@ -382,133 +408,38 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		@Override
 		public void paint(Graphics g) {
 			if(wave.isDeleteWave()) {
-				g.dispose();
-				layoutContainer.remove(waveComponentMap.get(this.hashCode()));
-				waveComponentMap.remove(this.hashCode());
-				this.waveGone = true;
-				frame.revalidate();
-				controller.getAnimal().setWaveHit(false);
+				disposeWave(g);
 				return;
 			}
 			
 			if(!this.waveGone) {
-				if(wave.getBounds().intersects(controller.getAnimal().getBounds())) {
-					if(controller.isTutorialActive()) {
-						controller.getAnimal().setWaveHit(true);
-					}
-					else {
-						controller.getAnimal().setWaveHit(true);
-						controller.setGameActive(false);
-						controller.setGameWin(false);
-						
-					}
-					
-					return;
-				}
+				controller.collisionWaveAnimal(wave);
+				controller.collisionWavePowerUps(wave, powerUps);
 				
 				if(controller.getAnimal().isWaveHit()) {
 					if(controller.isTutorialActive()) {
 						wave.pauseWave();
-						removeWaveFromPauseTimer();
+						this.removeWaveFromPauseTimer();
 					}
 				}
-				
-				
-				
-				for(GridTile gr : powerUps) {
-					ConcretePUModel conc = gr.getGridBlock().getConcrPU();
-					GabionPUModel gab = gr.getGridBlock().getGabPU();
-					if(conc.getIsActive() & conc.isPickedUp()) {
-						if(conc.getBounds().intersects(wave.getBounds())) {
-							wave.setReceed(true);
-						}
-					}
-					else if (gab.getIsActive() & gab.isPickedUp()) {
-						if(gab.getBounds().intersects(wave.getBounds())) {
-							wave.setReceed(true);
-						}
-					}
-					else if(wave.getBounds().getX() < 10) {
-						wave.setReceed(true);
-					}
-				}
-				
-				
 				
 				if ((wave.getLocation().getX() > frameMap.get(Frames.ANIMAL).getWidth()) && wave.isReceed() && wave.isLastWave()) {
-					List<Pair> pairs = controller.getBeach().getGridLayers().get(wave.getClusterGroup());
-					System.out.println("Printing out cluster group: "); 
-					Iterator it = pairs.iterator();
-					while(it.hasNext()) {
-						Pair tempPair = (Pair)it.next();
-						System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
-					}
-					for(int i = pairs.size()-1; i >= 0; i--) {
-						GridBlock tempGrid = controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i)));
-						if(tempGrid != null) {
-							if(!tempGrid.getWater().isActive()) {
-								if(tempGrid.getGabPU().getIsActive()) {
-									tempGrid.getGabPU().setIsActive(false);
-								}
-								if(tempGrid.getConcrPU().getIsActive()) {
-									tempGrid.getConcrPU().setActive(false);
-								}
-								
-								if(i != pairs.size()-1) {
-									controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pairs.get(i+1))).getWater().setGraphicOnDeck(1);
-								}
-								WaterModel newWatMod = new WaterModel();
-								newWatMod.addPics();
-								tempGrid.setWater(newWatMod, controller.getBeach().findPairInGrid(pairs.get(i)), "");
-					
-								layoutContainer.remove(waveComponentMap.get(this.hashCode()));
-								waveComponentMap.remove(this.hashCode());
-								wave = null;
-								this.waveGone = true;
-								g.dispose();
-								frame.revalidate();
-								return;
-							}
-							
-						}
-						
-					}
-					
-					layoutContainer.remove(waveComponentMap.get(this.hashCode()));
-					waveComponentMap.remove(this.hashCode());
-					wave = null;
-					this.waveGone = true;
-					g.dispose();
-					frame.revalidate();
+					controller.fillWaterTile(wave);
+					disposeWave(g);
 				}
 				
-				//I don't think the -150 has to be dynamic. It's off the screen for all monitors, so it shouldn't' be an issue
 				else if((wave.getLocation().getX() > -150) && wave.getLocation().getX() < frame.getWidth()+frameMap.get(Frames.SHORE).getWidth()) {
-					if(wave.isLastWave()){
-						g.setColor(Color.green);
-						g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
-						
-					}
-					
-						g.setColor(Color.BLUE);
-						g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
+					g.setColor(Color.BLUE);
+					g.fillOval((int)wave.getBounds().getX(), (int)wave.getBounds().getY(), (int)wave.getBounds().getWidth(), (int)wave.getHeight());
 				}
 				
 				else {
-					layoutContainer.remove(waveComponentMap.get(this.hashCode()));
-					waveComponentMap.remove(this.hashCode());
-					wave = null;
-					this.waveGone = true;
-					g.dispose();
-					frame.revalidate();
+					disposeWave(g);
 				}
 			}
 		}
 	}
-	
-	
-	
-	
+
 	public class Animal extends JComponent {
 		@Override
 		public void paint(Graphics g) {
@@ -717,7 +648,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	}
 
 
-	public HashMap getComponentMap() {
+	public HashMap getWaveComponentMap() {
 		
 		return waveComponentMap;
 	}
