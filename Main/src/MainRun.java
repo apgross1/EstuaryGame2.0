@@ -81,7 +81,6 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setResizable(false);
 		
-		
 		startScreen = new JLabel();
 		startScreen.setLayout(new GridBagLayout());
 		//Defining constraint for background
