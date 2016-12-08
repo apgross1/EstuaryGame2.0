@@ -307,7 +307,7 @@ public class Game2View extends JPanel implements KeyListener{
 			if(controller.getTutoralStatus()){
 				controller.setTutorialStatus(false);
 			}
-				controller.getAnimalModelG2().setVelocity(2);
+				controller.getAnimalModelG2().setVelocity(3);
 			
 			
 			break;
@@ -317,7 +317,7 @@ public class Game2View extends JPanel implements KeyListener{
 				controller.setTutorialStatus(false);
 			}
 			
-				controller.getAnimalModelG2().setVelocity(-2);
+				controller.getAnimalModelG2().setVelocity(-3);
 			
 			break;
 			
