@@ -18,7 +18,6 @@ public class main {
 		}
 		
 		//Once the start game button is pressed well get here.
-		
 		System.out.println("Yup, were good.");
 	
 		
@@ -26,6 +25,7 @@ public class main {
 		Game1Controller g1 = new Game1Controller(gameFrame);
 		Game2Controller g2 = new Game2Controller();
 		Game3Controller g3 = new Game3Controller(true);
+
 		
 		g1.startGame();
 		g2.startGame();

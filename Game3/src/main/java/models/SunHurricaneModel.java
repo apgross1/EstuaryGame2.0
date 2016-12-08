@@ -30,6 +30,12 @@ public class SunHurricaneModel {
 		location = new Pair(0,0);
 	}
 	
+	//for testing purposes
+	public SunHurricaneModel() {
+		graphics = new HashMap<String, ArrayList<BufferedImage>>();
+		location = new Pair(0,0);
+	}
+	
 	/**
 	 * Changes position of the sun/hurricane
 	 */

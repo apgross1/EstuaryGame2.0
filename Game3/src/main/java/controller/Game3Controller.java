@@ -367,7 +367,7 @@ public class Game3Controller {
 					if(i != pairs.size()-1) {
 						this.getBeach().getBeachGrid().get(this.getBeach().findPairInGrid(pairs.get(i+1))).getWater().setGraphicOnDeck(1);
 					}
-					WaterModel newWatMod = new WaterModel();
+					WaterModel newWatMod = new WaterModel("game");
 					newWatMod.addPics();
 					tempGrid.setWater(newWatMod, this.getBeach().findPairInGrid(pairs.get(i)), "");
 		
