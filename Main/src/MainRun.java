@@ -49,6 +49,9 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 	JFrame frame;
 	BufferedImage badGuy = null;
 	
+	int x_loc = 0;
+	boolean dir = true;
+	
 	private ArrayList<BufferedImage> startPics = new ArrayList<BufferedImage>();
 	private ArrayList<BufferedImage> exitPics = new ArrayList<BufferedImage>();
 	
@@ -75,10 +78,12 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 		}
 		
 		try {
-			badGuy = ImageIO.read(new File("./Images/Game3/exitGame_0.png"));
+			badGuy = ImageIO.read(new File("./Images/badGuy.png"));
 		} catch (IOException excep) {
 			excep.printStackTrace();
 		}
+		
+		x_loc = (screenSize.width /2) - (int)(.5*badGuy.getWidth());
 	
 		startPics.add(start_0);
 		startPics.add(start_1);
@@ -158,7 +163,9 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
         // Draw the String
         g.drawString(text, x, (int) (.30*(screenSize.height)));
         // Dispose the Graphics
-        g.dispose();
+        //g.drawRect(10, 10, 200, 200);  
+		
+        //g.dispose();
     }
 	
     public class Animation extends JComponent {
@@ -166,37 +173,35 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 
 		@Override
 		public void paint(Graphics g) {
-			g.setColor(Color.white);
-			drawCenteredString(g, "Gamey McGame Face", new Font("Impact", Font.PLAIN, 50));
+			g.setColor(Color.DARK_GRAY);
+			drawCenteredString(g, "SWMP Romp: A game of estuaries!", new Font("Haettenschweiler", Font.PLAIN, 100));
 			
-			//g.fillRect(50, 50, 50, 50);
-		
-			//g.drawImage(badGuy, 50, 50, this);
-			/*
-			int x_loc = 0;
-			boolean dir = true;
-			if(x_loc <= screenSize.width && x_loc >= 0){
-				if(dir){ //east
-					System.out.println("Goin East");
-					//g.drawImage(badGuy, x_loc, (int) (.30*(screenSize.height)), this);
-					g.drawRect(x_loc, (int) (.30*(screenSize.height)), 100, 100);
-					x_loc++;
+			if(dir){
+				if(x_loc <= screenSize.width - badGuy.getWidth()){
+					g.drawImage(badGuy, x_loc, (int) (.09*(screenSize.height)), this);
+					x_loc += 3;
 				}else{
-					g.drawImage(badGuy, x_loc, (int) (.30*(screenSize.height)), this);
-					x_loc--;
+					dir = !dir;
 				}
 			}else{
-				dir = !dir;
+				System.out.println("EVERGET");
+				if(x_loc >= 0){
+					g.drawImage(badGuy, x_loc, (int) (.09*(screenSize.height)), this);
+					x_loc -= 3;
+				}else{
+					dir = !dir;
+				}
 			}
-			*/
 		}
     }
+    
 	public boolean isStartPressed(){
 		return startPressed;
 	}
 	
 	public void repaintFrame(){
 		frame.repaint();
+		frame.revalidate();
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
