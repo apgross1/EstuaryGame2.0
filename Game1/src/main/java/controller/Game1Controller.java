@@ -405,5 +405,14 @@ public class Game1Controller{
 	public void setGameState(boolean gameState) {
 		this.gameState = gameState;
 	}
+	
+	public boolean difficulty(){
+		if(bar.getStatus() <= 20 && overallRound < 3){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 
 }

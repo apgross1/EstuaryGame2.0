@@ -363,36 +363,52 @@ public class Game1View extends JPanel implements KeyListener{
 		}
  }
 	 
-	@Override
-		public void keyPressed(KeyEvent e) {
-		    int keyCode = e.getKeyCode();
-		    switch( keyCode ) {
-		        case KeyEvent.VK_UP:
-		            // handle up 
-		        	controller.getAnimalModel().setCurrDir(Direction.NORTH);
-		        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 200)*-1);
-		            break;
-		        case KeyEvent.VK_DOWN:
-		            // handle down 
-		        	controller.getAnimalModel().setCurrDir(Direction.SOUTH);
-		        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 200));
-		            break;
-		        case KeyEvent.VK_LEFT:
-		            // handle left
-		        	controller.getAnimalModel().setCurrDir(Direction.WEST);
-		        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 200)*-1);
-		            break;
-		        case KeyEvent.VK_RIGHT :
-		            // handle right
-		        	controller.getAnimalModel().setCurrDir(Direction.EAST);
-		        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 200));
-		            break;
-		        case KeyEvent.VK_ESCAPE :
-		            // handle escape (to minimize game)
-		        	frame.setExtendedState(JFrame.ICONIFIED);
-		            break;
-		}
+    @Override
+	public void keyPressed(KeyEvent e) {
+	    int keyCode = e.getKeyCode();
+	    switch( keyCode ) {
+	        case KeyEvent.VK_UP:
+	            // handle up 
+	        	controller.getAnimalModel().setCurrDir(Direction.NORTH);
+	        	if(controller.difficulty() == false){
+	        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 200)*-1);}
+	        	else{
+	        		controller.getAnimalModel().setSpeedY(-6);
+	        	}
+	            break;
+	        case KeyEvent.VK_DOWN:
+	            // handle down 
+	        	controller.getAnimalModel().setCurrDir(Direction.SOUTH);
+	        	if(controller.difficulty() == false){
+	        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 200));}
+	        	else{
+	        		controller.getAnimalModel().setSpeedY(6);
+	        	}
+	            break;
+	        case KeyEvent.VK_LEFT:
+	            // handle left
+	        	controller.getAnimalModel().setCurrDir(Direction.WEST);
+	        	if(controller.difficulty() == false){
+	        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 200)*-1);}
+	        	else{
+	        		controller.getAnimalModel().setSpeedX(-6);
+	        	}
+	            break;
+	        case KeyEvent.VK_RIGHT :
+	            // handle right
+	        	controller.getAnimalModel().setCurrDir(Direction.EAST);
+	        	if(controller.difficulty() == false){
+	        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 200));}
+	        	else{
+	        		controller.getAnimalModel().setSpeedX(6);
+	        	}
+	            break;
+	        case KeyEvent.VK_ESCAPE :
+	            // handle escape (to minimize game)
+	        	frame.setExtendedState(JFrame.ICONIFIED);
+	            break;
 	}
+}
 	 
 		@Override
 		public void keyReleased(KeyEvent e) {
