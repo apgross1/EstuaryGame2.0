@@ -10,11 +10,24 @@ public class main {
 	
 	public static void main(String[] args) {
 		JFrame gameFrame = new JFrame();
-		
-		
 		MainRun game = new MainRun(gameFrame);
+		
+		long lastTime = System.nanoTime();
+		final double ammountOfTicks = 60.0;	
+		double ns = 1000000000 /ammountOfTicks;
+		double delta = 0;
+		
+		
 		while(!game.isStartPressed()){
-			game.repaintFrame();
+		long now = System.nanoTime();
+		delta += (now-lastTime)/ns;
+		lastTime=now;
+
+
+			if(delta>=1){
+				game.repaintFrame();
+				delta--;
+			}
 		}
 		
 		//Once the start game button is pressed well get here.
