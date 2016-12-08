@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -104,10 +105,11 @@ public class Game1View extends JPanel implements KeyListener{
         frame.setBackground(Color.gray);
         
         //Full screen
+        frame.setVisible(false);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
         frame.setUndecorated(true);
  
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(controller.getDim().width, controller.getDim().height); 
        
         
@@ -440,6 +442,13 @@ public class Game1View extends JPanel implements KeyListener{
 			// TODO Auto-generated method stub
 			
 		}
+		public JFrame getFrame() {
+			return frame;
+		}
+		public void setFrame(JFrame frame) {
+			this.frame = frame;
+		}
+
 
 	 
 	 /*

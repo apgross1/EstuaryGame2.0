@@ -59,7 +59,7 @@ public class Game2Controller {
 		view.addController(this);
     	gameFrame.getContentPane().add(view.new Animation());
     	gameFrame.setBackground(Color.GRAY);
-    	gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     	gameFrame.setSize(1000, 700);
     	gameFrame.setVisible(true);
     	gameFrame.setResizable(false);
@@ -233,6 +233,18 @@ public class Game2Controller {
 
 	public AnimalModelG2 getAnimalModelG2() {
 		return this.animal;
+	}
+
+
+
+	public Game2View getView() {
+		return view;
+	}
+
+
+
+	public void setView(Game2View view) {
+		this.view = view;
 	}
 
 

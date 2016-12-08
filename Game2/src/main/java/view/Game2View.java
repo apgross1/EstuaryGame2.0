@@ -283,5 +283,19 @@ public class Game2View extends JPanel implements KeyListener{
 		controller.getAnimalModelG2().setVelocity(0);
 		
 	}
+
+
+
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+
+
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
 	
 }

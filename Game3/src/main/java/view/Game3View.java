@@ -83,7 +83,8 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	private JButton menuButton;
 	private ArrayList<BufferedImage> mainMenuPics = new ArrayList<BufferedImage>();
 	private ArrayList<BufferedImage> exitGamePics = new ArrayList<BufferedImage>();
-
+	private boolean exitToMain =  false;
+	private boolean exitGame = false;
 	
 
 	
@@ -808,7 +809,6 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 			}
 			JButton button = (JButton) e.getSource();
 			button.setIcon(new ImageIcon(returnMain_1));
-			System.out.println("Returning to main menu!");
 		}
 	}
 	
@@ -851,12 +851,16 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		JButton button = (JButton) e.getSource();
 		if(button.getName() == "exit") {
 			button.setIcon(new ImageIcon(this.getExitGamePics().get(0)));
-			frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+			//frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSED));
+			//frame.dispose();
+			setExitGame(true);
+			return;
+					
 		}
 		else {
 			button.setIcon(new ImageIcon(this.getMainMenuPics().get(0)));
-			System.out.println("Returning to main screen!");
-			
+			setExitToMain(true);
+			frame.dispose();
 		}
 	}
 
@@ -892,5 +896,25 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 
 	public void setExitGamePics(ArrayList<BufferedImage> exitGamePics) {
 		this.exitGamePics = exitGamePics;
+	}
+
+
+	public boolean isExitToMain() {
+		return exitToMain;
+	}
+
+
+	public void setExitToMain(boolean exitToMain) {
+		this.exitToMain = exitToMain;
+	}
+
+
+	public boolean isExitGame() {
+		return exitGame;
+	}
+
+
+	public void setExitGame(boolean exitGame) {
+		this.exitGame = exitGame;
 	}
 }

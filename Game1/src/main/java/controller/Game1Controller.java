@@ -14,6 +14,7 @@ import view.Game1View;
 
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.geom.RectangularShape;
 
 import javax.swing.JFrame;
 
@@ -57,6 +58,7 @@ public class Game1Controller{
 	 * testing purposes
 	 */
 	public Game1Controller(){
+	
 		
 	}
 	
@@ -405,5 +407,11 @@ public class Game1Controller{
 	public void setGameState(boolean gameState) {
 		this.gameState = gameState;
 	}
-
+	public Game1View getG1view() {
+		return g1view;
+	}
+	public void setG1view(Game1View g1view) {
+		this.g1view = g1view;
+	}
+	
 }
