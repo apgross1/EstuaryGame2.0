@@ -70,8 +70,8 @@ public class Game3Controller {
 	public void runGame()  {
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
-		animal.addPics();
-		tutorial.addPics();
+		//animal.addPics();
+		//tutorial.addPics();
 		view = new Game3View(this, gameFrame);
 		
 		
@@ -86,7 +86,7 @@ public class Game3Controller {
 		setSun(sun);
 		setHurricane(hurricane);
 		
-		this.loadImages();
+		//this.loadImages();
 		
 		view.addSun();
 		view.addHurricane();
@@ -368,10 +368,9 @@ public class Game3Controller {
 					}
 					
 					if(i != pairs.size()-1) {
-						this.getBeach().getBeachGrid().get(this.getBeach().findPairInGrid(pairs.get(i+1))).getWater().setGraphicOnDeck(1);
+						this.getBeach().getBeachGrid().get(this.getBeach().findPairInGrid(pairs.get(i+1))).getWater().setGraphicOnDeck(AnimGraphics.SAND_WITH_WATER_CENTER.getVal());
 					}
 					WaterModel newWatMod = new WaterModel("game");
-					newWatMod.addPics();
 					tempGrid.setWater(newWatMod, this.getBeach().findPairInGrid(pairs.get(i)), "");
 		
 					view.getLayoutContainerComps().remove(view.getWaveComponentMap().get(w.hashCode()));
@@ -523,7 +522,7 @@ public class Game3Controller {
 				tempTime.stop();
 			}
 			else {
-				tutorial.setKeyBoardPicOnDeck((tutorial.getKeyBoardPicOnDeck()+1)%(tutorial.getGraphicMap().get(AnimGraphics.KEYBOARD).size()));
+				tutorial.setKeyBoardPicOnDeck(((tutorial.getKeyBoardPicOnDeck()+1)%5));
 			}
 		}
 	};
@@ -659,15 +658,6 @@ public class Game3Controller {
 		this.activateKeys();	
 	}
 	
-	
-	/**
-	 *Loads the graphics for the sun and hurricane which will serve as visual representations of
-	 *these game objects 
-	 */
-	public void loadImages() {
-		sun.addPics();
-		hurricane.addPics();
-	}
 	
 	/**
 	 * Getter to determine if the game is still running

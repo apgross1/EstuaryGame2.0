@@ -19,7 +19,6 @@ public class GridBlock {
 	private int width;
 	private BeachModel beach;
 	private Pair viewLocation = new Pair(0,0);
-	private BufferedImage sandGraphic;
 	
 	/**
 	 * Constructor for this element. The constructor initializes:
@@ -152,24 +151,11 @@ public class GridBlock {
 			this.setVacant(false);
 
 			beach.getPositionGrid()[loc.getY()][loc.getX()] = 2;
-			water.addPics();
 			System.out.println("Value on grid at (" + loc.getX() + "," + loc.getY() + "): " + beach.getPositionGrid()[loc.getY()][loc.getX()]);
 		}
 	}
 	
-	
-	/**
-	 * Adds the graphics associates with this element. These are used to
-	 * visually represent this element. 
-	 */
-	public void addPic() {
-		try {
-			sandGraphic = ImageIO.read(new File("./Images/Game3/tile_sand_center.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 	
 	/**
 	 * Gets the location of this element
@@ -314,22 +300,4 @@ public class GridBlock {
 	public void setViewLocation(Pair viewLocation) {
 		this.viewLocation = viewLocation;
 	}
-
-	/**
-	 * Gets the sand graphic 
-	 * @return sandGraphic a BufferedImage
-	 */
-	public BufferedImage getSandGraphic() {
-		return sandGraphic;
-	}
-
-	/**
-	 * Sets the sand graphic. Has it correspond to the character in a larger film.
-	 * @param sandGraphic sandGraphic, the graphic that visually represents this element in the View
-	 */
-	public void setSandGraphic(BufferedImage sandGraphic) {
-		this.sandGraphic = sandGraphic;
-	}
-
-	
 }

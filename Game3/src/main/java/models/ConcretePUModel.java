@@ -24,7 +24,6 @@ public class ConcretePUModel extends WallModelAbstract {
 	private boolean isActive;
 	private boolean isPickedUp;
 	private ConcPUState wallState;
-	private HashMap<ConcPUState,ArrayList<BufferedImage>> graphics;
 	private HashMap<Frames, JComponent> frameMap;
 	private Pair location;
 	private Pair viewLocation;
@@ -52,7 +51,6 @@ public class ConcretePUModel extends WallModelAbstract {
 		this.isPickedUp = false;
 		this.location = new Pair(0,0);
 		this.viewLocation = new Pair(0,0);
-		graphics = new HashMap<ConcPUState,ArrayList<BufferedImage>>();
 	}
 	
 	/**
@@ -88,27 +86,6 @@ public class ConcretePUModel extends WallModelAbstract {
 		this.isPickedUp = isPickedUp;
 	}
 	
-	/**
-	 * Adds the graphics associates with this element. These are used to
-	 * visually represent this element. 
-	 */
-	public void addPics() {
-		try{
-			ArrayList<BufferedImage> wallGraphic = new ArrayList<BufferedImage>();
-			BufferedImage concreteWall = ImageIO.read(new File("./Images/Game3/ConcreteWall.png"));
-			wallGraphic.add(concreteWall);
-			
-			ArrayList<BufferedImage> puGraphic = new ArrayList<BufferedImage>();
-			BufferedImage pu = ImageIO.read(new File("./Images/Game3/ConcretePU.png"));
-			puGraphic.add(pu);
-			
-			graphics.put(ConcPUState.WALL, wallGraphic);
-			graphics.put(ConcPUState.POWER_UP, puGraphic);
-			}
-			catch(IOException e) {
-	    		e.printStackTrace();
-	    	}
-	}
 	
 	/**
 	 * Gets the bounds of this element at a single point in time.
@@ -181,24 +158,6 @@ public class ConcretePUModel extends WallModelAbstract {
 		return location;
 	}
 	
-	/**
-	 * Gets the graphic map of this element. The components in the
-	 * graphic map visually represent this element in the View.
-	 * @return graphics a HashMap that contains BufferedImage ArrayList()s pairing with
-	 * their wall state (POWER_UP or WALL)
-	 */
-	public HashMap<ConcPUState, ArrayList<BufferedImage>> getGraphics() {
-		return graphics;
-	}
-	
-	/**
-	 * Sets the graphic map of this element. The components in the
-	 * graphic map visually represent this element in the View.
-	 * @param graphics
-	 */
-	public void setGraphics(HashMap<ConcPUState, ArrayList<BufferedImage>> graphics) {
-		this.graphics = graphics;
-	}
 	
 	/**
 	 * Gets the height of this element

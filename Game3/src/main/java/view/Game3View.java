@@ -85,8 +85,85 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	private ArrayList<BufferedImage> exitGamePics = new ArrayList<BufferedImage>();
 	private boolean exitToMain =  false;
 	private boolean exitGame = false;
+	private HashMap<AnimGraphics, BufferedImage> graphicMap;
 	
+	public void loadImages() {
+		try{
+			BufferedImage bluecrab_0 = ImageIO.read(new File("./Images/Game3/bluecrab_0.png"));
+			BufferedImage bluecrab_1 = ImageIO.read(new File("./Images/Game3/bluecrab_1.png"));
+			BufferedImage bluecrab_2 = ImageIO.read(new File("./Images/Game3/bluecrab_2.png"));
+			
+			graphicMap.put(AnimGraphics.BLUECRAB_0, bluecrab_0);
+			graphicMap.put(AnimGraphics.BLUECRAB_1, bluecrab_1);
+			graphicMap.put(AnimGraphics.BLUECRAB_2, bluecrab_2);
+			
+			BufferedImage concreteWall = ImageIO.read(new File("./Images/Game3/ConcreteWall.png"));
+			BufferedImage concPu = ImageIO.read(new File("./Images/Game3/ConcretePU.png"));
+			
+			graphicMap.put(AnimGraphics.CONCRETE_WALL, concreteWall);
+			graphicMap.put(AnimGraphics.CONC_PU, concPu);
+			
+			BufferedImage gabionWall = ImageIO.read(new File("./Images/Game3/GabionWall.png"));
+			BufferedImage gabPu = ImageIO.read(new File("./Images/Game3/GabionPU.png"));
+			
+			graphicMap.put(AnimGraphics.GABION_WALL, gabionWall);
+			graphicMap.put(AnimGraphics.GAB_PU, gabPu);
+			
+			BufferedImage sandGraphic = ImageIO.read(new File("./Images/Game3/tile_sand_center.png"));
+			graphicMap.put(AnimGraphics.TILE_SAND_CENTER, sandGraphic);
+			
+			BufferedImage sunPic = ImageIO.read(new File("./Images/Game3/glowingbg.png"));
+			BufferedImage hurrAngry = ImageIO.read(new File("./Images/Game3/angry_cloud.png"));
+			BufferedImage hurrScared = ImageIO.read(new File("./Images/Game3/dismayed_cloud.png"));
+			
+			graphicMap.put(AnimGraphics.SUN, sunPic);
+			graphicMap.put(AnimGraphics.HURRICANE_ANGRY, hurrAngry);
+			graphicMap.put(AnimGraphics.HURRICANE_SCARED, hurrScared);
+			
+			BufferedImage key_pic_0 = ImageIO.read(new File("./Images/Game3/key_press_0.png"));
+			BufferedImage key_pic_1 = ImageIO.read(new File("./Images/Game3/key_press_1.png"));
+			BufferedImage key_pic_2 = ImageIO.read(new File("./Images/Game3/key_press_2.png"));
+			BufferedImage key_pic_3 = ImageIO.read(new File("./Images/Game3/key_press_3.png"));
+			BufferedImage key_pic_4 = ImageIO.read(new File("./Images/Game3/key_press_4.png"));
+			graphicMap.put(AnimGraphics.KEY_PIC_0, key_pic_0);
+			graphicMap.put(AnimGraphics.KEY_PIC_1, key_pic_1);
+			graphicMap.put(AnimGraphics.KEY_PIC_2, key_pic_2);
+			graphicMap.put(AnimGraphics.KEY_PIC_3, key_pic_3);
+			graphicMap.put(AnimGraphics.KEY_PIC_4, key_pic_4);
+			
+			
+			BufferedImage x = ImageIO.read(new File("./Images/Game3/x.png"));
+			BufferedImage arrow = ImageIO.read(new File("./Images/Game3/green_arrow.png"));
+			BufferedImage dialogue = ImageIO.read(new File("./Images/Game3/Dialogue2.png"));
 
+			graphicMap.put(AnimGraphics.BIG_X, x);
+			graphicMap.put(AnimGraphics.ARROW, arrow);
+			graphicMap.put(AnimGraphics.DIALOGUE, dialogue);
+			
+			
+			BufferedImage bufferedImage1 = ImageIO.read(new File("./Images/Game3/sand_with_water.png"));
+			BufferedImage bufferedImage2 = ImageIO.read(new File("./Images/Game3/tile_water_C.png"));
+			graphicMap.put(AnimGraphics.SAND_WITH_WATER, bufferedImage1);
+			graphicMap.put(AnimGraphics.SAND_WITH_WATER_CENTER, bufferedImage2);
+			
+			BufferedImage shoreGraphic = ImageIO.read(new File("./Images/Game3/Creek.png"));
+			graphicMap.put(AnimGraphics.SHORE, shoreGraphic);
+			
+			BufferedImage exitGame_0 = ImageIO.read(new File("./Images/Game3/exitGame_0.png"));
+			BufferedImage exitGame_1 = ImageIO.read(new File("./Images/Game3/exitGame_1.png"));
+			BufferedImage returnMain_0= ImageIO.read(new File("./Images/Game3/returnMain_0.png"));
+			BufferedImage returnMain_1 = ImageIO.read(new File("./Images/Game3/returnMain_1.png"));
+			
+			graphicMap.put(AnimGraphics.EXIT_GAME_0, exitGame_0);
+			graphicMap.put(AnimGraphics.EXIT_GAME_1, exitGame_1);
+			graphicMap.put(AnimGraphics.RETURN_MAIN_0, returnMain_0);
+			graphicMap.put(AnimGraphics.RETURN_MAIN_1, returnMain_1);
+		
+		}
+			catch(IOException e) {
+	    		e.printStackTrace();
+	    	}
+	}
 	
 	/**
 	 * Constructor for this element
@@ -94,36 +171,11 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	 * @param gameF instance of the JFrame shared between all 3 games
 	 */
 	public Game3View(Game3Controller ctl, JFrame gameF){
-		//Adding end menu button images
-		BufferedImage exitGame_0 = null;
-		BufferedImage exitGame_1 = null;
-		BufferedImage returnMain_0 = null;
-		BufferedImage returnMain_1 = null;
-		try {
-			exitGame_0 = ImageIO.read(new File("./Images/Game3/exitGame_0.png"));
-			exitGame_1 = ImageIO.read(new File("./Images/Game3/exitGame_1.png"));
-			returnMain_0= ImageIO.read(new File("./Images/Game3/returnMain_0.png"));
-			returnMain_1 = ImageIO.read(new File("./Images/Game3/returnMain_1.png"));
-		} catch (IOException excep) {
-			excep.printStackTrace();
-		}
-	
-		this.getMainMenuPics().add(returnMain_0);
-		this.getMainMenuPics().add(returnMain_1);
-		this.getExitGamePics().add(exitGame_0);
-		this.getExitGamePics().add(exitGame_1);
-		
-		
-		
+		graphicMap = new HashMap<AnimGraphics, BufferedImage>();
+		this.loadImages();
 		
 		brightLevel = 255;
 		skyColor = new Color((int)0,(int)0,(int)0, (int)this.getBrightLevel());
-		//Adding shore graphic (only one which is not created in a model)
-		try {
-			shoreGraphic = ImageIO.read(new File("./Images/Game3/Creek.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
 		
 		frameMap = new HashMap<Frames, JComponent>();
@@ -297,7 +349,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		 */
 		public void drawKeyboard(Graphics g) {
 			if(!controller.getTutorial().isKeyboardStop()) {
-				g.drawImage((controller.getTutorial().getGraphicMap().get(AnimGraphics.KEYBOARD).get(controller.getTutorial().getKeyBoardPicOnDeck())), (int)(frame.getWidth()*.60), (int)(frame.getHeight()*.40), this);
+				g.drawImage(graphicMap.get(AnimGraphics.valueOf(controller.getTutorial().getKeyBoardPicOnDeck()+AnimGraphics.KEY_PIC_0.getVal())), (int)(frame.getWidth()*.60), (int)(frame.getHeight()*.40), this);
 			}
 		}
 		
@@ -308,7 +360,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		 */
 		public void drawX(Graphics g) {
 			if(controller.getAnimal().isWaveHit()) {
-				g.drawImage((controller.getTutorial().getGraphicMap().get(AnimGraphics.BIG_X).get(0)), controller.getAnimal().getLocX(),controller.getAnimal().getLocY(), this);
+				g.drawImage((graphicMap.get(AnimGraphics.BIG_X)), controller.getAnimal().getLocX(),controller.getAnimal().getLocY(), this);
 			}
 		}
 		
@@ -318,7 +370,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		 */
 		public void drawDialogue(Graphics g) {
 			if(controller.getTutorial().isDialogueOn()) {
-				g.drawImage((controller.getTutorial().getGraphicMap().get(AnimGraphics.DIALOGUE).get(0)), (int)(frameMap.get(Frames.ANIMAL).getWidth()*.6), (int)(frameMap.get(Frames.ANIMAL ).getHeight()*.30), this);
+				g.drawImage(graphicMap.get(AnimGraphics.DIALOGUE), (int)(frameMap.get(Frames.ANIMAL).getWidth()*.6), (int)(frameMap.get(Frames.ANIMAL ).getHeight()*.30), this);
 			}
 		}
 	}
@@ -343,7 +395,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		public void paint(Graphics g) {
 			//g.setColor(Color.GREEN);
 			//g.fillOval(hurricane.getLocation().getX(), hurricane.getLocation().getY(), hurricane.getWidth(), hurricane.getHeight());
-			g.drawImage((hurricane.getGraphics().get("HURRICANE")).get(0), hurricane.getLocation().getX(), hurricane.getLocation().getY(), this);
+			g.drawImage(graphicMap.get(AnimGraphics.HURRICANE_ANGRY), hurricane.getLocation().getX(), hurricane.getLocation().getY(), this);
 		}
 	}
 	
@@ -364,7 +416,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		}
 		@Override
 		public void paint(Graphics g) {
-			g.drawImage(sun.getGraphics().get("SUN").get(0), sun.getLocation().getX(), sun.getLocation().getY(), this);
+			g.drawImage(graphicMap.get(AnimGraphics.SUN), sun.getLocation().getX(), sun.getLocation().getY(), this);
 		}
 	}
 	
@@ -444,7 +496,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	public class Animal extends JComponent {
 		@Override
 		public void paint(Graphics g) {
-			g.drawImage(controller.getAnimal().getGraphics().get("MOVE").get(controller.getAnimal().getGraphicOnDeck()), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
+			g.drawImage(graphicMap.get(AnimGraphics.valueOf(controller.getAnimal().getGraphicOnDeck())), (int)controller.getAnimal().getBounds().getX(), (int) controller.getAnimal().getBounds().getY(), this);
 		}
 	}
 	
@@ -453,7 +505,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		public void paint(Graphics g) {
 			//g.setColor(Color.BLUE);
 			
-			g.drawImage(shoreGraphic, 0, 0, this);
+			g.drawImage(graphicMap.get(AnimGraphics.SHORE), 0, 0, this);
 			frame.revalidate();
 			//g.fillRect(0, 0, frameMap.get(Frames.SHORE).getWidth(), frameMap.get(Frames.SHORE).getHeight());
 		}
@@ -470,16 +522,13 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 			
 			//g.drawString(coords, this.getWidth()/2, this.getHeight()/2);
 			if(grid.getWater().isActive() == false) {
-				g.drawImage(grid.getSandGraphic(),0, 0, this);
+				g.drawImage(graphicMap.get(AnimGraphics.TILE_SAND_CENTER),0, 0, this);
 				//g.setColor(Color.YELLOW);
 				//g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}
 			else{
-				//System.out.println("View's idea of where tidal pool is: (" + grid.getLocation().getX()+","+grid.getLocation().getY()+")");
-				g.drawImage(grid.getWater().getWaterGraphics().get(grid.getWater().getGraphicOnDeck()),0, 0, this);
-				
-				//g.setColor(Color.BLUE);
-				//g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
+				//Fix this below
+				g.drawImage(graphicMap.get(AnimGraphics.valueOf(grid.getWater().getGraphicOnDeck())),0, 0, this);
 			}
 			
 		}
@@ -496,7 +545,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		
 		public void drawArrow(Graphics g) {
 			if(controller.isTutorialActive() && gridBlock.getGabPU().getIsActive()) {
-				g.drawImage(controller.getTutorial().getGraphicMap().get(AnimGraphics.ARROW).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY()+40, this);
+				g.drawImage(graphicMap.get(AnimGraphics.ARROW),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY()+40, this);
 			}
 		}
 		
@@ -507,7 +556,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 				//g.setColor(Color.RED);
 				//g.fillRect((int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
 				if(gridBlock.getConcrPU().isPickedUp()){
-					g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.WALL).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), this);
+					g.drawImage(graphicMap.get(AnimGraphics.CONCRETE_WALL),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), this);
 					int potentialX = controller.getAnimal().getLocX() + controller.getAnimal().getSpeedX();
 					int potentialY = controller.getAnimal().getLocY() + controller.getAnimal().getSpeedY();
 					Rectangle potentialAnimBounds = new Rectangle(potentialX, potentialY, controller.getAnimal().getWidth(), controller.getAnimal().getHeight());
@@ -519,15 +568,13 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 					}
 				}
 				else{
-					g.drawImage(gridBlock.getConcrPU().getGraphics().get(ConcPUState.POWER_UP).get(0),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), this);
+					g.drawImage(graphicMap.get(AnimGraphics.CONC_PU),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), this);
 				}
 			}
 			
 			else if(gridBlock.getGabPU().getIsActive()) {
-				//g.setColor(Color.RED);
-				//g.fillRect((int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), (int) gridBlock.getGabPU().getBounds().getWidth(), (int) gridBlock.getGabPU().getBounds().getHeight());
 				if(gridBlock.getGabPU().isPickedUp()){
-					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.WALL).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), this);
+					g.drawImage(graphicMap.get(AnimGraphics.GABION_WALL),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), this);
 					int potentialX = controller.getAnimal().getLocX() + controller.getAnimal().getSpeedX();
 					int potentialY = controller.getAnimal().getLocY() + controller.getAnimal().getSpeedY();
 					Rectangle potentialAnimBounds = new Rectangle(potentialX, potentialY, controller.getAnimal().getWidth(), controller.getAnimal().getHeight());
@@ -539,7 +586,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 					}
 				}
 				else{
-					g.drawImage(gridBlock.getGabPU().getGraphics().get(GabPUState.POWER_UP).get(0),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), this);
+					g.drawImage(graphicMap.get(AnimGraphics.GAB_PU),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY(), this);
 				}
 			}
 		}
@@ -552,7 +599,6 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 			randCluster = clusterVal;
 		}
 		else {
-			System.out.println("Generating non-tutorial clusters");
 			randCluster = WaveClusters.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((WaveClusters.CLUSTER_FIVE.getWaveID() - WaveClusters.CLUSTER_ONE.getWaveID()) + 1));
 		}
 		for(int i = 0; i < 250; i++) {
@@ -730,18 +776,11 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		
 		
 		//Creating menu button
-		BufferedImage returnMain_0 = null;
-		try {
-			returnMain_0 = ImageIO.read(new File("./Images/Game3/returnMain_0.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		menuButton = new JButton(new ImageIcon(returnMain_0));
+		menuButton = new JButton(new ImageIcon(graphicMap.get(AnimGraphics.RETURN_MAIN_0)));
 		menuButton.setName("menu");
 		menuButton.setBorder(BorderFactory.createEmptyBorder());
 		menuButton.setContentAreaFilled(false);
-		menuButton.setPreferredSize(new Dimension(returnMain_0.getWidth(), returnMain_0.getHeight()));
+		menuButton.setPreferredSize(new Dimension(graphicMap.get(AnimGraphics.RETURN_MAIN_0).getWidth(), graphicMap.get(AnimGraphics.RETURN_MAIN_0).getHeight()));
 		GridBagConstraints b1c = new GridBagConstraints();
 		b1c.gridx = 0;
 		b1c.gridy = 1;
@@ -752,20 +791,12 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		
 		
 		//Creating exit button
-		BufferedImage exitGame_0 = null;
-		
-		try {
-			exitGame_0 = ImageIO.read(new File("./Images/Game3/exitGame_0.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		JButton exitButton = new JButton(new ImageIcon(exitGame_0));
+		JButton exitButton = new JButton(new ImageIcon(graphicMap.get(AnimGraphics.EXIT_GAME_0)));
 		exitButton.setBorder(BorderFactory.createEmptyBorder());
 		exitButton.setContentAreaFilled(false);
 		exitButton.setName("exit");
 		exitButton.addMouseListener(this);
-		exitButton.setPreferredSize(new Dimension((int)(exitGame_0.getWidth()),exitGame_0.getHeight()));
+		exitButton.setPreferredSize(new Dimension((int)(graphicMap.get(AnimGraphics.EXIT_GAME_0).getWidth()),graphicMap.get(AnimGraphics.EXIT_GAME_0).getHeight()));
 		GridBagConstraints b2c = new GridBagConstraints();
 		b2c.gridx = 2;
 		b2c.gridy = 1;
@@ -801,31 +832,21 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	public class ReturnToMain implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			BufferedImage returnMain_1 = null;
-			try {
-				returnMain_1 = ImageIO.read(new File("./Images/Game3/returnMain_1.png"));
-			} catch (IOException excep) {
-				excep.printStackTrace();
-			}
 			JButton button = (JButton) e.getSource();
-			button.setIcon(new ImageIcon(returnMain_1));
+			button.setIcon(new ImageIcon(graphicMap.get(AnimGraphics.RETURN_MAIN_1)));
 		}
 	}
 	
 	public class ExitGame implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			BufferedImage exitGame_1 = null;
-			try {
-				exitGame_1 = ImageIO.read(new File("./Images/Game3/exitGame_1.png"));
-			} catch (IOException excep) {
-				excep.printStackTrace();
-			}
 			JButton button = (JButton) e.getSource();
-			button.setIcon(new ImageIcon(exitGame_1));
+			button.setIcon(new ImageIcon(graphicMap.get(AnimGraphics.EXIT_GAME_1)));
 		}
 	}
 
+	
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -837,11 +858,11 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	public void mousePressed(MouseEvent e) {
 		JButton button = (JButton) e.getSource();
 		if(button.getName() == "exit") {
-			button.setIcon(new ImageIcon(this.getExitGamePics().get(1)));
+			button.setIcon(new ImageIcon(graphicMap.get(AnimGraphics.EXIT_GAME_1)));
 		}
 		
 		else {
-			button.setIcon(new ImageIcon(this.getMainMenuPics().get(1)));
+			button.setIcon(new ImageIcon(graphicMap.get(graphicMap.get(AnimGraphics.RETURN_MAIN_1))));
 		}
 	}
 
@@ -850,15 +871,13 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		JButton button = (JButton) e.getSource();
 		if(button.getName() == "exit") {
-			button.setIcon(new ImageIcon(this.getExitGamePics().get(0)));
-			//frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSED));
-			//frame.dispose();
+			button.setIcon(new ImageIcon(graphicMap.get(AnimGraphics.EXIT_GAME_0)));
 			setExitGame(true);
 			return;
 					
 		}
 		else {
-			button.setIcon(new ImageIcon(this.getMainMenuPics().get(0)));
+			button.setIcon(new ImageIcon(graphicMap.get(AnimGraphics.RETURN_MAIN_0)));
 			setExitToMain(true);
 			frame.dispose();
 		}

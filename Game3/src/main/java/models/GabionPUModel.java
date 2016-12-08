@@ -16,7 +16,6 @@ public class GabionPUModel extends WallModelAbstract {
 	private boolean isPickedUp;
 	private Pair location;
 	private Pair viewLocation;
-	private HashMap<GabPUState, ArrayList<BufferedImage>> graphics;
 	private HashMap<Frames, JComponent> frameMap;
 	private GabPUState wallState;
 	private Rectangle bounds;
@@ -44,7 +43,6 @@ public class GabionPUModel extends WallModelAbstract {
 		this.isPickedUp = false;
 		this.location = new Pair(0,0);
 		this.viewLocation = new Pair(0,0);
-		graphics = new HashMap<GabPUState, ArrayList<BufferedImage>>();
 	}
 
 	
@@ -83,47 +81,7 @@ public class GabionPUModel extends WallModelAbstract {
 		this.wallState = gameState;
 	}
 
-	/**
-	 * Adds the graphics associates with this element. These are used to
-	 * visually represent this element. 
-	 */
-	public void addPics() {
-		
-		try{
-			ArrayList<BufferedImage> wallGraphic = new ArrayList<BufferedImage>();
-			BufferedImage gabionWall = ImageIO.read(new File("./Images/Game3/GabionWall.png"));
-			wallGraphic.add(gabionWall);
-			
-			ArrayList<BufferedImage> puGraphic = new ArrayList<BufferedImage>();
-			BufferedImage pu = ImageIO.read(new File("./Images/Game3/GabionPU.png"));
-			puGraphic.add(pu);
-			
-			graphics.put(GabPUState.WALL, wallGraphic);
-			graphics.put(GabPUState.POWER_UP, puGraphic);
-			}
-			catch(IOException e) {
-	    		e.printStackTrace();
-	    }
-	}
 	
-	/**
-	 * Gets the graphic map of this element. The components in the
-	 * graphic map visually represent this element in the View.
-	 * @return graphics a HashMap that contains BufferedImage ArrayList()s pairing with
-	 * their wall state (POWER_UP or WALL)
-	 */
-	public HashMap<GabPUState, ArrayList<BufferedImage>> getGraphics() {
-		return graphics;
-	}
-
-	/**
-	 * Sets the graphic map of this element. The components in the
-	 * graphic map visually represent this element in the View.
-	 * @param graphics
-	 */
-	public void setGraphics(HashMap<GabPUState, ArrayList<BufferedImage>> graphics) {
-		this.graphics = graphics;
-	}
 
 	/**
 	 * Gets the location of this element.

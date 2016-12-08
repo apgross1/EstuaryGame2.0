@@ -9,12 +9,13 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import Enums.AnimGraphics;
+
 public class WaterModel {
 	private Pair location = new Pair(0,0);
 	private int height;
 	private int width;
 	private boolean isActive;
-	private ArrayList<BufferedImage> waterGraphics;
 	private int graphicOnDeck;
 	
 	
@@ -23,6 +24,7 @@ public class WaterModel {
 	 * Constructor for this element
 	 */
 	public WaterModel(String test) {
+		graphicOnDeck = AnimGraphics.SAND_WITH_WATER.getVal();
 		if(test == "test"){
 			this.height = 200;
 			this.width = 200;
@@ -30,7 +32,6 @@ public class WaterModel {
 		else{
 			this.height = 200;
 			this.width = 200;
-			this.addPics();
 		}
 	}
 	
@@ -40,25 +41,6 @@ public class WaterModel {
 	 */
 	public WaterModel(Pair loc) {
 		location = loc;
-	}
-	
-	/**
-	 * Adds the graphics associates with this element. These are used to
-	 * visually represent this element. 
-	 */
-	public void addPics() {
-		try{
-			waterGraphics = new ArrayList<BufferedImage>();
-			BufferedImage bufferedImage1 = ImageIO.read(new File("./Images/Game3/sand_with_water.png"));
-			waterGraphics.add(bufferedImage1);
-			BufferedImage bufferedImage2 = ImageIO.read(new File("./Images/Game3/tile_water_C.png"));
-			waterGraphics.add(bufferedImage2);
-			graphicOnDeck = 0;
-			}
-			catch(IOException e) {
-	    		e.printStackTrace();
-	    	}
-			
 	}
 	
 	
@@ -137,26 +119,6 @@ public class WaterModel {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-
-
-
-	/**
-	 * Gets ArrayList of images visually representing this element
-	 * @return waterGraphics ArrayList of BufferedImages
-	 */
-	public ArrayList<BufferedImage> getWaterGraphics() {
-		return waterGraphics;
-	}
-
-
-	/**
-	 * Sets ArrayList of images visually representing this element
-	 * @param waterGraphics ArrayList of BufferedImages
-	 */
-	public void setWaterGraphics(ArrayList<BufferedImage> waterGraphics) {
-		this.waterGraphics = waterGraphics;
-	}
-
 
 	/**
 	 * Gets current graphic being panted for this element

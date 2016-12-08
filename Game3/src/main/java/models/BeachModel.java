@@ -68,7 +68,6 @@ public class BeachModel {
 			Pair tempPair = it.next();
 			//System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
 			GridBlock g = new GridBlock(tempPair, this);
-			g.addPic();
 			g.setLocation(tempPair);
 			beachGrid.put(tempPair, g);
 		}
@@ -150,7 +149,6 @@ public class BeachModel {
 				setGabPair(this.findPairInGrid(pair));
 				GabionPUModel tempGab = new GabionPUModel();
 				tempGab.setFrameMap(frameMap);
-				tempGab.addPics();
 				tempGab.setLocation(this.findPairInGrid(pair), GameState );
 				tempGab.setIsActive(true);
 				beachGrid.get(this.findPairInGrid(pair)).setGabPU(tempGab);
@@ -162,7 +160,6 @@ public class BeachModel {
 				setGabPair(this.findPairInGrid(pair));
 				GabionPUModel tempGab = new GabionPUModel();
 				tempGab.setFrameMap(frameMap);
-				tempGab.addPics();
 				tempGab.setLocation(this.findPairInGrid(pair), GameState);
 				tempGab.setIsActive(true);
 				beachGrid.get(this.findPairInGrid(pair)).setGabPU(tempGab);
@@ -187,7 +184,6 @@ public class BeachModel {
 			setConcPair(pair);
 			ConcretePUModel tempConcr = new ConcretePUModel();
 			tempConcr.setFrameMap(frameMap);
-			tempConcr.addPics();
 			tempConcr.setLocation(this.findPairInGrid(pair), GameState);
 			tempConcr.setActive(true);
 			beachGrid.get(this.findPairInGrid(pair)).setConcrPU(tempConcr);
