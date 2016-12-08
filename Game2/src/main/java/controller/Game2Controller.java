@@ -1,7 +1,9 @@
 package controller;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -11,10 +13,10 @@ import java.util.Iterator;
 
 import javax.swing.JFrame;
 
-import models.AlgaeEaterModel;
+
 import models.AlgaeModel;
 import models.AnimalModelG2;
-import models.WaterModelG2;
+
 
 import view.Game2View;
 import view.Game2View.Animation;
@@ -23,11 +25,11 @@ public class Game2Controller {
 	private boolean gameActive;
 	private Game2View view;
 	private AnimalModelG2 animal;
-	private AlgaeEaterModel algaeEater;
+	
 	private AlgaeModel algae;
 	private Collection<AlgaeModel> algaeList = new ArrayList<AlgaeModel>();
-	private WaterModelG2 water;
-	private JFrame gameFrame;
+	
+	private JFrame gameFrame = new JFrame();
 	long spawnTime=0;
 	int numMissed = 0;
 	long startTime;
@@ -36,13 +38,15 @@ public class Game2Controller {
 	
 	int spawnDelay = 2000; //in milliseconds
 	boolean isStorming = false;
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int width = (int) screenSize.getWidth();
+	int height = (int) screenSize.getHeight();
 	
-	public Game2Controller(JFrame gamef) {
-		gameFrame = gamef;
+	public Game2Controller() {
+
 		animal = new AnimalModelG2();
-		water = new WaterModelG2();
 		algae = new AlgaeModel();
-		algaeEater = new AlgaeEaterModel();
+		
 		
 	}
 
@@ -51,7 +55,7 @@ public class Game2Controller {
 	public void startGame() {
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
-		view = new Game2View(this, gameFrame);
+		view = new Game2View(this, gameFrame, screenSize);
 		view.addController(this);
     	gameFrame.getContentPane().add(view.new Animation());
     	gameFrame.setBackground(Color.GRAY);
@@ -71,11 +75,12 @@ public class Game2Controller {
 		long stormTimer = System.currentTimeMillis();
 		
 		while(gameActive){
+			
 			long now = System.nanoTime();
 			delta += (now-lastTime)/ns;
 			lastTime=now;
 			if(delta>=1){
-				animal.tick();
+				animal.move();
 				view.repaintFrame();
 				updates++;
 				delta--;
@@ -104,10 +109,12 @@ public class Game2Controller {
 				spawnTime = System.currentTimeMillis();
 				
 				}
+				
 			}
+			
 		}
-	}
 	
+	}
 	
 	public boolean getStormStatus(){
 		return isStorming;
@@ -115,12 +122,12 @@ public class Game2Controller {
 	public void activateStorm(){
 	
 		isStorming = true;
-		setSpawnDelay(getSpawnDelay()-1500);
+		setSpawnDelay(getSpawnDelay()-1700);
 	}
 	public void deactivateStorm(){
 		
 		isStorming = false;
-		setSpawnDelay(getSpawnDelay()+1500);
+		setSpawnDelay(getSpawnDelay()+1700);
 	}
 	public int getSpawnDelay(){
 		return spawnDelay;
@@ -161,7 +168,7 @@ public class Game2Controller {
 	public boolean collisionOccured(AnimalModelG2 animal, AlgaeModel algae){
 		
 		Rectangle algae_rect = new Rectangle(algae.getLocX(), algae.getLocY(), algae.getWidth(), algae.getHeight());
-		Rectangle animal_rect = new Rectangle(animal.getLocX(), animal.getY(), animal.getWidth(), animal.getHeight());
+		Rectangle animal_rect = new Rectangle(animal.getLocX(), animal.getLocY(), animal.getWidth(), animal.getHeight());
 		
 		if(animal_rect.getBounds().intersects(algae_rect)){
 			return true;
@@ -211,13 +218,6 @@ public class Game2Controller {
 
 	
 
-	public WaterModelG2 getWater() {
-		return water;
-	}
-
-	public void setWater(WaterModelG2 water) {
-		this.water = water;
-	}
 	
 	public AlgaeModel getAlgae() {
 		return algae;
@@ -226,13 +226,10 @@ public class Game2Controller {
 	public void setAlgae(AlgaeModel algae) {
 		this.algae = algae;
 	}
-	public AlgaeEaterModel getAlgaeEater() {
-		return algaeEater;
+	public int getAlgaeNum(){
+		return algaeList.size();
 	}
-
-	public void setAlgaeEater(AlgaeEaterModel ae) {
-		this.algaeEater = ae;
-	}
+	
 
 	public AnimalModelG2 getAnimalModelG2() {
 		return this.animal;

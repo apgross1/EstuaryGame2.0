@@ -49,7 +49,7 @@ public class Game1Controller{
 	 * 
 	 */
 	public Game1Controller(JFrame gameF) {
-		g1view = new Game1View(this, gameF);
+		g1view = new Game1View(this);
 	}
 	//for testing purposes
 	/**
@@ -204,7 +204,7 @@ public class Game1Controller{
 		
 		long startTime = System.currentTimeMillis(); //fetch starting time
 		
-		while((System.currentTimeMillis()-startTime)<3000){
+		while((System.currentTimeMillis()-startTime)<2000){
 			if(!this.gameState) { //For testing purposes...just to close the game at will
 				return;
 			}

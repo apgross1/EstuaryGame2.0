@@ -204,10 +204,10 @@ public class Game1Tests {
 	@Test
 	public void testGabActive(){
 		models.GabionChunk gabchunk = new models.GabionChunk();
-		gabchunk.isActive();
-		assertTrue("Should be false", gabchunk.isActive() == false);
 		gabchunk.toggleActive();
 		assertTrue("Should be true", gabchunk.isActive() == true);
+		gabchunk.toggleActive();
+		assertTrue("Should be false", gabchunk.isActive() == false);
 	}
 	
 	@Test
@@ -239,6 +239,8 @@ public class Game1Tests {
 		models.ConcreteChunk gabchunk = new models.ConcreteChunk();
 		gabchunk.toggleActive();
 		assertTrue("Should be true", gabchunk.isActive() == true);
+		gabchunk.toggleActive();
+		assertTrue("Should be false", gabchunk.isActive() == false);
 	}
 	
 	@Test

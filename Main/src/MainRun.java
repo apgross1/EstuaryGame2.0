@@ -89,24 +89,14 @@ public class MainRun extends JPanel implements KeyListener{
 		
     }
 	
-	public void menuRun() {
-		while(!startPressed) {
-			frame.repaint();
-		}
-	}
-	
 	public boolean isStartPressed(){
 		return startPressed;
 	}
 	
-	public void setStartPressed(boolean startPress) {
-		startPressed = startPress;
-	}
 	public void repaintFrame(){
 		frame.repaint();
 	}
 
-	
 	
 	//For clicking on the screen when the user wants to start / load / etc.
 	@Override
