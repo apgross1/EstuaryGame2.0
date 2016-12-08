@@ -5,6 +5,7 @@ public class BarModelG2 extends BarModelAbstract{
 	private int maxLevel;
 	private int width;
 	private int damage;
+	private int damagePercent;
 	public BarModelG2(){
 		
 	}
@@ -12,23 +13,37 @@ public class BarModelG2 extends BarModelAbstract{
 		this.maxLevel = maxLevel;
 		this.width =20;
 		damage = 10;
+		damagePercent = (getMaxLevel()/getDamage())/3;
 	}
 	public int getDamage(){
 		return damage;
 	}
+	public void setDamage(int d){
+		damage=d;
+	}
 	public int getWidth(){
 		return width;
 	}
-	@Override
-	public void decrease(int i){
+	public void setWidth(int w) {
+		width = w;
 		
 	}
 	@Override
+	public void decrease(int i){
+		width -=i;
+	}
+	@Override
 	public boolean isEmpty(){
-		return false;
+		if(width == 0){
+		return true;
+		}
+		else{
+			return false;
+		}
 	}
 	@Override
 	public void increase(int i) {
+		damage =+ i;
 	}
 	public int getStatus() {
 		return status;
@@ -42,5 +57,12 @@ public class BarModelG2 extends BarModelAbstract{
 	public void setMaxLevel(int maxLevel) {
 		this.maxLevel = maxLevel;
 	}
+	public int getDamagePercent(){
+		return damagePercent;
+	}
+	public int updateDamagePercent(){
+		return damagePercent += damagePercent;
+	}
+	
 
 }

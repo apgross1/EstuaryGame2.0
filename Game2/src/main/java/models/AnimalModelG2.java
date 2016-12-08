@@ -1,5 +1,7 @@
 package models;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,68 +10,55 @@ import enums.Direction;
 
 public class AnimalModelG2 extends AnimalModelAbstract {
 
-	private HashMap<Direction, ArrayList<BufferedImage>> animations;
-
-	private int speed;
+	private int velocity;
 	private boolean isDead;
 	private int height, width;
 	private int y;
+	Dimension size;
+	int screenWidth;
+	private int screenHeight;
+	int charYBoundMin;
+	int charYBoundMax;
 	
 	public AnimalModelG2() {
-		this.height = 75;
-		this.width = 75;
-		this.setHealth(100);
-		this.setLocY(275);
-		this.setLocX(10);
-		this.setSpeed(100);
+		size = Toolkit.getDefaultToolkit().getScreenSize();
+		screenWidth = (int) size.getWidth();
+		screenHeight = (int) size.getHeight();
+		
+		charYBoundMin = (int) (screenHeight-(screenHeight*.1));
+		charYBoundMax = (int) (screenHeight*.32);
+		
+		this.height = (int) (screenHeight*.15);
+		this.width = (int)  (screenHeight*.15);
+		
 		this.isDead = false;
-		this.speed = 0;
+		this.velocity = 0;
 		
-		this.y = 275;
+		setLocY((int) (screenHeight/2));
 	}
-	public void tick(){
-		if(y>5 && speed<0)
+	
+	
+	@Override
+	public void move() {
+		if(y>charYBoundMax  && velocity<0)
 		{
-		y+=speed;
+		y+=velocity;
 		}
-		else if( y<590 && speed>0 ){
-			y+=speed;
+		else if( y<charYBoundMin && velocity>0 ){
+			y+=velocity;
 		}
 		
 	}
-	public int getY(){
+	@Override
+	public int getLocY(){
 		return y;
 	}
 	
-	public int getHeight() {
-		return height;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
 	@Override
-	public void move() {
-//		switch (this.getCurrDir()) {
-//		case NORTH:
-//			if(this.getLocY()>0){
-//				
-//				this.setLocY(y);
-//			}
-//			break;
-//		case SOUTH:
-//			if(this.getLocY()<585){
-//				
-//				this.setLocY(y);
-//			}
-//			
-//			break;
-//		default:
-//			break;
-//		}
+	public void setLocY(int loc){
+		y = loc;
 	}
-
+	
 	@Override
 	public void healthUp() {
 		setHealth(getHealth() + 1);
@@ -80,26 +69,45 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 		setHealth(getHealth() - 1);
 
 	}
-
-	public int getSpeed() {
-		return speed;
+	@Override
+	public void pickUp() {
+		//Not Needed
+	}
+	
+	public int getHeight() {
+		return height;
 	}
 
-	public void setSpeed(int speed) {
-		this.speed = speed;
+	public int getWidth() {
+		return width;
+	}
+	
+	public int setHeight(int h) {
+		return height = h;
+		
+	}
+	public int setWidth(int w) {
+		
+		return width = w;
+		
+	}
+	
+	public int getVelocity() {
+		return velocity;
 	}
 
-	public void increaseSpeed() {
-		this.setSpeed(getSpeed() + 1);
+	public void setVelocity(int v) {
+		velocity = v;
 	}
 
-	public void decreaseSpeed() {
-		this.setSpeed(getSpeed() - 1);
+	public void increaseVelocity() {
+		this.setVelocity(getVelocity() + 1);
 	}
 
-	public void setAnimations(HashMap<Direction, ArrayList<BufferedImage>> animations) {
-		this.animations = animations;
+	public void decreaseVelocity() {
+		this.setVelocity(getVelocity() - 1);
 	}
+
 
 	public boolean getIsDead() {
 		return isDead;
@@ -109,9 +117,11 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 		isDead = state;
 	}
 
-	@Override
-	public void pickUp() {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
+	
+	
+
+
+	
 }
