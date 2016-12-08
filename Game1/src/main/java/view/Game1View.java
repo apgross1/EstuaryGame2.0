@@ -301,7 +301,7 @@ public class Game1View extends JPanel implements KeyListener{
 						if(tmp.isActive()){
 							//g.setColor(Color.RED);
 							//g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
-							g.drawImage(ccc, tmp.getLocX(), tmp.getLocY(), 30, 20, this);
+							g.drawImage(ccc, tmp.getLocX(), tmp.getLocY(), 35, 30, this);
 						}
 					}
 					while (git.hasNext()){
@@ -309,7 +309,7 @@ public class Game1View extends JPanel implements KeyListener{
 						if(tmp.isActive()){
 							//g.setColor(Color.WHITE);
 							//g.fillRect(tmp.getLocX(), tmp.getLocY(), 10, 10);
-							g.drawImage(clam, tmp.getLocX(), tmp.getLocY(), 30, 20, this);
+							g.drawImage(clam, tmp.getLocX(), tmp.getLocY(), 35, 30, this);
 						}
 					}
 				}
@@ -373,7 +373,7 @@ public class Game1View extends JPanel implements KeyListener{
 	            // handle up 
 	        	controller.getAnimalModel().setCurrDir(Direction.NORTH);
 	        	if(controller.difficulty() == false){
-	        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 200)*-1);}
+	        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 175)*-1);}
 	        	else{
 	        		controller.getAnimalModel().setSpeedY(-6);
 	        	}
@@ -382,7 +382,7 @@ public class Game1View extends JPanel implements KeyListener{
 	            // handle down 
 	        	controller.getAnimalModel().setCurrDir(Direction.SOUTH);
 	        	if(controller.difficulty() == false){
-	        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 200));}
+	        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 175));}
 	        	else{
 	        		controller.getAnimalModel().setSpeedY(6);
 	        	}
@@ -391,7 +391,7 @@ public class Game1View extends JPanel implements KeyListener{
 	            // handle left
 	        	controller.getAnimalModel().setCurrDir(Direction.WEST);
 	        	if(controller.difficulty() == false){
-	        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 200)*-1);}
+	        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 175)*-1);}
 	        	else{
 	        		controller.getAnimalModel().setSpeedX(-6);
 	        	}
@@ -400,7 +400,7 @@ public class Game1View extends JPanel implements KeyListener{
 	            // handle right
 	        	controller.getAnimalModel().setCurrDir(Direction.EAST);
 	        	if(controller.difficulty() == false){
-	        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 200));}
+	        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 175));}
 	        	else{
 	        		controller.getAnimalModel().setSpeedX(6);
 	        	}
