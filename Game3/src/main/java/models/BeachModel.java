@@ -150,7 +150,7 @@ public class BeachModel {
 				GabionPUModel tempGab = new GabionPUModel();
 				tempGab.setFrameMap(frameMap);
 				tempGab.addPics();
-				tempGab.setLocation(this.findPairInGrid(pair), "test");
+				tempGab.setLocation(this.findPairInGrid(pair), "game");
 				tempGab.setIsActive(true);
 				beachGrid.get(this.findPairInGrid(pair)).setGabPU(tempGab);
 				positionGrid[pair.getY()][pair.getX()] = Walls.GABION_GAME3.getValue();

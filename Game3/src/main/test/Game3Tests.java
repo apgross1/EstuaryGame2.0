@@ -1647,13 +1647,32 @@ public class Game3Tests {
 	
 	@Test
 	public void BeachModelInitializebeachTest(){
+		
 		BeachModel beach = new BeachModel("test");
 		beach.initializeBeach();
+		
 		assertTrue(beach.generatePPUL().size() == 49);
-		assert
+		
+		
+		//must relook at this test later but it works!!
+		for(int i = 0; i < beach.generatePPUL().size(); i++){
+			if(i ==2){
+				beach.getPositionGrid()[i][0] = 2;
+			}
+		}
+		assertTrue(beach.generatePPUL().size() == 48);
+		
 	}
 	
-	
+	@Test
+	public void BeachModelSpawnGabPUTest(){
+		BeachModel beach = new BeachModel("test");
+		beach.initializeBeach();
+		beach.spawnGabPU(beach.generatePPUL(), true);
+		assertTrue(beach.generatePPUL().size() == 48);
+		beach.spawnGabPU(beach.generatePPUL(), false);
+		assertTrue(beach.generatePPUL().size() == 48);
+	}
 	
 	
 	

@@ -812,5 +812,6 @@ public class Game3Controller {
 			a.setLocX(0);
 			a.setLocY(0);
 			setAnimal(a);
+			setBeach(new BeachModel("test"));
 		}
 }
