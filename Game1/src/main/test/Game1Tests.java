@@ -16,27 +16,6 @@ import models.GabionWallModelG1;
 import controller.Game1Controller;
 
 public class Game1Tests {
-	
-	//My tests
-	//Low level tests (within-class) (All methods in AnimalModel and GabionWallModel:
-	//Movement
-	//calculateDamageGabion
-	//calculateDamageConcrete
-	//
-	//High level tests (Between-class):
-	//Random spawning
-	//Pickup
-	
-	//Movement of animal
-	
-	//Daniel's tests
-		//All of BarModel and ConcreteWallModel
-		////Game start (tests timer)
-		////Game end (tests timer as well)
-		//Wave hit (after round) (Covers BarModel)
-		
-	
-	//Low-level testing
 	//AnimalModel
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	JFrame gameFrame = new JFrame();
@@ -442,53 +421,12 @@ public class Game1Tests {
 		assertTrue("Should be true", process.collisionOccured(myAnimal, (gwm.getChunks().iterator()).next()));
 	}
 	
-	//wave hit
-			/*@Test
-			public void testTakeDamage(){
+	@Test
+	public void testTakeDamage(){
 				controller.Game1Controller process = new controller.Game1Controller();
-				//Game1Controller clock = new Game1Controller(gameFrame);
-				models.ConcreteWallModelG1 wall = new models.ConcreteWallModelG1();
-				models.GabionWallModelG1 gwall = new models.GabionWallModelG1();
-				wall.setMaxBlocks(30);
-				wall.setCurrentBlocks(30);
-				models.BarModel bar =  new models.BarModel();
-				bar.setMaxLevel(100);
-				bar.setStatus(100);
-				process.round();
+				process.takeDamage();
+				//Should take 100% damadge because there are no collected gabbions or chunks.
+				assertEquals(process.getBarModel().getStatus(), 0);
 				
-				
-				//tests to see if collision occurred
-				assertTrue("Should be 3", wall.getCurrentBlocks() == 3);
-				//assertTrue("Should be true", gwall.getCurrentOysters() == 0);
-				
-				//time should stop after round
-				//float time1 = clock.getTime();
-				//float time2 = clock.getTime();
-				//assertTrue("Should be equal", time1 == time2);
-				
-				//removing from wall
-				wall.breakDown();
-				assertTrue("Should be 12", wall.getCurrentBlocks() == 12);
-				wall.removeChunk(wall.amountRemoved(50));
-				assertTrue("Should be 13", wall.getCurrentBlocks() == 13);
-				
-				//tests if bar is updated
-				assertTrue("Should be less than 100", bar.getStatus() < 100);
-				
-				//tests if time is reset
-				//assertTrue("Should be 0.0", clock.getTime() == 0.0 );
-				
-				//time should restart
-				//assertTrue("Should be true", clock.getTime() > 0.0);
-				
-				//tests game over
-				bar.setStatus(0);
-				assertTrue("Should be true", process.isGameState() == true);
-				
-			}*/
-			
-			
-			
-
-
+	}
 }
