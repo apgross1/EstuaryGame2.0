@@ -206,7 +206,7 @@ public class Game1Controller{
 		
 		long startTime = System.currentTimeMillis(); //fetch starting time
 		
-		while((System.currentTimeMillis()-startTime)<30){
+		while((System.currentTimeMillis()-startTime)<30000){
 			if(!this.gameState) { //For testing purposes...just to close the game at will
 				return;
 			}

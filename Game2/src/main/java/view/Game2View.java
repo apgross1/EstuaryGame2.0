@@ -309,8 +309,8 @@ public class Game2View extends JPanel implements KeyListener{
 		case KeyEvent.VK_SPACE:
 			
 			
-			controller.setGameActive(false);
-			frame.dispose();
+			//controller.setGameActive(false);
+			//frame.dispose();
 		
 		
 		break;

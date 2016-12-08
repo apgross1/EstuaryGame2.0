@@ -191,7 +191,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 			layoutContainer.add(powerUp, new Integer(2),-1);
 		    beachOverlay.add(gridBlock);
 		    //beachOverlay.add(location);
-		    beachOverlay.setBorder(BorderFactory.createLineBorder(Color.black));
+		    //beachOverlay.setBorder(BorderFactory.createLineBorder(Color.black));
 		    beachGrid.add(beachOverlay);
 		    
 		}
@@ -232,8 +232,8 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		animalPos.setBounds(frameMap.get(Frames.TIMER).getWidth()/2, frameMap.get(Frames.TIMER).getHeight()/2, 200, 100);
 
 		
-		timePanel.add(animalPos);
-		animalPos.setVisible(true);
+		//timePanel.add(animalPos);
+		//animalPos.setVisible(true);
 		timePanel.revalidate();
 		frame.revalidate();
 	}
@@ -595,10 +595,10 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	        	controller.getAnimal().setSpeedX(3);
 	            break;
 	        case KeyEvent.VK_SPACE :
-	        	System.out.println("This is a temp key event to end the game (set bool gameActive in controller to false)");
-	        	controller.setGameActive(false);
-	        	controller.setGameWin(false);
-	        	frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+	        	//System.out.println("This is a temp key event to end the game (set bool gameActive in controller to false)");
+	        	//controller.setGameActive(false);
+	        	//controller.setGameWin(false);
+	        	//frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	            break;
 	    }
 	}
