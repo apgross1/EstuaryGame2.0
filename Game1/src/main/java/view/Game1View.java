@@ -337,7 +337,7 @@ public class Game1View extends JPanel implements KeyListener{
 						//lose
 						//g.setFont(new Font("Haettenschweiler", Font.PLAIN, 50));
 						g.setColor(Color.RED);
-						drawCenteredString(g, "Unfortunatly you were unable to protect the estuary, next time try using more oyesters.", new Font("Haettenschweiler", Font.PLAIN, 50));
+						drawCenteredString(g, "Unfortunately you were unable to protect the estuary, next time try using more oysters.", new Font("Haettenschweiler", Font.PLAIN, 50));
 						//g.drawString("Unfortunatly you were unable to protect the estuary, next time try using more gabbions.", (int)(.15*(controller.getDim().width)), (int)(.5*(controller.getDim().height)));
 						
 					}else if(controller.getIsGameOver() & controller.isWin()){
@@ -373,7 +373,7 @@ public class Game1View extends JPanel implements KeyListener{
 				
 				//g.drawString("Quick! Collect either gabbions or concrete chuncks to protect the estuary! You decide what is more effective.", (int)(.2*(controller.getDim().width)), (int)(.5*(controller.getDim().height)));
 				g.drawImage(keypic, (int)(controller.getDim().width * .5)-182, (int)(controller.getDim().height * .6), 364, 164, this);
-				drawCenteredString(g, "Quick! Collect either gabbions or concrete chuncks to protect the estuary! You decide what is more effective.", new Font("Haettenschweiler", Font.PLAIN, 50));
+				drawCenteredString(g, "Quick! Collect either gabions or concrete chuncks to protect the estuary! You decide what is more effective.", new Font("Haettenschweiler", Font.PLAIN, 50));
 				//g.drawImage(img, x, y, width, height, observer)
 				
 				

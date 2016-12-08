@@ -31,7 +31,8 @@ import enums.Direction;
 public class Game2View extends JPanel implements KeyListener{
 	
 	private Game2Controller controller;
-	private JFrame frame = new JFrame();
+	private JFrame frame;
+
 	//private JPanel action_pannel = new JPanel();
 	
 	AlgaeModel algae = new AlgaeModel();
@@ -57,13 +58,12 @@ public class Game2View extends JPanel implements KeyListener{
 	Random rand = new Random();
 	int randomStorm = rand.nextInt((3 - 1) + 1) + 1;
 	
-	public Game2View(Game2Controller ctl, JFrame gamef, Dimension size){
-		
+	public Game2View(Game2Controller ctl, JFrame frame, Dimension size){
+		this.frame = frame;
 		height = (int) size.getHeight();
 		width = (int) size.getWidth();
 		oxyBar = new BarModelG2(200);
 		controller = ctl;
-		frame = gamef;
 		frame.dispose();
 		frame.setUndecorated(true);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 

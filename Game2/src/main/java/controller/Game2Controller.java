@@ -29,7 +29,7 @@ public class Game2Controller {
 	private AlgaeModel algae;
 	private Collection<AlgaeModel> algaeList = new ArrayList<AlgaeModel>();
 	
-	private JFrame gameFrame;
+	private JFrame gameFrame = new JFrame();
 	long spawnTime=0;
 	int numMissed = 0;
 	long startTime;
@@ -42,10 +42,9 @@ public class Game2Controller {
 	int width = (int) screenSize.getWidth();
 	int height = (int) screenSize.getHeight();
 	
-	public Game2Controller(JFrame gamef) {
-		gameFrame = gamef;
+	public Game2Controller() {
+
 		animal = new AnimalModelG2();
-		
 		algae = new AlgaeModel();
 		
 		
@@ -76,6 +75,7 @@ public class Game2Controller {
 		long stormTimer = System.currentTimeMillis();
 		
 		while(gameActive){
+			
 			long now = System.nanoTime();
 			delta += (now-lastTime)/ns;
 			lastTime=now;
