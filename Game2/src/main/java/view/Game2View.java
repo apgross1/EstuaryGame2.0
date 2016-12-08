@@ -245,10 +245,7 @@ public class Game2View extends JPanel implements KeyListener{
 						g.drawImage(algaeImg, tmp.getRiverAlgaeX(), tmp.getRiverAlgaeY(), tmp.getWidth(), tmp.getHeight(), this);
 						tmp.moveRiverAlgae();
 					}
-					
 					tmp.move();
-					
-					
 				}
 				
 			
