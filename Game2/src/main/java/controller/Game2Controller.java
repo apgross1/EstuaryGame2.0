@@ -29,7 +29,7 @@ public class Game2Controller {
 	private AlgaeModel algae;
 	private Collection<AlgaeModel> algaeList = new ArrayList<AlgaeModel>();
 	
-	private JFrame gameFrame;
+	private JFrame gameFrame = new JFrame();
 	long spawnTime=0;
 	int numMissed = 0;
 	long startTime;
@@ -38,12 +38,13 @@ public class Game2Controller {
 	
 	int spawnDelay = 2000; //in milliseconds
 	boolean isStorming = false;
+	boolean tutorialActive;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	int width = (int) screenSize.getWidth();
 	int height = (int) screenSize.getHeight();
 	
 	public Game2Controller(JFrame gamef) {
-		gameFrame = gamef;
+		//gameFrame = gamef;
 		animal = new AnimalModelG2();
 		
 		algae = new AlgaeModel();
@@ -60,19 +61,19 @@ public class Game2Controller {
 		view.addController(this);
     	gameFrame.getContentPane().add(view.new Animation());
     	gameFrame.setBackground(Color.GRAY);
-    	gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	
+    	gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    	gameFrame.setSize(1000, 700);
     	gameFrame.setVisible(true);
     	gameFrame.setResizable(false);
 		gameActive = true;
-
+		tutorialActive = true;
     	
-		startTime = System.currentTimeMillis();
+		
 		long lastTime = System.nanoTime();
 		final double ammountOfTicks = 60.0;	
 		double ns = 1000000000 /ammountOfTicks;
 		double delta = 0;
-		
+		startTime = System.currentTimeMillis();
 		long stormTimer = System.currentTimeMillis();
 		
 		while(gameActive){
@@ -80,16 +81,24 @@ public class Game2Controller {
 			delta += (now-lastTime)/ns;
 			lastTime=now;
 			if(delta>=1){
+				
+				
 				animal.move();
 				view.repaintFrame();
 				updates++;
 				delta--;
+				
 			}
+			if(tutorialActive){
+				startTime = System.currentTimeMillis();
+				stormTimer = System.currentTimeMillis();
+			}
+			else{
 			
 			frames++;
 			collisionDetection();
 			
-			if(System.currentTimeMillis()-stormTimer>10000){
+			if(System.currentTimeMillis()-stormTimer>8000){
 				stormTimer+=10000;
 				if(getStormStatus()==true){
 					deactivateStorm();
@@ -113,7 +122,7 @@ public class Game2Controller {
 			}
 			
 		}
-	
+		}
 	}
 	
 	public boolean getStormStatus(){
@@ -233,6 +242,28 @@ public class Game2Controller {
 
 	public AnimalModelG2 getAnimalModelG2() {
 		return this.animal;
+	}
+
+
+
+
+	public boolean getTutoralStatus() {
+		
+		return tutorialActive;
+	}
+public void setTutorialStatus(boolean active) {
+		
+		tutorialActive=active;
+}
+	public Game2View getView() {
+		return view;
+	}
+
+
+
+	public void setView(Game2View view) {
+		this.view = view;
+
 	}
 
 

@@ -1,3 +1,4 @@
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -10,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
@@ -34,13 +36,13 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.OverlayLayout;
 
 import controller.Game1Controller;
 import controller.Game2Controller;
 import controller.Game3Controller;
-import view.Game1View.Animation;
 
-public class MainRun extends JPanel implements KeyListener, MouseListener{
+public class MainRun extends JPanel implements MouseListener, KeyListener {
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	static boolean gameStarted = false;
 	JButton startButton = new JButton("Start Game");
@@ -48,21 +50,21 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 	boolean startPressed = false;
 	JFrame frame;
 	BufferedImage badGuy = null;
-	
+	private Game1Controller g1cont;
+	private Game2Controller g2cont;
+	private Game3Controller g3cont;
+	private boolean menuClose;
+	public int num = 0;
 	int x_loc = 0;
 	boolean dir = true;
-	
 	private ArrayList<BufferedImage> startPics = new ArrayList<BufferedImage>();
 	private ArrayList<BufferedImage> exitPics = new ArrayList<BufferedImage>();
-	
-	
-	//
 	JLabel startScreen;
 	JPanel backLay = new JPanel(new BorderLayout());
 	JButton menuButton;
 	
 	public MainRun(JFrame frame){
-		
+		this.frame = frame;
 		//Adding end menu button images
 		BufferedImage exitGame_0 = null;
 		BufferedImage exitGame_1 = null;
@@ -89,13 +91,11 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 		startPics.add(start_1);
 		exitPics.add(exitGame_0);
 		exitPics.add(exitGame_1);
-		
-		this.frame = frame;
-		this.frame.setSize(screenSize.width, screenSize.height); 
-		this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		this.frame.setUndecorated(true);
-		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.frame.setResizable(false);
+
+
+		g1cont = new Game1Controller(this.frame);
+		g2cont = new Game2Controller(this.frame);
+		g3cont = new Game3Controller(true);
 		
 		startScreen = new JLabel();
 		startScreen.setLayout(new GridBagLayout());
@@ -107,7 +107,7 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 		backLay.setOpaque(false);
 		
 		//Defining constraint for background
-		ImageIcon backgroundIcon = new ImageIcon("./Images/2D_estuary.jpg"); 
+		ImageIcon backgroundIcon = new ImageIcon("./Images/2D_estuary_main.png"); 
 		startScreen.setIcon(backgroundIcon);
 		System.out.println(frame.getWidth() + " " + frame.getHeight());
 		startScreen.setBounds(0, 0, frame.getWidth(), frame.getHeight());
@@ -137,43 +137,30 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 		b2c.gridy = 1;
 		b2c.weightx = .1;
 		b2c.weighty = .1;
+		
 		startScreen.add(exitButton, b2c);
 		
 		
-		startButton.addActionListener(new ActionListener() { 
-			  public void actionPerformed(ActionEvent e) {
-				  System.out.println("Start Button Pressed!");
-				  startPressed = true;
-				  }});
-		
-		frame.getContentPane().removeAll();
-		frame.add(backLay);
-		frame.add(startScreen);
-		frame.setVisible(true);
-		frame.revalidate();
-		frame.repaint();
-		
+		this.frame.setSize(screenSize.width, screenSize.height); 
+		this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		this.frame.setUndecorated(true);
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.frame.setResizable(false);
+		this.frame.getContentPane().removeAll();
+		this.frame.add(backLay);
+		this.frame.add(startScreen);
+		this.frame.revalidate();
+		this.frame.repaint();	
+		this.frame.setVisible(true);
     }
-    public void drawCenteredString(Graphics g, String text, Font font) {
-        // Get the FontMetrics
-        FontMetrics metrics = g.getFontMetrics(font);
-        // Determine the X coordinate for the text
-        int x = (screenSize.width - metrics.stringWidth(text)) / 2;
-        g.setFont(font);
-        // Draw the String
-        g.drawString(text, x, (int) (.30*(screenSize.height)));
-        // Dispose the Graphics
-        //g.drawRect(10, 10, 200, 200);  
-		
-        //g.dispose();
-    }
-	
-    public class Animation extends JComponent {
+
+	public class Animation extends JComponent {
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void paint(Graphics g) {
 			g.setColor(Color.DARK_GRAY);
+			System.out.println("Painting");
 			drawCenteredString(g, "SWMP Romp: A game of estuaries!", new Font("Haettenschweiler", Font.PLAIN, 100));
 			
 			if(dir){
@@ -194,15 +181,82 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 			}
 		}
     }
-    
+	
+	public void drawCenteredString(Graphics g, String text, Font font) {
+        // Get the FontMetrics
+        FontMetrics metrics = g.getFontMetrics(font);
+        // Determine the X coordinate for the text
+        int x = (screenSize.width - metrics.stringWidth(text)) / 2;
+        g.setFont(font);
+        // Draw the String
+        g.drawString(text, x, (int) (.30*(screenSize.height)));
+        // Dispose the Graphics
+        //g.drawRect(10, 10, 200, 200);  
+		
+        //g.dispose();
+    }
+	
+	public void runMainMenu() {
+		long lastTime = System.nanoTime();
+		final double ammountOfTicks = 60.0;	
+		double ns = 1000000000 /ammountOfTicks;
+		double delta = 0;
+		while((!menuClose)){
+			/*long now = System.nanoTime();
+			delta += (now-lastTime)/ns;
+			lastTime=now;
+			if(delta>=1){
+				this.repaintFrame();
+				delta--;
+			}*/
+			this.repaintFrame();
+		}
+		
+		g1cont.startGame();
+		g2cont.startGame();
+		g1cont.getG1view().getFrame().dispose();
+		
+		g3cont.runGame();
+		g2cont.getView().getFrame().dispose();
+		if(g3cont.getView().isExitToMain()) {
+			
+			g3cont.getView().setExitToMain(false);
+			this.menuClose = false;
+			frame.revalidate();
+			frame.repaint();
+			System.out.println("Creating new frame");
+			frame = new JFrame();
+			this.frame.setSize(screenSize.width, screenSize.height); 
+			this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+			this.frame.setUndecorated(true);
+			this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.frame.setResizable(false);
+			g1cont = new Game1Controller(this.frame);
+			g2cont = new Game2Controller(this.frame);
+			g3cont = new Game3Controller(true);
+			runMainMenu();
+		}
+		else if (g3cont.getView().isExitGame()) {
+			System.exit(0);
+			return;
+		}
+		return;
+	}
+	
+	
+
 	public boolean isStartPressed(){
 		return startPressed;
 	}
 	
+	public void setStartPressed(boolean startPress) {
+		startPressed = startPress;
+	}
 	public void repaintFrame(){
 		frame.repaint();
 		frame.revalidate();
 	}
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		JButton button = (JButton) e.getSource();
@@ -226,7 +280,7 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 		else {
 			button.setIcon(new ImageIcon(startPics.get(0)));
 			System.out.println("Game Starting!");
-			startPressed = true;
+			menuClose = true;
 		}
 	}
 
