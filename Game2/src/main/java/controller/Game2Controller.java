@@ -68,12 +68,12 @@ public class Game2Controller {
 		gameActive = true;
 		tutorialActive = true;
     	
-		startTime = System.currentTimeMillis();
+		
 		long lastTime = System.nanoTime();
 		final double ammountOfTicks = 60.0;	
 		double ns = 1000000000 /ammountOfTicks;
 		double delta = 0;
-		
+		startTime = System.currentTimeMillis();
 		long stormTimer = System.currentTimeMillis();
 		
 		while(gameActive){
@@ -90,13 +90,15 @@ public class Game2Controller {
 				
 			}
 			if(tutorialActive){
-				
+				startTime = System.currentTimeMillis();
+				stormTimer = System.currentTimeMillis();
 			}
 			else{
+			
 			frames++;
 			collisionDetection();
 			
-			if(System.currentTimeMillis()-stormTimer>10000){
+			if(System.currentTimeMillis()-stormTimer>8000){
 				stormTimer+=10000;
 				if(getStormStatus()==true){
 					deactivateStorm();
