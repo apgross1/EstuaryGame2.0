@@ -31,8 +31,7 @@ import enums.Direction;
 public class Game2View extends JPanel implements KeyListener{
 	
 	private Game2Controller controller;
-	private JFrame frame;
-
+	private JFrame frame = new JFrame();
 	//private JPanel action_pannel = new JPanel();
 	
 	AlgaeModel algae = new AlgaeModel();
@@ -49,6 +48,7 @@ public class Game2View extends JPanel implements KeyListener{
 	BufferedImage storm2;
 	BufferedImage storm3;
 	BufferedImage storm4;
+	BufferedImage algaeEaters;
 	int width;
 	int height;
 	int changeCount=0;
@@ -58,12 +58,13 @@ public class Game2View extends JPanel implements KeyListener{
 	Random rand = new Random();
 	int randomStorm = rand.nextInt((3 - 1) + 1) + 1;
 	
-	public Game2View(Game2Controller ctl, JFrame frame, Dimension size){
-		this.frame = frame;
+	public Game2View(Game2Controller ctl, JFrame gamef, Dimension size){
+		
 		height = (int) size.getHeight();
 		width = (int) size.getWidth();
 		oxyBar = new BarModelG2(200);
 		controller = ctl;
+		frame = gamef;
 		frame.dispose();
 		frame.setUndecorated(true);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -90,14 +91,15 @@ public class Game2View extends JPanel implements KeyListener{
 	public void loadImages(){
 		try {
 			background = ImageIO.read(new File("./Images/Game2/background.png"));
-			character = ImageIO.read(new File("./Images/Game2/hsCrab.png"));
+			character = ImageIO.read(new File("./Images/Game2/bluecrab_0.png"));
 			algaeImg = ImageIO.read(new File("./Images/Game2/algae.png"));
 			algaeImgMed = ImageIO.read(new File("./Images/Game2/algaeMedium.png"));
 			algaeImgBad = ImageIO.read(new File("./Images/Game2/algaeBad.png"));
-			storm1 = ImageIO.read(new File("./Images/Game2/storm1.png"));
-			storm2 = ImageIO.read(new File("./Images/Game2/storm2.png"));
-			storm3 = ImageIO.read(new File("./Images/Game2/storm3.png"));
-			storm4 = ImageIO.read(new File("./Images/Game2/storm4.png"));
+			storm1 = ImageIO.read(new File("./Images/Game2/cloud1.png"));
+			storm2 = ImageIO.read(new File("./Images/Game2/cloud2.png"));
+			storm3 = ImageIO.read(new File("./Images/Game2/cloud3.png"));
+			storm4 = ImageIO.read(new File("./Images/Game2/cloud4.png"));
+			algaeEaters= ImageIO.read(new File("./Images/Game2/AlgaeFish.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 	  
@@ -130,7 +132,8 @@ public class Game2View extends JPanel implements KeyListener{
 			
 			
 			g.drawImage(character, controller.getAnimalModelG2().getLocX(),controller.getAnimalModelG2().getLocY(),controller.getAnimalModelG2().getWidth(),controller.getAnimalModelG2().getHeight(), this);		
-			
+			g.drawImage(algaeEaters, controller.getAnimalModelG2().getLocX(),controller.getAnimalModelG2().getLocY()-(algaeEaters.getHeight()/5),controller.getAnimalModelG2().getWidth()*2,controller.getAnimalModelG2().getHeight()*2, this);		
+
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 25)); 
 			g.setColor(Color.WHITE);
 			
@@ -207,7 +210,7 @@ public class Game2View extends JPanel implements KeyListener{
 				if(tmp.isActive()){
 					g.drawImage(algaeImg, tmp.getLocX(), tmp.getLocY(), tmp.getWidth(), tmp.getHeight(), this);
 					if(controller.getStormStatus()==true){
-						g.drawImage(algaeImg, tmp.getRiverAlgaeX(), tmp.getRiverAlgaeY(), algae.getWidth(), algae.getHeight(), this);
+						g.drawImage(algaeImg, tmp.getRiverAlgaeX(), tmp.getRiverAlgaeY(), tmp.getWidth(), tmp.getHeight(), this);
 						tmp.moveRiverAlgae();
 					}
 					
@@ -282,6 +285,9 @@ public class Game2View extends JPanel implements KeyListener{
 	public void keyReleased(KeyEvent e) {
 		controller.getAnimalModelG2().setVelocity(0);
 		
+	}
+	public int getAlgaeEaterX(){
+		return algaeEaters.getWidth()/6;
 	}
 	
 }
