@@ -15,7 +15,7 @@ import models.BarModelG2;
 
 
 public class gameTwoTests {
-	//Animal Tests for gmae 2
+	//Animal Tests for game2
 	@Test
 	public void testAnimalMove(){
 		AnimalModelG2 a = new AnimalModelG2();
