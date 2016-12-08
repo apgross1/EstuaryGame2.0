@@ -74,6 +74,7 @@ public class Game2Controller {
 		double ns = 1000000000 /ammountOfTicks;
 		double delta = 0;
 		startTime = System.currentTimeMillis();
+		long endTimer =0;
 		long stormTimer = System.currentTimeMillis();
 		
 		while(gameActive){
@@ -122,6 +123,16 @@ public class Game2Controller {
 			}
 			
 		}
+			
+		}
+		endTimer =0;
+		
+		while(endTimer<100000){
+			
+				endTimer++;
+				
+				
+		
 		}
 	}
 	
@@ -209,7 +220,7 @@ public class Game2Controller {
 					tmp.eaten();
 					
 				}
-				if(shallowWaterCollision(tmp)){
+				else if(shallowWaterCollision(tmp)){
 					tmp.eaten();
 					addNumMissed();
 				}	
