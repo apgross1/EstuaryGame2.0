@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
@@ -35,6 +36,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.OverlayLayout;
 
 import controller.Game1Controller;
 import controller.Game2Controller;
@@ -105,7 +107,7 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		backLay.setOpaque(false);
 		
 		//Defining constraint for background
-		ImageIcon backgroundIcon = new ImageIcon("./Images/2D_estuary.jpg"); 
+		ImageIcon backgroundIcon = new ImageIcon("./Images/2D_estuary_main.png"); 
 		startScreen.setIcon(backgroundIcon);
 		System.out.println(frame.getWidth() + " " + frame.getHeight());
 		startScreen.setBounds(0, 0, frame.getWidth(), frame.getHeight());
@@ -135,14 +137,8 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		b2c.gridy = 1;
 		b2c.weightx = .1;
 		b2c.weighty = .1;
+		
 		startScreen.add(exitButton, b2c);
-		
-		
-		startButton.addActionListener(new ActionListener() { 
-			  public void actionPerformed(ActionEvent e) {
-				  System.out.println("Start Button Pressed!");
-				  startPressed = true;
-				  }});
 		
 		
 		this.frame.setSize(screenSize.width, screenSize.height); 
@@ -206,15 +202,13 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		double ns = 1000000000 /ammountOfTicks;
 		double delta = 0;
 		while((!menuClose)){
-			long now = System.nanoTime();
+			/*long now = System.nanoTime();
 			delta += (now-lastTime)/ns;
 			lastTime=now;
-
-
-				if(delta>=1){
-					this.repaintFrame();
-					delta--;
-				}
+			if(delta>=1){
+				this.repaintFrame();
+				delta--;
+			}*/
 			this.repaintFrame();
 		}
 		
@@ -260,6 +254,7 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 	}
 	public void repaintFrame(){
 		frame.repaint();
+		frame.revalidate();
 	}
 
 	@Override

@@ -49,7 +49,7 @@ public class Game3Controller {
 	 * @param tutorialOn boolean that determines if the tutorial should be played
 	 */
 	public Game3Controller(boolean tutorialOn) {
-		this.setTutorialActive(false);
+		this.setTutorialActive(true);
 		gameFrame = new JFrame();
 		AnimalModelG3 a = new AnimalModelG3();
 		a.setLocX(250);
@@ -109,7 +109,6 @@ public class Game3Controller {
 		Random die = new Random();
 		int triggerSpawn = 4;
 		while(getgameActive()) {
-			setGameActive(false);
 			long now = System.nanoTime();
 			delta += (now-lastTime)/ns;
 			lastTime=now;

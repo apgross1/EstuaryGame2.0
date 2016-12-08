@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -1665,15 +1666,63 @@ public class Game3Tests {
 	}
 	
 	@Test
-	public void BeachModelSpawnGabPUTest(){
+	public void BeachModelGabPUTest(){
 		BeachModel beach = new BeachModel("test");
+		beach.setGameState("test");
 		beach.initializeBeach();
 		beach.spawnGabPU(beach.generatePPUL(), true);
 		assertTrue(beach.generatePPUL().size() == 48);
+		beach.removeGabPU(beach.getGabPair());
+		assertTrue(beach.generatePPUL().size() == 49);
 		beach.spawnGabPU(beach.generatePPUL(), false);
 		assertTrue(beach.generatePPUL().size() == 48);
 	}
 	
+	@Test
+	public void BeachModelSpawnConcretePUTest(){
+		BeachModel beach = new BeachModel("test");
+		beach.setGameState("test");
+		beach.initializeBeach();
+		beach.spawnConcrPU(beach.generatePPUL());
+		assertTrue(beach.generatePPUL().size() == 48);
+		beach.spawnConcrPU(beach.generatePPUL());
+		assertTrue(beach.generatePPUL().size() == 47);
+		beach.removeConcrPU(beach.getConcPair());
+		assertTrue(beach.generatePPUL().size() == 48);
+
+	}
 	
+	@Test
+	public void BeachModelOrderedPairsTest(){
+		BeachModel beach = new BeachModel("test");
+		List<Pair> pair = null;
+		beach.setOrderedPairs(pair);
+		assertTrue(beach.getOrderedPairs() == null);
+	}
+	
+	@Test
+	public void BeachModelGridLayersTest(){
+		BeachModel beach = new BeachModel("test");
+		HashMap<WaveClusters, List<Pair>> map = null;
+		beach.setGridLayers(map);
+		assertTrue(beach.getGridLayers() == null);
+	}
+	
+	@Test
+	public void BeachModelPositionGridTest(){
+		BeachModel beach = new BeachModel("test");
+		int[][] array = null;
+		beach.setPositionGrid(array);
+		assertTrue(beach.getPositionGrid() == null);
+	}
+	
+	@Test
+	public void BeachModelBeachGridTest(){
+		BeachModel beach = new BeachModel("test");
+		HashMap<Pair, GridBlock> map = null;
+		beach.setBeachGrid(map);
+		assertTrue(beach.getBeachGrid() == null);
+
+	}
 	
 }
