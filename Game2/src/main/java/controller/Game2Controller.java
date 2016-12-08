@@ -130,9 +130,6 @@ public class Game2Controller {
 		while(endTimer<100000){
 			
 				endTimer++;
-				
-				
-		
 		}
 	}
 	
