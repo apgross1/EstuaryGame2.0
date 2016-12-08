@@ -157,6 +157,10 @@ public class Game3Controller {
 		
 		
 		view.startEndScreen(this.isGameWin());
+		
+		while((!view.isExitToMain()) && (!view.isExitGame())) {
+			this.gameFrame.repaint();
+		}
 	}
 
 	
@@ -812,5 +816,30 @@ public class Game3Controller {
 			a.setLocX(0);
 			a.setLocY(0);
 			setAnimal(a);
+			setBeach(new BeachModel("test"));
+		}
+
+
+
+		public Game3View getView() {
+			return view;
+		}
+
+
+
+		public void setView(Game3View view) {
+			this.view = view;
+		}
+
+
+
+		public JFrame getGameFrame() {
+			return gameFrame;
+		}
+
+
+
+		public void setGameFrame(JFrame gameFrame) {
+			this.gameFrame = gameFrame;
 		}
 }

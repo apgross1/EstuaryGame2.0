@@ -60,49 +60,6 @@ import enums.Waves;
 	 * added counter to beach model for squares
 	 */
 public class Game3Tests {
-	/*
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		BeachModel beach = new BeachModel("test");
-		ArrayList<Pair> pairList = beach.generatePPUL();
-		Collections.sort(pairList, new PairComparator());
-		
-		Iterator<Pair> it = pairList.iterator();
-		
-		while(it.hasNext()) {
-			Pair tempPair = it.next();
-			//System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
-			GridBlock g = new GridBlock(tempPair, beach, "test");
-			
-			g.setLocation(tempPair);
-			beach.getBeachGrid().put(tempPair, g);
-		}
-		
-		
-		
-		
-		Collection<Pair> blockLocs = beach.getBeachGrid().keySet();
-		Iterator<Pair> pairIt = blockLocs.iterator();
-		while(pairIt.hasNext()) {
-			beach.getOrderedPairs().add(pairIt.next());
-		}
-		Collections.sort(beach.getOrderedPairs(), new PairComparator());
-			
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-	*/
 
 	//BeachModel beach = new BeachModel();
 	//GridBlock grid = new GridBlock();
@@ -809,12 +766,15 @@ public class Game3Tests {
 	}
 	*/
 		
-	/*
+	
 	@Test
 	public void GraphicOnDeckTest() {
+		AnimalModelG3 animal = new AnimalModelG3();
+		animal.setGraphicOnDeck(2);
+		assertTrue(animal.getGraphicOnDeck() == 2);
 	}
 	
-	*/
+	
 	
 	@Test
 	public void BoundsTest(){
@@ -922,18 +882,25 @@ public class Game3Tests {
 		assertTrue(animal.isWaveHit() == true);
 	}
 	
+	@Test
+	public void AnimalModelFramesTest(){
+		AnimalModelG3 animal = new AnimalModelG3();
+		HashMap<Frames, JComponent> map = null;
+		animal.setFrames(map);
+		assertTrue(animal.getFrames() == null);
+		
+	}
+	
+	@Test
+	public void AnimalModelGraphicsTest(){
+		AnimalModelG3 animal = new AnimalModelG3();
+		assertTrue(animal.getGraphics().size() == 0);
+		
+	}
+	
 	
 	
 	/*
-
-	public boolean isWaveHit() {
-		return waveHit;
-	}
-
-	public void setWaveHit(boolean waveHit) {
-		this.waveHit = waveHit;
-	}
-
 	
 	public void addPics(){
 
@@ -963,19 +930,6 @@ public class Game3Tests {
 		this.beachLocation.setY((int)(Math.ceil(this.getLocY())/tileHeight));
 		
 		
-	}
-	
-	public HashMap<String, ArrayList<BufferedImage>> getGraphics() {
-		return graphics;
-	}
-	
-	
-	public HashMap<Frames, JComponent> getFrames() {
-		return frames;
-	}
-
-	public void setFrames(HashMap<Frames, JComponent> frames) {
-		this.frames = frames;
 	}
 	
 	*/
@@ -1065,8 +1019,23 @@ public class Game3Tests {
 		concrete.setActive(true);
 		assertTrue(concrete.getIsActive() == true & concrete.getWidth() == 30 & concrete.getHeight() == 30 & concrete.getViewLocation().getX() == 0 & concrete.getViewLocation().getY() == 0  );
 	}
-
 	
+	@Test
+	public void ConcPUGraphicsTest(){
+		ConcretePUModel concrete = new ConcretePUModel();
+		HashMap<ConcPUState, ArrayList<BufferedImage>> map = null;
+		concrete.setGraphics(map);
+		assertTrue(concrete.getGraphics() == null);
+		
+	}
+	
+	@Test
+	public void ConcPUModelFramesTest(){
+		ConcretePUModel concrete = new ConcretePUModel();
+		HashMap<Frames, JComponent> map = null;
+		concrete.setFrameMap(map);
+		assertTrue(concrete.getFrameMap() == null);
+		}
 	
 	/*
 	
@@ -1103,17 +1072,6 @@ public class Game3Tests {
 	    	}
 	}
 	
-	public HashMap<ConcPUState, ArrayList<BufferedImage>> getGraphics() {
-		return graphics;
-	}
-	public void setGraphics(HashMap<ConcPUState, ArrayList<BufferedImage>> graphics) {
-		this.graphics = graphics;
-	}
-	@Override
-	public void spawn(boolean gameStart, int numChunksRemoved) {
-		
-	}
-	
 		public Pair getViewLocation() {
 		return viewLocation;
 	}
@@ -1139,19 +1097,7 @@ public class Game3Tests {
 		}
 	}
 	
-	/*
-
-
-	public HashMap<Frames, JComponent> getFrameMap() {
-		return frameMap;
-	}
-	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
-		this.frameMap = frameMap;
-	}
-	
 	*/
-	
-	
 	//Gabion Tests
 	
 	@Test
@@ -1203,15 +1149,24 @@ public class Game3Tests {
 		assertTrue(gabion.isPickedUp() == true & gabion.getWallState() == GabPUState.WALL & gabion.getWidth() == 70 & gabion.getHeight() == 150 & gabion.getViewLocation().getX() == 30 & gabion.getViewLocation().getY() == 0 );
 	}
 	
-	/*
-	public HashMap<Frames, JComponent> getFrameMap() {
-		return frameMap;
-	}
-
-	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
-		this.frameMap = frameMap;
+	@Test
+	public void GabPUGraphicsTest(){
+		GabionPUModel gab = new GabionPUModel();
+		HashMap<GabPUState, ArrayList<BufferedImage>> map = null;
+		gab.setGraphics(map);
+		assertTrue(gab.getGraphics() == null);
+		
 	}
 	
+	@Test
+	public void GabPUModelFramesTest(){
+		GabionPUModel gab = new GabionPUModel();
+		HashMap<Frames, JComponent> map = null;
+		gab.setFrameMap(map);
+		assertTrue(gab.getFrameMap() == null);
+		}
+	
+	/*
 	public BufferedImage getWall() {
 		return wall;
 	}
@@ -1242,15 +1197,7 @@ public class Game3Tests {
 	    		e.printStackTrace();
 	    }
 	}
-	
-	public HashMap<GabPUState, ArrayList<BufferedImage>> getGraphics() {
-		return graphics;
-	}
 
-	public void setGraphics(HashMap<GabPUState, ArrayList<BufferedImage>> graphics) {
-		this.graphics = graphics;
-	}
-	
 */
 	
 	//SunHurricane Tests
@@ -1292,6 +1239,15 @@ public class Game3Tests {
 		assertTrue(SunHurricane.getInitialPosition() == 768 );
 	}
 	
+	@Test
+	public void SunHurricaneGraphicsTest(){
+		SunHurricaneModel sunHurricane = new SunHurricaneModel();
+		HashMap<String, ArrayList<BufferedImage>> map = null;
+		sunHurricane.setGraphics(map);
+		assertTrue(sunHurricane.getGraphics() == null);
+		
+	}
+	
 	/*
 	public void move() {
 		location.setX(location.getX()-2);
@@ -1307,13 +1263,6 @@ public class Game3Tests {
 		return y;
 	}
 
-	public HashMap<String, ArrayList<BufferedImage>> getGraphics() {
-		return graphics;
-	}
-
-	public void setGraphics(HashMap<String, ArrayList<BufferedImage>> graphics) {
-		this.graphics = graphics;
-	}
 	
 	public void addPics() {
 		ArrayList<BufferedImage> sun = new ArrayList<BufferedImage>();
@@ -1375,6 +1324,15 @@ public class Game3Tests {
 		assertTrue(tutorial.isDialogueOn() == true);
 	}
 	
+	@Test
+	public void TutorialTest(){
+		Tutorial tutorial = new Tutorial();
+		HashMap<AnimGraphics, ArrayList<BufferedImage>> map = null;
+		tutorial.setGraphicMap(map);
+		assertTrue(tutorial.getGraphicMap() == null);
+		
+	}
+	
 	
 	 /*
 	public void addPics() {
@@ -1416,14 +1374,7 @@ public class Game3Tests {
 	    		e.printStackTrace();
 	    	}
 	}
-	
-	public HashMap<AnimGraphics, ArrayList<BufferedImage>> getGraphicMap() {
-		return graphicMap;
-	}
-
-	public void setGraphicMap(HashMap<AnimGraphics, ArrayList<BufferedImage>> graphicMap) {
-		this.graphicMap = graphicMap;
-	} 
+ 
 	
 	*/
 	
@@ -1475,6 +1426,15 @@ public class Game3Tests {
 		assertTrue(water.getGraphicOnDeck() == 30);
 	}
 	
+	@Test
+	public void WaterGraphicsTest(){
+		WaterModel water = new WaterModel("test");
+		ArrayList<BufferedImage> array = null;
+		water.setWaterGraphics(array);
+		assertTrue(water.getWaterGraphics() == null);
+		
+	}
+	
 	/*	
 	
 	public void addPics() {
@@ -1491,17 +1451,6 @@ public class Game3Tests {
 	    	}
 			
 	}
-	
-	
-	public ArrayList<BufferedImage> getWaterGraphics() {
-		return waterGraphics;
-	}
-
-
-	public void setWaterGraphics(ArrayList<BufferedImage> waterGraphics) {
-		this.waterGraphics = waterGraphics;
-	}
-	  
 	 */
 	
 	//WaveModel
@@ -1599,6 +1548,14 @@ public class Game3Tests {
 		assertTrue(wave.isDeleteWave() == true);
 	}
 	
+	@Test
+	public void WaveModelFramesTest(){
+		WaveModel wave = new WaveModel();
+		HashMap<Frames, JComponent> map = null;
+		wave.setFrames(map);
+		assertTrue(wave.getFrames() == null);
+	}
+	
 	
 	/*
 	
@@ -1676,19 +1633,46 @@ public class Game3Tests {
 		}
 	};
 	
-	
-	public HashMap<Frames, JComponent> getFrames() {
-		return frames;
-	}
-
-
-
-	public void setFrames(HashMap<Frames, JComponent> frames) {
-		this.frames = frames;
-	}
-	
 	*/
 	
+	//BeachModel
+	
+	@Test
+	public void BeachModelFrameMapTest(){
+		BeachModel beach = new BeachModel("test");
+		HashMap<Frames, JComponent> map = null;
+		beach.setFrameMap(map);
+		assertTrue(beach.getFrameMap() == null);
+	}
+	
+	@Test
+	public void BeachModelInitializebeachTest(){
+		
+		BeachModel beach = new BeachModel("test");
+		beach.initializeBeach();
+		
+		assertTrue(beach.generatePPUL().size() == 49);
+		
+		
+		//must relook at this test later but it works!!
+		for(int i = 0; i < beach.generatePPUL().size(); i++){
+			if(i ==2){
+				beach.getPositionGrid()[i][0] = 2;
+			}
+		}
+		assertTrue(beach.generatePPUL().size() == 48);
+		
+	}
+	
+	@Test
+	public void BeachModelSpawnGabPUTest(){
+		BeachModel beach = new BeachModel("test");
+		beach.initializeBeach();
+		beach.spawnGabPU(beach.generatePPUL(), true);
+		assertTrue(beach.generatePPUL().size() == 48);
+		beach.spawnGabPU(beach.generatePPUL(), false);
+		assertTrue(beach.generatePPUL().size() == 48);
+	}
 	
 	
 	

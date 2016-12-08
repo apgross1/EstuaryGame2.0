@@ -29,7 +29,7 @@ public class Game2Controller {
 	private AlgaeModel algae;
 	private Collection<AlgaeModel> algaeList = new ArrayList<AlgaeModel>();
 	
-	private JFrame gameFrame;
+	private JFrame gameFrame = new JFrame();
 	long spawnTime=0;
 	int numMissed = 0;
 	long startTime;
@@ -44,7 +44,7 @@ public class Game2Controller {
 	int height = (int) screenSize.getHeight();
 	
 	public Game2Controller(JFrame gamef) {
-		gameFrame = gamef;
+		//gameFrame = gamef;
 		animal = new AnimalModelG2();
 		
 		algae = new AlgaeModel();
@@ -61,8 +61,8 @@ public class Game2Controller {
 		view.addController(this);
     	gameFrame.getContentPane().add(view.new Animation());
     	gameFrame.setBackground(Color.GRAY);
-    	gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	
+    	gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    	gameFrame.setSize(1000, 700);
     	gameFrame.setVisible(true);
     	gameFrame.setResizable(false);
 		gameActive = true;
@@ -244,6 +244,7 @@ public class Game2Controller {
 
 
 
+
 	public boolean getTutoralStatus() {
 		
 		return tutorialActive;
@@ -251,6 +252,16 @@ public class Game2Controller {
 public void setTutorialStatus(boolean active) {
 		
 		tutorialActive=active;
+}
+	public Game2View getView() {
+		return view;
+	}
+
+
+
+	public void setView(Game2View view) {
+		this.view = view;
+
 	}
 
 

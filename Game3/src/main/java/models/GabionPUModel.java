@@ -274,11 +274,6 @@ public class GabionPUModel extends WallModelAbstract {
 		
 	}
 	
-	@Override
-	public void spawn(boolean gameStart, int numChunksRemoved) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	//For testing purposes
 		public void setLocationTest(Pair location) {

@@ -143,21 +143,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.setSpeedY(0);
 	}
 	
-	@Override
-	public void healthUp() {
-		
-		
-	}
-
-	@Override
-	public void healthDown() {
-		this.setHealth(0);
-	}
-
-	@Override
-	public void pickUp() {
-		
-	}
 
 	/**
 	 * Getter for the HashMap containing animation arrays whose elements 
