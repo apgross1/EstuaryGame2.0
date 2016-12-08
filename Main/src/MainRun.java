@@ -142,7 +142,7 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 				  }});
 		
 		frame.getContentPane().removeAll();
-		frame.add(backLay); //(THIS NEEDS TO BE A JPANNEL OVER A JLABLE BUT ISNT WORKIN)
+		frame.add(backLay);
 		frame.add(startScreen);
 		frame.setVisible(true);
 		frame.revalidate();
@@ -154,9 +154,6 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
         FontMetrics metrics = g.getFontMetrics(font);
         // Determine the X coordinate for the text
         int x = (screenSize.width - metrics.stringWidth(text)) / 2;
-        // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
-        //int y = ((screenSize.height - metrics.getHeight()) / 2) + metrics.getAscent();
-        // Set the font
         g.setFont(font);
         // Draw the String
         g.drawString(text, x, (int) (.30*(screenSize.height)));
@@ -168,10 +165,13 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void paint(Graphics g) {	
-			//System.out.println("StuffnThingsPls");
+		public void paint(Graphics g) {
 			g.setColor(Color.white);
-			drawCenteredString(g, "Tim Sucks at naming games.", new Font("Haettenschweiler", Font.PLAIN, 50));
+			drawCenteredString(g, "Gamey McGame Face", new Font("Impact", Font.PLAIN, 50));
+			
+			//g.fillRect(50, 50, 50, 50);
+		
+			//g.drawImage(badGuy, 50, 50, this);
 			/*
 			int x_loc = 0;
 			boolean dir = true;
