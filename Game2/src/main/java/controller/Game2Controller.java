@@ -61,7 +61,7 @@ public class Game2Controller {
     	gameFrame.getContentPane().add(view.new Animation());
     	gameFrame.setBackground(Color.GRAY);
     	gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	gameFrame.setSize(1000, 700);
+    	
     	gameFrame.setVisible(true);
     	gameFrame.setResizable(false);
 		gameActive = true;
@@ -166,9 +166,9 @@ public class Game2Controller {
 	}
 	
 	public boolean collisionOccured(AnimalModelG2 animal, AlgaeModel algae){
-		
+		int algMod = view.getAlgaeEaterX();
 		Rectangle algae_rect = new Rectangle(algae.getLocX(), algae.getLocY(), algae.getWidth(), algae.getHeight());
-		Rectangle animal_rect = new Rectangle(animal.getLocX(), animal.getLocY(), animal.getWidth(), animal.getHeight());
+		Rectangle animal_rect = new Rectangle(animal.getLocX()+algMod, animal.getLocY(), animal.getWidth(), animal.getHeight());
 		
 		if(animal_rect.getBounds().intersects(algae_rect)){
 			return true;

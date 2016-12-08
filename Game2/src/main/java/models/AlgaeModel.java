@@ -9,7 +9,7 @@ import java.util.Collection;
 public class AlgaeModel {
 	private int locX;
 	private int locY;
-	private int health;
+	
 	private boolean isActive;
 	
 	private int velocity = 2;

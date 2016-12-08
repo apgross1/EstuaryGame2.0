@@ -28,8 +28,8 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 		charYBoundMin = (int) (screenHeight-(screenHeight*.1));
 		charYBoundMax = (int) (screenHeight*.32);
 		
-		this.height = (int) (screenHeight*.15);
-		this.width = (int)  (screenHeight*.15);
+		this.height = (int) (screenHeight*.11);
+		this.width = (int)  (screenHeight*.11);
 		
 		this.isDead = false;
 		this.velocity = 0;
