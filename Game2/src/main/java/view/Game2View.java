@@ -258,6 +258,7 @@ public class Game2View extends JPanel implements KeyListener{
 					 g.setColor(Color.BLACK);
 					 g.drawString("You have lost ", width/4, height/2);
 					 g.setFont(gameLose);
+					
 					 controller.setGameActive(false);
 					 
 				 }
@@ -268,6 +269,7 @@ public class Game2View extends JPanel implements KeyListener{
 						 g.setColor(Color.BLACK);
 						 g.drawString("You have won!", width/4, height/2);
 						 g.setFont(gameLose);
+						
 						 controller.setGameActive(false);
 					
 				}
@@ -292,7 +294,7 @@ public class Game2View extends JPanel implements KeyListener{
 			if(controller.getTutoralStatus()){
 				controller.setTutorialStatus(false);
 			}
-				controller.getAnimalModelG2().setVelocity(5);
+				controller.getAnimalModelG2().setVelocity(2);
 			
 			
 			break;
@@ -302,7 +304,7 @@ public class Game2View extends JPanel implements KeyListener{
 				controller.setTutorialStatus(false);
 			}
 			
-				controller.getAnimalModelG2().setVelocity(-5);
+				controller.getAnimalModelG2().setVelocity(-2);
 			
 			break;
 			
