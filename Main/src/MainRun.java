@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
@@ -36,6 +38,7 @@ import javax.swing.JPanel;
 import controller.Game1Controller;
 import controller.Game2Controller;
 import controller.Game3Controller;
+import view.Game1View.Animation;
 
 public class MainRun extends JPanel implements KeyListener, MouseListener{
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -44,6 +47,7 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 	JLabel backGround = new JLabel();
 	boolean startPressed = false;
 	JFrame frame;
+	BufferedImage badGuy = null;
 	
 	private ArrayList<BufferedImage> startPics = new ArrayList<BufferedImage>();
 	private ArrayList<BufferedImage> exitPics = new ArrayList<BufferedImage>();
@@ -51,6 +55,7 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 	
 	//
 	JLabel startScreen;
+	JPanel backLay = new JPanel(new BorderLayout());
 	JButton menuButton;
 	
 	public MainRun(JFrame frame){
@@ -65,6 +70,12 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 			exitGame_1 = ImageIO.read(new File("./Images/Game3/exitGame_1.png"));
 			start_0 = ImageIO.read(new File("./Images/start_0.png"));
 			start_1 = ImageIO.read(new File("./Images/start_1.png"));
+		} catch (IOException excep) {
+			excep.printStackTrace();
+		}
+		
+		try {
+			badGuy = ImageIO.read(new File("./Images/Game3/exitGame_0.png"));
 		} catch (IOException excep) {
 			excep.printStackTrace();
 		}
@@ -83,19 +94,19 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 		
 		startScreen = new JLabel();
 		startScreen.setLayout(new GridBagLayout());
+		
+		backLay.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		backLay.setSize(new Dimension(frame.getWidth(),frame.getHeight()));
+		
+		backLay.add(new Animation());
+		backLay.setOpaque(false);
+		
 		//Defining constraint for background
 		ImageIcon backgroundIcon = new ImageIcon("./Images/2D_estuary.jpg"); 
 		startScreen.setIcon(backgroundIcon);
 		System.out.println(frame.getWidth() + " " + frame.getHeight());
 		startScreen.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		
-		
-		//Creating menu button
-		try {
-			start_0 = ImageIO.read(new File("./Images/Game3/start_0.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
 		menuButton = new JButton(new ImageIcon(start_0));
 		menuButton.setName("menu");
@@ -131,13 +142,55 @@ public class MainRun extends JPanel implements KeyListener, MouseListener{
 				  }});
 		
 		frame.getContentPane().removeAll();
+		frame.add(backLay); //(THIS NEEDS TO BE A JPANNEL OVER A JLABLE BUT ISNT WORKIN)
 		frame.add(startScreen);
 		frame.setVisible(true);
 		frame.revalidate();
 		frame.repaint();
 		
     }
+    public void drawCenteredString(Graphics g, String text, Font font) {
+        // Get the FontMetrics
+        FontMetrics metrics = g.getFontMetrics(font);
+        // Determine the X coordinate for the text
+        int x = (screenSize.width - metrics.stringWidth(text)) / 2;
+        // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
+        //int y = ((screenSize.height - metrics.getHeight()) / 2) + metrics.getAscent();
+        // Set the font
+        g.setFont(font);
+        // Draw the String
+        g.drawString(text, x, (int) (.30*(screenSize.height)));
+        // Dispose the Graphics
+        g.dispose();
+    }
 	
+    public class Animation extends JComponent {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void paint(Graphics g) {	
+			//System.out.println("StuffnThingsPls");
+			g.setColor(Color.white);
+			drawCenteredString(g, "Tim Sucks at naming games.", new Font("Haettenschweiler", Font.PLAIN, 50));
+			/*
+			int x_loc = 0;
+			boolean dir = true;
+			if(x_loc <= screenSize.width && x_loc >= 0){
+				if(dir){ //east
+					System.out.println("Goin East");
+					//g.drawImage(badGuy, x_loc, (int) (.30*(screenSize.height)), this);
+					g.drawRect(x_loc, (int) (.30*(screenSize.height)), 100, 100);
+					x_loc++;
+				}else{
+					g.drawImage(badGuy, x_loc, (int) (.30*(screenSize.height)), this);
+					x_loc--;
+				}
+			}else{
+				dir = !dir;
+			}
+			*/
+		}
+    }
 	public boolean isStartPressed(){
 		return startPressed;
 	}

@@ -73,28 +73,10 @@ public class Game1View extends JPanel implements KeyListener{
         //Load all pictures in the view
         loadImgs();
         frame = new JFrame();
-        /*
-        frame = gameF;
-        frame.getContentPane().add(new Animation());
-        frame.setBackground(Color.gray);
-        
-        //Full screen
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        frame.setUndecorated(true);
- 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(controller.getDim().width, controller.getDim().height); 
-        frame.setVisible(true);
-        frame.setResizable(false);
-       
-        //addKeyListener
-        frame.addKeyListener(this);
-        */
+
     }
 	public void setUp(){
 		frame.getContentPane().removeAll();
-		//frame.dispose();
-		//frame
 		
 		JPanel tempPanel = new JPanel(new BorderLayout());
 		tempPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
