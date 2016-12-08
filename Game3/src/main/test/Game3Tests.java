@@ -1650,7 +1650,7 @@ public class Game3Tests {
 		BeachModel beach = new BeachModel("test");
 		beach.initializeBeach();
 		assertTrue(beach.generatePPUL().size() == 49);
-	
+		assert
 	}
 	
 	
