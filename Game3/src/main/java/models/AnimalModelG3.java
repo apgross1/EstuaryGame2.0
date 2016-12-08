@@ -36,6 +36,8 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	private boolean waveHit = false;
 	private Pair beachLocation = new Pair(0,0);
 	private HashMap<Frames, JComponent> frames;
+	private int FrameHeight; //may be deleted
+	private int FrameWidth; // may be deleted
 
 	/**
 	 * Constructor to initialize the animal. Sets default dimensions 
@@ -63,7 +65,9 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		if (((getLocY() + speedY >= 0) & (this.getBounds().getMaxX() + speedX <= frames.get(Frames.ANIMAL).getWidth())) && 
 		   ((this.getBounds().getMaxY() + speedY <= frames.get(Frames.ANIMAL).getHeight()) & getLocX()+ speedX >= 0)
 			&& (!this.isWallHit()) && (!isRestrictedMovement())) {
+			if(graphicOnDeck != 0){
 			graphicOnDeck = (graphicOnDeck+1) % graphics.get("MOVE").size();
+			}
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
 		}
@@ -329,4 +333,27 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	public void setWaveHit(boolean waveHit) {
 		this.waveHit = waveHit;
 	}
+
+/*
+	public void setFrameHeight(int height) {
+		// TODO Auto-generated method stub
+		FrameHeight = height;
+	}
+
+	public int getFrameHeight() {
+		// TODO Auto-generated method stub
+		return FrameHeight;
+	}
+	
+	public void setFrameWidth(int Width) {
+		// TODO Auto-generated method stub
+		FrameWidth = width;
+	}
+
+	public int getFrameWidth() {
+		// TODO Auto-generated method stub
+		return FrameWidth;
+	}
+	*/
+	
 }

@@ -748,7 +748,7 @@ public class Game3Tests {
 	
 	
 	//AnimalModel
-	
+	/*
 	@Test
 	public void tickTest(){
 		AnimalModelG3 animal = new AnimalModelG3();
@@ -807,6 +807,7 @@ public class Game3Tests {
 		animal.tick();
 		assertTrue(animal.getLocX() == 2 && animal.getLocY() == 2);
 	}
+	*/
 		
 	/*
 	@Test
@@ -879,7 +880,7 @@ public class Game3Tests {
 		assertTrue(animal.isBoundHit() == true);
 	}
 	
-	@Test
+	/*@Test
 	public void FrameWidthTest(){
 		AnimalModelG3 animal = new AnimalModelG3();
 		animal.setFrameWidth(1080);
@@ -891,14 +892,13 @@ public class Game3Tests {
 		AnimalModelG3 animal = new AnimalModelG3();
 		animal.setFrameHeight(900);
 		assertTrue(animal.getFrameHeight() == 900);
-	}
+	}*/
 	
 	@Test
 	public void PotentialMoveTest(){
 		AnimalModelG3 animal = new AnimalModelG3();
-		Pair pair =  new Pair(5,6);
-		animal.setBeachLocation(pair);
-		assertTrue(animal.getPotentialMove() == pair);
+		assertTrue(animal.getPotentialMove().getX() == 0);
+		assertTrue(animal.getPotentialMove().getY() == 0);
 	}
 	
 	@Test
@@ -1528,140 +1528,79 @@ public class Game3Tests {
 	public void WaveStateDeleteTest(){
 		WaveModel wave = new WaveModel();
 		
-		wave.pauseWave();
-		assertTrue(wave.getWaveStatePause() == true);
-		wave.resumeWave();
-		assertTrue(wave.getWaveStatePause() == false);
-		
+		wave.resetWave();
+		assertTrue(wave.isDeleteWave() == true);		
 	}
 	
+	@Test
+	public void WaveModelBoundsTest(){
+		WaveModel wave = new WaveModel();
+		wave.setHeight(30);
+		wave.setWidth(30);
+		wave.setLocation(new Pair(0,0));
+		assertTrue(wave.getBounds().getX() == 0 & wave.getBounds().getY() == 0 & wave.getBounds().getWidth() == 30 & wave.getBounds().getHeight() == 30);
+	}
 	
+	@Test
+	public void WaveModelheightTest(){
+		WaveModel wave = new WaveModel();
+		wave.setHeight(30);
+		assertTrue(wave.getHeight() == 30);
+	}
+	
+	@Test
+	public void WaveModelWidthTest(){
+		WaveModel wave = new WaveModel();
+		wave.setWidth(30);
+		assertTrue(wave.getWidth() == 30);
+	}
+	
+	@Test
+	public void WaveModeLocationTest(){
+		WaveModel wave = new WaveModel();
+		Pair pair = new Pair(3,3);
+		wave.setLocation(pair);
+		assertTrue(wave.getLocation() == pair);
+	}
+	
+	@Test
+	public void WaveModelReceedTest(){
+		WaveModel wave = new WaveModel();
+		wave.setReceed(true);
+		assertTrue(wave.isReceed() == true);
+	}
+	
+	@Test
+	public void WaveModelWaveClusterTest(){
+		WaveModel wave = new WaveModel();
+		WaveClusters waveEnum = WaveClusters.values()[0];
+		wave.setClusterGroup(waveEnum);
+		assertTrue(wave.getClusterGroup() == waveEnum);
+	}
+	
+	@Test
+	public void WaveModelLastWaveTest(){
+		WaveModel wave = new WaveModel();
+		wave.setLastWave(true);
+		assertTrue(wave.isLastWave() == true);
+	}
+	
+	@Test
+	public void WaveModelVelocityTest(){
+		WaveModel wave = new WaveModel();
+		wave.setVelocity(2);
+		assertTrue(wave.getVelocity() == 2);
+	}
+	
+	@Test
+	public void WaveModelDeleteWaveTest(){
+		WaveModel wave = new WaveModel();
+		wave.setDeleteWave(true);
+		assertTrue(wave.isDeleteWave() == true);
+	}
 	
 	
 	/*
-	
-	public void resetWave() {
-		this.setDeleteWave(true);
-	}
-	
-	public Rectangle getBounds() {
-
-		return new Rectangle(location.getX(),location.getY(), this.getWidth(), this.getHeight());
-
-	}
-
-	
-
-	public int getHeight() {
-
-		return height;
-
-	}
-
-
-
-	public void setHeight(int height) {
-
-		this.height = height;
-
-	}
-
-
-
-	public int getWidth() {
-
-		return width;
-
-	}
-
-
-
-	public void setWidth(int width) {
-
-		this.width = width;
-
-	}
-
-
-
-	public Pair getLocation() {
-
-		return location;
-
-	}
-
-
-
-	public void setLocation(Pair location) {
-
-		this.location = location;
-
-	}
-
-	public boolean isReceed() {
-		return receed;
-	}
-
-	public void setReceed(boolean receed) {
-		this.receed = receed;
-	}
-
-
-	public WaveClusters getClusterGroup() {
-		return clusterGroup;
-	}
-
-
-
-	public void setClusterGroup(WaveClusters waveEnum) {
-		this.clusterGroup = waveEnum;
-	}
-
-
-
-	public boolean isLastWave() {
-		return lastWave;
-	}
-
-
-
-	public void setLastWave(boolean lastWave) {
-		this.lastWave = lastWave;
-	}
-
-	public HashMap<Frames, JComponent> getFrames() {
-		return frames;
-	}
-
-
-
-	public void setFrames(HashMap<Frames, JComponent> frames) {
-		this.frames = frames;
-	}
-
-
-
-	public int getVelocity() {
-		return velocity;
-	}
-
-
-
-	public void setVelocity(int velocity) {
-		this.velocity = velocity;
-	}
-
-
-
-	public boolean isDeleteWave() {
-		return deleteWave;
-	}
-
-
-
-	public void setDeleteWave(boolean deleteWave) {
-		this.deleteWave = deleteWave;
-	}
 	
 	public void randomSpawn(int clusterVal) {
 		WaveClusters waveEnum = WaveClusters.values()[clusterVal];
@@ -1737,7 +1676,20 @@ public class Game3Tests {
 		}
 	};
 	
+	
+	public HashMap<Frames, JComponent> getFrames() {
+		return frames;
+	}
+
+
+
+	public void setFrames(HashMap<Frames, JComponent> frames) {
+		this.frames = frames;
+	}
+	
 	*/
+	
+	
 	
 	
 }

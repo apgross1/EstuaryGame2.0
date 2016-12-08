@@ -22,12 +22,17 @@ public class WaterModel {
 	/**
 	 * Constructor for this element
 	 */
-	public WaterModel() {
-		this.height = 200;
-		this.width = 200;
-		this.addPics();
+	public WaterModel(String test) {
+		if(test == "test"){
+			this.height = 200;
+			this.width = 200;
+		}
+		else{
+			this.height = 200;
+			this.width = 200;
+			this.addPics();
+		}
 	}
-	
 	
 	/**
 	 * Alternative constructor that passes in the location of the water tile   

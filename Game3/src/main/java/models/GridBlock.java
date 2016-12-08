@@ -32,7 +32,7 @@ public class GridBlock {
 	 * @param b BeachModel, the game beach
 	 */
 	public GridBlock(BeachModel b) {
-		water = new WaterModel();
+		water = new WaterModel("game");
 		gabPU.setIsActive(false);
 		concrPU.setActive(false);
 		height = 200;
@@ -48,7 +48,7 @@ public class GridBlock {
 	 * @param b BeachModel, the game beach being used
 	 */
 	public GridBlock(Pair loc, BeachModel b) {
-		water = new WaterModel();
+		water = new WaterModel("game");
 
 		gabPU = new GabionPUModel();
 		gabPU.setIsActive(false);
@@ -91,7 +91,7 @@ public class GridBlock {
 	 * @param loc Pair, the location of the power-up
 	 */
 	public GridBlock(ConcretePUModel powerUp, Pair loc) {
-		water = new WaterModel();
+		water = new WaterModel("game");
 
 		gabPU.setIsActive(false);
 		concrPU.setActive(false);
@@ -109,11 +109,11 @@ public class GridBlock {
 	 * @param loc Pair, the location of the gabion power-up
 	 */
 	public GridBlock(GabionPUModel powerUp, Pair loc) {
-		water = new WaterModel();
+		water = new WaterModel("game");
 
 		gabPU.setIsActive(false);
 		concrPU.setActive(false);
-		powerUp.setLocation(loc);
+		powerUp.setLocation(loc, "game");
 		this.setGabPU(powerUp);
 		this.location = loc;
 		this.setViewLocation(location);
