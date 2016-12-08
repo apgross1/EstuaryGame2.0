@@ -26,6 +26,7 @@ public class BeachModel {
 	private Pair concPair = new Pair(0,0);
 	private Timer puTimer;
 	private HashMap<Frames, JComponent> frameMap;
+	private String GameState = "game";
 
 	
 	/**
@@ -150,7 +151,7 @@ public class BeachModel {
 				GabionPUModel tempGab = new GabionPUModel();
 				tempGab.setFrameMap(frameMap);
 				tempGab.addPics();
-				tempGab.setLocation(this.findPairInGrid(pair), "game");
+				tempGab.setLocation(this.findPairInGrid(pair), GameState );
 				tempGab.setIsActive(true);
 				beachGrid.get(this.findPairInGrid(pair)).setGabPU(tempGab);
 				positionGrid[pair.getY()][pair.getX()] = Walls.GABION_GAME3.getValue();
@@ -162,7 +163,7 @@ public class BeachModel {
 				GabionPUModel tempGab = new GabionPUModel();
 				tempGab.setFrameMap(frameMap);
 				tempGab.addPics();
-				tempGab.setLocation(this.findPairInGrid(pair), "game");
+				tempGab.setLocation(this.findPairInGrid(pair), GameState);
 				tempGab.setIsActive(true);
 				beachGrid.get(this.findPairInGrid(pair)).setGabPU(tempGab);
 				positionGrid[pair.getY()][pair.getX()] = Walls.GABION_GAME3.getValue();
@@ -187,7 +188,7 @@ public class BeachModel {
 			ConcretePUModel tempConcr = new ConcretePUModel();
 			tempConcr.setFrameMap(frameMap);
 			tempConcr.addPics();
-			tempConcr.setLocation(this.findPairInGrid(pair), "game");
+			tempConcr.setLocation(this.findPairInGrid(pair), GameState);
 			tempConcr.setActive(true);
 			beachGrid.get(this.findPairInGrid(pair)).setConcrPU(tempConcr);
 			
@@ -398,6 +399,11 @@ public class BeachModel {
 	 */
 	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
 		this.frameMap = frameMap;
+	}
+
+	
+	public void setGameState(String gameState) {
+		this.GameState = gameState;
 	}
 
 }
