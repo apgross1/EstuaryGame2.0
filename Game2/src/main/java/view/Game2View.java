@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -18,7 +20,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-
+import javax.swing.Timer;
 
 import models.AlgaeModel;
 import models.AnimalModelG2;
@@ -218,9 +220,6 @@ public class Game2View extends JPanel implements KeyListener{
 						 randomStorm = rand.nextInt((3 - 1) + 1) + 1;
 					 }
 				}
-				 
-				
-				
 			}
 			
 			g.drawString("Time: " +controller.getGameTime(), 10, 25);
@@ -255,8 +254,8 @@ public class Game2View extends JPanel implements KeyListener{
 					 g.setColor(Color.BLACK);
 					 g.drawString("You have lost ", width/4, height/2);
 					 g.setFont(gameLose);
-					
-					 controller.setGameActive(false);
+					 endGameTimer();
+					 
 					 
 				 }
 				else if(controller.getGameTime()==60){
@@ -266,8 +265,8 @@ public class Game2View extends JPanel implements KeyListener{
 						 g.setColor(Color.BLACK);
 						 g.drawString("You have won!", width/4, height/2);
 						 g.setFont(gameLose);
+						endGameTimer();
 						
-						 controller.setGameActive(false);
 					
 				}
 			
@@ -277,6 +276,23 @@ public class Game2View extends JPanel implements KeyListener{
 		}
 	}
     
+	ActionListener GameEndListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			controller.setGameActive(false);
+		}
+	};
+	
+	public void endGameTimer() {
+		Timer t = new Timer(3000, GameEndListener);
+		t.setRepeats(false);
+		t.start();
+		
+	}
+	
+	
+	
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
