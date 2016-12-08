@@ -8,10 +8,6 @@ public abstract class BarModelAbstract {
 		
 	}
 	
-	public abstract void increase(int ammount);
-	
-	public abstract void decrease(int ammount);
-	
 	public boolean isEmpty() {
 		if (status == 0) {
 			return true;

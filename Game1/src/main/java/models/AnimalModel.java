@@ -127,17 +127,4 @@ public class AnimalModel extends AnimalModelAbstract {
 			}
 		}
 	}
-	
-	
-	
-	/*
-	 * These are functions to be removed from Common Res once all branches are combined.
-	 */
-	
-	@Override
-	public void healthUp() {}
-	@Override
-	public void healthDown() {}
-	@Override
-	public void pickUp() {}
 }

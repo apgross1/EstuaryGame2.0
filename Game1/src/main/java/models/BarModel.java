@@ -15,7 +15,6 @@ public class BarModel extends BarModelAbstract {
 	/**
 	 * A function that calls setStatus(int) to decreases the health.
 	 */
-	@Override
 	public void decrease(int damage) {
 		if(getStatus() > 0){
 			if(getStatus() >= damage){
@@ -26,11 +25,4 @@ public class BarModel extends BarModelAbstract {
 		}
 	}
 	
-	
-	/*
-	 * These are functions to be removed from Common Res once all branches are combined.
-	 */
-	@Override
-	public void increase(int i) {
-	}
 }

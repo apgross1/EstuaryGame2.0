@@ -47,7 +47,11 @@ public class WaveModel {
 		this.move();
 	}
 
-	
+	public WaveModel() {
+		movement = (screenSizeX*.00104);
+		wavePause = false;
+	}
+
 
 	/**
 	 * Assigns this element to a wave cluster group. The location of the wave
@@ -68,8 +72,6 @@ public class WaveModel {
 		int blockThreeMin = blockTwoMax+1, blockThreeMax = blockOneMax*3;
 		int blockFourMin = blockThreeMax+1, blockFourMax = blockOneMax*4;
 		int blockFiveMin = blockFourMax+1, blockFiveMax = blockOneMax*5;
-		int blockSixMin = blockFiveMin+1, blockSixMax = blockOneMax*6;
-		int blockSevenMin = blockSixMin+1, blockSevenMax = blockOneMax*7;
 		
 		
 		switch(clusterGroup){
@@ -333,6 +335,14 @@ public class WaveModel {
 	 */
 	public void setDeleteWave(boolean deleteWave) {
 		this.deleteWave = deleteWave;
+	}
+
+	/**
+	 * Determines is wave was paused. 
+	 * @return wavePause boolean, 1 if wave is paused, 0 otherwise
+	 */
+	public boolean getWaveStatePause() {
+		return this.wavePause;
 	}
 	
 }

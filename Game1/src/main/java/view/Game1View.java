@@ -74,28 +74,10 @@ public class Game1View extends JPanel implements KeyListener{
         //Load all pictures in the view
         loadImgs();
         frame = new JFrame();
-        /*
-        frame = gameF;
-        frame.getContentPane().add(new Animation());
-        frame.setBackground(Color.gray);
-        
-        //Full screen
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        frame.setUndecorated(true);
- 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(controller.getDim().width, controller.getDim().height); 
-        frame.setVisible(true);
-        frame.setResizable(false);
-       
-        //addKeyListener
-        frame.addKeyListener(this);
-        */
+
     }
 	public void setUp(){
 		frame.getContentPane().removeAll();
-		//frame.dispose();
-		//frame
 		
 		JPanel tempPanel = new JPanel(new BorderLayout());
 		tempPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
@@ -383,36 +365,52 @@ public class Game1View extends JPanel implements KeyListener{
 		}
  }
 	 
-	@Override
-		public void keyPressed(KeyEvent e) {
-		    int keyCode = e.getKeyCode();
-		    switch( keyCode ) {
-		        case KeyEvent.VK_UP:
-		            // handle up 
-		        	controller.getAnimalModel().setCurrDir(Direction.NORTH);
-		        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 200)*-1);
-		            break;
-		        case KeyEvent.VK_DOWN:
-		            // handle down 
-		        	controller.getAnimalModel().setCurrDir(Direction.SOUTH);
-		        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 200));
-		            break;
-		        case KeyEvent.VK_LEFT:
-		            // handle left
-		        	controller.getAnimalModel().setCurrDir(Direction.WEST);
-		        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 200)*-1);
-		            break;
-		        case KeyEvent.VK_RIGHT :
-		            // handle right
-		        	controller.getAnimalModel().setCurrDir(Direction.EAST);
-		        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 200));
-		            break;
-		        case KeyEvent.VK_ESCAPE :
-		            // handle escape (to minimize game)
-		        	frame.setExtendedState(JFrame.ICONIFIED);
-		            break;
-		}
+    @Override
+	public void keyPressed(KeyEvent e) {
+	    int keyCode = e.getKeyCode();
+	    switch( keyCode ) {
+	        case KeyEvent.VK_UP:
+	            // handle up 
+	        	controller.getAnimalModel().setCurrDir(Direction.NORTH);
+	        	if(controller.difficulty() == false){
+	        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 200)*-1);}
+	        	else{
+	        		controller.getAnimalModel().setSpeedY(-6);
+	        	}
+	            break;
+	        case KeyEvent.VK_DOWN:
+	            // handle down 
+	        	controller.getAnimalModel().setCurrDir(Direction.SOUTH);
+	        	if(controller.difficulty() == false){
+	        	controller.getAnimalModel().setSpeedY((controller.getDim().height / 200));}
+	        	else{
+	        		controller.getAnimalModel().setSpeedY(6);
+	        	}
+	            break;
+	        case KeyEvent.VK_LEFT:
+	            // handle left
+	        	controller.getAnimalModel().setCurrDir(Direction.WEST);
+	        	if(controller.difficulty() == false){
+	        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 200)*-1);}
+	        	else{
+	        		controller.getAnimalModel().setSpeedX(-6);
+	        	}
+	            break;
+	        case KeyEvent.VK_RIGHT :
+	            // handle right
+	        	controller.getAnimalModel().setCurrDir(Direction.EAST);
+	        	if(controller.difficulty() == false){
+	        	controller.getAnimalModel().setSpeedX((controller.getDim().height / 200));}
+	        	else{
+	        		controller.getAnimalModel().setSpeedX(6);
+	        	}
+	            break;
+	        case KeyEvent.VK_ESCAPE :
+	            // handle escape (to minimize game)
+	        	frame.setExtendedState(JFrame.ICONIFIED);
+	            break;
 	}
+}
 	 
 		@Override
 		public void keyReleased(KeyEvent e) {

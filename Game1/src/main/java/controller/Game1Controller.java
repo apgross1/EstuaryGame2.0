@@ -206,7 +206,7 @@ public class Game1Controller{
 		
 		long startTime = System.currentTimeMillis(); //fetch starting time
 		
-		while((System.currentTimeMillis()-startTime)<2000){
+		while((System.currentTimeMillis()-startTime)<30){
 			if(!this.gameState) { //For testing purposes...just to close the game at will
 				return;
 			}
@@ -406,6 +406,15 @@ public class Game1Controller{
 	 */
 	public void setGameState(boolean gameState) {
 		this.gameState = gameState;
+	}
+	
+	public boolean difficulty(){
+		if(bar.getStatus() <= 20 && overallRound < 3){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	public Game1View getG1view() {
 		return g1view;

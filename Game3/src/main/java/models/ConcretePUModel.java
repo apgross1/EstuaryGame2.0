@@ -289,10 +289,7 @@ public class ConcretePUModel extends WallModelAbstract {
 		this.location = location;
 	}
 	
-	@Override
-	public void spawn(boolean gameStart, int numChunksRemoved) {
-		
-	}
+	
 	@Override
 	public void breakDown() {
 	}

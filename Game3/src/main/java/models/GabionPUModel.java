@@ -136,11 +136,16 @@ public class GabionPUModel extends WallModelAbstract {
 	
 	/**
 	 * Sets the location of this element
-	 * @param location a Pair containing the location of this element
+	 * @param location a Pair containing the location of this element, test determines if it's test or game
 	 */
-	public void setLocation(Pair location) {
-		this.location = location;
-		this.setViewLocation(location);
+	public void setLocation(Pair location, String test) {
+		if(test == "test"){
+			this.location = location;
+		}
+		else{
+			this.location = location;
+			this.setViewLocation(location);
+		}
 	}
 	
 	
@@ -269,11 +274,6 @@ public class GabionPUModel extends WallModelAbstract {
 		
 	}
 	
-	@Override
-	public void spawn(boolean gameStart, int numChunksRemoved) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	//For testing purposes
 		public void setLocationTest(Pair location) {
