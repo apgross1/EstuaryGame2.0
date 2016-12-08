@@ -28,10 +28,7 @@ public class BarModelG2 extends BarModelAbstract{
 		width = w;
 		
 	}
-	@Override
-	public void decrease(int i){
-		width -=i;
-	}
+	
 	@Override
 	public boolean isEmpty(){
 		if(width == 0){
@@ -41,10 +38,7 @@ public class BarModelG2 extends BarModelAbstract{
 			return false;
 		}
 	}
-	@Override
-	public void increase(int i) {
-		damage =+ i;
-	}
+	
 	public int getStatus() {
 		return status;
 	}

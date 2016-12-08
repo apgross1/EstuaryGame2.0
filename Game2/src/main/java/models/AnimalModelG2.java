@@ -28,8 +28,8 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 		charYBoundMin = (int) (screenHeight-(screenHeight*.1));
 		charYBoundMax = (int) (screenHeight*.32);
 		
-		this.height = (int) (screenHeight*.15);
-		this.width = (int)  (screenHeight*.15);
+		this.height = (int) (screenHeight*.11);
+		this.width = (int)  (screenHeight*.11);
 		
 		this.isDead = false;
 		this.velocity = 0;
@@ -59,20 +59,8 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 		y = loc;
 	}
 	
-	@Override
-	public void healthUp() {
-		setHealth(getHealth() + 1);
-	}
-
-	@Override
-	public void healthDown() {
-		setHealth(getHealth() - 1);
-
-	}
-	@Override
-	public void pickUp() {
-		//Not Needed
-	}
+	
+	
 	
 	public int getHeight() {
 		return height;
