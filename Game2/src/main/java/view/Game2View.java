@@ -32,10 +32,13 @@ public class Game2View extends JPanel implements KeyListener{
 	
 	private Game2Controller controller;
 	private JFrame frame = new JFrame();
-	//private JPanel action_pannel = new JPanel();
+	
 	
 	AlgaeModel algae = new AlgaeModel();
 	BarModelG2 oxyBar;
+	BufferedImage arrows;
+	BufferedImage arrowUP;
+	BufferedImage arrowDOWN;
 	BufferedImage background;
 	BufferedImage character;
 	BufferedImage algaeImg;
@@ -53,6 +56,7 @@ public class Game2View extends JPanel implements KeyListener{
 	int height;
 	int changeCount=0;
 	int frameCount= 0;
+	int tutFrameCount = 0;
 	
 	
 	Random rand = new Random();
@@ -100,6 +104,10 @@ public class Game2View extends JPanel implements KeyListener{
 			storm3 = ImageIO.read(new File("./Images/Game2/cloud3.png"));
 			storm4 = ImageIO.read(new File("./Images/Game2/cloud4.png"));
 			algaeEaters= ImageIO.read(new File("./Images/Game2/AlgaeFish.png"));
+			arrows = ImageIO.read(new File("./Images/Game2/arrows.png"));
+			arrowUP = ImageIO.read(new File("./Images/Game2/ArrowUP.png"));
+			arrowDOWN = ImageIO.read(new File("./Images/Game2/ArrowDOWN.png"));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 	  
@@ -107,6 +115,8 @@ public class Game2View extends JPanel implements KeyListener{
 	}
 	
 	public class Animation extends JComponent {
+		
+		
 		
 		@Override
 		public void paint(Graphics g) {
@@ -123,11 +133,33 @@ public class Game2View extends JPanel implements KeyListener{
 				algaeImg=algaeImgMed;
 				}
 			}
-			
-			
-			
-			
 			g.drawImage(background, 0, 0, width, height, this);
+			
+			if(controller.getTutoralStatus()){
+				tutFrameCount++;
+				Font tutorial = new Font("TimesRoman", Font.BOLD, 30);
+				 g.setFont(tutorial);
+				 g.setColor(Color.BLACK);
+				 g.drawString("Use the arrow keys to prevent algae from depleting the estuary's oxygen!", width/6, height/2);
+				
+				if(tutFrameCount<60){
+					g.drawImage(arrows, width/4, height/3, this);
+					g.drawImage(arrowUP, width/4, height/3, this);
+					
+				}
+				else if(tutFrameCount>=60&&tutFrameCount<120){
+					g.drawImage(arrows, width/4, height/3, this);
+					g.drawImage(arrowDOWN, width/4, height/3, this);
+				}
+				else {
+					tutFrameCount=0;
+					
+				}
+				
+			}
+			
+			else{
+			
 			
 			
 			
@@ -243,6 +275,7 @@ public class Game2View extends JPanel implements KeyListener{
 			
 			}
 		}
+		}
 	}
     
 	@Override
@@ -256,14 +289,18 @@ public class Game2View extends JPanel implements KeyListener{
 		int keyCode = e.getKeyCode();
 		switch(keyCode){
 		case KeyEvent.VK_DOWN:
-			
+			if(controller.getTutoralStatus()){
+				controller.setTutorialStatus(false);
+			}
 				controller.getAnimalModelG2().setVelocity(5);
 			
 			
 			break;
 		
 		case KeyEvent.VK_UP:
-			
+			if(controller.getTutoralStatus()){
+				controller.setTutorialStatus(false);
+			}
 			
 				controller.getAnimalModelG2().setVelocity(-5);
 			
@@ -289,5 +326,6 @@ public class Game2View extends JPanel implements KeyListener{
 	public int getAlgaeEaterX(){
 		return algaeEaters.getWidth()/6;
 	}
+	
 	
 }

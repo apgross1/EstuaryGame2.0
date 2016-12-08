@@ -38,6 +38,7 @@ public class Game2Controller {
 	
 	int spawnDelay = 2000; //in milliseconds
 	boolean isStorming = false;
+	boolean tutorialActive;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	int width = (int) screenSize.getWidth();
 	int height = (int) screenSize.getHeight();
@@ -65,7 +66,7 @@ public class Game2Controller {
     	gameFrame.setVisible(true);
     	gameFrame.setResizable(false);
 		gameActive = true;
-
+		tutorialActive = true;
     	
 		startTime = System.currentTimeMillis();
 		long lastTime = System.nanoTime();
@@ -80,12 +81,18 @@ public class Game2Controller {
 			delta += (now-lastTime)/ns;
 			lastTime=now;
 			if(delta>=1){
+				
+				
 				animal.move();
 				view.repaintFrame();
 				updates++;
 				delta--;
+				
 			}
-			
+			if(tutorialActive){
+				
+			}
+			else{
 			frames++;
 			collisionDetection();
 			
@@ -113,7 +120,7 @@ public class Game2Controller {
 			}
 			
 		}
-	
+		}
 	}
 	
 	public boolean getStormStatus(){
@@ -233,6 +240,17 @@ public class Game2Controller {
 
 	public AnimalModelG2 getAnimalModelG2() {
 		return this.animal;
+	}
+
+
+
+	public boolean getTutoralStatus() {
+		
+		return tutorialActive;
+	}
+public void setTutorialStatus(boolean active) {
+		
+		tutorialActive=active;
 	}
 
 
