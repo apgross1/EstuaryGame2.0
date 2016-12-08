@@ -128,12 +128,4 @@ public class GabionWallModelG1 extends WallModelAbstract{
 		activeClamsOnBoard = i;
 		
 	}
-	
-	/*
-	 * Methods below this line are to be removed from common resources 
-	 * once braches are pulled to master.
-	 */
-	@Override
-	public void spawn(boolean gameStart, int numChunksRemoved) {		
-	}
 }

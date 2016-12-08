@@ -124,13 +124,4 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	public void setactiveBlocksOnBoard(int i){
 		activeBlocksOnBoard = i;
 	}
-	
-	/*
-	 * Functions below this line are to be removed from common resources once branches
-	 * are combined
-	 */
-	@Override
-	public void spawn(boolean gameStart, int numChunksRemoved) {		
-	}
-	
 }

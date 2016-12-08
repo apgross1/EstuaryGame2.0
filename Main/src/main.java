@@ -18,6 +18,7 @@ public class main {
 		}
 		
 		//Once the start game button is pressed well get here.
+		
 		System.out.println("Yup, were good.");
 	
 		
