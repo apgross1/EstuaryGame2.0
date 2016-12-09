@@ -72,14 +72,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.setSpeedX(0);
 		this.setSpeedY(0);
 	}
-	
-
-	
-	//Body may need to be deleted
-	@Override
-	public void move() {
-		
-	}
 
 	/**
 	 * Getter for height dimension of animal.

@@ -37,8 +37,7 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 		setLocY((int) (screenHeight/2));
 	}
 	
-	
-	@Override
+
 	public void move() {
 		if(y>charYBoundMax  && velocity<0)
 		{

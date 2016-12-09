@@ -15,8 +15,6 @@ public abstract class AnimalModelAbstract {
 	private HashMap<Direction, ArrayList<BufferedImage>> moveAnimations;
 	private Direction currDir;
 	
-
-	public abstract void move();
 	
 	public int getLocX() {
 		return locX;

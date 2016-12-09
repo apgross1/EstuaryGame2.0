@@ -104,7 +104,6 @@ public class AnimalModel extends AnimalModelAbstract {
 	/**
 	 * Updates the actual location of the animal.
 	 */
-	@Override
 	public void move() {
 		if(getCurrDir() == Direction.EAST){
 			if(getLocX() < (screenWidth-width) + speedX){
