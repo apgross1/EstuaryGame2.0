@@ -387,4 +387,12 @@ public class Game1Tests {
 				assertEquals(process.getBarModel().getStatus(), 0);
 				
 	}
+	@Test
+	public void testisEmpty(){
+		models.BarModelAbstract bar = new models.BarModel();
+		bar.setStatus(100);
+		assertTrue("should be false", bar.isEmpty() == false);
+		bar.setStatus(0);
+		assertTrue("Should be true", bar.isEmpty());
+	}
 }

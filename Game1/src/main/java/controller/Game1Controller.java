@@ -408,6 +408,11 @@ public class Game1Controller{
 		this.gameState = gameState;
 	}
 	
+	/**
+	 * method that determines if youre having too much trouble with the game
+	 * and returns a boolean that says if the difficulty should be lower or not
+	 * @return a bool that determines if the game is too hard for you or not
+	 */
 	public boolean difficulty(){
 		if(bar.getStatus() <= 20 && overallRound < 3){
 			return true;
@@ -416,9 +421,18 @@ public class Game1Controller{
 			return false;
 		}
 	}
+	
+	/**
+	 * a getter for the game1 view for the controller to use 
+	 * @return a view for game 1
+	 */
 	public Game1View getG1view() {
 		return g1view;
 	}
+	/**
+	 * a setter for the game1view for the controller to use
+	 * @param g1view takes in the game 1 view 
+	 */
 	public void setG1view(Game1View g1view) {
 		this.g1view = g1view;
 	}
