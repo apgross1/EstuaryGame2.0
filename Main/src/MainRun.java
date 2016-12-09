@@ -25,7 +25,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -43,6 +45,10 @@ import controller.Game2Controller;
 import controller.Game3Controller;
 
 public class MainRun extends JPanel implements MouseListener, KeyListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	static boolean gameStarted = false;
 	JButton startButton = new JButton("Start Game");
@@ -149,9 +155,13 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		this.frame.getContentPane().removeAll();
 		this.frame.add(backLay);
 		this.frame.add(startScreen);
+		
+		this.frame.addKeyListener(this);
+		
 		this.frame.revalidate();
 		this.frame.repaint();	
 		this.frame.setVisible(true);
+		
     }
 
 	/**
@@ -310,6 +320,19 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 			menuClose = true;
 		}
 	}
+	
+	public void serializeCtls() throws IOException{
+		//Write game one to file 
+		FileOutputStream fout = new FileOutputStream("G:\\game1.ser");
+		ObjectOutputStream oos = new ObjectOutputStream(fout);
+		try {
+			oos.writeObject(g1cont);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -330,8 +353,19 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyPressed(KeyEvent e) {
+	    int keyCode = e.getKeyCode();
+	    switch( keyCode ) {
+	        case KeyEvent.VK_S: // if s is pressed save to file.
+	        	System.out.println("S-Pressed saving seralizing controllers");
+				try{
+					serializeCtls();
+				}catch (IOException e1){
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	            break;
+	    }
 		
 	}
 
