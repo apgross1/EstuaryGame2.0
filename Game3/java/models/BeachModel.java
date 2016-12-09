@@ -17,15 +17,12 @@ import Enums.TestControl;
 import Enums.WaveClusters;
 
 public class BeachModel {
-	private int squareCount;
-	private int landSize;
 	private HashMap<Pair, GridBlock> beachGrid;
 	private HashMap<WaveClusters, List<Pair>> gridLayers;
 	private List<Pair> orderedPairs;
 	private int[][] positionGrid;
 	private Pair gabPair = new Pair(0,0);
 	private Pair concPair = new Pair(0,0);
-	private Timer puTimer;
 	private HashMap<Frames, JComponent> frameMap;
 	private TestControl GameState;
 	
@@ -45,11 +42,8 @@ public class BeachModel {
 	}
 	
 	/**
-	 * Constructor for this element for testing. Initializes the
-	 * i)   beach grid, a hashmap of all (x,y) coordinate pairs and their respective gridblock
-	 * ii)  gridLayrers, a hashmap consisting of the locations of the wave lanes
-	 * iii) positionGrid, a 7x7 grid to  plot int representations of objects on the screen
-	 * iv)  orderedPairs, an ordered arrayList of grid pairs
+	 * Constructor used for testing purposes.
+	 * @param test , TestControl that determines if the BeachModel instance is being created in test-mode or game-mode
 	 */
 	public BeachModel(TestControl test) {
 		beachGrid = new HashMap<Pair,GridBlock>();

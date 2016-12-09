@@ -18,7 +18,11 @@ import java.awt.geom.RectangularShape;
 
 import javax.swing.JFrame;
 
-public class Game1Controller{
+public class Game1Controller implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	//Models
 	private AnimalModel animal = new AnimalModel(screenSize);
@@ -292,7 +296,7 @@ public class Game1Controller{
 	
 	/**
 	 * tells wether the countodwn between rounds is happening
-	 * @return a bool of wether the coutdown is happening or not
+	 * @return a bool of whether the coutdown is happening or not
 	 */
 	public boolean getInCountDown(){
 		return countdown;
@@ -401,8 +405,8 @@ public class Game1Controller{
 	}
 
 	/**
-	 * takes in a game state and uses it to set the overall gameState
-	 * @param gameState of game 1 
+	 * takes in the game state and uses it to set the overall gameState
+	 * @param a bool of the gameState of game 1 
 	 */
 	public void setGameState(boolean gameState) {
 		this.gameState = gameState;
@@ -431,7 +435,7 @@ public class Game1Controller{
 	}
 	/**
 	 * a setter for the game1view for the controller to use
-	 * @param g1view takes in the game 1 view 
+	 * @param takes in the game 1 view 
 	 */
 	public void setG1view(Game1View g1view) {
 		this.g1view = g1view;

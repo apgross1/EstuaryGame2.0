@@ -1,5 +1,9 @@
 package Enums;
 
+/**
+ * @author Andrew
+ *Enum class that refers to the frames used in the game
+ */
 public enum Frames {
 	TIMER(0),
 	ANIMAL(1),

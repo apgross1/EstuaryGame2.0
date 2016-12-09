@@ -3,6 +3,10 @@ package Enums;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Andrew
+ *Enum class that refers to the graphics used in the game
+ */
 public enum AnimGraphics {
 	BLUECRAB_0(0),
 	BLUECRAB_1(1),
@@ -31,6 +35,7 @@ public enum AnimGraphics {
 	RETURN_MAIN_0(24),
 	RETURN_MAIN_1(25);
 	
+   
     private int graphicNum;
 
     private static Map<Integer, AnimGraphics> map = new HashMap<Integer, AnimGraphics>();
