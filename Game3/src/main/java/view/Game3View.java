@@ -171,6 +171,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	 * @param gameF instance of the JFrame shared between all 3 games
 	 */
 	public Game3View(Game3Controller ctl, JFrame gameF){
+		System.out.println("This should be the master");
 		graphicMap = new HashMap<AnimGraphics, BufferedImage>();
 		this.loadImages();
 		
