@@ -892,13 +892,6 @@ public class Game3Tests {
 		
 	}
 	
-	@Test
-	public void AnimalModelGraphicsTest(){
-		AnimalModelG3 animal = new AnimalModelG3();
-		assertTrue(animal.getGraphics().size() == 0);
-		
-	}
-	
 	
 	
 	/*
@@ -1021,14 +1014,6 @@ public class Game3Tests {
 		assertTrue(concrete.getIsActive() == true & concrete.getWidth() == 30 & concrete.getHeight() == 30 & concrete.getViewLocation().getX() == 0 & concrete.getViewLocation().getY() == 0  );
 	}
 	
-	@Test
-	public void ConcPUGraphicsTest(){
-		ConcretePUModel concrete = new ConcretePUModel();
-		HashMap<ConcPUState, ArrayList<BufferedImage>> map = null;
-		concrete.setGraphics(map);
-		assertTrue(concrete.getGraphics() == null);
-		
-	}
 	
 	@Test
 	public void ConcPUModelFramesTest(){
@@ -1150,14 +1135,7 @@ public class Game3Tests {
 		assertTrue(gabion.isPickedUp() == true & gabion.getWallState() == GabPUState.WALL & gabion.getWidth() == 70 & gabion.getHeight() == 150 & gabion.getViewLocation().getX() == 30 & gabion.getViewLocation().getY() == 0 );
 	}
 	
-	@Test
-	public void GabPUGraphicsTest(){
-		GabionPUModel gab = new GabionPUModel();
-		HashMap<GabPUState, ArrayList<BufferedImage>> map = null;
-		gab.setGraphics(map);
-		assertTrue(gab.getGraphics() == null);
-		
-	}
+	
 	
 	@Test
 	public void GabPUModelFramesTest(){
@@ -1240,14 +1218,6 @@ public class Game3Tests {
 		assertTrue(SunHurricane.getInitialPosition() == 768 );
 	}
 	
-	@Test
-	public void SunHurricaneGraphicsTest(){
-		SunHurricaneModel sunHurricane = new SunHurricaneModel();
-		HashMap<String, ArrayList<BufferedImage>> map = null;
-		sunHurricane.setGraphics(map);
-		assertTrue(sunHurricane.getGraphics() == null);
-		
-	}
 	
 	/*
 	public void move() {
@@ -1325,14 +1295,6 @@ public class Game3Tests {
 		assertTrue(tutorial.isDialogueOn() == true);
 	}
 	
-	@Test
-	public void TutorialTest(){
-		Tutorial tutorial = new Tutorial();
-		HashMap<AnimGraphics, ArrayList<BufferedImage>> map = null;
-		tutorial.setGraphicMap(map);
-		assertTrue(tutorial.getGraphicMap() == null);
-		
-	}
 	
 	
 	 /*
@@ -1427,14 +1389,6 @@ public class Game3Tests {
 		assertTrue(water.getGraphicOnDeck() == 30);
 	}
 	
-	@Test
-	public void WaterGraphicsTest(){
-		WaterModel water = new WaterModel("test");
-		ArrayList<BufferedImage> array = null;
-		water.setWaterGraphics(array);
-		assertTrue(water.getWaterGraphics() == null);
-		
-	}
 	
 	/*	
 	

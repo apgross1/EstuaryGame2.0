@@ -1,21 +1,9 @@
 package models;
 
-import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-
-import javax.imageio.ImageIO;
 import javax.swing.JComponent;
-
 import Enums.Frames;
-import enums.Direction;
-import view.Game3View.Animal;
 
 
 
@@ -293,7 +281,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		// TODO Auto-generated method stub
 		FrameHeight = height;
 	}
-
 	public int getFrameHeight() {
 		// TODO Auto-generated method stub
 		return FrameHeight;
@@ -303,7 +290,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		// TODO Auto-generated method stub
 		FrameWidth = width;
 	}
-
 	public int getFrameWidth() {
 		// TODO Auto-generated method stub
 		return FrameWidth;

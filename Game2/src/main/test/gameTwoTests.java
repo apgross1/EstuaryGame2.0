@@ -1,5 +1,8 @@
 import static org.junit.Assert.*;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 
 import org.junit.Test;
@@ -8,6 +11,7 @@ import controller.Game2Controller;
 import models.AlgaeModel;
 import models.AnimalModelG2;
 import models.BarModelG2;
+import view.Game2View;
 
 
 
@@ -434,10 +438,12 @@ public class gameTwoTests {
 	}
 	@Test
 	public void testcollisionOccured(){
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		AnimalModelG2 animal = new AnimalModelG2();
 		AlgaeModel algae = new AlgaeModel();
 		JFrame frame = new JFrame();
 		Game2Controller c = new Game2Controller(frame);
+		
 		animal.setLocX(10);
 		animal.setLocY(10);
 		algae.setLocX(10);

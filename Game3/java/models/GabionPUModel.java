@@ -81,8 +81,6 @@ public class GabionPUModel extends WallModelAbstract {
 		this.wallState = gameState;
 	}
 
-	
-
 	/**
 	 * Gets the location of this element.
 	 * @return a Pair containing the location of this element

@@ -62,6 +62,7 @@ public class SunHurricaneModel {
 	}
 
 
+
 	/**
 	 * Gets the height of the sun/hurricane
 	 * @return height int, the height (y value) of the sun/hurricane

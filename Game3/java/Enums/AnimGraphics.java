@@ -45,8 +45,8 @@ public enum AnimGraphics {
     	graphicNum = num; 
 	}
 
-    public static AnimGraphics valueOf(int legNo) {
-        return map.get(legNo);
+    public static AnimGraphics valueOf(int anim) {
+        return map.get(anim);
     }
     
     public int getVal() {

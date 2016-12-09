@@ -70,8 +70,6 @@ public class Game3Controller {
 	public void runGame()  {
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
-		//animal.addPics();
-		//tutorial.addPics();
 		view = new Game3View(this, gameFrame);
 		
 		
@@ -85,9 +83,6 @@ public class Game3Controller {
 	
 		setSun(sun);
 		setHurricane(hurricane);
-		
-		//this.loadImages();
-		
 		view.addSun();
 		view.addHurricane();
 		this.startTime();

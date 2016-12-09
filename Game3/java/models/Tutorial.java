@@ -26,7 +26,8 @@ public class Tutorial {
 		dialogueOn = false;
 	}
 	
-
+	
+	
 	/**
 	 * Gets the current keyboard picture a series of keyboard pictures that are on a cyclical timer
 	 * @return keyBoardPicOnDeck int, the current keyboard picture a series of keyboard pictures

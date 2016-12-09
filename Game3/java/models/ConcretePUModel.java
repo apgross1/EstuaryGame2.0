@@ -86,6 +86,7 @@ public class ConcretePUModel extends WallModelAbstract {
 		this.isPickedUp = isPickedUp;
 	}
 	
+
 	
 	/**
 	 * Gets the bounds of this element at a single point in time.
