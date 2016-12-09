@@ -44,7 +44,13 @@ public class BeachModel {
 		this.initializeBeach();
 	}
 	
-	//Testing purposes
+	/**
+	 * Constructor for this element for testing. Initializes the
+	 * i)   beach grid, a hashmap of all (x,y) coordinate pairs and their respective gridblock
+	 * ii)  gridLayrers, a hashmap consisting of the locations of the wave lanes
+	 * iii) positionGrid, a 7x7 grid to  plot int representations of objects on the screen
+	 * iv)  orderedPairs, an ordered arrayList of grid pairs
+	 */
 	public BeachModel(TestControl test) {
 		beachGrid = new HashMap<Pair,GridBlock>();
 		gridLayers = new HashMap<WaveClusters, List<Pair>>();
