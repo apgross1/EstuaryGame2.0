@@ -66,7 +66,7 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 	private ArrayList<BufferedImage> startPics = new ArrayList<BufferedImage>();
 	private ArrayList<BufferedImage> exitPics = new ArrayList<BufferedImage>();
 	JLabel startScreen;
-	JPanel backLay = new JPanel(new BorderLayout());
+	//JPanel backLay = new JPanel(new BorderLayout());
 	JButton menuButton;
 	
 	public MainRun(JFrame frame){
@@ -106,11 +106,11 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		startScreen = new JLabel();
 		startScreen.setLayout(new GridBagLayout());
 		
-		backLay.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-		backLay.setSize(new Dimension(frame.getWidth(),frame.getHeight()));
+		///backLay.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		//backLay.setSize(new Dimension(frame.getWidth(),frame.getHeight()));
 		
-		backLay.add(new Animation());
-		backLay.setOpaque(false);
+		//backLay.add(new Animation());
+		//backLay.setOpaque(false);
 		
 		//Defining constraint for background
 		ImageIcon backgroundIcon = new ImageIcon("./Images/2D_estuary_main.png"); 
@@ -130,6 +130,7 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		b1c.weightx = .1;
 		b1c.weighty = 0.1;
 		menuButton.addMouseListener(this);
+		menuButton.addKeyListener(this);
 		startScreen.add(menuButton, b1c);
 		
 		JButton exitButton = new JButton(new ImageIcon(exitGame_0));
@@ -153,11 +154,8 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setResizable(false);
 		this.frame.getContentPane().removeAll();
-		this.frame.add(backLay);
-		this.frame.add(startScreen);
-		
-		this.frame.addKeyListener(this);
-		
+		//this.frame.add(backLay);
+		this.frame.add(startScreen);		
 		this.frame.revalidate();
 		this.frame.repaint();	
 		this.frame.setVisible(true);
@@ -165,8 +163,8 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
     }
 
 	/**
-	 * used to set the animation for the character across the main screen,
-	 * also paints the text for our game title
+	 * used in old version to to set the animation for the character across the main screen,
+	 * not used in final project.
 	 *
 	 */
 	public class Animation extends JComponent {
@@ -296,6 +294,7 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		//System.out.println("Button Pressed");
 		JButton button = (JButton) e.getSource();
 		if(button.getName() == "exit") {
 			button.setIcon(new ImageIcon(exitPics.get(1)));
@@ -319,6 +318,23 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 			System.out.println("Game Starting!");
 			menuClose = true;
 		}
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		System.out.println("Key Pressed");
+	    int keyCode = e.getKeyCode();
+	    switch( keyCode ) {
+	        case KeyEvent.VK_S: // if s is pressed save to file.
+	        	System.out.println("S-Pressed saving seralizing controllers");
+				try{
+					serializeCtls();
+				}catch (IOException e1){
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	            break;
+	    }	
 	}
 	
 	public void serializeCtls() throws IOException{
@@ -349,23 +365,6 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-	    int keyCode = e.getKeyCode();
-	    switch( keyCode ) {
-	        case KeyEvent.VK_S: // if s is pressed save to file.
-	        	System.out.println("S-Pressed saving seralizing controllers");
-				try{
-					serializeCtls();
-				}catch (IOException e1){
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-	            break;
-	    }
 		
 	}
 
