@@ -43,6 +43,7 @@ import org.junit.Test;
 
 import Enums.AnimGraphics;
 import Enums.Frames;
+import Enums.TestControl;
 import Enums.WaveClusters;
 import controller.Game3Controller;
 import enums.Walls;
@@ -70,7 +71,7 @@ public class Game3Tests {
 	@Test
 	public void testSpawnConc(){
 		
-		BeachModel beach = new BeachModel("test");
+		BeachModel beach = new BeachModel(TestControl.TEST);
 		ArrayList<Pair> pairList = beach.generatePPUL();
 		Collections.sort(pairList, new PairComparator());
 		
@@ -79,7 +80,7 @@ public class Game3Tests {
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
 			//System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
-			GridBlock g = new GridBlock(tempPair, beach, "test");
+			GridBlock g = new GridBlock(tempPair, beach, TestControl.TEST);
 			
 			g.setLocation(tempPair);
 			beach.getBeachGrid().put(tempPair, g);
@@ -119,7 +120,7 @@ public class Game3Tests {
 			beach.setConcPair(pair);
 			ConcretePUModel tempConcr = new ConcretePUModel();
 			tempConcr.setFrameMap(beach.getFrameMap());
-			tempConcr.setLocation(beach.findPairInGrid(pair),"test");
+			tempConcr.setLocation(beach.findPairInGrid(pair), TestControl.TEST);
 			tempConcr.setActive(true);
 			
 			
@@ -166,7 +167,7 @@ public class Game3Tests {
 	//Testing spawnGab (adding gab wall to board)
 	@Test
 	public void testSpawnGab(){
-		BeachModel beach = new BeachModel("test");
+		BeachModel beach = new BeachModel(TestControl.TEST);
 		ArrayList<Pair> pairList = beach.generatePPUL();
 		Collections.sort(pairList, new PairComparator());
 		
@@ -175,7 +176,7 @@ public class Game3Tests {
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
 			//System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
-			GridBlock g = new GridBlock(tempPair, beach, "test");
+			GridBlock g = new GridBlock(tempPair, beach, TestControl.TEST);
 			
 			g.setLocation(tempPair);
 			beach.getBeachGrid().put(tempPair, g);
@@ -215,7 +216,7 @@ public class Game3Tests {
 			beach.setGabPair(pair);
 			GabionPUModel tempGab = new GabionPUModel();
 			tempGab.setFrameMap(beach.getFrameMap());
-			tempGab.setLocation(beach.findPairInGrid(pair),"test");
+			tempGab.setLocation(beach.findPairInGrid(pair),TestControl.TEST);
 			tempGab.setIsActive(true);
 			
 			
@@ -259,7 +260,7 @@ public class Game3Tests {
 	//Testing intialization
 	@Test
 	public void testInitBeach() {
-		BeachModel beach = new BeachModel("Tests");
+		BeachModel beach = new BeachModel(TestControl.TEST);
 		ArrayList<Pair> pairList = beach.generatePPUL();
 		Collections.sort(pairList, new PairComparator());
 		
@@ -267,7 +268,7 @@ public class Game3Tests {
 		
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			GridBlock g = new GridBlock(tempPair, beach, "test");
+			GridBlock g = new GridBlock(tempPair, beach, TestControl.TEST);
 			
 			g.setLocation(tempPair);
 			beach.getBeachGrid().put(tempPair, g);
@@ -304,7 +305,7 @@ public class Game3Tests {
 	//Testing PPUL generator (Possible Power-Up Location)
 	@Test
 	public void testGeneratePPUL() {
-		BeachModel beach = new BeachModel("Tests");
+		BeachModel beach = new BeachModel(TestControl.TEST);
 		ArrayList<Pair> pairList = beach.generatePPUL();
 		Collections.sort(pairList, new PairComparator());
 		
@@ -312,7 +313,7 @@ public class Game3Tests {
 		
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			GridBlock g = new GridBlock(tempPair, beach, "test");
+			GridBlock g = new GridBlock(tempPair, beach, TestControl.TEST);
 			
 			g.setLocation(tempPair);
 			beach.getBeachGrid().put(tempPair, g);
@@ -342,7 +343,7 @@ public class Game3Tests {
 			}
 		}
 		
-		beach.removeSquare((new Pair(3,5)), "Test"); //Low-level
+		beach.removeSquare((new Pair(3,5)), TestControl.TEST); //Low-level
 		ArrayList<Pair> newppul = beach.generatePPUL();
 		assertTrue("New list should have less combos...", ppul.size() > newppul.size());
 //Taken from here		
@@ -359,7 +360,7 @@ public class Game3Tests {
 			beach.setGabPair(pair);
 			GabionPUModel tempGab = new GabionPUModel();
 			tempGab.setFrameMap(beach.getFrameMap());
-			tempGab.setLocation(beach.findPairInGrid(pair),"test");
+			tempGab.setLocation(beach.findPairInGrid(pair),TestControl.TEST);
 			tempGab.setIsActive(true);
 			
 			
@@ -380,7 +381,7 @@ public class Game3Tests {
 			beach.setConcPair(pair2);
 			ConcretePUModel tempConcr = new ConcretePUModel();
 			tempConcr.setFrameMap(beach.getFrameMap());
-			tempConcr.setLocation(beach.findPairInGrid(pair2), "test");
+			tempConcr.setLocation(beach.findPairInGrid(pair2), TestControl.TEST);
 			tempConcr.setActive(true);
 			
 			
@@ -402,35 +403,14 @@ public class Game3Tests {
 		ppul = beach.generatePPUL();
 		//This test may be tied to test on line 423 so if it fails anytime later testing this then it is conected to 423
 		assertTrue("New PostPU list should have equal combos than modified list...", listPostPUSpawn.size() == ppul.size());
-		
-		/*
-		 *Will need to come back to 
-		Pair puBlock = null;
-		for(GridBlock val : beach.getBeachGrid().values()) {
-			if(val.getConcrPU().getIsActive() == true) {
-				System.out.println("here");
-				puBlock = val.getConcrPU().getLocation();
-				System.out.println(puBlock.getX());
-				System.out.println(puBlock.getY());
-			}
-		}
-		
-		beach.removeConcrPU(puBlock);
-		Collection<Pair> listPostRemovePU = beach.generatePPUL();
-
-		assertTrue("New list should be one less", listPostRemovePU.size() > listPostPUSpawn.size());
-		
-		*/
-		
 	}
-	
 	
 	
 	//Testing removal of square/position on grid
 	//Spot filled by wave
 	@Test
 	public void testTileRemove() {
-		BeachModel beach = new BeachModel("Tests");
+		BeachModel beach = new BeachModel(TestControl.TEST);
 		ArrayList<Pair> pairList = beach.generatePPUL();
 		Collections.sort(pairList, new PairComparator());
 		
@@ -438,7 +418,7 @@ public class Game3Tests {
 		
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			GridBlock g = new GridBlock(tempPair, beach, "test");
+			GridBlock g = new GridBlock(tempPair, beach, TestControl.TEST);
 			
 			g.setLocation(tempPair);
 			beach.getBeachGrid().put(tempPair, g);
@@ -469,7 +449,7 @@ public class Game3Tests {
 		}
 		
 		Pair pair = new Pair(3,5);
-		beach.removeSquare(pair, "test");
+		beach.removeSquare(pair, TestControl.TEST);
 		ArrayList<Pair> newppul = beach.generatePPUL();
 		assertTrue("New list should have less combos...", ppul.size() > newppul.size());
 		
@@ -479,22 +459,6 @@ public class Game3Tests {
 	}
 	
 	
-	
-	/*
-	@Test
-	public void testWaveHit(){
-		ConcretePUModel conc = new ConcretePUModel();
-		GabionPUModel gab = new GabionPUModel();
-		conc.setActive(true);
-		gab.setIsActive(true);
-		
-		assertTrue("False", conc.getIsActive() == false);
-		assertTrue("True", gab.getIsActive() == true);
-		
-		
-	}
-	
-	*/
 	
 	/*
 	//AnimalModel
@@ -510,7 +474,7 @@ public class Game3Tests {
 		
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			GridBlock g = new GridBlock(tempPair, beach, "test");
+			GridBlock g = new GridBlock(tempPair, beach, TestControl.TEST);
 			
 			g.setLocation(tempPair);
 			beach.getBeachGrid().put(tempPair, g);
@@ -541,7 +505,7 @@ public class Game3Tests {
 		}
 		
 		Pair pair = new Pair(3,5);
-		beach.removeSquare(pair, "test");
+		beach.removeSquare(pair, TestControl.TEST);
 		
 		animal.setBeachLocation(new Pair(3,5));
 		
@@ -566,7 +530,7 @@ public class Game3Tests {
 		
 		
 		Pair location = new Pair(0,1);
-		concPU.setLocation(location, "test");
+		concPU.setLocation(location, TestControl.TEST);
 		concPU.setActive(true);
 		concPU.setPickedUp(false); 
 		gabPU.setLocationTest(new Pair(3,5));
@@ -580,7 +544,7 @@ public class Game3Tests {
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
 			//System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
-			GridBlock g = new GridBlock(tempPair, controller.getBeach(), "test");
+			GridBlock g = new GridBlock(tempPair, controller.getBeach(), TestControl.TEST);
 			
 			g.setLocation(tempPair);
 			controller.getBeach().getBeachGrid().put(tempPair, g);
@@ -894,40 +858,6 @@ public class Game3Tests {
 	
 	
 	
-	/*
-	
-	public void addPics(){
-
-		try{
-		ArrayList<BufferedImage> moveAnimations = new ArrayList<BufferedImage>();
-		BufferedImage bufferedImage1 = ImageIO.read(new File("./Images/Game3/bluecrab_0.png"));
-		moveAnimations.add(bufferedImage1);
-		BufferedImage bufferedImage2 = ImageIO.read(new File("./Images/Game3/bluecrab_1.png"));
-		moveAnimations.add(bufferedImage2);
-		BufferedImage bufferedImage3 = ImageIO.read(new File("./Images/Game3/bluecrab_2.png"));
-		moveAnimations.add(bufferedImage3);
-		graphics.put("MOVE", moveAnimations);
-		graphicOnDeck = 0;
-		}
-		catch(IOException e) {
-    		e.printStackTrace();
-    	}
-		
-	}
-	
-	public void findBeachLocation() {
-		int tileHeight = ((frames.get(Frames.SHORE).getHeight()))/7;
-		int tileWidth = ((frames.get(Frames.ANIMAL).getWidth()+frames.get(Frames.SHORE).getWidth()))/7;
-		
-		
-		this.beachLocation.setX((int)(Math.floor(this.getLocX())/tileWidth));
-		this.beachLocation.setY((int)(Math.ceil(this.getLocY())/tileHeight));
-		
-		
-	}
-	
-	*/
-	
 	
 	//Concrete Model Tests
 
@@ -955,7 +885,7 @@ public class Game3Tests {
 	public void LocationTest(){
 		ConcretePUModel concrete = new ConcretePUModel();
 		Pair location = new Pair(3,5);
-		concrete.setLocation(location, "test");
+		concrete.setLocation(location, TestControl.TEST);
 		assertTrue(concrete.getLocation() == location);
 	}
 	
@@ -1023,67 +953,7 @@ public class Game3Tests {
 		assertTrue(concrete.getFrameMap() == null);
 		}
 	
-	/*
 	
-	public BufferedImage getPowerUp() {
-		return powerUp;
-	}
-
-	public void setPowerUp(BufferedImage powerUp) {
-		this.powerUp = powerUp;
-	}
-
-	public BufferedImage getWall() {
-		return wall;
-	}
-
-	public void setWall(BufferedImage wall) {
-		this.wall = wall;
-	}
-	public void addPics() {
-		try{
-			ArrayList<BufferedImage> wallGraphic = new ArrayList<BufferedImage>();
-			BufferedImage concreteWall = ImageIO.read(new File("./Images/Game3/ConcreteWall.png"));
-			wallGraphic.add(concreteWall);
-			
-			ArrayList<BufferedImage> puGraphic = new ArrayList<BufferedImage>();
-			BufferedImage pu = ImageIO.read(new File("./Images/Game3/ConcretePU.png"));
-			puGraphic.add(pu);
-			
-			graphics.put(ConcPUState.WALL, wallGraphic);
-			graphics.put(ConcPUState.POWER_UP, puGraphic);
-			}
-			catch(IOException e) {
-	    		e.printStackTrace();
-	    	}
-	}
-	
-		public Pair getViewLocation() {
-		return viewLocation;
-	}
-	public void setViewLocation(Pair viewLocation) {
-		int tileWidth = (int)((frameMap.get(Frames.ANIMAL).getWidth()+frameMap.get(Frames.SHORE).getWidth())/7);
-		int tileHeight = (int)(frameMap.get(Frames.SHORE).getHeight()/7);
-		if(location.getX() == 0 && location.getY() == 0){
-			this.viewLocation.setX((int)(((location.getX()))*tileWidth) + 10);
-			this.viewLocation.setY((int)(location.getY())*tileHeight + 10);
-		}
-		else if(location.getX() == 0){
-			this.viewLocation.setX((int)(((location.getX()))*tileWidth) + 1);
-			this.viewLocation.setY((int)(location.getY())*tileHeight);	
-		}
-		else if(location.getY() == 0){
-			this.viewLocation.setX((int)((location.getX()))*tileWidth);
-			this.viewLocation.setY((int)((location.getY())*tileHeight) + 1);
-		}
-	
-		else{
-			this.viewLocation.setX((int)((location.getX()))*tileWidth);
-			this.viewLocation.setY((int)(location.getY())*tileHeight);
-		}
-	}
-	
-	*/
 	//Gabion Tests
 	
 	@Test
@@ -1099,7 +969,7 @@ public class Game3Tests {
 	public void GabPULocationTest(){
 		GabionPUModel gabion = new GabionPUModel();
 		Pair location = new Pair(3,5);
-		gabion.setLocation(location, "test");
+		gabion.setLocation(location, TestControl.TEST);
 		assertTrue(gabion.getLocation() == location);
 	}
 	
@@ -1145,40 +1015,6 @@ public class Game3Tests {
 		assertTrue(gab.getFrameMap() == null);
 		}
 	
-	/*
-	public BufferedImage getWall() {
-		return wall;
-	}
-	public void setWall(BufferedImage wall) {
-		this.wall = wall;
-	}
-	public BufferedImage getPowerUp() {
-		return powerUp;
-	}
-	public void setPowerUp(BufferedImage powerUp) {
-		this.powerUp = powerUp;
-	}
-	
-	public void addPics() {
-		try{
-			ArrayList<BufferedImage> wallGraphic = new ArrayList<BufferedImage>();
-			BufferedImage concreteWall = ImageIO.read(new File("./Images/Game3/GabionWall.png"));
-			wallGraphic.add(concreteWall);
-			
-			ArrayList<BufferedImage> puGraphic = new ArrayList<BufferedImage>();
-			BufferedImage pu = ImageIO.read(new File("./Images/Game3/GabionPU.png"));
-			puGraphic.add(pu);
-			
-			graphics.put(GabPUState.WALL, wallGraphic);
-			graphics.put(GabPUState.POWER_UP, puGraphic);
-			}
-			catch(IOException e) {
-	    		e.printStackTrace();
-	    }
-	}
-
-*/
-	
 	//SunHurricane Tests
 	@Test
 	public void SunHurricaneBoundsTest(){
@@ -1219,51 +1055,6 @@ public class Game3Tests {
 	}
 	
 	
-	/*
-	public void move() {
-		location.setX(location.getX()-2);
-		location.setY(this.calculateY(location.getX()));
-		
-	}
-	
-	
-	public int calculateY(int x) {
-		//System.out.println("Panel height is: " + panel.getHeight());
-		int y = (int)(-1*(panel.getHeight()*(Math.sin(((.00165)*x)))) + panel.getHeight());
-		
-		return y;
-	}
-
-	
-	public void addPics() {
-		ArrayList<BufferedImage> sun = new ArrayList<BufferedImage>();
-		ArrayList<BufferedImage> cloudStates = new ArrayList<BufferedImage>();
-		try {
-			BufferedImage sunPic = ImageIO.read(new File("./Images/Game3/glowingbg.png"));
-			sun.add(sunPic);
-			
-			BufferedImage hurrAngry = ImageIO.read(new File("./Images/Game3/angry_cloud.png"));
-			BufferedImage hurrScared = ImageIO.read(new File("./Images/Game3/dismayed_cloud.png"));
-			cloudStates.add(hurrAngry); cloudStates.add(hurrScared);
-			
-			graphics.put("SUN", sun);
-			graphics.put("HURRICANE", cloudStates);
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public JPanel getPanel() {
-		return panel;
-	}
-
-	public void setPanel(JPanel panel) {
-		this.panel = panel;
-	}
-	 
-	 */
 	
 	//Tutorial
 	
@@ -1297,49 +1088,7 @@ public class Game3Tests {
 	
 	
 	
-	 /*
-	public void addPics() {
-		try{
-			//Adding keyboard graphics
-			ArrayList<BufferedImage> keyBoardPics = new ArrayList<BufferedImage>();
-			BufferedImage key_pic_0 = ImageIO.read(new File("./Images/Game3/key_press_0.png"));
-			BufferedImage key_pic_1 = ImageIO.read(new File("./Images/Game3/key_press_1.png"));
-			BufferedImage key_pic_2 = ImageIO.read(new File("./Images/Game3/key_press_2.png"));
-			BufferedImage key_pic_3 = ImageIO.read(new File("./Images/Game3/key_press_3.png"));
-			BufferedImage key_pic_4 = ImageIO.read(new File("./Images/Game3/key_press_4.png"));
-			keyBoardPics.add(key_pic_0);
-			keyBoardPics.add(key_pic_1);
-			keyBoardPics.add(key_pic_2);
-			keyBoardPics.add(key_pic_3);
-			keyBoardPics.add(key_pic_4);
-			
-			//Adding 'X'
-			ArrayList<BufferedImage> xPic = new ArrayList<BufferedImage>();
-			BufferedImage x = ImageIO.read(new File("./Images/Game3/x.png"));
-			xPic.add(x);
-			
-			//Adding arrow
-			ArrayList<BufferedImage> arrowPic = new ArrayList<BufferedImage>();
-			BufferedImage arrow = ImageIO.read(new File("./Images/Game3/green_arrow.png"));
-			arrowPic.add(arrow);
-			
-			//Adding final dialogue
-			ArrayList<BufferedImage> dialoguePic = new ArrayList<BufferedImage>();
-			BufferedImage dialogue = ImageIO.read(new File("./Images/Game3/Dialogue2.png"));
-			dialoguePic.add(dialogue);
-			
-			graphicMap.put(AnimGraphics.KEYBOARD, keyBoardPics);
-			graphicMap.put(AnimGraphics.BIG_X, xPic);
-			graphicMap.put(AnimGraphics.ARROW, arrowPic);
-			graphicMap.put(AnimGraphics.DIALOGUE, dialoguePic);
-			}
-			catch(IOException e) {
-	    		e.printStackTrace();
-	    	}
-	}
- 
-	
-	*/
+	 
 	
 	//WaterModel
 	
@@ -1355,13 +1104,13 @@ public class Game3Tests {
 	
 	@Test
 	public void WaterModelBoundsTest(){
-		WaterModel water = new WaterModel("test");
+		WaterModel water = new WaterModel(TestControl.TEST);
 		assertTrue(water.getBounds().getX() == 0 & water.getBounds().getY() == 0 & water.getBounds().getWidth() == 30 & water.getBounds().getHeight() == 30);
 	}
 	
 	@Test
 	public void WaterModelHeightTest(){
-		WaterModel water = new WaterModel("test");
+		WaterModel water = new WaterModel(TestControl.TEST);
 		water.setHeight(30);
 		assertTrue(water.getHeight() == 30);
 	}
@@ -1369,14 +1118,14 @@ public class Game3Tests {
 
 	@Test
 	public void WaterModelWidthTest(){
-		WaterModel water = new WaterModel("test");
+		WaterModel water = new WaterModel(TestControl.TEST);
 		water.setWidth(30);
 		assertTrue(water.getWidth() == 30);
 	}
 	
 	@Test
 	public void WaterModelActiveTest(){
-		WaterModel water = new WaterModel("test");
+		WaterModel water = new WaterModel(TestControl.TEST);
 		water.setActive(true);
 		assertTrue(water.isActive() == true);
 	}
@@ -1384,39 +1133,47 @@ public class Game3Tests {
 	
 	@Test
 	public void WaterModelGraphicOnDeckTest(){
-		WaterModel water = new WaterModel("test");
+		WaterModel water = new WaterModel(TestControl.TEST);
 		water.setGraphicOnDeck(30);
 		assertTrue(water.getGraphicOnDeck() == 30);
 	}
 	
 	
-	/*	
-	
-	public void addPics() {
-		try{
-			waterGraphics = new ArrayList<BufferedImage>();
-			BufferedImage bufferedImage1 = ImageIO.read(new File("./Images/Game3/sand_with_water.png"));
-			waterGraphics.add(bufferedImage1);
-			BufferedImage bufferedImage2 = ImageIO.read(new File("./Images/Game3/tile_water_C.png"));
-			waterGraphics.add(bufferedImage2);
-			graphicOnDeck = 0;
-			}
-			catch(IOException e) {
-	    		e.printStackTrace();
-	    	}
-			
-	}
-	 */
 	
 	//WaveModel
-	
-	/*
 	@Test
-	public void WaveModelSpawnTest(){
-		WaveModel wave = new WaveModel();
+	public void RandomSpawnTest() {
+		int blockOneMin = 0, blockOneMax = 1000/7;
+		int blockTwoMin = blockOneMax+1, blockTwoMax = blockOneMax*2;
+		int blockThreeMin = blockTwoMax+1, blockThreeMax = blockOneMax*3;
+		int blockFourMin = blockThreeMax+1, blockFourMax = blockOneMax*4;
+		int blockFiveMin = blockFourMax+1, blockFiveMax = blockOneMax*5;
+		//Testing cluster 1
+		WaveModel wave = new WaveModel(WaveClusters.CLUSTER_ONE.getWaveID(),new HashMap<Frames, JComponent>(), TestControl.TEST);
+		assertTrue((wave.getLocation().getY() >= blockOneMin) && (wave.getLocation().getY() <= blockOneMax));
+		
+		//Testing cluster 2
+		wave.setClusterGroup(WaveClusters.CLUSTER_TWO);
+		wave.randomSpawn(wave.getClusterGroup().getWaveID());
+		assertTrue((wave.getLocation().getY() >= blockTwoMin) && (wave.getLocation().getY() <= blockTwoMax));
+	
+		//Testing cluster 3
+		wave.setClusterGroup(WaveClusters.CLUSTER_THREE);
+		wave.randomSpawn(wave.getClusterGroup().getWaveID());
+		assertTrue((wave.getLocation().getY() >= blockThreeMin) && (wave.getLocation().getY() <= blockThreeMax));
+		
+		//Testing cluster 4
+		wave.setClusterGroup(WaveClusters.CLUSTER_FOUR);
+		wave.randomSpawn(wave.getClusterGroup().getWaveID());
+		assertTrue((wave.getLocation().getY() >= blockFourMin) && (wave.getLocation().getY() <= blockFourMax));
+		
+		//Testing cluster 5
+		wave.setClusterGroup(WaveClusters.CLUSTER_FIVE);
+		wave.randomSpawn(wave.getClusterGroup().getWaveID());
+		assertTrue((wave.getLocation().getY() >= blockFiveMin) && (wave.getLocation().getY() <= blockFiveMax));
 		
 	}
-	*/
+	
 	
 	@Test
 	public void WaveStatePauseTest(){
@@ -1511,90 +1268,11 @@ public class Game3Tests {
 		assertTrue(wave.getFrames() == null);
 	}
 	
-	
-	/*
-	
-	public void randomSpawn(int clusterVal) {
-		WaveClusters waveEnum = WaveClusters.values()[clusterVal];
-		setClusterGroup(waveEnum);
-		location = new Pair(0,0);
-
-		//Change 250 to make it dynamic (should be width of the shore line)
-		location.setX((int)(screenSizeX - 250) + (int)(Math.random() * 500));
-		
-		int beachHeight = frames.get(Frames.SHORE).getHeight();
-		int blockOneMin = 0, blockOneMax = beachHeight/7;
-		int blockTwoMin = blockOneMax+1, blockTwoMax = blockOneMax*2;
-		int blockThreeMin = blockTwoMax+1, blockThreeMax = blockOneMax*3;
-		int blockFourMin = blockThreeMax+1, blockFourMax = blockOneMax*4;
-		int blockFiveMin = blockFourMax+1, blockFiveMax = blockOneMax*5;
-		int blockSixMin = blockFiveMin+1, blockSixMax = blockOneMax*6;
-		int blockSevenMin = blockSixMin+1, blockSevenMax = blockOneMax*7;
-		
-		
-		switch(clusterGroup){
-			case CLUSTER_ONE:
-				location.setY(blockOneMin + (int)(Math.random() * (((blockOneMax - blockOneMin) + 1))));
-				break;
-			case CLUSTER_TWO:
-				location.setY(blockTwoMin + (int)(Math.random() * (((blockTwoMax - blockTwoMin) + 1))));
-				break;
-			case CLUSTER_THREE:
-				location.setY(blockThreeMin + (int)(Math.random() * (((blockThreeMax - blockThreeMin) + 1))));
-				break;
-			case CLUSTER_FOUR:
-				location.setY(blockFourMin + (int)(Math.random() * (((blockFourMax - blockFourMin) + 1))));
-				break;
-			case CLUSTER_FIVE:
-				location.setY(blockFiveMin + (int)(Math.random() * (((blockFiveMax - blockFiveMin) + 1))));
-				break;
-		}
-	
-	}
-	
-	
-	ActionListener movementTimer = new ActionListener() {
-
-		@Override
-
-		public void actionPerformed(ActionEvent e) {
-
-			if(!isReceed()) {
-				if(wavePause) {
-					setVelocity(0);
-				}
-				else{
-					setVelocity((int)((screenSizeX*.3125)/(movement)));
-				}
-				location.setX((int)(location.getX()-getVelocity()));
-				
-				movement += 1;
-			}
-			else {
-				if(wavePause) {
-					setVelocity(0);
-				}
-				else{
-					setVelocity((int)((screenSizeX*.3125/(movement))));
-				}
-				
-				location.setX((int)(location.getX()+velocity));
-				//accelerator = -1*accelerator;
-				movement -= 1; 
-				
-			}
-			Object time = e.getSource();
-			Timer myTime = (Timer) time;
-		}
-	};
-	
-	*/
-	
 	//BeachModel
 	
 	@Test
 	public void BeachModelFrameMapTest(){
-		BeachModel beach = new BeachModel("test");
+		BeachModel beach = new BeachModel(TestControl.TEST);
 		HashMap<Frames, JComponent> map = null;
 		beach.setFrameMap(map);
 		assertTrue(beach.getFrameMap() == null);
@@ -1603,7 +1281,7 @@ public class Game3Tests {
 	@Test
 	public void BeachModelInitializebeachTest(){
 		
-		BeachModel beach = new BeachModel("test");
+		BeachModel beach = new BeachModel(TestControl.TEST);
 		beach.initializeBeach();
 		
 		assertTrue(beach.generatePPUL().size() == 49);
@@ -1621,8 +1299,7 @@ public class Game3Tests {
 	
 	@Test
 	public void BeachModelGabPUTest(){
-		BeachModel beach = new BeachModel("test");
-		beach.setGameState("test");
+		BeachModel beach = new BeachModel(TestControl.TEST);
 		beach.initializeBeach();
 		beach.spawnGabPU(beach.generatePPUL(), true);
 		assertTrue(beach.generatePPUL().size() == 48);
@@ -1634,8 +1311,8 @@ public class Game3Tests {
 	
 	@Test
 	public void BeachModelSpawnConcretePUTest(){
-		BeachModel beach = new BeachModel("test");
-		beach.setGameState("test");
+		BeachModel beach = new BeachModel(TestControl.TEST);
+		beach.setGameState(TestControl.TEST);
 		beach.initializeBeach();
 		beach.spawnConcrPU(beach.generatePPUL());
 		assertTrue(beach.generatePPUL().size() == 48);
@@ -1648,7 +1325,7 @@ public class Game3Tests {
 	
 	@Test
 	public void BeachModelOrderedPairsTest(){
-		BeachModel beach = new BeachModel("test");
+		BeachModel beach = new BeachModel(TestControl.TEST);
 		List<Pair> pair = null;
 		beach.setOrderedPairs(pair);
 		assertTrue(beach.getOrderedPairs() == null);
@@ -1656,7 +1333,7 @@ public class Game3Tests {
 	
 	@Test
 	public void BeachModelGridLayersTest(){
-		BeachModel beach = new BeachModel("test");
+		BeachModel beach = new BeachModel(TestControl.TEST);
 		HashMap<WaveClusters, List<Pair>> map = null;
 		beach.setGridLayers(map);
 		assertTrue(beach.getGridLayers() == null);
@@ -1664,7 +1341,7 @@ public class Game3Tests {
 	
 	@Test
 	public void BeachModelPositionGridTest(){
-		BeachModel beach = new BeachModel("test");
+		BeachModel beach = new BeachModel(TestControl.TEST);
 		int[][] array = null;
 		beach.setPositionGrid(array);
 		assertTrue(beach.getPositionGrid() == null);
@@ -1672,11 +1349,70 @@ public class Game3Tests {
 	
 	@Test
 	public void BeachModelBeachGridTest(){
-		BeachModel beach = new BeachModel("test");
+		BeachModel beach = new BeachModel(TestControl.TEST);
 		HashMap<Pair, GridBlock> map = null;
 		beach.setBeachGrid(map);
 		assertTrue(beach.getBeachGrid() == null);
 
 	}
+	
+	//GridBlock tests
+	@Test
+	public void GridBlockConstructorTest() {
+		ConcretePUModel concr = new ConcretePUModel();
+		Pair p = new Pair(1,1);
+		GridBlock gb1 = new GridBlock(concr, p);
+		assertFalse(gb1.getGabPU().getIsActive());
+		assertTrue(gb1.getConcrPU().getIsActive());
+		assertTrue(gb1.getConcrPU().equals(concr));
+		assertTrue(gb1.getConcrPU().getLocation().equals(p));
+		assertTrue(gb1.getViewLocation().equals(p));
+		assertFalse(gb1.isVacant());
+		
+		GabionPUModel gab = new GabionPUModel();
+		GridBlock gb2 = new GridBlock(gab, p);
+		assertFalse(gb2.getConcrPU().getIsActive());
+		assertTrue(gb2.getGabPU().getIsActive());
+		assertTrue(gb2.getGabPU().equals(gab));
+		assertTrue(gb2.getGabPU().getLocation().equals(p));
+		assertTrue(gb2.getViewLocation().equals(p));
+		assertFalse(gb2.isVacant());
+		
+		
+		BeachModel b = new BeachModel();
+		GridBlock gb3 = new GridBlock(b,TestControl.TEST);
+		assertTrue(gb3.getWater() != null);
+		assertFalse(gb3.getGabPU().getIsActive());
+		assertFalse(gb3.getConcrPU().getIsActive());
+		assertTrue(gb3.isVacant());
+		assertTrue(gb3.getWidth() == 200);
+		assertTrue(gb3.getHeight() == 200);
+		
+		GridBlock gb4 = new GridBlock(p,b,TestControl.TEST);
+		assertFalse(gb4.getGabPU().getIsActive());
+		assertTrue(gb4.getLocation().equals(p));
+		assertFalse(gb4.getConcrPU().getIsActive());
+		assertTrue(gb4.getHeight() == 200);
+		assertTrue(gb4.getWidth() == 200);
+	}
+	
+	@Test
+	public void GridBlockSetWaterTest() {
+		WaterModel w = new WaterModel(TestControl.TEST);
+		BeachModel b = new BeachModel();
+		Pair p = new Pair(1,1);
+		GridBlock gb = new GridBlock(p,b);
+		gb.setWater(w, p);
+		
+		assertFalse(gb.getGabPU().getIsActive());
+		assertFalse(gb.getConcrPU().getIsActive());
+		assertTrue(gb.getWater().getLocation().equals(p));
+		assertTrue(gb.getWater().equals(w));
+		assertTrue(gb.getWater().isActive());
+		assertFalse(gb.isVacant());
+		assertTrue(b.getPositionGrid()[p.getY()][p.getX()] == 2);
+	}
+	
+	
 	
 }

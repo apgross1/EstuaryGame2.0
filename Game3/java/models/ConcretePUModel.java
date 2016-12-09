@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 import Enums.Frames;
+import Enums.TestControl;
 import models.GabionPUModel.GabPUState;
 
 
@@ -234,8 +235,8 @@ public class ConcretePUModel extends WallModelAbstract {
 	 * @param test String used to change the functionality of this
 	 * method given its truth value 
 	 */
-	public void setLocation(Pair location, String test) {
-		if(test == "test"){
+	public void setLocation(Pair location, TestControl test) {
+		if(test == TestControl.TEST){
 			this.location = location;
 		}
 		else{
@@ -243,11 +244,7 @@ public class ConcretePUModel extends WallModelAbstract {
 			this.setViewLocation(location);
 		}
 	}
-	
-	//Testing purposes
-	public void setLocationTest(Pair location) {
-		this.location = location;
-	}
+
 	
 	
 	@Override

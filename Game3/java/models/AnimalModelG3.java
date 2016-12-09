@@ -38,27 +38,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	
 	}
 	
-	
-	/**
-	 * Controls the movement of the animal.
-	 * It contains a conditional statement that allows
-	 * movement of the animal if it is:
-	 * 1) Within the bounds of the beach
-	 * 2) Not hitting a gabion/concrete wall
-	 * 3) Not restricted by the tutorial
-	 */
-	public void tick(){
-		if (((getLocY() + speedY >= 0) & (this.getBounds().getMaxX() + speedX <= frames.get(Frames.ANIMAL).getWidth())) && 
-		   ((this.getBounds().getMaxY() + speedY <= frames.get(Frames.ANIMAL).getHeight()) & getLocX()+ speedX >= 0)
-			&& (!this.isWallHit()) && (!isRestrictedMovement())) {
-			 graphicOnDeck = (graphicOnDeck+1) % 3;
-			
-			this.setLocX(this.getLocX() + speedX);
-			this.setLocY(this.getLocY() + speedY);
-		}
-	}
-	
-	
 	/**
 	 * Getter for the image representing the current state of the animal.
 	 * @return the current image representing the animal which will be painted on the screen
@@ -83,19 +62,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		return (new Rectangle(this.getLocX(),this.getLocY(),this.getWidth(),this.getHeight()));
 	}
 	
-	
-	/**
-	 * Finds the position of the animal in the 7x7 positionGrid. This is contrary to the
-	 * position of the animal in terms of its position within a JPanel. This method
-	 * is used primarily for collision detection with a water tile.
-	 */
-	public void findBeachLocation() {
-		int tileHeight = ((frames.get(Frames.SHORE).getHeight()))/7;
-		int tileWidth = ((frames.get(Frames.ANIMAL).getWidth()+frames.get(Frames.SHORE).getWidth()))/7;
-		
-		this.beachLocation.setX((int)(Math.floor(this.getLocX())/tileWidth));
-		this.beachLocation.setY((int)(Math.ceil(this.getLocY())/tileHeight));
-	}
 	
 	/**
 	 * Resets the position of animal. Used primarily in the tutorial.
@@ -273,8 +239,15 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	public void setWaveHit(boolean waveHit) {
 		this.waveHit = waveHit;
 	}
-	
-	
+
+	public Pair getBeachLocation() {
+		return beachLocation;
+	}
+
+	public void setBeachLocation(Pair beachLocation) {
+		this.beachLocation = beachLocation;
+	}
+
 
 /*
 	public void setFrameHeight(int height) {

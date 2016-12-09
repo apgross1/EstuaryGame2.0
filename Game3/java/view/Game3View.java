@@ -49,6 +49,7 @@ import javax.swing.border.Border;
 
 import Enums.AnimGraphics;
 import Enums.Frames;
+import Enums.TestControl;
 import Enums.WaveClusters;
 import controller.Game3Controller;
 import enums.Direction;
@@ -603,7 +604,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 			randCluster = WaveClusters.CLUSTER_ONE.getWaveID() + (int)(Math.random() * ((WaveClusters.CLUSTER_FIVE.getWaveID() - WaveClusters.CLUSTER_ONE.getWaveID()) + 1));
 		}
 		for(int i = 0; i < 250; i++) {
-			WaveModel wave = new WaveModel(randCluster, frameMap);
+			WaveModel wave = new WaveModel(randCluster, frameMap, TestControl.NO_TEST);
 			if(i == 249) {
 				wave.setLastWave(true);
 			}

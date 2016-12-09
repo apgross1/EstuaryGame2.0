@@ -3,6 +3,7 @@ package models;
 import java.awt.Rectangle;
 
 import Enums.AnimGraphics;
+import Enums.TestControl;
 
 public class WaterModel {
 	private Pair location = new Pair(0,0);
@@ -16,9 +17,9 @@ public class WaterModel {
 	/**
 	 * Constructor for this element
 	 */
-	public WaterModel(String test) {
+	public WaterModel(TestControl test) {
 		graphicOnDeck = AnimGraphics.SAND_WITH_WATER.getVal();
-		if(test == "test"){
+		if(test == TestControl.TEST){
 			this.height = 200;
 			this.width = 200;
 		}

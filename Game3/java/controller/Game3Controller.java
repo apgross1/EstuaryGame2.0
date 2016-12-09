@@ -4,12 +4,17 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import Enums.AnimGraphics;
+import Enums.Frames;
+import Enums.TestControl;
 import models.AnimalModelG3;
 import models.BeachModel;
 import models.ConcretePUModel;
@@ -49,7 +54,7 @@ public class Game3Controller {
 	 * @param tutorialOn boolean that determines if the tutorial should be played
 	 */
 	public Game3Controller(boolean tutorialOn) {
-		this.setTutorialActive(true);
+		this.setTutorialActive(false);
 		gameFrame = new JFrame();
 		AnimalModelG3 a = new AnimalModelG3();
 		a.setLocX(250);
@@ -108,7 +113,7 @@ public class Game3Controller {
 			delta += (now-lastTime)/ns;
 			lastTime=now;
 			if(delta>=1){
-				animal.tick();
+				this.animalMove();
 				view.repaintAll();
 				updates++;
 				delta--;
@@ -121,7 +126,7 @@ public class Game3Controller {
 			}
 			
 			//Controller for now but could be implemented in Model in tick function
-			animal.findBeachLocation();
+			this.updateAnimalBeachLocation();
 			
 			
 			
@@ -365,8 +370,8 @@ public class Game3Controller {
 					if(i != pairs.size()-1) {
 						this.getBeach().getBeachGrid().get(this.getBeach().findPairInGrid(pairs.get(i+1))).getWater().setGraphicOnDeck(AnimGraphics.SAND_WITH_WATER_CENTER.getVal());
 					}
-					WaterModel newWatMod = new WaterModel("game");
-					tempGrid.setWater(newWatMod, this.getBeach().findPairInGrid(pairs.get(i)), "");
+					WaterModel newWatMod = new WaterModel(TestControl.NO_TEST);
+					tempGrid.setWater(newWatMod, this.getBeach().findPairInGrid(pairs.get(i)));
 		
 					view.getLayoutContainerComps().remove(view.getWaveComponentMap().get(w.hashCode()));
 					view.getWaveComponentMap().remove(w.hashCode());
@@ -793,6 +798,38 @@ public class Game3Controller {
 	public void setGameWin(boolean gameWin) {
 		this.gameWin = gameWin;
 	}
+	
+	/**
+	 * Controls the movement of the animal.
+	 * It contains a conditional statement that allows
+	 * movement of the animal if it is:
+	 * 1) Within the bounds of the beach
+	 * 2) Not hitting a gabion/concrete wall
+	 * 3) Not restricted by the tutorial
+	 */
+	public void animalMove() {
+		if (((getAnimal().getLocY() + getAnimal().getSpeedY() >= 0) & (getAnimal().getBounds().getMaxX() + getAnimal().getSpeedX() <= getView().getFrameMap().get(Frames.ANIMAL).getWidth())) && 
+		   ((getAnimal().getBounds().getMaxY() + getAnimal().getSpeedY()<= getView().getFrameMap().get(Frames.ANIMAL).getHeight()) & getAnimal().getLocX()+ getAnimal().getSpeedX() >= 0)
+			&& (!getAnimal().isWallHit()) && (!getAnimal().isRestrictedMovement())) {
+			 getAnimal().setGraphicOnDeck((getAnimal().getGraphicOnDeck()+1)%3);
+			
+			getAnimal().setLocX(getAnimal().getLocX() + getAnimal().getSpeedX());
+			getAnimal().setLocY(getAnimal().getLocY() + getAnimal().getSpeedY());
+		}
+	}
+	
+	/**
+	 * Finds the position of the animal in the 7x7 positionGrid. This is contrary to the
+	 * position of the animal in terms of its position within a JPanel. This method
+	 * is used primarily for collision detection with a water tile.
+	 */
+	public void updateAnimalBeachLocation() {
+		int tileHeight = ((getView().getFrameMap().get(Frames.SHORE).getHeight()))/7;
+		int tileWidth = ((getView().getFrameMap().get(Frames.ANIMAL).getWidth()+getView().getFrameMap().get(Frames.SHORE).getWidth()))/7;
+		
+		getAnimal().getBeachLocation().setX((int)(Math.floor(getAnimal().getLocX())/tileWidth));
+		getAnimal().getBeachLocation().setY((int)(Math.ceil(getAnimal().getLocY())/tileHeight));
+	}
 
 	//For testing purposes
 		public Game3Controller(){
@@ -800,7 +837,7 @@ public class Game3Controller {
 			a.setLocX(0);
 			a.setLocY(0);
 			setAnimal(a);
-			setBeach(new BeachModel("test"));
+			setBeach(new BeachModel(TestControl.TEST));
 		}
 
 

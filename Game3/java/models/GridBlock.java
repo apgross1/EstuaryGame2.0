@@ -9,6 +9,8 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import Enums.TestControl;
+
 public class GridBlock {
 	private Pair location;
 	private GabionPUModel gabPU = new GabionPUModel();
@@ -19,7 +21,7 @@ public class GridBlock {
 	private int width;
 	private BeachModel beach;
 	private Pair viewLocation = new Pair(0,0);
-	private BufferedImage sandGraphic;
+	private TestControl gameState;
 	
 	/**
 	 * Constructor for this element. The constructor initializes:
@@ -31,14 +33,15 @@ public class GridBlock {
 	 * vi) vacant, boolean that determines if the grid block is free of any water/gabionPU/concrPU
 	 * @param b BeachModel, the game beach
 	 */
-	public GridBlock(BeachModel b) {
-		water = new WaterModel("game");
+	public GridBlock(BeachModel b, TestControl t) {
+		water = new WaterModel(t);
 		gabPU.setIsActive(false);
 		concrPU.setActive(false);
 		height = 200;
 		width = 200;
 		vacant = true;
 		beach = b;
+		gameState = t;
 	}
 	
 	
@@ -48,7 +51,7 @@ public class GridBlock {
 	 * @param b BeachModel, the game beach being used
 	 */
 	public GridBlock(Pair loc, BeachModel b) {
-		water = new WaterModel("game");
+		water = new WaterModel(TestControl.TEST);
 
 		gabPU = new GabionPUModel();
 		gabPU.setIsActive(false);
@@ -70,14 +73,17 @@ public class GridBlock {
 	 * @param b BeachModel, the game beach being used
 	 * @param Test String, to determine if a test is being conducted
 	 */
-	public GridBlock(Pair loc, BeachModel b, String Test) {
+	public GridBlock(Pair loc, BeachModel b, TestControl test) {
 		gabPU = new GabionPUModel();
 		gabPU.setIsActive(false);
 		beach = b;
 		concrPU = new ConcretePUModel();
 		concrPU.setActive(false);
 		location = loc;
-		this.setViewLocation(location);
+		if(test == TestControl.NO_TEST) {
+			this.setViewLocation(location);
+		}
+		
 		height = 200;
 		width = 200;
 		vacant = true;
@@ -91,15 +97,18 @@ public class GridBlock {
 	 * @param loc Pair, the location of the power-up
 	 */
 	public GridBlock(ConcretePUModel powerUp, Pair loc) {
-		water = new WaterModel("game");
+		water = new WaterModel(TestControl.TEST);
 
 		gabPU.setIsActive(false);
+		
 		concrPU.setActive(false);
-		powerUp.setLocation(loc,"Game");
+		powerUp.setLocation(loc, TestControl.TEST);
+		
 		this.setConcrPU(powerUp);
 		this.location = loc;
 		this.setViewLocation(location);
 		this.setVacant(false);
+		
 	}
 	
 	/**
@@ -109,11 +118,11 @@ public class GridBlock {
 	 * @param loc Pair, the location of the gabion power-up
 	 */
 	public GridBlock(GabionPUModel powerUp, Pair loc) {
-		water = new WaterModel("game");
+		water = new WaterModel(TestControl.TEST);
 
 		gabPU.setIsActive(false);
 		concrPU.setActive(false);
-		powerUp.setLocation(loc, "game");
+		powerUp.setLocation(loc, TestControl.TEST);
 		this.setGabPU(powerUp);
 		this.location = loc;
 		this.setViewLocation(location);
@@ -128,47 +137,19 @@ public class GridBlock {
 	 * @param loc Pair, location of the water to be placed on the grid block
 	 * @param test String, used to change functionality of method to run in test-mode
 	 */
-	public void setWater(WaterModel water, Pair loc, String test) {
-		if(test == "test"){
-			gabPU.setIsActive(false);
-			concrPU.setActive(false);
-			water.setLocation(loc);
-			this.water = water;
-			this.water.setActive(true);
-			//this.location = loc;
-			this.setVacant(false);
-			
-			beach.getPositionGrid()[loc.getY()][loc.getX()] = 2;
-			System.out.println("Value on grid at (" + loc.getX() + "," + loc.getY() + "): " + beach.getPositionGrid()[loc.getY()][loc.getX()]);
-			
-		}
-		else{
-			gabPU.setIsActive(false);
-			concrPU.setActive(false);
-			water.setLocation(loc);
-			this.water = water;
-			this.water.setActive(true);
-			// this.location = loc;
-			this.setVacant(false);
-
-			beach.getPositionGrid()[loc.getY()][loc.getX()] = 2;
-			System.out.println("Value on grid at (" + loc.getX() + "," + loc.getY() + "): " + beach.getPositionGrid()[loc.getY()][loc.getX()]);
-		}
+	public void setWater(WaterModel water, Pair loc) {
+		gabPU.setIsActive(false);
+		concrPU.setActive(false);
+		water.setLocation(loc);
+		this.water = water;
+		this.water.setActive(true);
+		//this.location = loc;
+		this.setVacant(false);
+		
+		beach.getPositionGrid()[loc.getY()][loc.getX()] = 2;
+		System.out.println("Value on grid at (" + loc.getX() + "," + loc.getY() + "): " + beach.getPositionGrid()[loc.getY()][loc.getX()]);
 	}
 	
-	
-	/**
-	 * Adds the graphics associates with this element. These are used to
-	 * visually represent this element. 
-	 */
-	public void addPic() {
-		try {
-			sandGraphic = ImageIO.read(new File("./Images/Game3/tile_sand_center.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	/**
 	 * Gets the location of this element
@@ -313,22 +294,5 @@ public class GridBlock {
 	public void setViewLocation(Pair viewLocation) {
 		this.viewLocation = viewLocation;
 	}
-
-	/**
-	 * Gets the sand graphic 
-	 * @return sandGraphic a BufferedImage
-	 */
-	public BufferedImage getSandGraphic() {
-		return sandGraphic;
-	}
-
-	/**
-	 * Sets the sand graphic. Has it correspond to the character in a larger film.
-	 * @param sandGraphic sandGraphic, the graphic that visually represents this element in the View
-	 */
-	public void setSandGraphic(BufferedImage sandGraphic) {
-		this.sandGraphic = sandGraphic;
-	}
-
 	
 }

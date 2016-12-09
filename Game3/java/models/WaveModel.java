@@ -15,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 
 import Enums.Frames;
+import Enums.TestControl;
 import Enums.WaveClusters;
 import enums.Waves;
 
@@ -32,6 +33,7 @@ public class WaveModel {
 	private HashMap<Frames, JComponent> frames;
 	private boolean wavePause;
 	private boolean deleteWave = false;
+	private TestControl GameState;
 
 
 	/**
@@ -39,7 +41,8 @@ public class WaveModel {
 	 * @param clusterVal the number cluster with which this wave is associated
 	 * @param f the frame map used to perform dynamic scaling
 	 */
-	public WaveModel(int clusterVal, HashMap<Frames, JComponent> f) {
+	public WaveModel(int clusterVal, HashMap<Frames, JComponent> f, TestControl test) {
+		this.setGameState(test);
 		movement = (screenSizeX*.00104);
 		wavePause = false;
 		frames = f;
@@ -65,8 +68,13 @@ public class WaveModel {
 
 		//Change 250 to make it dynamic (should be width of the shore line)
 		location.setX((int)(screenSizeX - 250) + (int)(Math.random() * 500));
-		
-		int beachHeight = frames.get(Frames.SHORE).getHeight();
+		int beachHeight = 0;
+		if(this.getGameState() == TestControl.NO_TEST) {
+			beachHeight = frames.get(Frames.SHORE).getHeight();
+		}
+		else{
+			beachHeight = 1000;
+		}
 		int blockOneMin = 0, blockOneMax = beachHeight/7;
 		int blockTwoMin = blockOneMax+1, blockTwoMax = blockOneMax*2;
 		int blockThreeMin = blockTwoMax+1, blockThreeMax = blockOneMax*3;
@@ -343,6 +351,14 @@ public class WaveModel {
 	 */
 	public boolean getWaveStatePause() {
 		return this.wavePause;
+	}
+
+	public TestControl getGameState() {
+		return GameState;
+	}
+
+	public void setGameState(TestControl gameState) {
+		GameState = gameState;
 	}
 	
 }
