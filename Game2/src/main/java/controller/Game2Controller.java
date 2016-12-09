@@ -125,11 +125,21 @@ public class Game2Controller {
 		}
 			
 		}
+		lastTime = System.nanoTime();
+		long t =System.currentTimeMillis();
 		endTimer =0;
-		
-		while(endTimer<100000){
-			
+		while(endTimer<endTimer+120){
+			long now = System.nanoTime();
+			delta += (now-lastTime)/ns;
+			lastTime=now;
+			if(delta>=1){
+				
+				
 				endTimer++;
+				delta--;
+				
+			}
+				
 				
 				
 		
