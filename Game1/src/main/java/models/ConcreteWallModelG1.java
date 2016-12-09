@@ -4,15 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-<<<<<<< HEAD
-public class ConcreteWallModelG1 extends WallModelAbstract implements java.io.Serializable{
+public class ConcreteWallModelG1 implements java.io.Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-=======
-public class ConcreteWallModelG1 {
->>>>>>> branch 'master' of https://github.com/apgross1/EstuaryGame2.0
 	private int maxBlocks;
 	private int currentBlocks;
 	private int activeBlocksOnBoard;
