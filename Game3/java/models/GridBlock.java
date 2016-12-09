@@ -152,7 +152,6 @@ public class GridBlock {
 			this.setVacant(false);
 
 			beach.getPositionGrid()[loc.getY()][loc.getX()] = 2;
-			water.addPics();
 			System.out.println("Value on grid at (" + loc.getX() + "," + loc.getY() + "): " + beach.getPositionGrid()[loc.getY()][loc.getX()]);
 		}
 	}

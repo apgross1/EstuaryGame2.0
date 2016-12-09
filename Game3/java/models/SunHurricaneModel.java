@@ -18,21 +18,18 @@ public class SunHurricaneModel {
 	private Pair location;
 	private JPanel panel;
 	private int initialPosition;
-	private HashMap<String, ArrayList<BufferedImage>> graphics;
 	
 	/**
 	 * Constructor for this element.
 	 * @param jPanel
 	 */
 	public SunHurricaneModel(JPanel jPanel) {
-		graphics = new HashMap<String, ArrayList<BufferedImage>>();
 		panel = jPanel;
 		location = new Pair(0,0);
 	}
 	
 	//for testing purposes
 	public SunHurricaneModel() {
-		graphics = new HashMap<String, ArrayList<BufferedImage>>();
 		location = new Pair(0,0);
 	}
 	
@@ -64,48 +61,7 @@ public class SunHurricaneModel {
 		return new Rectangle(location.getX(),location.getY(), this.getWidth(), this.getHeight());
 	}
 
-	/**
-	 * Gets the graphic map of this element. The components in the
-	 * graphic map visually represent this element in the View.
-	 * @return graphics a HashMap that contains BufferedImage ArrayList()s pairing with
-	 * their respective name
-	 */
-	public HashMap<String, ArrayList<BufferedImage>> getGraphics() {
-		return graphics;
-	}
 
-	/**
-	 * Sets the graphic map of this element. The components in the
-	 * graphic map visually represent this element in the View.
-	 * @param graphics
-	 */
-	public void setGraphics(HashMap<String, ArrayList<BufferedImage>> graphics) {
-		this.graphics = graphics;
-	}
-
-	/**
-	 * Adds the graphics associates with this element. These are used to
-	 * visually represent this element. 
-	 */
-	public void addPics() {
-		ArrayList<BufferedImage> sun = new ArrayList<BufferedImage>();
-		ArrayList<BufferedImage> cloudStates = new ArrayList<BufferedImage>();
-		try {
-			BufferedImage sunPic = ImageIO.read(new File("./Images/Game3/glowingbg.png"));
-			sun.add(sunPic);
-			
-			BufferedImage hurrAngry = ImageIO.read(new File("./Images/Game3/angry_cloud.png"));
-			BufferedImage hurrScared = ImageIO.read(new File("./Images/Game3/dismayed_cloud.png"));
-			cloudStates.add(hurrAngry); cloudStates.add(hurrScared);
-			
-			graphics.put("SUN", sun);
-			graphics.put("HURRICANE", cloudStates);
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Gets the height of the sun/hurricane

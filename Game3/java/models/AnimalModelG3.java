@@ -1,21 +1,9 @@
 package models;
 
-import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-
-import javax.imageio.ImageIO;
 import javax.swing.JComponent;
-
 import Enums.Frames;
-import enums.Direction;
-import view.Game3View.Animal;
 
 
 
@@ -24,7 +12,6 @@ import view.Game3View.Animal;
  *
  */
 public class AnimalModelG3 extends AnimalModelAbstract{
-	private HashMap<String,ArrayList<BufferedImage>> graphics;
 	private int graphicOnDeck;
 	private int height;
 	private int width;
@@ -46,7 +33,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	public AnimalModelG3() {
 		this.setHeight(60);
 		this.setWidth(60);
-		graphics = new HashMap<String, ArrayList<BufferedImage>>();
 		boundHit = false;
 		restrictedMovement = false;
 	
@@ -65,35 +51,13 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		if (((getLocY() + speedY >= 0) & (this.getBounds().getMaxX() + speedX <= frames.get(Frames.ANIMAL).getWidth())) && 
 		   ((this.getBounds().getMaxY() + speedY <= frames.get(Frames.ANIMAL).getHeight()) & getLocX()+ speedX >= 0)
 			&& (!this.isWallHit()) && (!isRestrictedMovement())) {
-			if(graphicOnDeck != 0){
-			graphicOnDeck = (graphicOnDeck+1) % graphics.get("MOVE").size();
-			}
+			 graphicOnDeck = (graphicOnDeck+1) % 3;
+			
 			this.setLocX(this.getLocX() + speedX);
 			this.setLocY(this.getLocY() + speedY);
 		}
 	}
 	
-	/**
-	 * Adds images to the graphic map for the animal that will
-	 * be called when painting the animal.
-	 */
-	public void addPics(){
-		try{
-		ArrayList<BufferedImage> moveAnimations = new ArrayList<BufferedImage>();
-		BufferedImage bufferedImage1 = ImageIO.read(new File("./Images/Game3/bluecrab_0.png"));
-		moveAnimations.add(bufferedImage1);
-		BufferedImage bufferedImage2 = ImageIO.read(new File("./Images/Game3/bluecrab_1.png"));
-		moveAnimations.add(bufferedImage2);
-		BufferedImage bufferedImage3 = ImageIO.read(new File("./Images/Game3/bluecrab_2.png"));
-		moveAnimations.add(bufferedImage3);
-		graphics.put("MOVE", moveAnimations);
-		graphicOnDeck = 0;
-		}
-		catch(IOException e) {
-    		e.printStackTrace();
-    	}
-		
-	}
 	
 	/**
 	 * Getter for the image representing the current state of the animal.
@@ -143,15 +107,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.setSpeedY(0);
 	}
 	
-
-	/**
-	 * Getter for the HashMap containing animation arrays whose elements 
-	 * are images depicting the animal visually.
-	 * @return HashMap containing animation arrays
-	 */
-	public HashMap<String, ArrayList<BufferedImage>> getGraphics() {
-		return graphics;
-	}
 
 	
 	//Body may need to be deleted
@@ -318,13 +273,14 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	public void setWaveHit(boolean waveHit) {
 		this.waveHit = waveHit;
 	}
+	
+	
 
 /*
 	public void setFrameHeight(int height) {
 		// TODO Auto-generated method stub
 		FrameHeight = height;
 	}
-
 	public int getFrameHeight() {
 		// TODO Auto-generated method stub
 		return FrameHeight;
@@ -334,7 +290,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		// TODO Auto-generated method stub
 		FrameWidth = width;
 	}
-
 	public int getFrameWidth() {
 		// TODO Auto-generated method stub
 		return FrameWidth;
