@@ -54,15 +54,6 @@ public class ConcretePUModel extends WallModelAbstract {
 		this.viewLocation = new Pair(0,0);
 	}
 	
-	/**
-	 * Alternative constructor for this element
-	 * @param loc a Pair containing coordinates at which the concrete power-up/wall will be placed
-	 */
-	public ConcretePUModel(Pair loc) {
-		location = loc;
-		this.viewLocation = new Pair(0,0);
-		this.setViewLocation(loc);
-	}
 	
 	/**
 	 * Sets a new concrete state depending on whether or not the concrete power up was picked up.
@@ -112,7 +103,6 @@ public class ConcretePUModel extends WallModelAbstract {
 	public void setViewLocation(Pair viewLocation) {
 		int tileWidth = (int)((frameMap.get(Frames.ANIMAL).getWidth()+frameMap.get(Frames.SHORE).getWidth())/7);
 		int tileHeight = (int)(frameMap.get(Frames.SHORE).getHeight()/7);
-		
 		this.viewLocation.setX((int)((location.getX()))*tileWidth);
 		this.viewLocation.setY((int)(location.getY())*tileHeight);
 	}
@@ -244,11 +234,4 @@ public class ConcretePUModel extends WallModelAbstract {
 			this.setViewLocation(location);
 		}
 	}
-
-	
-	
-	@Override
-	public void breakDown() {
-	}
-	
 }

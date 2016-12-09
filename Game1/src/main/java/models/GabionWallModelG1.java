@@ -47,7 +47,6 @@ public class GabionWallModelG1 extends WallModelAbstract{
 	 * Mathematical function that sets current Oysters (what is displayed on the wall)
 	 * to 85% of what the player collected.
 	 */
-	@Override
 	public void breakDown() {
 		currentOysters = (int) (.85*currentOysters);
 	}

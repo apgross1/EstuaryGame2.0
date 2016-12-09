@@ -5,7 +5,6 @@ public abstract class WallModelAbstract {
 		
 	}
 	
-	public abstract void breakDown();
 	
 	public void spawn() {
 		

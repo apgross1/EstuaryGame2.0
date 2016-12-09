@@ -87,6 +87,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	private boolean exitToMain =  false;
 	private boolean exitGame = false;
 	private HashMap<AnimGraphics, BufferedImage> graphicMap;
+	private TestControl gameState;
 	
 	public void loadImages() {
 		try{
@@ -171,10 +172,14 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	 * @param ctl instance of Game3Controller
 	 * @param gameF instance of the JFrame shared between all 3 games
 	 */
-	public Game3View(Game3Controller ctl, JFrame gameF){
+	public Game3View(Game3Controller ctl, JFrame gameF, TestControl gamestate){
+		this.gameState = gamestate;
 		System.out.println("This should be the master");
 		graphicMap = new HashMap<AnimGraphics, BufferedImage>();
-		this.loadImages();
+		if(this.gameState == TestControl.NO_TEST) {
+			this.loadImages();
+		}
+		
 		
 		brightLevel = 255;
 		skyColor = new Color((int)0,(int)0,(int)0, (int)this.getBrightLevel());

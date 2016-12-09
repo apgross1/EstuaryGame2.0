@@ -225,17 +225,4 @@ public class GabionPUModel extends WallModelAbstract {
 	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
 		this.frameMap = frameMap;
 	}
-	
-	@Override
-	public void breakDown() {
-		
-	}
-	
-	
-	//For testing purposes
-		public void setLocationTest(Pair location) {
-			this.location = location;
-		}
-		
-
 }

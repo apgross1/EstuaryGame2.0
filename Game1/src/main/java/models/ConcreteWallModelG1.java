@@ -45,7 +45,6 @@ public class ConcreteWallModelG1 extends WallModelAbstract {
 	 * Simple math function that breaks down the concrete walls to 10% 
 	 * of what the player was able to collect.
 	 */
-	@Override
 	public void breakDown() {
 		currentBlocks = (int) (.1*currentBlocks);
 	}

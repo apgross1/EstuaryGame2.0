@@ -10,11 +10,13 @@ import models.GabionPUModel.GabPUState;
 import models.GridBlock;
 import models.WaterModel;
 import models.WaveModel;
+import view.Game3View;
 import models.GabionPUModel;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -62,11 +64,12 @@ import enums.Waves;
 	 * added counter to beach model for squares
 	 */
 public class Game3Tests {
-
+	boolean timeFinished;
 	//BeachModel beach = new BeachModel();
 	//GridBlock grid = new GridBlock();
 	
-	//ConcretePUModel
+	
+	
 	//Spawn power-up
 	@Test
 	public void testSpawnConc(){
@@ -160,6 +163,8 @@ public class Game3Tests {
 	    assertFalse("Should be false...", concrWall.getIsActive());
 	    
 	}
+
+	
 	
 	
 	
@@ -875,6 +880,22 @@ public class Game3Tests {
 	*/
 	
 	@Test
+	public void ConcretePUModelTestSetViewLocation() {
+		Game3Controller contr = new Game3Controller(true);
+		contr.setView(new Game3View(contr, contr.getGameFrame(), TestControl.TEST));
+		contr.setFrameMap(contr.getView().getFrameMap());
+		
+		ConcretePUModel concr = contr.getBeach().getBeachGrid().get(contr.getBeach().findPairInGrid(contr.getBeach().getConcPair())).getConcrPU();
+		concr.setFrameMap(contr.getFrameMap());
+		concr.setViewLocation(new Pair(1,1));
+		
+		int tileWidth = (int)((contr.getView().getFrameMap().get(Frames.ANIMAL).getWidth()+contr.getView().getFrameMap().get(Frames.SHORE).getWidth())/7);
+		int tileHeight = (int)(contr.getView().getFrameMap().get(Frames.SHORE).getHeight()/7);
+		assertTrue(concr.getViewLocation().getX() == concr.getLocation().getX()*tileWidth);
+		assertTrue(concr.getViewLocation().getY() == concr.getLocation().getY()*tileHeight);
+	}
+	
+	@Test
 	public void ConcPUStateTest(){
 		ConcretePUModel concrete = new ConcretePUModel();
 		concrete.setWallState(ConcPUState.POWER_UP);
@@ -1015,6 +1036,24 @@ public class Game3Tests {
 		assertTrue(gab.getFrameMap() == null);
 		}
 	
+	@Test
+	public void GabPUModelSetViewLocationTest() {
+		Game3Controller contr = new Game3Controller(true);
+		contr.setView(new Game3View(contr, contr.getGameFrame(), TestControl.TEST));
+		contr.setFrameMap(contr.getView().getFrameMap());
+		
+		GabionPUModel gab = contr.getBeach().getBeachGrid().get(contr.getBeach().findPairInGrid(contr.getBeach().getGabPair())).getGabPU();
+		gab.setFrameMap(contr.getFrameMap());
+		gab.setLocation(new Pair(1,1), TestControl.TEST);
+		gab.setViewLocation(new Pair(1,1));
+		
+		int tileWidth = (int)((contr.getView().getFrameMap().get(Frames.ANIMAL).getWidth()+contr.getView().getFrameMap().get(Frames.SHORE).getWidth())/7);
+		int tileHeight = (int)(contr.getView().getFrameMap().get(Frames.SHORE).getHeight()/7);
+		System.out.println(gab.getViewLocation().getX() + " vs" + gab.getLocation().getX()*tileWidth);
+		assertTrue(gab.getViewLocation().getX() == gab.getLocation().getX()*tileWidth);
+		assertTrue(gab.getViewLocation().getY() == gab.getLocation().getY()*tileHeight);
+	}
+	
 	//SunHurricane Tests
 	@Test
 	public void SunHurricaneBoundsTest(){
@@ -1054,7 +1093,38 @@ public class Game3Tests {
 		assertTrue(SunHurricane.getInitialPosition() == 768 );
 	}
 	
+	@Test
+	public void TestSunHurricaneConstructor() {
+		JPanel testPanel = new JPanel();
+		SunHurricaneModel sun = new SunHurricaneModel(testPanel);
+		assertTrue(sun.getPanel().equals(testPanel));
+		assertTrue(sun.getLocation().getX() == 0);
+		assertTrue(sun.getLocation().getY() == 0);
+	}
 	
+	@Test
+	public void TestSunHurricaneMove() {
+		JPanel testPanel = new JPanel();
+		testPanel.setBounds(0, 0, 200, 200);
+		SunHurricaneModel sun = new SunHurricaneModel(testPanel);
+		sun.setLocation(new Pair(50,50));
+		sun.move();
+		
+		assertTrue(sun.getLocation().getX() == 48);
+		assertTrue(sun.getLocation().getY() == sun.calculateY(48));
+	}
+	
+	@Test
+	public void TestCaluclateYSunHurricaneModel() {
+		JPanel testPanel = new JPanel();
+		testPanel.setBounds(0, 0, 200, 200);
+		SunHurricaneModel sun = new SunHurricaneModel();
+		sun.setPanel(testPanel);
+		sun.setLocation(new Pair(50,50));
+		
+		int expectedY = (int)(-1*sun.getPanel().getHeight()*(Math.sin(((0.00165)*sun.getLocation().getX()))) + sun.getPanel().getHeight());
+		assertTrue(sun.calculateY(sun.getLocation().getX()) == expectedY);
+	}
 	
 	//Tutorial
 	
@@ -1177,7 +1247,7 @@ public class Game3Tests {
 	
 	@Test
 	public void WaveStatePauseTest(){
-		WaveModel wave = new WaveModel();
+		WaveModel wave = new WaveModel(TestControl.TEST);
 		
 		wave.pauseWave();
 		assertTrue(wave.getWaveStatePause() == true);
@@ -1187,7 +1257,7 @@ public class Game3Tests {
 	
 	@Test
 	public void WaveStateDeleteTest(){
-		WaveModel wave = new WaveModel();
+		WaveModel wave = new WaveModel(TestControl.TEST);
 		
 		wave.resetWave();
 		assertTrue(wave.isDeleteWave() == true);		
@@ -1195,7 +1265,7 @@ public class Game3Tests {
 	
 	@Test
 	public void WaveModelBoundsTest(){
-		WaveModel wave = new WaveModel();
+		WaveModel wave = new WaveModel(TestControl.TEST);
 		wave.setHeight(30);
 		wave.setWidth(30);
 		wave.setLocation(new Pair(0,0));
@@ -1204,21 +1274,21 @@ public class Game3Tests {
 	
 	@Test
 	public void WaveModelheightTest(){
-		WaveModel wave = new WaveModel();
+		WaveModel wave = new WaveModel(TestControl.TEST);
 		wave.setHeight(30);
 		assertTrue(wave.getHeight() == 30);
 	}
 	
 	@Test
 	public void WaveModelWidthTest(){
-		WaveModel wave = new WaveModel();
+		WaveModel wave = new WaveModel(TestControl.TEST);
 		wave.setWidth(30);
 		assertTrue(wave.getWidth() == 30);
 	}
 	
 	@Test
 	public void WaveModeLocationTest(){
-		WaveModel wave = new WaveModel();
+		WaveModel wave = new WaveModel(TestControl.TEST);
 		Pair pair = new Pair(3,3);
 		wave.setLocation(pair);
 		assertTrue(wave.getLocation() == pair);
@@ -1226,14 +1296,14 @@ public class Game3Tests {
 	
 	@Test
 	public void WaveModelReceedTest(){
-		WaveModel wave = new WaveModel();
+		WaveModel wave = new WaveModel(TestControl.TEST);
 		wave.setReceed(true);
 		assertTrue(wave.isReceed() == true);
 	}
 	
 	@Test
 	public void WaveModelWaveClusterTest(){
-		WaveModel wave = new WaveModel();
+		WaveModel wave = new WaveModel(TestControl.TEST);
 		WaveClusters waveEnum = WaveClusters.values()[0];
 		wave.setClusterGroup(waveEnum);
 		assertTrue(wave.getClusterGroup() == waveEnum);
@@ -1241,31 +1311,118 @@ public class Game3Tests {
 	
 	@Test
 	public void WaveModelLastWaveTest(){
-		WaveModel wave = new WaveModel();
+		WaveModel wave = new WaveModel(TestControl.TEST);
 		wave.setLastWave(true);
 		assertTrue(wave.isLastWave() == true);
 	}
 	
 	@Test
 	public void WaveModelVelocityTest(){
-		WaveModel wave = new WaveModel();
+		WaveModel wave = new WaveModel(TestControl.TEST);
 		wave.setVelocity(2);
 		assertTrue(wave.getVelocity() == 2);
 	}
 	
 	@Test
 	public void WaveModelDeleteWaveTest(){
-		WaveModel wave = new WaveModel();
+		WaveModel wave = new WaveModel(TestControl.TEST);
 		wave.setDeleteWave(true);
 		assertTrue(wave.isDeleteWave() == true);
 	}
 	
 	@Test
 	public void WaveModelFramesTest(){
-		WaveModel wave = new WaveModel();
+		WaveModel wave = new WaveModel(TestControl.TEST);
 		HashMap<Frames, JComponent> map = null;
 		wave.setFrames(map);
 		assertTrue(wave.getFrames() == null);
+	}
+	
+	@Test
+	public void waveMoveTest() {
+		
+		ActionListener pauseTimer = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				timeFinished = true;
+			}
+		};
+		
+		Timer pauseTime = new Timer(50, pauseTimer);
+		pauseTime.setRepeats(false);
+		
+		WaveModel wave = new WaveModel(TestControl.TEST);
+		wave.setLocation(new Pair(100,100));
+		
+		//Testing wave pause
+		timeFinished = false;
+		wave.setVelocity(4);
+		wave.setReceed(false);
+		wave.setWavePause(true);
+		
+		int initialVelocity = wave.getVelocity();
+		int initialXLoc = wave.getLocation().getX();
+		wave.move();
+		pauseTime.start();
+		while(!timeFinished) {
+			System.out.println("Thinking...");
+		}
+		timeFinished = false;
+		assertTrue((wave.getVelocity() != initialVelocity) && (wave.getVelocity() == 0));
+		assertTrue(wave.getLocation().getX() == initialXLoc);
+		
+		//Testing not receed, no wave pause
+		wave.setWavePause(false);
+		initialVelocity = wave.getVelocity();
+		initialXLoc = wave.getLocation().getX();
+		wave.move();
+		pauseTime.start();
+		while(!timeFinished) {
+			System.out.println("Thinking...");
+		}
+		timeFinished = false;
+		assertTrue(wave.getVelocity() != initialVelocity);
+		assertTrue(wave.getVelocity() == (int)((wave.getScreenSizeX()*.3125)/(wave.getMovement()-1)));
+		assertTrue(wave.getLocation().getX() == initialXLoc-wave.getVelocity());
+	
+		//Receeding, wave paused
+		wave.setVelocity(50);
+		initialVelocity = wave.getVelocity();
+		initialXLoc = wave.getLocation().getX();
+		wave.setReceed(true);
+		wave.setWavePause(true);
+		wave.move();
+		pauseTime.start();
+		while(!timeFinished) {
+			System.out.println("Thinking...");
+		}
+		timeFinished = false;
+		assertTrue((wave.getVelocity() != initialVelocity) && (wave.getVelocity() == 0));
+		assertTrue(wave.getLocation().getX() == initialXLoc);
+	
+		//Receeding, wave resumed
+		wave.setWavePause(false);
+		wave.setVelocity(50);
+		initialVelocity = wave.getVelocity();
+		initialXLoc = wave.getLocation().getX();
+		
+		wave.move();
+		pauseTime.start();
+		while(!timeFinished) {
+			System.out.println("Thinking...");
+		}
+		timeFinished = false;
+		assertTrue(wave.getVelocity() != initialVelocity);
+		assertTrue(wave.getVelocity() == (int)((wave.getScreenSizeX()*.3125)/(wave.getMovement()+1)));
+		assertTrue(wave.getLocation().getX() == initialXLoc+wave.getVelocity());
+	}
+	
+	@Test
+	public void WaveModelScreenSizeTest() {
+		Double screenSizeX = Toolkit.getDefaultToolkit().getScreenSize().getWidth(); 
+		WaveModel wave = new WaveModel(TestControl.TEST);
+		wave.setScreenSizeX(screenSizeX);
+		assertTrue(wave.getScreenSizeX() == screenSizeX);
 	}
 	
 	//BeachModel

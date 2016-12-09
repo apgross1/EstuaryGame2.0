@@ -45,6 +45,7 @@ public class Game3Controller {
 	private boolean tutorialActive;
 	private Timer puWallLinkTimer;
 	private boolean gameWin;
+	private HashMap<Frames, JComponent> frameMap;
 	
 	
 	
@@ -75,7 +76,7 @@ public class Game3Controller {
 	public void runGame()  {
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
-		view = new Game3View(this, gameFrame);
+		view = new Game3View(this, gameFrame, TestControl.NO_TEST);
 		
 		
 		this.getBeach().setFrameMap(view.getFrameMap());
@@ -862,5 +863,17 @@ public class Game3Controller {
 
 		public void setGameFrame(JFrame gameFrame) {
 			this.gameFrame = gameFrame;
+		}
+
+
+
+		public HashMap<Frames, JComponent> getFrameMap() {
+			return frameMap;
+		}
+
+
+
+		public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
+			this.frameMap = frameMap;
 		}
 }

@@ -50,7 +50,8 @@ public class WaveModel {
 		this.move();
 	}
 
-	public WaveModel() {
+	public WaveModel(TestControl gameState) {
+		this.setGameState(gameState);
 		movement = (screenSizeX*.00104);
 		wavePause = false;
 	}
@@ -110,6 +111,8 @@ public class WaveModel {
 	ActionListener movementTimer = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Object time = e.getSource();
+			Timer myTime = (Timer) time;
 			if(!isReceed()) {
 				if(wavePause) {
 					setVelocity(0);
@@ -132,10 +135,11 @@ public class WaveModel {
 				location.setX((int)(location.getX()+velocity));
 				//accelerator = -1*accelerator;
 				movement -= 1; 
-				
 			}
-			Object time = e.getSource();
-			Timer myTime = (Timer) time;
+			
+			if(getGameState() == TestControl.TEST) {
+				myTime.stop();
+			}
 		}
 	};
 
@@ -361,4 +365,25 @@ public class WaveModel {
 		GameState = gameState;
 	}
 	
+	public void setWavePause(boolean wavePause) {
+		this.wavePause = wavePause;
+	}
+
+	public Double getScreenSizeX() {
+		return screenSizeX;
+	}
+
+	public void setScreenSizeX(Double screenSizeX) {
+		this.screenSizeX = screenSizeX;
+	}
+
+	public double getMovement() {
+		return movement;
+	}
+
+	public void setMovement(double movement) {
+		this.movement = movement;
+	}
+
+
 }
