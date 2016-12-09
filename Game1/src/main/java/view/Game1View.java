@@ -76,6 +76,11 @@ public class Game1View extends JPanel implements KeyListener{
         frame = new JFrame();
 
     }
+	/**
+	 * a methid that "sets up" the jpanel used by the game aka the screen itself
+	 * sets the arbitrary original dimensions and color, adds it to the overall frame
+	 * also sets the bounds for the frame
+	 */
 	public void setUp(){
 		frame.getContentPane().removeAll();
 		
@@ -440,9 +445,18 @@ public class Game1View extends JPanel implements KeyListener{
 			// TODO Auto-generated method stub
 			
 		}
+		/**
+		 * getter to get the jframe that is being used
+		 * @return returns the jframe 
+		 */
 		public JFrame getFrame() {
 			return frame;
 		}
+		/**
+		 * setter to set the Jframe that will be used
+		 * @param frame the Jframe that is being set, sets this to the jframe
+		 * being used by other functions
+		 */
 		public void setFrame(JFrame frame) {
 			this.frame = frame;
 		}

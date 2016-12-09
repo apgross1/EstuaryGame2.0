@@ -15,7 +15,7 @@ public class AnimalModel extends AnimalModelAbstract {
 	/**
 	 * constructor for the animal model that sets the spawn location, and also
 	 * takes in the dimensions of the screen to help with said spawning
-	 * @param s the dimensions of the screen
+	 * @param Dimension s the dimensions of the screen
 	 */
 	public AnimalModel(Dimension s) {
 		//Set screen resolution for movement
@@ -84,7 +84,7 @@ public class AnimalModel extends AnimalModelAbstract {
 	}
 	/**
 	 * getter to get the speed of the animal in the y direction
-	 * @return an int will the speed in the y direction
+	 * @return an int with the speed in the y direction
 	 */
 	public int getSpeedY() {
 		return speedY;

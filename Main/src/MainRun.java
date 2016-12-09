@@ -25,7 +25,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -43,6 +45,10 @@ import controller.Game2Controller;
 import controller.Game3Controller;
 
 public class MainRun extends JPanel implements MouseListener, KeyListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	static boolean gameStarted = false;
 	JButton startButton = new JButton("Start Game");
@@ -149,11 +155,20 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		this.frame.getContentPane().removeAll();
 		//this.frame.add(backLay);
 		this.frame.add(startScreen);
+		
+		this.frame.addKeyListener(this);
+		
 		this.frame.revalidate();
 		this.frame.repaint();	
 		this.frame.setVisible(true);
+		
     }
 
+	/**
+	 * used to set the animation for the character across the main screen,
+	 * also paints the text for our game title
+	 *
+	 */
 	public class Animation extends JComponent {
 		private static final long serialVersionUID = 1L;
 
@@ -181,6 +196,12 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		}
     }
 	
+	/**
+	 * a method used to center any text, in this case the main menu text
+	 * @param g the graphic used by function, in this case the background
+	 * @param text the text that is being written to the screen
+	 * @param font sets the font to be used by the text
+	 */
 	public void drawCenteredString(Graphics g, String text, Font font) {
         // Get the FontMetrics
         FontMetrics metrics = g.getFontMetrics(font);
@@ -195,6 +216,10 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
         //g.dispose();
     }
 	
+	/**
+	 * method that runs the timing for the main menu and also starts the games
+	 * also handles linking the end screen to the main screen
+	 */
 	public void runMainMenu() {
 		long lastTime = System.nanoTime();
 		final double ammountOfTicks = 60.0;	
@@ -211,12 +236,12 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 			this.repaintFrame();
 		}
 		
-		//g1cont.startGame();
-		//g2cont.startGame();
-		//g1cont.getG1view().getFrame().dispose();
+		g1cont.startGame();
+		g2cont.startGame();
+		g1cont.getG1view().getFrame().dispose();
 		
 		g3cont.runGame();
-		//g2cont.getView().getFrame().dispose();
+		g2cont.getView().getFrame().dispose();
 		if(g3cont.getView().isExitToMain()) {
 			
 			g3cont.getView().setExitToMain(false);
@@ -244,13 +269,25 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 	
 	
 
+	/**
+	 * a bool that returns whether the start button was pressed or not
+	 * @return a bool of whether it was pressed or not
+	 */
 	public boolean isStartPressed(){
 		return startPressed;
 	}
 	
+	/**
+	 * method that takes in a bool of wheter start was pressed or not, and sets start
+	 * pressed to either true or false
+	 * @param startPress a bool that says if the start button was pressed or not
+	 */
 	public void setStartPressed(boolean startPress) {
 		startPressed = startPress;
 	}
+	/**
+	 * method to repaint and revalidate the frame
+	 */
 	public void repaintFrame(){
 		frame.repaint();
 		frame.revalidate();
@@ -282,6 +319,19 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 			menuClose = true;
 		}
 	}
+	
+	public void serializeCtls() throws IOException{
+		//Write game one to file 
+		FileOutputStream fout = new FileOutputStream("G:\\game1.ser");
+		ObjectOutputStream oos = new ObjectOutputStream(fout);
+		try {
+			oos.writeObject(g1cont);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -302,8 +352,19 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyPressed(KeyEvent e) {
+	    int keyCode = e.getKeyCode();
+	    switch( keyCode ) {
+	        case KeyEvent.VK_S: // if s is pressed save to file.
+	        	System.out.println("S-Pressed saving seralizing controllers");
+				try{
+					serializeCtls();
+				}catch (IOException e1){
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	            break;
+	    }
 		
 	}
 
