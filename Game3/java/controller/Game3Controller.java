@@ -29,6 +29,7 @@ import models.GabionPUModel.GabPUState;
 import view.Game3View;
 import view.Game3View.GridTile;
 
+
 public class Game3Controller {
 	private boolean gameActive;
 	private Game3View view;
@@ -320,6 +321,11 @@ public class Game3Controller {
 		}
 	}
 	
+	/**
+	 * Detects collision between a wave particle and the animal. If collision occurs in the normal game
+	 * the game will end. Otherwise in the case of the tutorial the game will continue to run.
+	 * @param w WaveModel, an instance of a wave particle
+	 */
 	public void collisionWaveAnimal(WaveModel w) {
 		if(w.getBounds().intersects(this.getAnimal().getBounds())) {
 			if(this.isTutorialActive()) {
@@ -334,6 +340,12 @@ public class Game3Controller {
 		}
 	}
 	
+	/**
+	 * Collision detection between and gabion/concrete wall and a wave particle.
+	 * If collision occurs the wave will receed back into the ocean.
+	 * @param w WaveModel, an instance of a wave particle
+	 * @param tiles an ArrayList of all sand tiles on the beach grid
+	 */
 	public void collisionWavePowerUps(WaveModel w, ArrayList<GridTile> tiles) {
 		for(GridTile gr : tiles) {
 			ConcretePUModel conc = gr.getGridBlock().getConcrPU();
@@ -354,6 +366,12 @@ public class Game3Controller {
 		}
 	}
 	
+	/**
+	 * Converts a sand tile into a water tile after a wave has receeded. The water tile
+	 * may take 2 states: 1) When the tile is the furthest out from the ocean 2) When the tile is between
+	 * two other water tiles.
+	 * @param w WaveModel, an instance of a wave particle
+	 */
 	public void fillWaterTile(WaveModel w) {
 		List<Pair> pairs = this.getBeach().getGridLayers().get(w.getClusterGroup());
 		
@@ -831,49 +849,62 @@ public class Game3Controller {
 		getAnimal().getBeachLocation().setX((int)(Math.floor(getAnimal().getLocX())/tileWidth));
 		getAnimal().getBeachLocation().setY((int)(Math.ceil(getAnimal().getLocY())/tileHeight));
 	}
-
-	//For testing purposes
-		public Game3Controller(){
-			AnimalModelG3 a = new AnimalModelG3();
-			a.setLocX(0);
-			a.setLocY(0);
-			setAnimal(a);
-			setBeach(new BeachModel(TestControl.TEST));
-		}
-
-
-
-		public Game3View getView() {
-			return view;
-		}
+	
+	
+	/**
+	 * Getter that retrieves the view
+	 * @return view Game3View, an instance of the game's view
+	 */
+	public Game3View getView() {
+		return view;
+	}
 
 
 
-		public void setView(Game3View view) {
-			this.view = view;
-		}
+	/**
+	 * Setter than assigns an instance of the game's view to be referenced in the controller.
+	 * @param view Game3View, an instance of the game's view
+	 */
+	public void setView(Game3View view) {
+		this.view = view;
+	}
 
 
 
-		public JFrame getGameFrame() {
-			return gameFrame;
-		}
+	/**
+	 * Getter that retrieves the frame used in the game. 
+	 * @return gameFrame JFrame, the frame being used in the game
+	 */
+	public JFrame getGameFrame() {
+		return gameFrame;
+	}
 
 
 
-		public void setGameFrame(JFrame gameFrame) {
-			this.gameFrame = gameFrame;
-		}
+	/**
+	 * Assigns the controller a reference to the JFrame used for the game
+	 * @param gameFrame an instance of JFrame
+	 */
+	public void setGameFrame(JFrame gameFrame) {
+		this.gameFrame = gameFrame;
+	}
 
 
 
-		public HashMap<Frames, JComponent> getFrameMap() {
-			return frameMap;
-		}
+	/**
+	 * Getter for the HashMap of frames used throughout the game in order
+	 * to scale visual components.
+	 * @return frameMap ,an instance of JFrame
+	 */
+	public HashMap<Frames, JComponent> getFrameMap() {
+		return frameMap;
+	}
 
-
-
-		public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
-			this.frameMap = frameMap;
-		}
+	/**
+	 * Assigns the controller a reference to the HashMap of frames used in the game
+	 * @param frameMap an instance of a HashMap of game frames
+	 */
+	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
+		this.frameMap = frameMap;
+	}
 }
