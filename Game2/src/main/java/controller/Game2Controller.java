@@ -46,9 +46,9 @@ public class Game2Controller {
 	public Game2Controller(JFrame gamef) {
 		//gameFrame = gamef;
 		animal = new AnimalModelG2();
-		
+	
 		algae = new AlgaeModel();
-		
+		view = null;
 		
 	}
 
@@ -125,11 +125,26 @@ public class Game2Controller {
 		}
 			
 		}
+		lastTime = System.nanoTime();
+		long t =System.currentTimeMillis();
 		endTimer =0;
-		
-		while(endTimer<100000){
-			
+		while(endTimer<endTimer+120){
+			long now = System.nanoTime();
+			delta += (now-lastTime)/ns;
+			lastTime=now;
+			if(delta>=1){
+				
+				
 				endTimer++;
+
+				delta--;
+				
+			}
+				
+				
+				
+		
+
 		}
 	}
 	
@@ -183,7 +198,11 @@ public class Game2Controller {
 	}
 	
 	public boolean collisionOccured(AnimalModelG2 animal, AlgaeModel algae){
-		int algMod = view.getAlgaeEaterX();
+		
+		int algMod =0;
+		if(view!=null){
+		algMod = view.getAlgaeEaterX();
+		}
 		Rectangle algae_rect = new Rectangle(algae.getLocX(), algae.getLocY(), algae.getWidth(), algae.getHeight());
 		Rectangle animal_rect = new Rectangle(animal.getLocX()+algMod, animal.getLocY(), animal.getWidth(), animal.getHeight());
 		

@@ -59,6 +59,7 @@ public class Game2View extends JPanel implements KeyListener{
 	int changeCount=0;
 	int frameCount= 0;
 	int tutFrameCount = 0;
+	int riverWidth;
 	
 	
 	Random rand = new Random();
@@ -354,8 +355,10 @@ public class Game2View extends JPanel implements KeyListener{
 		this.frame = frame;
 	}
 	public int getAlgaeEaterX(){
-		return algaeEaters.getWidth()/6;
+		riverWidth = algaeEaters.getWidth()/6;
+		return riverWidth;
 	}
+	
 	
 	
 }
