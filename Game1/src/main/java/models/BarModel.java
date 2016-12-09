@@ -1,8 +1,13 @@
 package models;
 
 
-public class BarModel extends BarModelAbstract {
+public class BarModel extends BarModelAbstract implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * constructor for the bar model that updates the max level of the bar
 	 * (how high it can go) and also sets the health at that level 

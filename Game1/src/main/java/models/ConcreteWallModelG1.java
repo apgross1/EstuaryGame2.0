@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class ConcreteWallModelG1 extends WallModelAbstract {
+public class ConcreteWallModelG1 extends WallModelAbstract implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int maxBlocks;
 	private int currentBlocks;
 	private int activeBlocksOnBoard;

@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class GabionWallModelG1 extends WallModelAbstract{
+public class GabionWallModelG1 extends WallModelAbstract implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int maxOysters;
 	private int currentOysters;
 	private int activeClamsOnBoard;

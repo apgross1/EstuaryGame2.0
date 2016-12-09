@@ -1,6 +1,10 @@
 package models;
 
-public class ConcreteChunk {
+public class ConcreteChunk implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int locX;
 	private int locY;
 	private int height = 10;
