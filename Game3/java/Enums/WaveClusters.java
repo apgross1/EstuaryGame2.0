@@ -1,5 +1,9 @@
 package Enums;
 
+/**
+ * @author Andrew
+ * Enum class that refers to the wave clusters in which a wave particle could be placed. 
+ */
 public enum WaveClusters {
 	CLUSTER_ONE(0,0,100),
 	CLUSTER_TWO(1,101,200),

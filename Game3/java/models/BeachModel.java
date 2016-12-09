@@ -17,15 +17,12 @@ import Enums.TestControl;
 import Enums.WaveClusters;
 
 public class BeachModel {
-	private int squareCount;
-	private int landSize;
 	private HashMap<Pair, GridBlock> beachGrid;
 	private HashMap<WaveClusters, List<Pair>> gridLayers;
 	private List<Pair> orderedPairs;
 	private int[][] positionGrid;
 	private Pair gabPair = new Pair(0,0);
 	private Pair concPair = new Pair(0,0);
-	private Timer puTimer;
 	private HashMap<Frames, JComponent> frameMap;
 	private TestControl GameState;
 	
@@ -44,7 +41,10 @@ public class BeachModel {
 		this.initializeBeach();
 	}
 	
-	//Testing purposes
+	/**
+	 * Constructor used for testing purposes.
+	 * @param test , TestControl that determines if the BeachModel instance is being created in test-mode or game-mode
+	 */
 	public BeachModel(TestControl test) {
 		beachGrid = new HashMap<Pair,GridBlock>();
 		gridLayers = new HashMap<WaveClusters, List<Pair>>();

@@ -27,7 +27,7 @@ import models.WaterModel;
 import models.WaveModel;
 import models.GabionPUModel.GabPUState;
 import view.Game3View;
-import view.Game3View.GridTile;
+import view.Game3View.GabionConc;
 
 
 public class Game3Controller {
@@ -345,8 +345,8 @@ public class Game3Controller {
 	 * @param w WaveModel, an instance of a wave particle
 	 * @param tiles an ArrayList of all sand tiles on the beach grid
 	 */
-	public void collisionWavePowerUps(WaveModel w, ArrayList<GridTile> tiles) {
-		for(GridTile gr : tiles) {
+	public void collisionWavePowerUps(WaveModel w, ArrayList<GabionConc> tiles) {
+		for(GabionConc gr : tiles) {
 			ConcretePUModel conc = gr.getGridBlock().getConcrPU();
 			GabionPUModel gab = gr.getGridBlock().getGabPU();
 			if(conc.getIsActive() & conc.isPickedUp()) {
