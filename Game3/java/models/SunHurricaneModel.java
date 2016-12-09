@@ -28,10 +28,6 @@ public class SunHurricaneModel {
 		location = new Pair(0,0);
 	}
 	
-	//for testing purposes
-	public SunHurricaneModel() {
-		location = new Pair(0,0);
-	}
 	
 	/**
 	 * Changes position of the sun/hurricane

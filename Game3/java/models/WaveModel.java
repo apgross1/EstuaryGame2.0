@@ -357,30 +357,58 @@ public class WaveModel {
 		return this.wavePause;
 	}
 
+	/**
+	 * Returns whether the game is in test-mode or game-mode
+	 * @return TestControl enum
+	 */
 	public TestControl getGameState() {
 		return GameState;
 	}
 
+	/**
+	 * Provides WaveModel with a reference to the game state (whether the game is in test-mode or game-mode)
+	 * @param gameState TestControl enum
+	 */
 	public void setGameState(TestControl gameState) {
 		GameState = gameState;
 	}
 	
+	/**
+	 * Determines if the wave is paused. This method is used in the tutorial.
+	 * @param wavePause boolean (1 if the wave is paused, 0 otherwise)
+	 */
 	public void setWavePause(boolean wavePause) {
 		this.wavePause = wavePause;
 	}
 
+	/**
+	 * Gets the width of the screen of the computer running the program.
+	 * @return screenSizeX
+	 */
 	public Double getScreenSizeX() {
 		return screenSizeX;
 	}
 
+	/**
+	 * Sets the width of the screen of the computer running the program.
+	 * @param screenSizeX Double indicating the screen width of the computer running the program
+	 */
 	public void setScreenSizeX(Double screenSizeX) {
 		this.screenSizeX = screenSizeX;
 	}
 
+	/**
+	 * Returns the displacement component of the vector used to determine the wave's motion.
+	 * @return movement , a double
+	 */
 	public double getMovement() {
 		return movement;
 	}
 
+	/**
+	 * Sets the displacement component of the vector used to determine the wave's motion.
+	 * @param movement double that indicates the displacement of the wave particle
+	 */
 	public void setMovement(double movement) {
 		this.movement = movement;
 	}

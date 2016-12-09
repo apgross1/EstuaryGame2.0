@@ -89,83 +89,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	private HashMap<AnimGraphics, BufferedImage> graphicMap;
 	private TestControl gameState;
 	
-	public void loadImages() {
-		try{
-			BufferedImage bluecrab_0 = ImageIO.read(new File("./Images/Game3/bluecrab_0.png"));
-			BufferedImage bluecrab_1 = ImageIO.read(new File("./Images/Game3/bluecrab_1.png"));
-			BufferedImage bluecrab_2 = ImageIO.read(new File("./Images/Game3/bluecrab_2.png"));
-			
-			graphicMap.put(AnimGraphics.BLUECRAB_0, bluecrab_0);
-			graphicMap.put(AnimGraphics.BLUECRAB_1, bluecrab_1);
-			graphicMap.put(AnimGraphics.BLUECRAB_2, bluecrab_2);
-			
-			BufferedImage concreteWall = ImageIO.read(new File("./Images/Game3/ConcreteWall.png"));
-			BufferedImage concPu = ImageIO.read(new File("./Images/Game3/ConcretePU.png"));
-			
-			graphicMap.put(AnimGraphics.CONCRETE_WALL, concreteWall);
-			graphicMap.put(AnimGraphics.CONC_PU, concPu);
-			
-			BufferedImage gabionWall = ImageIO.read(new File("./Images/Game3/GabionWall.png"));
-			BufferedImage gabPu = ImageIO.read(new File("./Images/Game3/GabionPU.png"));
-			
-			graphicMap.put(AnimGraphics.GABION_WALL, gabionWall);
-			graphicMap.put(AnimGraphics.GAB_PU, gabPu);
-			
-			BufferedImage sandGraphic = ImageIO.read(new File("./Images/Game3/tile_sand_center.png"));
-			graphicMap.put(AnimGraphics.TILE_SAND_CENTER, sandGraphic);
-			
-			BufferedImage sunPic = ImageIO.read(new File("./Images/Game3/glowingbg.png"));
-			BufferedImage hurrAngry = ImageIO.read(new File("./Images/Game3/angry_cloud.png"));
-			BufferedImage hurrScared = ImageIO.read(new File("./Images/Game3/dismayed_cloud.png"));
-			
-			graphicMap.put(AnimGraphics.SUN, sunPic);
-			graphicMap.put(AnimGraphics.HURRICANE_ANGRY, hurrAngry);
-			graphicMap.put(AnimGraphics.HURRICANE_SCARED, hurrScared);
-			
-			BufferedImage key_pic_0 = ImageIO.read(new File("./Images/Game3/key_press_0.png"));
-			BufferedImage key_pic_1 = ImageIO.read(new File("./Images/Game3/key_press_1.png"));
-			BufferedImage key_pic_2 = ImageIO.read(new File("./Images/Game3/key_press_2.png"));
-			BufferedImage key_pic_3 = ImageIO.read(new File("./Images/Game3/key_press_3.png"));
-			BufferedImage key_pic_4 = ImageIO.read(new File("./Images/Game3/key_press_4.png"));
-			graphicMap.put(AnimGraphics.KEY_PIC_0, key_pic_0);
-			graphicMap.put(AnimGraphics.KEY_PIC_1, key_pic_1);
-			graphicMap.put(AnimGraphics.KEY_PIC_2, key_pic_2);
-			graphicMap.put(AnimGraphics.KEY_PIC_3, key_pic_3);
-			graphicMap.put(AnimGraphics.KEY_PIC_4, key_pic_4);
-			
-			
-			BufferedImage x = ImageIO.read(new File("./Images/Game3/x.png"));
-			BufferedImage arrow = ImageIO.read(new File("./Images/Game3/green_arrow.png"));
-			BufferedImage dialogue = ImageIO.read(new File("./Images/Game3/Dialogue2.png"));
-
-			graphicMap.put(AnimGraphics.BIG_X, x);
-			graphicMap.put(AnimGraphics.ARROW, arrow);
-			graphicMap.put(AnimGraphics.DIALOGUE, dialogue);
-			
-			
-			BufferedImage bufferedImage1 = ImageIO.read(new File("./Images/Game3/sand_with_water.png"));
-			BufferedImage bufferedImage2 = ImageIO.read(new File("./Images/Game3/tile_water_C.png"));
-			graphicMap.put(AnimGraphics.SAND_WITH_WATER, bufferedImage1);
-			graphicMap.put(AnimGraphics.SAND_WITH_WATER_CENTER, bufferedImage2);
-			
-			BufferedImage shoreGraphic = ImageIO.read(new File("./Images/Game3/Creek.png"));
-			graphicMap.put(AnimGraphics.SHORE, shoreGraphic);
-			
-			BufferedImage exitGame_0 = ImageIO.read(new File("./Images/Game3/exitGame_0.png"));
-			BufferedImage exitGame_1 = ImageIO.read(new File("./Images/Game3/exitGame_1.png"));
-			BufferedImage returnMain_0= ImageIO.read(new File("./Images/Game3/returnMain_0.png"));
-			BufferedImage returnMain_1 = ImageIO.read(new File("./Images/Game3/returnMain_1.png"));
-			
-			graphicMap.put(AnimGraphics.EXIT_GAME_0, exitGame_0);
-			graphicMap.put(AnimGraphics.EXIT_GAME_1, exitGame_1);
-			graphicMap.put(AnimGraphics.RETURN_MAIN_0, returnMain_0);
-			graphicMap.put(AnimGraphics.RETURN_MAIN_1, returnMain_1);
-		
-		}
-			catch(IOException e) {
-	    		e.printStackTrace();
-	    	}
-	}
+	
 	
 	/**
 	 * Constructor for this element
@@ -174,7 +98,6 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	 */
 	public Game3View(Game3Controller ctl, JFrame gameF, TestControl gamestate){
 		this.gameState = gamestate;
-		System.out.println("This should be the master");
 		graphicMap = new HashMap<AnimGraphics, BufferedImage>();
 		if(this.gameState == TestControl.NO_TEST) {
 			this.loadImages();
@@ -297,11 +220,86 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		frame.revalidate();
 	}
  
-	
-	public void updateLoc() {
-		animalPos.setText("Animal is on tile: (" + this.getController().getAnimal().getPotentialMove().getX() + "," + this.controller.getAnimal().getPotentialMove().getY() + ")");
+	/**
+	 * Loads all images in Game 3 and stores them in a HashMap to be used when painting
+	 */
+	public void loadImages() {
+		try{
+			BufferedImage bluecrab_0 = ImageIO.read(new File("./Images/Game3/bluecrab_0.png"));
+			BufferedImage bluecrab_1 = ImageIO.read(new File("./Images/Game3/bluecrab_1.png"));
+			BufferedImage bluecrab_2 = ImageIO.read(new File("./Images/Game3/bluecrab_2.png"));
+			
+			graphicMap.put(AnimGraphics.BLUECRAB_0, bluecrab_0);
+			graphicMap.put(AnimGraphics.BLUECRAB_1, bluecrab_1);
+			graphicMap.put(AnimGraphics.BLUECRAB_2, bluecrab_2);
+			
+			BufferedImage concreteWall = ImageIO.read(new File("./Images/Game3/ConcreteWall.png"));
+			BufferedImage concPu = ImageIO.read(new File("./Images/Game3/ConcretePU.png"));
+			
+			graphicMap.put(AnimGraphics.CONCRETE_WALL, concreteWall);
+			graphicMap.put(AnimGraphics.CONC_PU, concPu);
+			
+			BufferedImage gabionWall = ImageIO.read(new File("./Images/Game3/GabionWall.png"));
+			BufferedImage gabPu = ImageIO.read(new File("./Images/Game3/GabionPU.png"));
+			
+			graphicMap.put(AnimGraphics.GABION_WALL, gabionWall);
+			graphicMap.put(AnimGraphics.GAB_PU, gabPu);
+			
+			BufferedImage sandGraphic = ImageIO.read(new File("./Images/Game3/tile_sand_center.png"));
+			graphicMap.put(AnimGraphics.TILE_SAND_CENTER, sandGraphic);
+			
+			BufferedImage sunPic = ImageIO.read(new File("./Images/Game3/glowingbg.png"));
+			BufferedImage hurrAngry = ImageIO.read(new File("./Images/Game3/angry_cloud.png"));
+			BufferedImage hurrScared = ImageIO.read(new File("./Images/Game3/dismayed_cloud.png"));
+			
+			graphicMap.put(AnimGraphics.SUN, sunPic);
+			graphicMap.put(AnimGraphics.HURRICANE_ANGRY, hurrAngry);
+			graphicMap.put(AnimGraphics.HURRICANE_SCARED, hurrScared);
+			
+			BufferedImage key_pic_0 = ImageIO.read(new File("./Images/Game3/key_press_0.png"));
+			BufferedImage key_pic_1 = ImageIO.read(new File("./Images/Game3/key_press_1.png"));
+			BufferedImage key_pic_2 = ImageIO.read(new File("./Images/Game3/key_press_2.png"));
+			BufferedImage key_pic_3 = ImageIO.read(new File("./Images/Game3/key_press_3.png"));
+			BufferedImage key_pic_4 = ImageIO.read(new File("./Images/Game3/key_press_4.png"));
+			graphicMap.put(AnimGraphics.KEY_PIC_0, key_pic_0);
+			graphicMap.put(AnimGraphics.KEY_PIC_1, key_pic_1);
+			graphicMap.put(AnimGraphics.KEY_PIC_2, key_pic_2);
+			graphicMap.put(AnimGraphics.KEY_PIC_3, key_pic_3);
+			graphicMap.put(AnimGraphics.KEY_PIC_4, key_pic_4);
+			
+			
+			BufferedImage x = ImageIO.read(new File("./Images/Game3/x.png"));
+			BufferedImage arrow = ImageIO.read(new File("./Images/Game3/green_arrow.png"));
+			BufferedImage dialogue = ImageIO.read(new File("./Images/Game3/Dialogue2.png"));
+
+			graphicMap.put(AnimGraphics.BIG_X, x);
+			graphicMap.put(AnimGraphics.ARROW, arrow);
+			graphicMap.put(AnimGraphics.DIALOGUE, dialogue);
+			
+			
+			BufferedImage bufferedImage1 = ImageIO.read(new File("./Images/Game3/sand_with_water.png"));
+			BufferedImage bufferedImage2 = ImageIO.read(new File("./Images/Game3/tile_water_C.png"));
+			graphicMap.put(AnimGraphics.SAND_WITH_WATER, bufferedImage1);
+			graphicMap.put(AnimGraphics.SAND_WITH_WATER_CENTER, bufferedImage2);
+			
+			BufferedImage shoreGraphic = ImageIO.read(new File("./Images/Game3/Creek.png"));
+			graphicMap.put(AnimGraphics.SHORE, shoreGraphic);
+			
+			BufferedImage exitGame_0 = ImageIO.read(new File("./Images/Game3/exitGame_0.png"));
+			BufferedImage exitGame_1 = ImageIO.read(new File("./Images/Game3/exitGame_1.png"));
+			BufferedImage returnMain_0= ImageIO.read(new File("./Images/Game3/returnMain_0.png"));
+			BufferedImage returnMain_1 = ImageIO.read(new File("./Images/Game3/returnMain_1.png"));
+			
+			graphicMap.put(AnimGraphics.EXIT_GAME_0, exitGame_0);
+			graphicMap.put(AnimGraphics.EXIT_GAME_1, exitGame_1);
+			graphicMap.put(AnimGraphics.RETURN_MAIN_0, returnMain_0);
+			graphicMap.put(AnimGraphics.RETURN_MAIN_1, returnMain_1);
+		
+		}
+			catch(IOException e) {
+	    		e.printStackTrace();
+	    	}
 	}
-	
 	
 	/**
 	 * Adds sun component to the JFrame (more specifically the panel where the timer is placed)
@@ -313,7 +311,6 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		timePanel.add(sun);
 		timePanel.revalidate();
 		frame.revalidate();
-		
 	}
 	
 	/**

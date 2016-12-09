@@ -153,7 +153,6 @@ public class Game3Controller {
 			}
 			this.collisionTile();
 			this.view.repaintAll();
-			this.view.updateLoc();	
 		}
 		
 		

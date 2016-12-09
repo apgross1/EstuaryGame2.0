@@ -1057,7 +1057,7 @@ public class Game3Tests {
 	//SunHurricane Tests
 	@Test
 	public void SunHurricaneBoundsTest(){
-		SunHurricaneModel SunHurricane = new SunHurricaneModel();
+		SunHurricaneModel SunHurricane = new SunHurricaneModel(new JPanel());
 		SunHurricane.setHeight(60);
 		SunHurricane.setWidth(60);
 		assertTrue(SunHurricane.getBounds().getX() == 0 & SunHurricane.getBounds().getY() == 0 & SunHurricane.getHeight() == 60 & SunHurricane.getWidth() == 60);
@@ -1065,14 +1065,14 @@ public class Game3Tests {
 	
 	@Test
 	public void SunHurricaneHeightTest(){
-		SunHurricaneModel SunHurricane = new SunHurricaneModel();
+		SunHurricaneModel SunHurricane = new SunHurricaneModel(new JPanel());
 		SunHurricane.setHeight(60);
 		assertTrue(SunHurricane.getHeight() == 60);
 	}
 	
 	@Test
 	public void SunHurricaneWidthTest(){
-		SunHurricaneModel SunHurricane = new SunHurricaneModel();
+		SunHurricaneModel SunHurricane = new SunHurricaneModel(new JPanel());
 		SunHurricane.setWidth(60);
 		assertTrue(SunHurricane.getWidth() == 60);
 	}
@@ -1080,7 +1080,7 @@ public class Game3Tests {
 	
 	@Test
 	public void SunHurricaneLocationTest(){
-		SunHurricaneModel SunHurricane = new SunHurricaneModel();
+		SunHurricaneModel SunHurricane = new SunHurricaneModel(new JPanel());
 		Pair Location = new Pair(3,5);
 		SunHurricane.setLocation(Location);
 		assertTrue(SunHurricane.getLocation() == Location );
@@ -1088,7 +1088,7 @@ public class Game3Tests {
 	
 	@Test
 	public void SunHurricaneInitialPositionTest(){
-		SunHurricaneModel SunHurricane = new SunHurricaneModel();
+		SunHurricaneModel SunHurricane = new SunHurricaneModel(new JPanel());
 		SunHurricane.setInitialPosition(768);
 		assertTrue(SunHurricane.getInitialPosition() == 768 );
 	}
@@ -1118,7 +1118,7 @@ public class Game3Tests {
 	public void TestCaluclateYSunHurricaneModel() {
 		JPanel testPanel = new JPanel();
 		testPanel.setBounds(0, 0, 200, 200);
-		SunHurricaneModel sun = new SunHurricaneModel();
+		SunHurricaneModel sun = new SunHurricaneModel(new JPanel());
 		sun.setPanel(testPanel);
 		sun.setLocation(new Pair(50,50));
 		

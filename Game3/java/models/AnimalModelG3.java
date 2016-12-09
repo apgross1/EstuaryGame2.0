@@ -232,33 +232,21 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.waveHit = waveHit;
 	}
 
+	
+	/**
+	 * Returns the location of the animal in terms of its placement on the 7x7 positionGrid.
+	 * @return beachLocation Pair instance
+	 */
 	public Pair getBeachLocation() {
 		return beachLocation;
 	}
 
+	/**
+	 * Setter that stores a Pair of coordinates that indicate the location of theb animal
+	 * in terms of its placement on the 7x7 positionGrid
+	 * @param beachLocation Pair instance
+	 */
 	public void setBeachLocation(Pair beachLocation) {
 		this.beachLocation = beachLocation;
 	}
-
-
-/*
-	public void setFrameHeight(int height) {
-		// TODO Auto-generated method stub
-		FrameHeight = height;
-	}
-	public int getFrameHeight() {
-		// TODO Auto-generated method stub
-		return FrameHeight;
-	}
-	
-	public void setFrameWidth(int Width) {
-		// TODO Auto-generated method stub
-		FrameWidth = width;
-	}
-	public int getFrameWidth() {
-		// TODO Auto-generated method stub
-		return FrameWidth;
-	}
-	*/
-	
 }

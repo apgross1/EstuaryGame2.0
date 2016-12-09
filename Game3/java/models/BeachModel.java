@@ -67,7 +67,6 @@ public class BeachModel {
 	
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			//System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
 			GridBlock g = new GridBlock(tempPair, this);
 			g.setLocation(tempPair);
 			beachGrid.put(tempPair, g);
@@ -399,6 +398,10 @@ public class BeachModel {
 	}
 
 	
+	/**
+	 * Sets the current gameState (test-mode or game-mode)
+	 * @param gameState TestControl enum that determines if program is running in test-mode or game-mode
+	 */
 	public void setGameState(TestControl gameState) {
 		this.GameState = gameState;
 	}
