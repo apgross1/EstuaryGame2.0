@@ -158,7 +158,7 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		this.frame.add(startScreen);
 		
 		this.frame.addKeyListener(this);
-		this.frame.add(startScreen);		
+		
 		this.frame.revalidate();
 		this.frame.repaint();	
 		this.frame.setVisible(true);
