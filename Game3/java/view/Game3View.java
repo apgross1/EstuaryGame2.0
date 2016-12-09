@@ -1,26 +1,19 @@
 package view;
 
-import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -28,12 +21,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,10 +31,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
 import javax.swing.OverlayLayout;
 import javax.swing.Timer;
-import javax.swing.border.Border;
 
 import Enums.AnimGraphics;
 import Enums.Frames;
@@ -53,17 +40,9 @@ import Enums.TestControl;
 import Enums.WaveClusters;
 import controller.Game3Controller;
 import enums.Direction;
-import enums.Waves;
-import models.AnimalModelG3;
-import models.BeachModel;
-import models.ConcretePUModel;
-import models.ConcretePUModel.ConcPUState;
-import models.GabionPUModel;
-import models.GabionPUModel.GabPUState;
 import models.GridBlock;
 import models.Pair;
 import models.SunHurricaneModel;
-import models.WaterModel;
 import models.WaveModel;
 
 
@@ -73,17 +52,14 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	private HashMap<Frames, JComponent> frameMap;
 	private JFrame frame;
 	private JPanel timePanel = new JPanel();
-	private ArrayList<GridTile> powerUps;
+	private ArrayList<GabionConc> powerUps;
 	private JPanel play_ground = new JPanel(new BorderLayout());
 	private JLayeredPane layoutContainer = new JLayeredPane();
-	private BufferedImage shoreGraphic;
 	private JLabel animalPos;
 	private int brightLevel;
 	private Color skyColor;
 	private JLabel endScreen;
 	private JButton menuButton;
-	private ArrayList<BufferedImage> mainMenuPics = new ArrayList<BufferedImage>();
-	private ArrayList<BufferedImage> exitGamePics = new ArrayList<BufferedImage>();
 	private boolean exitToMain =  false;
 	private boolean exitGame = false;
 	private HashMap<AnimGraphics, BufferedImage> graphicMap;
@@ -133,7 +109,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		play_ground.setSize(frame.getWidth(), frame.getHeight());
 		play_ground.setBackground(Color.WHITE);
 		
-		powerUps = new ArrayList<GridTile>();
+		powerUps = new ArrayList<GabionConc>();
 		
     	//Panes
 		//For animal movement
@@ -167,7 +143,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 			//location.setText("("+currBlock.getX()+","+currBlock.getY()+")");
 			SandWater gridBlock = new SandWater(currBlock);
 			gridBlock.add(location);
-			GridTile powerUp = new GridTile(currBlock);
+			GabionConc powerUp = new GabionConc(currBlock);
 			powerUps.add(powerUp);
 		    powerUp.setBounds(0,0,animalPane.getWidth(),animalPane.getHeight());
 			layoutContainer.add(powerUp, new Integer(2),-1);
@@ -334,7 +310,6 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	}
 	
 	/**
-	 * @author Andrew
 	 *Component class for the game tutorial. Handles all of the visual
 	 *representation related to the tutorial.
 	 */
@@ -380,7 +355,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	}
 	
 	/**
-	 * @author Andrew
+	 *
 	 *Component class for the hurricane. Used to visually represent the hurricane in the time panel.
 	 */
 	public class Hurricane extends JComponent {
@@ -404,7 +379,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	}
 	
 	/**
-	 * @author Andrew
+	 * 
 	 *Component class for the sun. Used to visually represent the sun in the time panel.
 	 */
 	public class Sun extends JComponent {
@@ -426,19 +401,28 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	
 	
 	/**
-	 * @author Andrew
+	 * 
 	 * Component class for a wave particle. The component class handles all of the 
 	 */
 	public class Wave extends JComponent {
 		private WaveModel wave;
 		private boolean waveGone;
 		
+		/**
+		 * Constructs a visual wave component to be displayed on the screen.
+		 * This differs from the back-end WaveModel
+		 * @param wave
+		 */
 		public Wave(WaveModel wave) {
 			this.wave = wave;
 			waveGone = false;
 			setOpaque(false);
 		}
 		
+		/**
+		 * Remove all memory of the wave particle after it has left the screen.
+		 * @param g instance of Graphics
+		 */
 		public void disposeWave(Graphics g) {
 			g.dispose();
 			layoutContainer.remove(waveComponentMap.get(this.hashCode()));
@@ -456,6 +440,10 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 			}
 		};
 		
+		/**
+		 * Resumes the motion of the wave after it has been paused.
+		 * This method is run during the tutorial.
+		 */
 		public void removeWaveFromPauseTimer() {
 			Timer t = new Timer(3000, removeWaveFromPauseListener);
 			t.setRepeats(false);
@@ -497,6 +485,9 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		}
 	}
 
+	/**
+	 *Component class for the animal. This class visually dislays the animal on the screen.
+	 */
 	public class Animal extends JComponent {
 		@Override
 		public void paint(Graphics g) {
@@ -504,6 +495,9 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		}
 	}
 	
+	/**
+	 *Component class for the shoreline, which paints the shoreline on the screen.
+	 */
 	public class ShoreLine extends JComponent {
 		@Override
 		public void paint(Graphics g) {
@@ -515,38 +509,57 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		}
 	}
 	
+	/**
+	 * Component class for SandWater, which visually represents the overlay on top of the
+	 * beach tiles by painting them as sand or water tiles
+	 */
 	public class SandWater extends JComponent {
 		private GridBlock grid;
+		/**
+		 * Constructor for this component class.
+		 * @param pair an instance of Pair that represents the coordinates of the gridblock
+		 */
 		public SandWater(Pair pair) {
 			this.grid = controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pair));
 		}
 		@Override
 		public void paint(Graphics g) {
-			
-			
-			//g.drawString(coords, this.getWidth()/2, this.getHeight()/2);
 			if(grid.getWater().isActive() == false) {
 				g.drawImage(graphicMap.get(AnimGraphics.TILE_SAND_CENTER),0, 0, this);
-				//g.setColor(Color.YELLOW);
-				//g.fillRect(0, 0, frame.getContentPane().getComponent(0).getWidth(), frame.getContentPane().getComponent(0).getHeight());
 			}
 			else{
-				//Fix this below
 				g.drawImage(graphicMap.get(AnimGraphics.valueOf(grid.getWater().getGraphicOnDeck())),0, 0, this);
 			}
 			
 		}
 	}
 	
-	public class GridTile extends JComponent {
+	/**
+	 * Component class for the gabion/concrete power-ups/walls. This class
+	 * paints the gabion and concrete power-ups.
+	 */
+	public class GabionConc extends JComponent {
 		private GridBlock gridBlock;
-		public GridTile(Pair pair) {
+		/**
+		 * Constructor for this component class
+		 * @param pair a Pair instance representing the location of a gridBlock
+		 */
+		public GabionConc(Pair pair) {
 			gridBlock = controller.getBeach().getBeachGrid().get(controller.getBeach().findPairInGrid(pair));
 		}
+		
+		/**
+		 * Returns an instance of the gridBlock currently being painted over
+		 * @return
+		 */
 		public GridBlock getGridBlock() {
 			return gridBlock;
 		}
 		
+		/**
+		 * Draws an arrow below the gabion to be used in the tutorial.
+		 * @param g an instance of Graphics
+		 */
 		public void drawArrow(Graphics g) {
 			if(controller.isTutorialActive() && gridBlock.getGabPU().getIsActive()) {
 				g.drawImage(graphicMap.get(AnimGraphics.ARROW),(int)gridBlock.getGabPU().getBounds().getX(), (int)gridBlock.getGabPU().getBounds().getY()+40, this);
@@ -596,8 +609,12 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		}
 	}
 	
+	/**
+	 * Generates a random wave cluster to which 250 new waves will be assigned.
+	 * @param isTutorial ,boolean that determines if the method is being called during the tutorial
+	 * @param clusterVal ,int that corresponds to a specific cluster (1-5)
+	 */
 	public void generateWaveCluster(boolean isTutorial, int clusterVal) {
-
 		int randCluster;
 		if(isTutorial) {
 			randCluster = clusterVal;
@@ -614,6 +631,11 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		}
 	}
 	
+	/**
+	 * Adds the newly created wave to the HashMap of active waves
+	 * @param w ,the WaveModel created from random generation
+	 * @param clusterVal , the value of the cluster (lane) to which the wave was assigned
+	 */
 	public void addWave(WaveModel w, int clusterVal) {
 		WaveModel waveM = w;
 		waveM.randomSpawn(clusterVal);
@@ -624,6 +646,9 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 	    int keyCode = e.getKeyCode();
@@ -644,28 +669,21 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	        	controller.getAnimal().setCurrDir(Direction.EAST);
 	        	controller.getAnimal().setSpeedX(3);
 	            break;
-	        case KeyEvent.VK_SPACE :
-	        	//System.out.println("This is a temp key event to end the game (set bool gameActive in controller to false)");
-	        	//controller.setGameActive(false);
-	        	//controller.setGameWin(false);
-	        	//frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+	        case KeyEvent.VK_SPACE:
 	            break;
 	    }
 	}
 	
 
-	public Game3Controller getController() {
-		return controller;
-	}
-	public void setController(Game3Controller controller) {
-		this.controller = controller;
-	}
+	
 
 
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 		int keyCode = e.getKeyCode();
 	    switch( keyCode ) {
 	        case KeyEvent.VK_UP:
@@ -685,13 +703,14 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	        	controller.getAnimal().setSpeedX(0);
 	            break;
 	    }
-
-	
 	}
 
 	 
 
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -699,76 +718,135 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	}
 
 
-	public HashMap getWaveComponentMap() {
-		
+	/**
+	 * Getter for the Wave component map that stores all active waves
+	 * @return waveComponentMap , instance of HashMap<Integer, Wave>
+	 */
+	public HashMap<Integer, Wave> getWaveComponentMap() {
 		return waveComponentMap;
 	}
 
+	/**
+	 * Getter for the time panel which stores the sun, hurricane and sky visual components
+	 * @return timePanel instance of JComponent
+	 */
 	public JPanel getTimePanel() {
 		return timePanel;
 	}
 
 
+	/**
+	 * Sets the time panel to be used in the game
+	 * @param timePanel
+	 */
 	public void setTimePanel(JPanel timePanel) {
 		this.timePanel = timePanel;
 	}
 
+	/**
+	 * Getter for the layout container component HashMap. Contrary
+	 * to waveComponentMap, this HashMap stores the visual components
+	 * associates with each object.
+	 * @return frameMap , an instance of HashMap<Frames, JComponent>
+	 */
 	public HashMap<Frames, JComponent> getLayoutContainerComps() {
 		return frameMap;
 	}
 
 
 
+	/**
+	 * Sets the layout container component HashMap. Contrary
+	 * to waveComponentMap, this HashMap stores the visual components
+	 * associates with each object.
+	 * @param layoutContainerComps ,an instance of HashMap<Frames, JComponent>
+	 */
 	public void setLayoutContainerComps(HashMap<Frames, JComponent> layoutContainerComps) {
 		this.frameMap = layoutContainerComps;
 	}
 
 
 
+	/**
+	 * Getter for the HashMap that contains the frames of the game for the use
+	 * of scaling windows/object actions
+	 * @return frameMap ,an instance of HashMap<Frames, JComponent>
+	 */
 	public HashMap<Frames, JComponent> getFrameMap() {
 		return frameMap;
 	}
 
 
 
+	/**
+	 * Sets the HashMap that contains the frames of the game for the use
+	 * of scaling windows/object actions
+	 * @param frameMap , an instance of HashMap<Frames, JComponent>
+	 */
 	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
 		this.frameMap = frameMap;
 	}
 	
+	/**
+	 * Brightens the color of the sky. This process runs throughout
+	 * the entirety of the game.
+	 */
 	public void brightenSky() {
 		this.setBrightLevel(this.getBrightLevel()-1);
 		if((this.getSkyColor().getBlue()+4) < 256) {
 			this.setSkyColor(new Color((int)((this.getSkyColor().getBlue()*0.4)),(int)((this.getSkyColor().getBlue()*(.698))),(int)this.getSkyColor().getBlue()+4,(int)this.getBrightLevel()));
 		}
-		
-		
 		this.getTimePanel().setBackground(this.getSkyColor());
 	}
 	
+	/**
+	 * Resets the color of the sky to black.
+	 */
 	public void resetSky() {
 		setSkyColor(new Color(0,0,0));
 	}
 
 
+	/**
+	 * Getter that return the color of the sky at a single point in time.
+	 * @return skyColor , an instance of Color 
+	 */
 	public Color getSkyColor() {
 		return skyColor;
 	}
 
 
+	/**
+	 * Sets the color of the sky at a single point in time.
+	 * @param skyColor , an instance of Color
+	 */
 	public void setSkyColor(Color skyColor) {
 		this.skyColor = skyColor;
 	}
 
 
+	/**
+	 * Getter for the current brightness level of the sky at a single point in time.
+	 * @return brightLevel, an int indicating the level of brightness
+	 */
 	public int getBrightLevel() {
 		return brightLevel;
 	}
 
 
+	/**
+	 * Sets the current brightness level of the sky at a single point in time
+	 * @param brightLevel , an int indicating the level of brightness
+	 */
 	public void setBrightLevel(int brightLevel) {
 		this.brightLevel = brightLevel;
 	}
 
+	/**
+	 * Sets-up and initializes the end-screen after the game has ended. State of the
+	 * end screen depends on whether the player won or lost.
+	 * @param gameWin , a boolean indicating whether or not the player won the game (1 if yes, 0 otherwise)
+	 */
 	public void startEndScreen(boolean gameWin) {
 		endScreen = new JLabel();
 		endScreen.setLayout(new GridBagLayout());
@@ -833,6 +911,10 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		frame.repaint();
 	}
 	
+	/**
+	 * ActionEvent that returns the game to its main screen if the correct button was pushed.
+	 *
+	 */
 	public class ReturnToMain implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -841,6 +923,9 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		}
 	}
 	
+	/**
+	 *ActionEvent that exits out of the game if the correct button was pushed.
+	 */
 	public class ExitGame implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -849,8 +934,9 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		}
 	}
 
-	
-	
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -858,6 +944,9 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		JButton button = (JButton) e.getSource();
@@ -871,6 +960,9 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		JButton button = (JButton) e.getSource();
@@ -888,6 +980,9 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -895,49 +990,63 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-	public ArrayList<BufferedImage> getMainMenuPics() {
-		return mainMenuPics;
-	}
-
-
-	public void setMainMenuPics(ArrayList<BufferedImage> mainMenuPics) {
-		this.mainMenuPics = mainMenuPics;
-	}
-
-
-	public ArrayList<BufferedImage> getExitGamePics() {
-		return exitGamePics;
-	}
-
-
-	public void setExitGamePics(ArrayList<BufferedImage> exitGamePics) {
-		this.exitGamePics = exitGamePics;
-	}
-
-
+	
+	/**
+	 * Getter that stores the user's decision to exit to the main menu.
+	 * @return exitToMain , a boolean
+	 */
 	public boolean isExitToMain() {
 		return exitToMain;
 	}
 
 
+	/**
+	 * Sets the user's decision to exit to the main menu.
+	 * @param exitToMain , a boolean (1 if yes, 0 otherwise)
+	 */
 	public void setExitToMain(boolean exitToMain) {
 		this.exitToMain = exitToMain;
 	}
 
 
+	/**
+	 * Getter that stores the user's decision to exit the game.
+	 * @return exitGame , a boolean
+	 */
 	public boolean isExitGame() {
 		return exitGame;
 	}
 
 
+	/**
+	 * Sets the user's decision to exit the game.
+	 * @param exitGame , a boolean
+	 */
 	public void setExitGame(boolean exitGame) {
 		this.exitGame = exitGame;
+	}
+	
+	/**
+	 * Getter for the Game3Controller that is used in the game.
+	 * @return controller , an instance of Game3Controller
+	 */
+	public Game3Controller getController() {
+		return controller;
+	}
+	
+	/**
+	 * Sets the Game3Controller that is used in the game.
+	 * @param controller , an instance of Game3Controller
+	 */
+	public void setController(Game3Controller controller) {
+		this.controller = controller;
 	}
 }

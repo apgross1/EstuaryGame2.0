@@ -12,7 +12,7 @@ import Enums.Frames;
 import Enums.TestControl;
 
 
-public class GabionPUModel extends WallModelAbstract {
+public class GabionPUModel  {
 	private boolean isActive;
 	private boolean isPickedUp;
 	private Pair location;

@@ -155,7 +155,10 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		this.frame.setResizable(false);
 		this.frame.getContentPane().removeAll();
 		//this.frame.add(backLay);
-		this.frame.add(startScreen);		
+		this.frame.add(startScreen);
+		
+		this.frame.addKeyListener(this);
+		
 		this.frame.revalidate();
 		this.frame.repaint();	
 		this.frame.setVisible(true);
@@ -173,7 +176,6 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		@Override
 		public void paint(Graphics g) {
 			g.setColor(Color.DARK_GRAY);
-			System.out.println("Painting");
 			drawCenteredString(g, "SWMP Romp: A game of estuaries!", new Font("Haettenschweiler", Font.PLAIN, 100));
 			
 			if(dir){

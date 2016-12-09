@@ -18,7 +18,7 @@ import models.GabionPUModel.GabPUState;
 
 
 
-public class ConcretePUModel extends WallModelAbstract {
+public class ConcretePUModel  {
 	public enum ConcPUState {
 		POWER_UP,WALL;
 	}
@@ -28,9 +28,9 @@ public class ConcretePUModel extends WallModelAbstract {
 	private HashMap<Frames, JComponent> frameMap;
 	private Pair location;
 	private Pair viewLocation;
-	private Rectangle bounds;
 	private int height;
 	private int width;
+	private Rectangle bounds;
 
 	
 	
