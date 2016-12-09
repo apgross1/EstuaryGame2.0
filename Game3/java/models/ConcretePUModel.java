@@ -18,7 +18,7 @@ import models.GabionPUModel.GabPUState;
 
 
 
-public class ConcretePUModel extends WallModelAbstract {
+public class ConcretePUModel  {
 	public enum ConcPUState {
 		POWER_UP,WALL;
 	}

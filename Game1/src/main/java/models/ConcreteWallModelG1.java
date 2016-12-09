@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class ConcreteWallModelG1 extends WallModelAbstract {
+public class ConcreteWallModelG1 {
 	private int maxBlocks;
 	private int currentBlocks;
 	private int activeBlocksOnBoard;

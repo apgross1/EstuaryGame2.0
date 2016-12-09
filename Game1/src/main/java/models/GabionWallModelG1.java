@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class GabionWallModelG1 extends WallModelAbstract{
+public class GabionWallModelG1 {
 	private int maxOysters;
 	private int currentOysters;
 	private int activeClamsOnBoard;
 	private Collection<GabionChunk> chunks = new ArrayList<GabionChunk>();
 	
 	/**
-	 * creates an instance of the model that sets the max amount of oyesters
+	 * creates an instance of the model that sets the max amount of oysters
 	 * that can be used in the walls
 	 */
 	public GabionWallModelG1() {
