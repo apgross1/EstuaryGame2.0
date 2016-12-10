@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -24,9 +24,9 @@ import view.Game2View.Animation;
  * @author Team 8
  *
  */
-public class Game2Controller {
+public class Game2Controller implements Serializable {
 	private boolean gameActive;
-	private Game2View view;
+	private transient Game2View view;
 	private AnimalModelG2 animal;
 
 	private AlgaeModel algae;

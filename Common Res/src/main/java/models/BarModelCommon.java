@@ -1,6 +1,8 @@
 package models;
 
-public class BarModelCommon {
+import java.io.Serializable;
+
+public class BarModelCommon implements Serializable {
 	public int status;
 	int maxLevel;
 	

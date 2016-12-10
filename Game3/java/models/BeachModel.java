@@ -1,5 +1,6 @@
 package models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -16,7 +17,7 @@ import Enums.Frames;
 import Enums.TestControl;
 import Enums.WaveClusters;
 
-public class BeachModel {
+public class BeachModel implements Serializable {
 	private HashMap<Pair, GridBlock> beachGrid;
 	private HashMap<WaveClusters, List<Pair>> gridLayers;
 	private List<Pair> orderedPairs;

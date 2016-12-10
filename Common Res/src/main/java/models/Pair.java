@@ -1,10 +1,12 @@
 package models;
 
+import java.io.Serializable;
+
 /**
  * @author Andrew
  * Helper class that creates and stores coordinate pairs
  */
-public class Pair {
+public class Pair implements Serializable {
 	private int a;
 	private int b;
 	
@@ -13,7 +15,7 @@ public class Pair {
 	 * @param num1 , an int representing the x coordinate
 	 * @param num2 , an int representing the y coordinate
 	 */
-	public Pair(int num1, int num2) {
+	public Pair(int num1, int num2)  {
 		setX(num1);
 		setY(num2);
 	}

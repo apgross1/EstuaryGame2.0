@@ -5,13 +5,14 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 import Enums.TestControl;
 
-public class GridBlock {
+public class GridBlock implements Serializable {
 	private Pair location;
 	private GabionPUModel gabPU = new GabionPUModel();
 	private ConcretePUModel concrPU = new ConcretePUModel();

@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,9 +31,9 @@ import view.Game3View;
 import view.Game3View.GabionConc;
 
 
-public class Game3Controller {
+public class Game3Controller implements Serializable {
 	private boolean gameActive;
-	private Game3View view;
+	private transient Game3View view;
 	private AnimalModelG3 animal;
 	private BeachModel beach;
 	private SunHurricaneModel sun;

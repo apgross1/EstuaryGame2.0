@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import models.GabionPUModel.GabPUState;
 
 
 
-public class ConcretePUModel  {
+public class ConcretePUModel implements Serializable {
 	public enum ConcPUState {
 		POWER_UP,WALL;
 	}

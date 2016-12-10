@@ -3,6 +3,7 @@ package models;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,7 +11,7 @@ import javax.imageio.ImageIO;
 
 import Enums.AnimGraphics;
 
-public class Tutorial {
+public class Tutorial implements Serializable {
 	private int keyBoardPicOnDeck;
 	private boolean keyboardStop;
 	private boolean waveWarning;

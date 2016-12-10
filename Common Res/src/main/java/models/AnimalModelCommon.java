@@ -1,6 +1,7 @@
 package models;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,7 +11,7 @@ import enums.Direction;
  * @author Andrew
  * Abstract class that sets the guidelines for creating an animal for each game.
  */
-public abstract class AnimalModelCommon {
+public abstract class AnimalModelCommon implements Serializable {
 	private int locX;
 	private int locY;
 	private int health;

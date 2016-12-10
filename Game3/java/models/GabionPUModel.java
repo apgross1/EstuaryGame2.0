@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
@@ -12,7 +13,7 @@ import Enums.Frames;
 import Enums.TestControl;
 
 
-public class GabionPUModel  {
+public class GabionPUModel implements Serializable {
 	private boolean isActive;
 	private boolean isPickedUp;
 	private Pair location;

@@ -1,6 +1,7 @@
 package models;
 
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.HashMap;
 import javax.swing.JComponent;
 import Enums.Frames;
@@ -11,7 +12,7 @@ import Enums.Frames;
  * @author Andrew
  *
  */
-public class AnimalModelG3 extends AnimalModelCommon{
+public class AnimalModelG3 extends AnimalModelCommon implements Serializable {
 	private int graphicOnDeck;
 	private int height;
 	private int width;

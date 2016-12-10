@@ -22,15 +22,15 @@ public class Game1Controller implements java.io.Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	//Models
 	private AnimalModel animal = new AnimalModel(screenSize);
-	ConcreteWallModelG1 wallModel = new ConcreteWallModelG1();
-	GabionWallModelG1 gabionModel = new GabionWallModelG1();
-	BarModel bar = new BarModel();
+	private ConcreteWallModelG1 wallModel = new ConcreteWallModelG1();
+	private GabionWallModelG1 gabionModel = new GabionWallModelG1();
+	private BarModel bar = new BarModel();
 	//View
-	Game1View g1view;
+	private transient Game1View g1view;
 	
 	//Vars
 	private boolean gameState;

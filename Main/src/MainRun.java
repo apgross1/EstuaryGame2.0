@@ -45,7 +45,7 @@ import controller.Game2Controller;
 import controller.Game3Controller;
 
 public class MainRun extends JPanel implements MouseListener, KeyListener {
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	static boolean gameStarted = false;
 	JButton startButton = new JButton("Start Game");
@@ -335,13 +335,17 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 	}
 	
 	public void serializeCtls() throws IOException{
+		ArrayList<Object> writeToFile = new ArrayList<Object>();
 		//Write game one to file 
-		FileOutputStream fout = new FileOutputStream("g1Ctl.ser");
-		ObjectOutputStream oos = new ObjectOutputStream(fout);
+		
 		try {
-			oos.writeObject(g1cont);
+			FileOutputStream fout = new FileOutputStream("controllers.ser");
+			ObjectOutputStream oos = new ObjectOutputStream(fout);
+			writeToFile.add(g1cont);
+			writeToFile.add(g2cont);
+			//writeToFile.add(g3cont);
+			oos.writeObject(writeToFile);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

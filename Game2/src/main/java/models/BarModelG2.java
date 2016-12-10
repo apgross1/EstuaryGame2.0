@@ -1,11 +1,13 @@
 package models;
 
+import java.io.Serializable;
+
 /**
  * @author Team 8
  *
  */
 
-public class BarModelG2 extends BarModelCommon{
+public class BarModelG2 extends BarModelCommon implements Serializable {
 
 	private int status;
 	private int maxLevel;

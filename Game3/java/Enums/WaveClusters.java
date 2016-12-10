@@ -1,10 +1,12 @@
 package Enums;
 
+import java.io.Serializable;
+
 /**
  * @author Andrew
  * Enum class that refers to the wave clusters in which a wave particle could be placed. 
  */
-public enum WaveClusters {
+public enum WaveClusters implements Serializable {
 	CLUSTER_ONE(0,0,100),
 	CLUSTER_TWO(1,101,200),
 	CLUSTER_THREE(2,201, 300),

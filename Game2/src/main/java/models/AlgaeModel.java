@@ -3,6 +3,7 @@ package models;
 import java.util.Random;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -10,7 +11,7 @@ import java.util.Collection;
  * @author Group 8
  *
  */
-public class AlgaeModel {
+public class AlgaeModel implements Serializable {
 	private int locX;
 	private int locY;
 	
@@ -18,18 +19,18 @@ public class AlgaeModel {
 	
 	private int velocity = 2;
 	private int randomYBound = 0;
-	Random rand = new Random();
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	int screenWidth = (int) screenSize.getWidth();
-	int screenHeight = (int) screenSize.getHeight();
+	private Random rand = new Random();
+	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private int screenWidth = (int) screenSize.getWidth();
+	private int screenHeight = (int) screenSize.getHeight();
 	private int height = (int) (screenHeight*.15);
 	private int width = (int) (screenHeight*.15);
-	int algaeXBoundMax = screenWidth;
-	int algaeYBoundMax = (int) (screenHeight-(screenHeight*.1));
-	int algaeYBoundMin = (int) (screenHeight*.32);
-	int maxAlgaeNum = 100;
-	int riverSpawnX ;
-	int riverSpawnY ;
+	private int algaeXBoundMax = screenWidth;
+	private int algaeYBoundMax = (int) (screenHeight-(screenHeight*.1));
+	private int algaeYBoundMin = (int) (screenHeight*.32);
+	private int maxAlgaeNum = 100;
+	private int riverSpawnX;
+	private int riverSpawnY;
 	
 	
 

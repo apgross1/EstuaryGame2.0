@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -19,7 +20,7 @@ import Enums.TestControl;
 import Enums.WaveClusters;
 import enums.Waves;
 
-public class WaveModel {
+public class WaveModel implements Serializable {
 
 	private int height = 25;
 	private int width = 25;

@@ -3,6 +3,7 @@ package models;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,7 +15,7 @@ import enums.Direction;
  *
  */
 
-public class AnimalModelG2 extends AnimalModelCommon {
+public class AnimalModelG2 extends AnimalModelCommon implements Serializable {
 
 
 	private int velocity;

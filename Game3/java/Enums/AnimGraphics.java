@@ -1,5 +1,6 @@
 package Enums;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ import java.util.Map;
  * @author Andrew
  *Enum class that refers to the graphics used in the game
  */
-public enum AnimGraphics {
+public enum AnimGraphics implements Serializable {
 	BLUECRAB_0(0),
 	BLUECRAB_1(1),
 	BLUECRAB_2(2),

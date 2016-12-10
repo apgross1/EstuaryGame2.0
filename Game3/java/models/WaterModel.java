@@ -1,11 +1,12 @@
 package models;
 
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 import Enums.AnimGraphics;
 import Enums.TestControl;
 
-public class WaterModel {
+public class WaterModel implements Serializable {
 	private Pair location = new Pair(0,0);
 	private int height;
 	private int width;
