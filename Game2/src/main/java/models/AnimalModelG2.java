@@ -8,6 +8,10 @@ import java.util.HashMap;
 
 import enums.Direction;
 
+/**
+ * @author Team 8
+ *
+ */
 public class AnimalModelG2 extends AnimalModelAbstract {
 
 	private int velocity;
@@ -20,6 +24,10 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 	int charYBoundMin;
 	int charYBoundMax;
 	
+	
+	/**
+	 * Constructs the animal based on screensize and sets initial variables
+	 */
 	public AnimalModelG2() {
 		size = Toolkit.getDefaultToolkit().getScreenSize();
 		screenWidth = (int) size.getWidth();
@@ -34,8 +42,8 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 		this.isDead = false;
 		this.velocity = 0;
 		
-		setLocY((int) (screenHeight/2));
-	}
+		setLocY((int) (screenHeight/2)); }
+	
 	
 	
 	@Override
@@ -49,6 +57,7 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 		}
 		
 	}
+	
 	@Override
 	public int getLocY(){
 		return y;
@@ -62,45 +71,80 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 	
 	
 	
+	/**
+	 * @return the height of the animal model
+	 */
 	public int getHeight() {
 		return height;
+		
 	}
 
+	/**
+	 * @return the integer width of the animal model
+	 */
 	public int getWidth() {
 		return width;
 	}
 	
-	public int setHeight(int h) {
-		return height = h;
+	/**
+	 * @param h the desired integer height
+	 */
+	public void setHeight(int h) {
+		height = h;
 		
 	}
-	public int setWidth(int w) {
+	/**
+	 * Registers the width at the desired integer w
+	 * @param w the desired integer height of the animal model
+	 */
+	public void setWidth(int w) {
 		
-		return width = w;
+		width = w;
 		
 	}
 	
+	/**
+	 * @return the current velocity of the character
+	 */
 	public int getVelocity() {
 		return velocity;
 	}
 
+	/**
+	 * Registers the desired velocity of the character based on the parameter v 
+	 * @param v the desired velocity of the character
+	 */
 	public void setVelocity(int v) {
 		velocity = v;
 	}
 
+	/**
+	 * Increases the velocity by a constant of 1
+	 */
 	public void increaseVelocity() {
 		this.setVelocity(getVelocity() + 1);
 	}
-
+	
+	/**
+	 * Decreases the velocity by a constant of 1
+	 */
 	public void decreaseVelocity() {
 		this.setVelocity(getVelocity() - 1);
 	}
 
 
+	/**
+	 * Returns a boolean value indicating whether or not the character is alive
+	 * @return returns whether or not the character is alive
+	 */
 	public boolean getIsDead() {
 		return isDead;
 	}
 
+	/**
+	 * Method to set whether or not the character is alive
+	 * @param takes what the desired state of the player is to be set at
+	 */
 	public void setIsDead(boolean state) {
 		isDead = state;
 	}

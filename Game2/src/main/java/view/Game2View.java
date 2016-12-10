@@ -30,6 +30,10 @@ import controller.Game2Controller;
 import enums.Direction;
 
 
+/**
+ * @author Jacob
+ *
+ */
 public class Game2View extends JPanel implements KeyListener{
 	
 	private Game2Controller controller;
@@ -88,13 +92,40 @@ public class Game2View extends JPanel implements KeyListener{
 	
 	
     
+	/**
+	 * Registers the controller passed in as a parameter
+	 * @param cont is the desired controller to be registered
+	 */
 	public void addController(Game2Controller cont) {
 		controller = cont;
 	}
+	
+	
+	/**
+	 * Updates the Jframe by calling paint
+	 */
 	public void repaintFrame(){
 		frame.repaint();
 		
 	}
+	
+	
+	/**
+	 * Loads in all the images used as bufferedImages
+	 * background= The river, estuary, farm and farmer
+	 * character = The blue crab
+	 * algaeImg = The algae when the estuary is at good health
+	 * algaeImgMed = The algae when the estuary is at medium health
+	 * algaeImgBad = The algae when the estuary is at poor health
+	 * storm1 = The stormcloud devoid of lightning
+	 * storm2 = The storm cloud when the right most lightning bolt is firing
+	 * storm3 = The storm cloud when the middle lightning bolt is firing
+	 * storm4 = The storm cloud when the left most lightning bolt is firing
+	 * algaeEaters = The cat fish that eat the algae
+	 * Arrows = The four directional arrows on the keyboard
+	 * arrowUP = The up arrow on the keyboard highlighted
+	 * arrowDOWN = The down arrow on the keyboard highlighted
+	 */
 	public void loadImages(){
 		try {
 			background = ImageIO.read(new File("./Images/Game2/background.png"));
@@ -121,6 +152,9 @@ public class Game2View extends JPanel implements KeyListener{
 		
 		
 		
+		/* (non-Javadoc)
+		 * @see javax.swing.JComponent#paint(java.awt.Graphics)
+		 */
 		@Override
 		public void paint(Graphics g) {
 			if(controller.getNumMissed()==oxyBar.getDamagePercent()){
@@ -278,12 +312,18 @@ public class Game2View extends JPanel implements KeyListener{
 	}
     
 	ActionListener GameEndListener = new ActionListener() {
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			controller.setGameActive(false);
 		}
 	};
 	
+	/**
+	 * After the game is over this component sets a 3 second timer to allow the user to read the game result
+	 */
 	public void endGameTimer() {
 		Timer t = new Timer(3000, GameEndListener);
 		t.setRepeats(false);
@@ -294,11 +334,20 @@ public class Game2View extends JPanel implements KeyListener{
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		//not used
 	}
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 * Key listener to adjust character velocity
+	 * -if Up is pressed sets velocity to -3
+	 * -if down is pressed sets velocity to 3
+	 */
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -334,16 +383,22 @@ public class Game2View extends JPanel implements KeyListener{
 	}
 				
 	
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		controller.getAnimalModelG2().setVelocity(0);
 		
-	}
+	} 
 
 
 
 
-
+	/**
+	 * Gets the current frame of the game2
+	 * @return the current game frame
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
@@ -351,9 +406,19 @@ public class Game2View extends JPanel implements KeyListener{
 
 
 
+	/**
+	 * Registers the desired frame to the passed in parameter
+	 * @param frame the desired frame to be registered
+	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
+	/** 
+	 * Gets the width taken up by the algaeEater
+	 * this is done by taking the algaeEate width and dividing by 6
+	 * used to calculate collision with the algae
+	 * @return riverWidth the width taken up by the algaeEater
+	 */
 	public int getAlgaeEaterX(){
 		riverWidth = algaeEaters.getWidth()/6;
 		return riverWidth;
