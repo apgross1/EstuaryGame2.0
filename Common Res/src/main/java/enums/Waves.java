@@ -1,5 +1,9 @@
 package enums;
 
+/**
+ * @author Andrew
+ * Enum class for the different waves that can be used depending on the game
+ */
 public enum Waves {
 	WAVE_GAME1(0,0,0),
 	WAVE_GAME3(2,0,0);

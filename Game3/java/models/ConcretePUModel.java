@@ -13,11 +13,12 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 import Enums.Frames;
+import Enums.TestControl;
 import models.GabionPUModel.GabPUState;
 
 
 
-public class ConcretePUModel extends WallModelAbstract {
+public class ConcretePUModel  {
 	public enum ConcPUState {
 		POWER_UP,WALL;
 	}
@@ -27,9 +28,9 @@ public class ConcretePUModel extends WallModelAbstract {
 	private HashMap<Frames, JComponent> frameMap;
 	private Pair location;
 	private Pair viewLocation;
-	private Rectangle bounds;
 	private int height;
 	private int width;
+	private Rectangle bounds;
 
 	
 	
@@ -53,15 +54,6 @@ public class ConcretePUModel extends WallModelAbstract {
 		this.viewLocation = new Pair(0,0);
 	}
 	
-	/**
-	 * Alternative constructor for this element
-	 * @param loc a Pair containing coordinates at which the concrete power-up/wall will be placed
-	 */
-	public ConcretePUModel(Pair loc) {
-		location = loc;
-		this.viewLocation = new Pair(0,0);
-		this.setViewLocation(loc);
-	}
 	
 	/**
 	 * Sets a new concrete state depending on whether or not the concrete power up was picked up.
@@ -111,7 +103,6 @@ public class ConcretePUModel extends WallModelAbstract {
 	public void setViewLocation(Pair viewLocation) {
 		int tileWidth = (int)((frameMap.get(Frames.ANIMAL).getWidth()+frameMap.get(Frames.SHORE).getWidth())/7);
 		int tileHeight = (int)(frameMap.get(Frames.SHORE).getHeight()/7);
-		
 		this.viewLocation.setX((int)((location.getX()))*tileWidth);
 		this.viewLocation.setY((int)(location.getY())*tileHeight);
 	}
@@ -234,8 +225,8 @@ public class ConcretePUModel extends WallModelAbstract {
 	 * @param test String used to change the functionality of this
 	 * method given its truth value 
 	 */
-	public void setLocation(Pair location, String test) {
-		if(test == "test"){
+	public void setLocation(Pair location, TestControl test) {
+		if(test == TestControl.TEST){
 			this.location = location;
 		}
 		else{
@@ -243,15 +234,4 @@ public class ConcretePUModel extends WallModelAbstract {
 			this.setViewLocation(location);
 		}
 	}
-	
-	//Testing purposes
-	public void setLocationTest(Pair location) {
-		this.location = location;
-	}
-	
-	
-	@Override
-	public void breakDown() {
-	}
-	
 }

@@ -9,9 +9,10 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import Enums.Frames;
+import Enums.TestControl;
 
 
-public class GabionPUModel extends WallModelAbstract {
+public class GabionPUModel  {
 	private boolean isActive;
 	private boolean isPickedUp;
 	private Pair location;
@@ -94,8 +95,8 @@ public class GabionPUModel extends WallModelAbstract {
 	 * Sets the location of this element
 	 * @param location a Pair containing the location of this element, test determines if it's test or game
 	 */
-	public void setLocation(Pair location, String test) {
-		if(test == "test"){
+	public void setLocation(Pair location, TestControl test) {
+		if(test == TestControl.TEST){
 			this.location = location;
 		}
 		else{
@@ -224,17 +225,4 @@ public class GabionPUModel extends WallModelAbstract {
 	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
 		this.frameMap = frameMap;
 	}
-	
-	@Override
-	public void breakDown() {
-		
-	}
-	
-	
-	//For testing purposes
-		public void setLocationTest(Pair location) {
-			this.location = location;
-		}
-		
-
 }

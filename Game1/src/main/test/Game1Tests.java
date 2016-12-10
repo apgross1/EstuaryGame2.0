@@ -33,84 +33,42 @@ public class Game1Tests {
 		//Basic cardinal directions with no edge cases
 		//South from origin
 		myAnimal.setCurrDir(enums.Direction.SOUTH);
+		myAnimal.setSpeedX(0);
+		myAnimal.setSpeedY(1);
 		myAnimal.move();
-		assertTrue("Y should be 1... ", myAnimal.getLocY()== 57);
+		assertTrue("Y should be 1... ", myAnimal.getLocY()== 51);
 		
-		//North from 1 down from origin (to avoid edge case)
+		//North
+		myAnimal.setLocX(500);
+		myAnimal.setLocY(500);
 		myAnimal.setCurrDir(enums.Direction.NORTH);
+		myAnimal.setSpeedX(0);
+		myAnimal.setSpeedY(-1);
 		myAnimal.move();
-		assertTrue("Y should be 0...", myAnimal.getLocY() == 43);
+		System.out.println(myAnimal.getLocY());
+		assertTrue("Y should be 0...", myAnimal.getLocY() == 499);
 		
+
 		//East from origin
 		myAnimal.setCurrDir(enums.Direction.EAST);
+		myAnimal.setLocX(50);
+		myAnimal.setLocY(50);
+		myAnimal.setSpeedX(1);
+		myAnimal.setSpeedY(0);
 		myAnimal.move();
-		assertTrue("X should be 1...", myAnimal.getLocX() == 7);
+		System.out.print("Y " + myAnimal.getLocX());
+		assertTrue("X should be 1...", myAnimal.getLocX() == 51);
 		
 		//West from origin+1
 		myAnimal.setCurrDir(enums.Direction.WEST);
+		myAnimal.setLocX(50);
+		myAnimal.setLocY(50);
+		myAnimal.setSpeedX(-1);
+		myAnimal.setSpeedY(0);
 		myAnimal.move();
-		assertTrue("X should be 0...", myAnimal.getLocX() == 0);
-		
-		/*
-		//Combinations (NE,NW,SE,SW)
-		//NE from (0,1)
-		myAnimal.setLocX(0);
-		myAnimal.setLocY(1);
-		myAnimal.setCurrDir(enums.Direction.NORTH_EAST);
-		myAnimal.move();
-		assertTrue("X should be 1 and y should be 0...", (myAnimal.getLocX() == 1) && (myAnimal.getLocY() == 0));
-	
-		//NW from (1,1)
-		myAnimal.setLocX(1);
-		myAnimal.setLocY(1);
-		myAnimal.setCurrDir(enums.Direction.NORTH_WEST);
-		myAnimal.move();
-		assertTrue("X should be 0 and y should be 0...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 0));
-		
-		//SE from (0,0)
-		myAnimal.setLocX(0);
-		myAnimal.setLocY(0);
-		myAnimal.setCurrDir(enums.Direction.SOUTH_EAST);
-		myAnimal.move();
-		assertTrue("X should be 1 and y should be 1...", (myAnimal.getLocX() == 1) && (myAnimal.getLocY() == 1));
-		
-		//SW from (1,0)
-		myAnimal.setLocX(1);
-		myAnimal.setLocY(0);
-		myAnimal.setCurrDir(enums.Direction.SOUTH_WEST);
-		myAnimal.move();
-		assertTrue("X should be 0 and y should be 1...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 1));
-		*/
-		
-		//Edge cases
-		//West (0,0)
-		myAnimal.setLocX(0);
-		myAnimal.setLocY(0);
-		myAnimal.setCurrDir(enums.Direction.WEST);
-		myAnimal.move();
-		assertTrue("Position should remain the same...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 0));
-		
-		//East
-		myAnimal.setLocX(885);
-		myAnimal.setLocY(0);
-		myAnimal.setCurrDir(enums.Direction.EAST);
-		myAnimal.move();
-		assertTrue("Position should remain the same...", (myAnimal.getLocX() == 885) && (myAnimal.getLocY() == 0));
-		
-		//North (0,0)
-		myAnimal.setLocX(0);
-		myAnimal.setLocY(0);
-		myAnimal.setCurrDir(enums.Direction.NORTH);
-		myAnimal.move();
-		assertTrue("Position should remain the same...", (myAnimal.getLocX() == 0) && (myAnimal.getLocY() == 0));
-		
-		//South (0,200)
-		myAnimal.setLocX(0);
-		myAnimal.setLocY(560);
-		myAnimal.setCurrDir(enums.Direction.SOUTH);
-		myAnimal.move();
-		assertTrue("Position should remain the same...", (myAnimal.getLocX() == 0 && (myAnimal.getLocY() == 560)));
+		assertTrue("X should be 0...", myAnimal.getLocX() == 49);
 	}
+	
 	@Test
 	public void testAnimalSize(){
 		models.AnimalModel animal = new models.AnimalModel(screenSize);
@@ -428,5 +386,13 @@ public class Game1Tests {
 				//Should take 100% damadge because there are no collected gabbions or chunks.
 				assertEquals(process.getBarModel().getStatus(), 0);
 				
+	}
+	@Test
+	public void testisEmpty(){
+		models.BarModelCommon bar = new models.BarModel();
+		bar.setStatus(100);
+		assertTrue("should be false", bar.isEmpty() == false);
+		bar.setStatus(0);
+		assertTrue("Should be true", bar.isEmpty());
 	}
 }

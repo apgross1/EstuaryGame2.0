@@ -4,12 +4,17 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import Enums.AnimGraphics;
+import Enums.Frames;
+import Enums.TestControl;
 import models.AnimalModelG3;
 import models.BeachModel;
 import models.ConcretePUModel;
@@ -22,7 +27,8 @@ import models.WaterModel;
 import models.WaveModel;
 import models.GabionPUModel.GabPUState;
 import view.Game3View;
-import view.Game3View.GridTile;
+import view.Game3View.GabionConc;
+
 
 public class Game3Controller {
 	private boolean gameActive;
@@ -40,6 +46,7 @@ public class Game3Controller {
 	private boolean tutorialActive;
 	private Timer puWallLinkTimer;
 	private boolean gameWin;
+	private HashMap<Frames, JComponent> frameMap;
 	
 	
 	
@@ -49,7 +56,7 @@ public class Game3Controller {
 	 * @param tutorialOn boolean that determines if the tutorial should be played
 	 */
 	public Game3Controller(boolean tutorialOn) {
-		this.setTutorialActive(true);
+		this.setTutorialActive(false);
 		gameFrame = new JFrame();
 		AnimalModelG3 a = new AnimalModelG3();
 		a.setLocX(250);
@@ -70,7 +77,7 @@ public class Game3Controller {
 	public void runGame()  {
 		gameFrame.getContentPane().removeAll();
 		gameFrame.revalidate();
-		view = new Game3View(this, gameFrame);
+		view = new Game3View(this, gameFrame, TestControl.NO_TEST);
 		
 		
 		this.getBeach().setFrameMap(view.getFrameMap());
@@ -108,7 +115,7 @@ public class Game3Controller {
 			delta += (now-lastTime)/ns;
 			lastTime=now;
 			if(delta>=1){
-				animal.tick();
+				this.animalMove();
 				view.repaintAll();
 				updates++;
 				delta--;
@@ -121,7 +128,7 @@ public class Game3Controller {
 			}
 			
 			//Controller for now but could be implemented in Model in tick function
-			animal.findBeachLocation();
+			this.updateAnimalBeachLocation();
 			
 			
 			
@@ -146,7 +153,6 @@ public class Game3Controller {
 			}
 			this.collisionTile();
 			this.view.repaintAll();
-			this.view.updateLoc();	
 		}
 		
 		
@@ -314,6 +320,11 @@ public class Game3Controller {
 		}
 	}
 	
+	/**
+	 * Detects collision between a wave particle and the animal. If collision occurs in the normal game
+	 * the game will end. Otherwise in the case of the tutorial the game will continue to run.
+	 * @param w WaveModel, an instance of a wave particle
+	 */
 	public void collisionWaveAnimal(WaveModel w) {
 		if(w.getBounds().intersects(this.getAnimal().getBounds())) {
 			if(this.isTutorialActive()) {
@@ -328,8 +339,14 @@ public class Game3Controller {
 		}
 	}
 	
-	public void collisionWavePowerUps(WaveModel w, ArrayList<GridTile> tiles) {
-		for(GridTile gr : tiles) {
+	/**
+	 * Collision detection between and gabion/concrete wall and a wave particle.
+	 * If collision occurs the wave will receed back into the ocean.
+	 * @param w WaveModel, an instance of a wave particle
+	 * @param tiles an ArrayList of all sand tiles on the beach grid
+	 */
+	public void collisionWavePowerUps(WaveModel w, ArrayList<GabionConc> tiles) {
+		for(GabionConc gr : tiles) {
 			ConcretePUModel conc = gr.getGridBlock().getConcrPU();
 			GabionPUModel gab = gr.getGridBlock().getGabPU();
 			if(conc.getIsActive() & conc.isPickedUp()) {
@@ -348,6 +365,12 @@ public class Game3Controller {
 		}
 	}
 	
+	/**
+	 * Converts a sand tile into a water tile after a wave has receeded. The water tile
+	 * may take 2 states: 1) When the tile is the furthest out from the ocean 2) When the tile is between
+	 * two other water tiles.
+	 * @param w WaveModel, an instance of a wave particle
+	 */
 	public void fillWaterTile(WaveModel w) {
 		List<Pair> pairs = this.getBeach().getGridLayers().get(w.getClusterGroup());
 		
@@ -365,8 +388,8 @@ public class Game3Controller {
 					if(i != pairs.size()-1) {
 						this.getBeach().getBeachGrid().get(this.getBeach().findPairInGrid(pairs.get(i+1))).getWater().setGraphicOnDeck(AnimGraphics.SAND_WITH_WATER_CENTER.getVal());
 					}
-					WaterModel newWatMod = new WaterModel("game");
-					tempGrid.setWater(newWatMod, this.getBeach().findPairInGrid(pairs.get(i)), "");
+					WaterModel newWatMod = new WaterModel(TestControl.NO_TEST);
+					tempGrid.setWater(newWatMod, this.getBeach().findPairInGrid(pairs.get(i)));
 		
 					view.getLayoutContainerComps().remove(view.getWaveComponentMap().get(w.hashCode()));
 					view.getWaveComponentMap().remove(w.hashCode());
@@ -793,37 +816,94 @@ public class Game3Controller {
 	public void setGameWin(boolean gameWin) {
 		this.gameWin = gameWin;
 	}
-
-	//For testing purposes
-		public Game3Controller(){
-			AnimalModelG3 a = new AnimalModelG3();
-			a.setLocX(0);
-			a.setLocY(0);
-			setAnimal(a);
-			setBeach(new BeachModel("test"));
+	
+	/**
+	 * Controls the movement of the animal.
+	 * It contains a conditional statement that allows
+	 * movement of the animal if it is:
+	 * 1) Within the bounds of the beach
+	 * 2) Not hitting a gabion/concrete wall
+	 * 3) Not restricted by the tutorial
+	 */
+	public void animalMove() {
+		if (((getAnimal().getLocY() + getAnimal().getSpeedY() >= 0) & (getAnimal().getBounds().getMaxX() + getAnimal().getSpeedX() <= getView().getFrameMap().get(Frames.ANIMAL).getWidth())) && 
+		   ((getAnimal().getBounds().getMaxY() + getAnimal().getSpeedY()<= getView().getFrameMap().get(Frames.ANIMAL).getHeight()) & getAnimal().getLocX()+ getAnimal().getSpeedX() >= 0)
+			&& (!getAnimal().isWallHit()) && (!getAnimal().isRestrictedMovement())) {
+			 getAnimal().setGraphicOnDeck((getAnimal().getGraphicOnDeck()+1)%3);
+			
+			getAnimal().setLocX(getAnimal().getLocX() + getAnimal().getSpeedX());
+			getAnimal().setLocY(getAnimal().getLocY() + getAnimal().getSpeedY());
 		}
+	}
+	
+	/**
+	 * Finds the position of the animal in the 7x7 positionGrid. This is contrary to the
+	 * position of the animal in terms of its position within a JPanel. This method
+	 * is used primarily for collision detection with a water tile.
+	 */
+	public void updateAnimalBeachLocation() {
+		int tileHeight = ((getView().getFrameMap().get(Frames.SHORE).getHeight()))/7;
+		int tileWidth = ((getView().getFrameMap().get(Frames.ANIMAL).getWidth()+getView().getFrameMap().get(Frames.SHORE).getWidth()))/7;
+		
+		getAnimal().getBeachLocation().setX((int)(Math.floor(getAnimal().getLocX())/tileWidth));
+		getAnimal().getBeachLocation().setY((int)(Math.ceil(getAnimal().getLocY())/tileHeight));
+	}
+	
+	
+	/**
+	 * Getter that retrieves the view
+	 * @return view Game3View, an instance of the game's view
+	 */
+	public Game3View getView() {
+		return view;
+	}
 
 
 
-		public Game3View getView() {
-			return view;
-		}
+	/**
+	 * Setter than assigns an instance of the game's view to be referenced in the controller.
+	 * @param view Game3View, an instance of the game's view
+	 */
+	public void setView(Game3View view) {
+		this.view = view;
+	}
 
 
 
-		public void setView(Game3View view) {
-			this.view = view;
-		}
+	/**
+	 * Getter that retrieves the frame used in the game. 
+	 * @return gameFrame JFrame, the frame being used in the game
+	 */
+	public JFrame getGameFrame() {
+		return gameFrame;
+	}
 
 
 
-		public JFrame getGameFrame() {
-			return gameFrame;
-		}
+	/**
+	 * Assigns the controller a reference to the JFrame used for the game
+	 * @param gameFrame an instance of JFrame
+	 */
+	public void setGameFrame(JFrame gameFrame) {
+		this.gameFrame = gameFrame;
+	}
 
 
 
-		public void setGameFrame(JFrame gameFrame) {
-			this.gameFrame = gameFrame;
-		}
+	/**
+	 * Getter for the HashMap of frames used throughout the game in order
+	 * to scale visual components.
+	 * @return frameMap ,an instance of JFrame
+	 */
+	public HashMap<Frames, JComponent> getFrameMap() {
+		return frameMap;
+	}
+
+	/**
+	 * Assigns the controller a reference to the HashMap of frames used in the game
+	 * @param frameMap an instance of a HashMap of game frames
+	 */
+	public void setFrameMap(HashMap<Frames, JComponent> frameMap) {
+		this.frameMap = frameMap;
+	}
 }

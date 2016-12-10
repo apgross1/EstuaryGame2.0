@@ -3,6 +3,10 @@ package models;
 import java.util.Comparator;
 
 
+/**
+ * @author Andrew
+ *
+ */
 public class PairComparator implements Comparator<Pair> {
     public int compare(Pair x1, Pair x2) {
         int result = Double.compare(x1.getY(), x2.getY());

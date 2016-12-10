@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class GabionWallModelG1 extends WallModelAbstract{
+public class GabionWallModelG1 implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int maxOysters;
 	private int currentOysters;
 	private int activeClamsOnBoard;
 	private Collection<GabionChunk> chunks = new ArrayList<GabionChunk>();
 	
 	/**
-	 * creates an instance of the model that sets the max amount of oyesters
+	 * creates an instance of the model that sets the max amount of oysters
 	 * that can be used in the walls
 	 */
 	public GabionWallModelG1() {
@@ -47,7 +51,6 @@ public class GabionWallModelG1 extends WallModelAbstract{
 	 * Mathematical function that sets current Oysters (what is displayed on the wall)
 	 * to 85% of what the player collected.
 	 */
-	@Override
 	public void breakDown() {
 		currentOysters = (int) (.85*currentOysters);
 	}

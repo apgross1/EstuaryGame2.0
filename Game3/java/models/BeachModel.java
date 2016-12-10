@@ -13,21 +13,18 @@ import javax.swing.Timer;
 import enums.Walls;
 import enums.Waves;
 import Enums.Frames;
+import Enums.TestControl;
 import Enums.WaveClusters;
 
 public class BeachModel {
-	private int squareCount;
-	private int landSize;
 	private HashMap<Pair, GridBlock> beachGrid;
 	private HashMap<WaveClusters, List<Pair>> gridLayers;
 	private List<Pair> orderedPairs;
 	private int[][] positionGrid;
 	private Pair gabPair = new Pair(0,0);
 	private Pair concPair = new Pair(0,0);
-	private Timer puTimer;
 	private HashMap<Frames, JComponent> frameMap;
-	private String GameState = "game";
-
+	private TestControl GameState;
 	
 	/**
 	 * Constructor for this element. Initializes the
@@ -44,12 +41,16 @@ public class BeachModel {
 		this.initializeBeach();
 	}
 	
-	//Testing purposes
-	public BeachModel(String test) {
+	/**
+	 * Constructor used for testing purposes.
+	 * @param test , TestControl that determines if the BeachModel instance is being created in test-mode or game-mode
+	 */
+	public BeachModel(TestControl test) {
 		beachGrid = new HashMap<Pair,GridBlock>();
 		gridLayers = new HashMap<WaveClusters, List<Pair>>();
 		positionGrid = new int[7][7];
 		orderedPairs = new ArrayList<Pair>();
+		this.setGameState(test);
 	}
 	
 	
@@ -66,9 +67,7 @@ public class BeachModel {
 	
 		while(it.hasNext()) {
 			Pair tempPair = it.next();
-			//System.out.println("("+tempPair.getX()+","+tempPair.getY()+")");
 			GridBlock g = new GridBlock(tempPair, this);
-			g.addPic();
 			g.setLocation(tempPair);
 			beachGrid.put(tempPair, g);
 		}
@@ -224,16 +223,16 @@ public class BeachModel {
 	 * @param waterLoc the location of where the water tile should be placed
 	 * @param test used to change the behavior of this function for testing purposes
 	 */
-	public void removeSquare(Pair waterLoc, String test) {
-		if(test == "test" || test == "Test"){
-			beachGrid.get(this.findPairInGrid(waterLoc)).setWater(new WaterModel(waterLoc), waterLoc,"test");
+	public void removeSquare(Pair waterLoc, TestControl test) {
+		if(test == TestControl.TEST){
+			beachGrid.get(this.findPairInGrid(waterLoc)).setWater(new WaterModel(waterLoc), waterLoc);
 			
 			positionGrid[waterLoc.getY()][waterLoc.getX()] = Waves.WAVE_GAME3.getWaveID();
 			
 		}
 		else{
 			
-		beachGrid.get(this.findPairInGrid(waterLoc)).setWater(new WaterModel(waterLoc), waterLoc, "Game");
+		beachGrid.get(this.findPairInGrid(waterLoc)).setWater(new WaterModel(waterLoc), waterLoc);
 		
 		positionGrid[waterLoc.getY()][waterLoc.getX()] = Waves.WAVE_GAME3.getWaveID();
 		}
@@ -399,7 +398,11 @@ public class BeachModel {
 	}
 
 	
-	public void setGameState(String gameState) {
+	/**
+	 * Sets the current gameState (test-mode or game-mode)
+	 * @param gameState TestControl enum that determines if program is running in test-mode or game-mode
+	 */
+	public void setGameState(TestControl gameState) {
 		this.GameState = gameState;
 	}
 

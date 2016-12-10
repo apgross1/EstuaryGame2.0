@@ -11,7 +11,7 @@ import Enums.Frames;
  * @author Andrew
  *
  */
-public class AnimalModelG3 extends AnimalModelAbstract{
+public class AnimalModelG3 extends AnimalModelCommon{
 	private int graphicOnDeck;
 	private int height;
 	private int width;
@@ -37,27 +37,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		restrictedMovement = false;
 	
 	}
-	
-	
-	/**
-	 * Controls the movement of the animal.
-	 * It contains a conditional statement that allows
-	 * movement of the animal if it is:
-	 * 1) Within the bounds of the beach
-	 * 2) Not hitting a gabion/concrete wall
-	 * 3) Not restricted by the tutorial
-	 */
-	public void tick(){
-		if (((getLocY() + speedY >= 0) & (this.getBounds().getMaxX() + speedX <= frames.get(Frames.ANIMAL).getWidth())) && 
-		   ((this.getBounds().getMaxY() + speedY <= frames.get(Frames.ANIMAL).getHeight()) & getLocX()+ speedX >= 0)
-			&& (!this.isWallHit()) && (!isRestrictedMovement())) {
-			 graphicOnDeck = (graphicOnDeck+1) % 3;
-			
-			this.setLocX(this.getLocX() + speedX);
-			this.setLocY(this.getLocY() + speedY);
-		}
-	}
-	
 	
 	/**
 	 * Getter for the image representing the current state of the animal.
@@ -85,19 +64,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	
 	
 	/**
-	 * Finds the position of the animal in the 7x7 positionGrid. This is contrary to the
-	 * position of the animal in terms of its position within a JPanel. This method
-	 * is used primarily for collision detection with a water tile.
-	 */
-	public void findBeachLocation() {
-		int tileHeight = ((frames.get(Frames.SHORE).getHeight()))/7;
-		int tileWidth = ((frames.get(Frames.ANIMAL).getWidth()+frames.get(Frames.SHORE).getWidth()))/7;
-		
-		this.beachLocation.setX((int)(Math.floor(this.getLocX())/tileWidth));
-		this.beachLocation.setY((int)(Math.ceil(this.getLocY())/tileHeight));
-	}
-	
-	/**
 	 * Resets the position of animal. Used primarily in the tutorial.
 	 */
 	public void resetPos() {
@@ -105,14 +71,6 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 		this.setLocY(250);
 		this.setSpeedX(0);
 		this.setSpeedY(0);
-	}
-	
-
-	
-	//Body may need to be deleted
-	@Override
-	public void move() {
-		
 	}
 
 	/**
@@ -273,27 +231,22 @@ public class AnimalModelG3 extends AnimalModelAbstract{
 	public void setWaveHit(boolean waveHit) {
 		this.waveHit = waveHit;
 	}
-	
-	
 
-/*
-	public void setFrameHeight(int height) {
-		// TODO Auto-generated method stub
-		FrameHeight = height;
-	}
-	public int getFrameHeight() {
-		// TODO Auto-generated method stub
-		return FrameHeight;
-	}
 	
-	public void setFrameWidth(int Width) {
-		// TODO Auto-generated method stub
-		FrameWidth = width;
+	/**
+	 * Returns the location of the animal in terms of its placement on the 7x7 positionGrid.
+	 * @return beachLocation Pair instance
+	 */
+	public Pair getBeachLocation() {
+		return beachLocation;
 	}
-	public int getFrameWidth() {
-		// TODO Auto-generated method stub
-		return FrameWidth;
+
+	/**
+	 * Setter that stores a Pair of coordinates that indicate the location of theb animal
+	 * in terms of its placement on the 7x7 positionGrid
+	 * @param beachLocation Pair instance
+	 */
+	public void setBeachLocation(Pair beachLocation) {
+		this.beachLocation = beachLocation;
 	}
-	*/
-	
 }

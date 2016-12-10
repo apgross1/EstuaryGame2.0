@@ -15,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.Timer;
 
 import Enums.Frames;
+import Enums.TestControl;
 import Enums.WaveClusters;
 import enums.Waves;
 
@@ -32,6 +33,7 @@ public class WaveModel {
 	private HashMap<Frames, JComponent> frames;
 	private boolean wavePause;
 	private boolean deleteWave = false;
+	private TestControl GameState;
 
 
 	/**
@@ -39,7 +41,8 @@ public class WaveModel {
 	 * @param clusterVal the number cluster with which this wave is associated
 	 * @param f the frame map used to perform dynamic scaling
 	 */
-	public WaveModel(int clusterVal, HashMap<Frames, JComponent> f) {
+	public WaveModel(int clusterVal, HashMap<Frames, JComponent> f, TestControl test) {
+		this.setGameState(test);
 		movement = (screenSizeX*.00104);
 		wavePause = false;
 		frames = f;
@@ -47,7 +50,8 @@ public class WaveModel {
 		this.move();
 	}
 
-	public WaveModel() {
+	public WaveModel(TestControl gameState) {
+		this.setGameState(gameState);
 		movement = (screenSizeX*.00104);
 		wavePause = false;
 	}
@@ -65,8 +69,13 @@ public class WaveModel {
 
 		//Change 250 to make it dynamic (should be width of the shore line)
 		location.setX((int)(screenSizeX - 250) + (int)(Math.random() * 500));
-		
-		int beachHeight = frames.get(Frames.SHORE).getHeight();
+		int beachHeight = 0;
+		if(this.getGameState() == TestControl.NO_TEST) {
+			beachHeight = frames.get(Frames.SHORE).getHeight();
+		}
+		else{
+			beachHeight = 1000;
+		}
 		int blockOneMin = 0, blockOneMax = beachHeight/7;
 		int blockTwoMin = blockOneMax+1, blockTwoMax = blockOneMax*2;
 		int blockThreeMin = blockTwoMax+1, blockThreeMax = blockOneMax*3;
@@ -102,6 +111,8 @@ public class WaveModel {
 	ActionListener movementTimer = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Object time = e.getSource();
+			Timer myTime = (Timer) time;
 			if(!isReceed()) {
 				if(wavePause) {
 					setVelocity(0);
@@ -124,10 +135,11 @@ public class WaveModel {
 				location.setX((int)(location.getX()+velocity));
 				//accelerator = -1*accelerator;
 				movement -= 1; 
-				
 			}
-			Object time = e.getSource();
-			Timer myTime = (Timer) time;
+			
+			if(getGameState() == TestControl.TEST) {
+				myTime.stop();
+			}
 		}
 	};
 
@@ -344,5 +356,62 @@ public class WaveModel {
 	public boolean getWaveStatePause() {
 		return this.wavePause;
 	}
+
+	/**
+	 * Returns whether the game is in test-mode or game-mode
+	 * @return TestControl enum
+	 */
+	public TestControl getGameState() {
+		return GameState;
+	}
+
+	/**
+	 * Provides WaveModel with a reference to the game state (whether the game is in test-mode or game-mode)
+	 * @param gameState TestControl enum
+	 */
+	public void setGameState(TestControl gameState) {
+		GameState = gameState;
+	}
 	
+	/**
+	 * Determines if the wave is paused. This method is used in the tutorial.
+	 * @param wavePause boolean (1 if the wave is paused, 0 otherwise)
+	 */
+	public void setWavePause(boolean wavePause) {
+		this.wavePause = wavePause;
+	}
+
+	/**
+	 * Gets the width of the screen of the computer running the program.
+	 * @return screenSizeX
+	 */
+	public Double getScreenSizeX() {
+		return screenSizeX;
+	}
+
+	/**
+	 * Sets the width of the screen of the computer running the program.
+	 * @param screenSizeX Double indicating the screen width of the computer running the program
+	 */
+	public void setScreenSizeX(Double screenSizeX) {
+		this.screenSizeX = screenSizeX;
+	}
+
+	/**
+	 * Returns the displacement component of the vector used to determine the wave's motion.
+	 * @return movement , a double
+	 */
+	public double getMovement() {
+		return movement;
+	}
+
+	/**
+	 * Sets the displacement component of the vector used to determine the wave's motion.
+	 * @param movement double that indicates the displacement of the wave particle
+	 */
+	public void setMovement(double movement) {
+		this.movement = movement;
+	}
+
+
 }

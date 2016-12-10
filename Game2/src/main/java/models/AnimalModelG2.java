@@ -8,11 +8,14 @@ import java.util.HashMap;
 
 import enums.Direction;
 
+
 /**
  * @author Team 8
  *
  */
-public class AnimalModelG2 extends AnimalModelAbstract {
+
+public class AnimalModelG2 extends AnimalModelCommon {
+
 
 	private int velocity;
 	private boolean isDead;
@@ -45,8 +48,7 @@ public class AnimalModelG2 extends AnimalModelAbstract {
 		setLocY((int) (screenHeight/2)); }
 	
 	
-	
-	@Override
+
 	public void move() {
 		if(y>charYBoundMax  && velocity<0)
 		{
