@@ -170,7 +170,7 @@ public class Game3Controller implements Serializable {
 	 * Listener for the sky timer. Cyclically brightens the sky over the
 	 * course of the game to indicate the passing of the hurricane.
 	 */
-	ActionListener skyTimerListener = new ActionListener() {
+	transient ActionListener skyTimerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			view.brightenSky();
@@ -191,7 +191,7 @@ public class Game3Controller implements Serializable {
 	 * after they have been spawned for an alloted time. The tile on which they
 	 * were placed will revert back to being vacant.
 	 */
-	ActionListener powerUpSpawnTimerListener = new ActionListener() {
+	transient ActionListener powerUpSpawnTimerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			beach.removeGabPU(beach.findPairInGrid(beach.getGabPair()));
@@ -222,7 +222,7 @@ public class Game3Controller implements Serializable {
 	 * after they have been spawned for an alloted time. The tile on which they
 	 * were placed will revert back to being vacant.
 	 */
-	ActionListener powerUpWallTimerListener = new ActionListener() {
+	transient ActionListener powerUpWallTimerListener = new ActionListener()  {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 				
@@ -408,7 +408,7 @@ public class Game3Controller implements Serializable {
 	 * Tracks how long the game should run (2.5 minutes).
 	 * When time has elapsed the player is sent to the "winner" end screen.
 	 */
-	ActionListener gameTimerListener = new ActionListener() {
+	transient ActionListener gameTimerListener = new ActionListener() {
 		public int timeElapsed;
 
 		@Override
@@ -444,7 +444,7 @@ public class Game3Controller implements Serializable {
 	/**
 	 * Generates a wave cluster while the game is active.
 	 */
-	ActionListener genWaveTimer = new ActionListener() {
+	transient ActionListener genWaveTimer = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Timer t = (Timer) e.getSource();
@@ -486,7 +486,7 @@ public class Game3Controller implements Serializable {
 	 * the animal to move towards it. This listener is used for
 	 * the tutorial.
 	 */
-	ActionListener singleGabSpawnListener = new ActionListener() {
+	transient ActionListener singleGabSpawnListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getBeach().spawnGabPU(getBeach().generatePPUL(), isTutorialActive());
@@ -500,7 +500,7 @@ public class Game3Controller implements Serializable {
 	 * where animal movement is restricted and no wave warning exists,
 	 * at which point a gabion power-up is requested to be spawned.
 	 */
-	ActionListener tutorialResetListener = new ActionListener() {
+	transient ActionListener tutorialResetListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getAnimal().resetPos();
@@ -515,7 +515,7 @@ public class Game3Controller implements Serializable {
 	 * wave cluster to be generated. This listener is used in the
 	 * tutorial.
 	 */
-	ActionListener animalRestrictedMovement = new ActionListener() {
+	transient ActionListener animalRestrictedMovement = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			animal.resetPos();
@@ -528,7 +528,7 @@ public class Game3Controller implements Serializable {
 	 * Listener used to animate the keyboard to mimic pressing of the keys.
 	 * This listener is used in the tutorial.
 	 */
-	ActionListener keyboardGraphicListener = new ActionListener() {
+	transient ActionListener keyboardGraphicListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if((animal.getSpeedX() != 0) || (animal.getSpeedY()!=0)) {
@@ -550,7 +550,7 @@ public class Game3Controller implements Serializable {
 	 * Generates a single wave in the same lane as the animal to represent 
 	 * the danger of waves in the game. This listener is used in the tutorial.
 	 */
-	ActionListener genSingleWaveListener = new ActionListener() {
+	transient ActionListener genSingleWaveListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			view.generateWaveCluster(true, 1);
@@ -563,7 +563,7 @@ public class Game3Controller implements Serializable {
 	 * repelled by a  gabion wall to emphasize the use of
 	 * power-ups. This listener is used in the tutorial.
 	 */
-	ActionListener genLastWaveListener = new ActionListener() {
+	transient ActionListener genLastWaveListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(getBeach().getBeachGrid().get(getBeach().findPairInGrid(getBeach().getGabPair())).getGabPU().getWallState() == GabPUState.WALL) {
@@ -579,7 +579,7 @@ public class Game3Controller implements Serializable {
 	/**
 	 * Creates dialogue box to give final instructions in the tutorial.
 	 */
-	ActionListener dialTimerListener = new ActionListener() {
+	transient ActionListener dialTimerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			getTutorial().setDialogueOn(true);
@@ -590,7 +590,7 @@ public class Game3Controller implements Serializable {
 	/**
 	 * Ends the tutorial and proceeds to the actual game.
 	 */
-	ActionListener initializeGameListener = new ActionListener() {
+	transient ActionListener initializeGameListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//Turning off dialogue box

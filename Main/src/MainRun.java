@@ -343,7 +343,7 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 			ObjectOutputStream oos = new ObjectOutputStream(fout);
 			writeToFile.add(g1cont);
 			writeToFile.add(g2cont);
-			//writeToFile.add(g3cont);
+			writeToFile.add(g3cont);
 			oos.writeObject(writeToFile);
 		} catch (IOException e) {
 			e.printStackTrace();
