@@ -338,7 +338,7 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 	
 	public void serializeCtls() throws IOException{
 		//Write game one to file 
-		FileOutputStream fout = new FileOutputStream("G:\\game1.ser");
+		FileOutputStream fout = new FileOutputStream("g1Ctl.ser");
 		ObjectOutputStream oos = new ObjectOutputStream(fout);
 		try {
 			oos.writeObject(g1cont);

@@ -3,8 +3,12 @@ package models;
 import java.awt.Dimension;
 import enums.Direction;
 
-public class AnimalModel extends AnimalModelCommon {
+public class AnimalModel extends AnimalModelCommon implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int height = 0;
 	private int width = 0;
 	private int screenHeight = 0;

@@ -18,7 +18,11 @@ import java.awt.geom.RectangularShape;
 
 import javax.swing.JFrame;
 
-public class Game1Controller{
+public class Game1Controller implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	//Models
 	private AnimalModel animal = new AnimalModel(screenSize);
