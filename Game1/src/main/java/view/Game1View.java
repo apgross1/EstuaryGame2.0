@@ -30,38 +30,32 @@ import models.ConcreteChunk;
 import models.GabionChunk;
 
 /**
- * @author Tinytimmmy
+ * @author Tim Marcus
  *
  */
 public class Game1View extends JPanel implements KeyListener{
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
 	private Game1Controller controller;
     private JFrame frame;
-    private TexturePaint sandTexture;
-    BufferedImage[][] pics;
-    final int frameCount = 3;
-    final static int imgWidth = 165;
-    final static int imgHeight = 165;
-    int picNum = 0;
+    private transient TexturePaint sandTexture;
+    private final int frameCount = 3;
+    private final static int imgWidth = 165;
+    private final static int imgHeight = 165;
+    private int picNum = 0;
     
-	BufferedImage gabImg;
-	BufferedImage concImg;
-	BufferedImage bg;
-	BufferedImage crabImg;
-	BufferedImage clam;
-	BufferedImage ccc;
-	BufferedImage keypic;
-	BufferedImage wave;
-	BufferedImage grassone;
-	BufferedImage grasstwo;
-	BufferedImage grassthree;
+	private transient BufferedImage gabImg;
+	private transient BufferedImage concImg;
+	private transient BufferedImage bg;
+	private transient BufferedImage crabImg;
+	private transient BufferedImage clam;
+	private transient BufferedImage ccc;
+	private transient BufferedImage keypic;
+	private transient BufferedImage wave;
+	private transient BufferedImage grassone;
+	private transient BufferedImage grasstwo;
+	private transient BufferedImage grassthree;
     
     //Load in sprites
-    private ArrayList<BufferedImage> animalSeq = new ArrayList<BufferedImage>();
+    private transient ArrayList<BufferedImage> animalSeq = new ArrayList<BufferedImage>();
 
 	/**
 	 * constructor for the view that takes in an instance of the controller and the
@@ -69,11 +63,12 @@ public class Game1View extends JPanel implements KeyListener{
 	 * @param ctl an instance of the controller
 	 * @param gameF the jframe that the view uses to paint on
 	 */
-	public Game1View(Game1Controller ctl){
+	public Game1View(Game1Controller ctl, JFrame frame){
         controller = ctl;
         //Load all pictures in the view
         loadImgs();
-        frame = new JFrame();
+        this.frame = frame;
+        //frame = new JFrame();
 
     }
 	/**
@@ -94,7 +89,7 @@ public class Game1View extends JPanel implements KeyListener{
         //Full screen
         frame.setVisible(false);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        frame.setUndecorated(true);
+        //frame.setUndecorated(true);
  
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(controller.getDim().width, controller.getDim().height); 

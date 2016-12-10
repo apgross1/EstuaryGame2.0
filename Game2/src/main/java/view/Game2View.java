@@ -25,7 +25,7 @@ import javax.swing.Timer;
 import models.AlgaeModel;
 import models.AnimalModelG2;
 import models.BarModelG2;
-
+import view.Game2View.Animation;
 import controller.Game2Controller;
 import enums.Direction;
 
@@ -37,27 +37,27 @@ import enums.Direction;
 public class Game2View extends JPanel implements KeyListener{
 	
 	private Game2Controller controller;
-	private JFrame frame = new JFrame();
+	private JFrame frame;
 	
 	
 	private AlgaeModel algae = new AlgaeModel();
 	private BarModelG2 oxyBar;
-	private BufferedImage arrows;
-	private BufferedImage arrowUP;
-	private BufferedImage arrowDOWN;
-	private BufferedImage background;
-	private BufferedImage character;
-	private BufferedImage algaeImg;
-	private BufferedImage algaeImgMed;
-	private BufferedImage algaeImgBad;
-	private BufferedImage catFish1;
-	private BufferedImage catFish2;
-	private BufferedImage catFish3;
-	private BufferedImage storm1;
-	private BufferedImage storm2;
-	private BufferedImage storm3;
-	private BufferedImage storm4;
-	private BufferedImage algaeEaters;
+	private transient BufferedImage arrows;
+	private transient BufferedImage arrowUP;
+	private transient BufferedImage arrowDOWN;
+	private transient BufferedImage background;
+	private transient BufferedImage character;
+	private transient BufferedImage algaeImg;
+	private transient BufferedImage algaeImgMed;
+	private transient BufferedImage algaeImgBad;
+	private transient BufferedImage catFish1;
+	private transient BufferedImage catFish2;
+	private transient BufferedImage catFish3;
+	private transient BufferedImage storm1;
+	private transient BufferedImage storm2;
+	private transient BufferedImage storm3;
+	private transient BufferedImage storm4;
+	private transient BufferedImage algaeEaters;
 	private int width;
 	private int height;
 	private int changeCount=0;
@@ -82,7 +82,12 @@ public class Game2View extends JPanel implements KeyListener{
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 	    
 		loadImages();
-    
+		frame.getContentPane().add(new Animation());
+		frame.setBackground(Color.GRAY);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setSize(1000, 700);
+		frame.setVisible(true);
+		frame.setResizable(false);
 		
     	frame.addKeyListener(this);
     	
@@ -309,7 +314,7 @@ public class Game2View extends JPanel implements KeyListener{
 		}
 	}
     
-	ActionListener GameEndListener = new ActionListener() {
+	transient ActionListener GameEndListener = new ActionListener() {
 		/* (non-Javadoc)
 		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 		 */

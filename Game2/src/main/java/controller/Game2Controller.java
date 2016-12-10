@@ -32,22 +32,22 @@ public class Game2Controller implements Serializable {
 	private AlgaeModel algae;
 	private Collection<AlgaeModel> algaeList = new ArrayList<AlgaeModel>();
 
-	private JFrame gameFrame = new JFrame();
-	long spawnTime = 0;
-	int numMissed = 0;
-	long startTime;
-	int updates = 0;
-	int frames = 0;
+	private JFrame gameFrame;
+	private long spawnTime = 0;
+	private int numMissed = 0;
+	private long startTime;
+	private int updates = 0;
+	private int frames = 0;
 
-	int spawnDelay = 2000; // in milliseconds
-	boolean isStorming = false;
-	boolean tutorialActive;
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	int width = (int) screenSize.getWidth();
-	int height = (int) screenSize.getHeight();
+	private int spawnDelay = 2000; // in milliseconds
+	private boolean isStorming = false;
+	private boolean tutorialActive;
+	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private int width = (int) screenSize.getWidth();
+	private int height = (int) screenSize.getHeight();
 
 	public Game2Controller(JFrame gamef) {
-		// gameFrame = gamef;
+		gameFrame = gamef;
 		animal = new AnimalModelG2();
 
 		algae = new AlgaeModel();
@@ -67,12 +67,6 @@ public class Game2Controller implements Serializable {
 		gameFrame.revalidate();
 		view = new Game2View(this, gameFrame, screenSize);
 		view.addController(this);
-		gameFrame.getContentPane().add(view.new Animation());
-		gameFrame.setBackground(Color.GRAY);
-		gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		gameFrame.setSize(1000, 700);
-		gameFrame.setVisible(true);
-		gameFrame.setResizable(false);
 		gameActive = true;
 		tutorialActive = true;
 

@@ -62,7 +62,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	private JButton menuButton;
 	private boolean exitToMain =  false;
 	private boolean exitGame = false;
-	private HashMap<AnimGraphics, BufferedImage> graphicMap;
+	private transient HashMap<AnimGraphics, BufferedImage> graphicMap;
 	private TestControl gameState;
 	
 	

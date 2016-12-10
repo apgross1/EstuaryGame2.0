@@ -33,7 +33,7 @@ import view.Game3View.GabionConc;
 
 public class Game3Controller implements Serializable {
 	private boolean gameActive;
-	private transient Game3View view;
+	private Game3View view;
 	private AnimalModelG3 animal;
 	private BeachModel beach;
 	private SunHurricaneModel sun;
@@ -56,9 +56,9 @@ public class Game3Controller implements Serializable {
 	 * @param gameF JFrame to be used
 	 * @param tutorialOn boolean that determines if the tutorial should be played
 	 */
-	public Game3Controller(boolean tutorialOn) {
+	public Game3Controller(boolean tutorialOn, JFrame frame) {
 		this.setTutorialActive(tutorialOn);
-		gameFrame = new JFrame();
+		gameFrame = frame;
 		AnimalModelG3 a = new AnimalModelG3();
 		a.setLocX(250);
 		a.setLocY(250);

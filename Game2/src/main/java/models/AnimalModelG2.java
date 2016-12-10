@@ -22,11 +22,11 @@ public class AnimalModelG2 extends AnimalModelCommon implements Serializable {
 	private boolean isDead;
 	private int height, width;
 	private int y;
-	Dimension size;
-	int screenWidth;
+	private Dimension size;
+	private int screenWidth;
 	private int screenHeight;
-	int charYBoundMin;
-	int charYBoundMax;
+	private int charYBoundMin;
+	private int charYBoundMax;
 	
 	
 	/**

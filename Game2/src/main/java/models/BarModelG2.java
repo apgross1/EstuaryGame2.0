@@ -14,6 +14,7 @@ public class BarModelG2 extends BarModelCommon implements Serializable {
 	private int width;
 	private int damage;
 	private int damagePercent;
+	
 	public BarModelG2(){
 		
 	}

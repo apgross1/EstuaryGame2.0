@@ -46,25 +46,25 @@ import controller.Game3Controller;
 
 public class MainRun extends JPanel implements MouseListener, KeyListener {
 	//private static final long serialVersionUID = 1L;
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	static boolean gameStarted = false;
-	JButton startButton = new JButton("Start Game");
-	JLabel backGround = new JLabel();
+	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private static boolean gameStarted = false;
+	private transient JButton startButton = new JButton("Start Game");
+	private transient JLabel backGround = new JLabel();
 	boolean startPressed = false;
-	JFrame frame;
-	BufferedImage badGuy = null;
+	private transient JFrame frame;
+	private transient BufferedImage badGuy = null;
 	private Game1Controller g1cont;
 	private Game2Controller g2cont;
 	private Game3Controller g3cont;
 	private boolean menuClose;
-	public int num = 0;
-	int x_loc = 0;
-	boolean dir = true;
-	private ArrayList<BufferedImage> startPics = new ArrayList<BufferedImage>();
-	private ArrayList<BufferedImage> exitPics = new ArrayList<BufferedImage>();
-	JLabel startScreen;
+	private int num = 0;
+	private int x_loc = 0;
+	private boolean dir = true;
+	private transient ArrayList<BufferedImage> startPics = new ArrayList<BufferedImage>();
+	private transient ArrayList<BufferedImage> exitPics = new ArrayList<BufferedImage>();
+	private transient JLabel startScreen;
 	//JPanel backLay = new JPanel(new BorderLayout());
-	JButton menuButton;
+	private transient JButton menuButton;
 	
 	public MainRun(JFrame frame){
 		this.frame = frame;
@@ -98,7 +98,7 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 
 		g1cont = new Game1Controller(this.frame);
 		g2cont = new Game2Controller(this.frame);
-		g3cont = new Game3Controller(true);
+		g3cont = new Game3Controller(true, this.frame);
 		
 		startScreen = new JLabel();
 		startScreen.setLayout(new GridBagLayout());
@@ -215,8 +215,8 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
     }
 	
 	/**
-	 * method that runs the timing for the main menu and also starts the games
-	 * also handles linking the end screen to the main screen
+	 * Runs the timing for the main menu, starts the games and
+	 * handles linking the end screen to the main screen
 	 */
 	public void runMainMenu() {
 		long lastTime = System.nanoTime();
@@ -224,21 +224,20 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		double ns = 1000000000 /ammountOfTicks;
 		double delta = 0;
 		while((!menuClose)){
-			/*long now = System.nanoTime();
-			delta += (now-lastTime)/ns;
-			lastTime=now;
-			if(delta>=1){
-				this.repaintFrame();
-				delta--;
-			}*/
 			this.repaintFrame();
 		}
-		
-		g1cont.startGame();	
+		/*g1cont.startGame();	
+		while(!g1cont.getIsGameOver()) {
+			
+		}
 		g2cont.startGame();
-		g1cont.getG1view().getFrame().dispose();
+		while(g2cont.getgameActive()) {
+			
+		}*/
 		g3cont.runGame();
-		g2cont.getView().getFrame().dispose();
+		while(g3cont.getgameActive()) {
+			
+		}
 		if(g3cont.getView().isExitToMain()) {
 			g3cont.getView().setExitToMain(false);
 			this.menuClose = false;
@@ -253,7 +252,7 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 			this.frame.setResizable(false);
 			g1cont = new Game1Controller(this.frame);
 			g2cont = new Game2Controller(this.frame);
-			g3cont = new Game3Controller(true);
+			g3cont = new Game3Controller(true, this.frame);
 			runMainMenu();
 		}
 		else if (g3cont.getView().isExitGame()) {
@@ -323,7 +322,7 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 	    int keyCode = e.getKeyCode();
 	    switch( keyCode ) {
 	        case KeyEvent.VK_S: // if s is pressed save to file.
-	        	System.out.println("S-Pressed saving seralizing controllers");
+	        	System.out.println("S-Pressed saving serializing controllers");
 				try{
 					serializeCtls();
 				}catch (IOException e1){
@@ -336,8 +335,6 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 	
 	public void serializeCtls() throws IOException{
 		ArrayList<Object> writeToFile = new ArrayList<Object>();
-		//Write game one to file 
-		
 		try {
 			FileOutputStream fout = new FileOutputStream("controllers.ser");
 			ObjectOutputStream oos = new ObjectOutputStream(fout);

@@ -30,7 +30,7 @@ public class Game1Controller implements java.io.Serializable{
 	private GabionWallModelG1 gabionModel = new GabionWallModelG1();
 	private BarModel bar = new BarModel();
 	//View
-	private transient Game1View g1view;
+	private Game1View g1view;
 	
 	//Vars
 	private boolean gameState;
@@ -54,7 +54,7 @@ public class Game1Controller implements java.io.Serializable{
 	 * 
 	 */
 	public Game1Controller(JFrame gameF) {
-		g1view = new Game1View(this);
+		g1view = new Game1View(this, gameF);
 	}
 	//for testing purposes
 	/**
