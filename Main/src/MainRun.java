@@ -234,14 +234,12 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 			this.repaintFrame();
 		}
 		
-		g1cont.startGame();
+		g1cont.startGame();	
 		g2cont.startGame();
 		g1cont.getG1view().getFrame().dispose();
-		
 		g3cont.runGame();
 		g2cont.getView().getFrame().dispose();
 		if(g3cont.getView().isExitToMain()) {
-			
 			g3cont.getView().setExitToMain(false);
 			this.menuClose = false;
 			frame.revalidate();

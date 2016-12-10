@@ -36,30 +36,31 @@ public class Game2View extends JPanel implements KeyListener{
 	private JFrame frame = new JFrame();
 	
 	
-	AlgaeModel algae = new AlgaeModel();
-	BarModelG2 oxyBar;
-	BufferedImage arrows;
-	BufferedImage arrowUP;
-	BufferedImage arrowDOWN;
-	BufferedImage background;
-	BufferedImage character;
-	BufferedImage algaeImg;
-	BufferedImage algaeImgMed;
-	BufferedImage algaeImgBad;
-	BufferedImage catFish1;
-	BufferedImage catFish2;
-	BufferedImage catFish3;
-	BufferedImage storm1;
-	BufferedImage storm2;
-	BufferedImage storm3;
-	BufferedImage storm4;
-	BufferedImage algaeEaters;
-	int width;
-	int height;
-	int changeCount=0;
-	int frameCount= 0;
-	int tutFrameCount = 0;
-	int riverWidth;
+	private AlgaeModel algae = new AlgaeModel();
+	private BarModelG2 oxyBar;
+	private BufferedImage arrows;
+	private BufferedImage arrowUP;
+	private BufferedImage arrowDOWN;
+	private BufferedImage background;
+	private BufferedImage character;
+	private BufferedImage algaeImg;
+	private BufferedImage algaeImgMed;
+	private BufferedImage algaeImgBad;
+	private BufferedImage catFish1;
+	private BufferedImage catFish2;
+	private BufferedImage catFish3;
+	private BufferedImage storm1;
+	private BufferedImage storm2;
+	private BufferedImage storm3;
+	private BufferedImage storm4;
+	private BufferedImage algaeEaters;
+	private int width;
+	private int height;
+	private int changeCount=0;
+	private int frameCount= 0;
+	private int tutFrameCount = 0;
+	private int riverWidth;
+	private boolean stopSpawn;
 	
 	
 	Random rand = new Random();
@@ -138,7 +139,7 @@ public class Game2View extends JPanel implements KeyListener{
 			}
 			g.drawImage(background, 0, 0, width, height, this);
 			
-			if(controller.getTutoralStatus()){
+			if(controller.getTutorialStatus()){
 				tutFrameCount++;
 				Font tutorial = new Font("TimesRoman", Font.BOLD, 30);
 				 g.setFont(tutorial);
@@ -237,7 +238,7 @@ public class Game2View extends JPanel implements KeyListener{
 			Iterator<AlgaeModel> it = algaeTemp.iterator();
 			
 			while(it.hasNext()){
-				//
+				setStopSpawn(true);
 				AlgaeModel tmp = it.next();
 				if(tmp.isActive()){
 					g.drawImage(algaeImg, tmp.getLocX(), tmp.getLocY(), tmp.getWidth(), tmp.getHeight(), this);
@@ -267,12 +268,9 @@ public class Game2View extends JPanel implements KeyListener{
 						 g.drawString("You have won!", width/4, height/2);
 						 g.setFont(gameLose);
 						endGameTimer();
-						
-					
 				}
-			
-			
 			}
+			setStopSpawn(false);
 		}
 		}
 	}
@@ -305,7 +303,7 @@ public class Game2View extends JPanel implements KeyListener{
 		int keyCode = e.getKeyCode();
 		switch(keyCode){
 		case KeyEvent.VK_DOWN:
-			if(controller.getTutoralStatus()){
+			if(controller.getTutorialStatus()){
 				controller.setTutorialStatus(false);
 			}
 				controller.getAnimalModelG2().setVelocity(3);
@@ -314,7 +312,7 @@ public class Game2View extends JPanel implements KeyListener{
 			break;
 		
 		case KeyEvent.VK_UP:
-			if(controller.getTutoralStatus()){
+			if(controller.getTutorialStatus()){
 				controller.setTutorialStatus(false);
 			}
 			
@@ -357,6 +355,20 @@ public class Game2View extends JPanel implements KeyListener{
 	public int getAlgaeEaterX(){
 		riverWidth = algaeEaters.getWidth()/6;
 		return riverWidth;
+	}
+
+
+
+
+	public boolean isStopSpawn() {
+		return stopSpawn;
+	}
+
+
+
+
+	public void setStopSpawn(boolean stopSpawn) {
+		this.stopSpawn = stopSpawn;
 	}
 	
 	
