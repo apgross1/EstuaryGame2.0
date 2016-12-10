@@ -881,7 +881,7 @@ public class Game3Tests {
 	
 	@Test
 	public void ConcretePUModelTestSetViewLocation() {
-		Game3Controller contr = new Game3Controller(true);
+		Game3Controller contr = new Game3Controller(true, new JFrame());
 		contr.setView(new Game3View(contr, contr.getGameFrame(), TestControl.TEST));
 		contr.setFrameMap(contr.getView().getFrameMap());
 		
@@ -1038,7 +1038,7 @@ public class Game3Tests {
 	
 	@Test
 	public void GabPUModelSetViewLocationTest() {
-		Game3Controller contr = new Game3Controller(true);
+		Game3Controller contr = new Game3Controller(true, new JFrame());
 		contr.setView(new Game3View(contr, contr.getGameFrame(), TestControl.TEST));
 		contr.setFrameMap(contr.getView().getFrameMap());
 		

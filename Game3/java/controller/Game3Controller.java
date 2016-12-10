@@ -57,7 +57,7 @@ public class Game3Controller implements Serializable {
 	 * @param tutorialOn boolean that determines if the tutorial should be played
 	 */
 	public Game3Controller(boolean tutorialOn, JFrame frame) {
-		this.setTutorialActive(false);
+		this.setTutorialActive(tutorialOn);
 		gameFrame = frame;
 		AnimalModelG3 a = new AnimalModelG3();
 		a.setLocX(250);
