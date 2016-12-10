@@ -949,7 +949,8 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		}
 		
 		else {
-			button.setIcon(new ImageIcon(graphicMap.get(graphicMap.get(AnimGraphics.RETURN_MAIN_1))));
+			graphicMap.size();
+			//button.setIcon(new ImageIcon(graphicMap.get(graphicMap.get(AnimGraphics.RETURN_MAIN_1))));
 		}
 	}
 

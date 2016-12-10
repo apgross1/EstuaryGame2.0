@@ -57,7 +57,7 @@ public class Game3Controller implements Serializable {
 	 * @param tutorialOn boolean that determines if the tutorial should be played
 	 */
 	public Game3Controller(boolean tutorialOn, JFrame frame) {
-		this.setTutorialActive(tutorialOn);
+		this.setTutorialActive(false);
 		gameFrame = frame;
 		AnimalModelG3 a = new AnimalModelG3();
 		a.setLocX(250);
@@ -416,7 +416,6 @@ public class Game3Controller implements Serializable {
 			Timer t = (Timer) e.getSource();
 			timeElapsed += t.getDelay();
 			if ((timeElapsed < 150000) & getgameActive()) {
-				System.out.println("Time Elapsed: " + timeElapsed);
 				sun.move();
 				hurricane.move();
 			}

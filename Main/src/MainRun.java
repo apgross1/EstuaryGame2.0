@@ -66,6 +66,101 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 	//JPanel backLay = new JPanel(new BorderLayout());
 	private transient JButton menuButton;
 	
+	
+	public void restartMain() {
+		this.frame = new JFrame();
+		//Adding end menu button images
+		BufferedImage exitGame_0 = null;
+		BufferedImage exitGame_1 = null;
+		BufferedImage start_0 = null;
+		BufferedImage start_1 = null;
+		try {
+			exitGame_0 = ImageIO.read(new File("./Images/Game3/exitGame_0.png"));
+			exitGame_1 = ImageIO.read(new File("./Images/Game3/exitGame_1.png"));
+			start_0 = ImageIO.read(new File("./Images/start_0.png"));
+			start_1 = ImageIO.read(new File("./Images/start_1.png"));
+		} catch (IOException excep) {
+			excep.printStackTrace();
+		}
+		
+		try {
+			badGuy = ImageIO.read(new File("./Images/badGuy.png"));
+		} catch (IOException excep) {
+			excep.printStackTrace();
+		}
+		
+		x_loc = (screenSize.width /2) - (int)(.5*badGuy.getWidth());
+	
+		startPics.add(start_0);
+		startPics.add(start_1);
+		exitPics.add(exitGame_0);
+		exitPics.add(exitGame_1);
+
+
+		g1cont = new Game1Controller(this.frame);
+		g2cont = new Game2Controller(this.frame);
+		g3cont = new Game3Controller(true, this.frame);
+		
+		startScreen = new JLabel();
+		startScreen.setLayout(new GridBagLayout());
+		
+		///backLay.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		//backLay.setSize(new Dimension(frame.getWidth(),frame.getHeight()));
+		
+		//backLay.add(new Animation());
+		//backLay.setOpaque(false);
+		
+		//Defining constraint for background
+		ImageIcon backgroundIcon = new ImageIcon("./Images/2D_estuary_main.png"); 
+		startScreen.setIcon(backgroundIcon);
+		System.out.println(frame.getWidth() + " " + frame.getHeight());
+		startScreen.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		
+		
+		menuButton = new JButton(new ImageIcon(start_0));
+		menuButton.setName("menu");
+		menuButton.setBorder(BorderFactory.createEmptyBorder());
+		menuButton.setContentAreaFilled(false);
+		menuButton.setPreferredSize(new Dimension(start_0.getWidth(), start_0.getHeight()));
+		GridBagConstraints b1c = new GridBagConstraints();
+		b1c.gridx = 0;
+		b1c.gridy = 1;
+		b1c.weightx = .1;
+		b1c.weighty = 0.1;
+		menuButton.addMouseListener(this);
+		menuButton.addKeyListener(this);
+		startScreen.add(menuButton, b1c);
+		
+		JButton exitButton = new JButton(new ImageIcon(exitGame_0));
+		exitButton.setBorder(BorderFactory.createEmptyBorder());
+		exitButton.setContentAreaFilled(false);
+		exitButton.setName("exit");
+		exitButton.addMouseListener(this);
+		exitButton.setPreferredSize(new Dimension((int)(exitGame_0.getWidth()),exitGame_0.getHeight()));
+		GridBagConstraints b2c = new GridBagConstraints();
+		b2c.gridx = 2;
+		b2c.gridy = 1;
+		b2c.weightx = .1;
+		b2c.weighty = .1;
+		
+		startScreen.add(exitButton, b2c);
+		
+		
+		this.frame.setSize(screenSize.width, screenSize.height); 
+		this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		this.frame.setUndecorated(true);
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.frame.setResizable(false);
+		this.frame.getContentPane().removeAll();
+		//this.frame.add(backLay);
+		this.frame.add(startScreen);
+		
+		this.frame.addKeyListener(this);
+		
+		this.frame.revalidate();
+		this.frame.repaint();	
+		this.frame.setVisible(true);
+	}
 	public MainRun(JFrame frame){
 		this.frame = frame;
 		//Adding end menu button images
@@ -224,35 +319,28 @@ public class MainRun extends JPanel implements MouseListener, KeyListener {
 		double ns = 1000000000 /ammountOfTicks;
 		double delta = 0;
 		while((!menuClose)){
+			System.out.println("In here");
 			this.repaintFrame();
 		}
-		/*g1cont.startGame();	
+		g1cont.startGame();	
 		while(!g1cont.getIsGameOver()) {
 			
 		}
 		g2cont.startGame();
 		while(g2cont.getgameActive()) {
 			
-		}*/
+		}
 		g3cont.runGame();
 		while(g3cont.getgameActive()) {
 			
 		}
 		if(g3cont.getView().isExitToMain()) {
+			System.out.println("Got here");
 			g3cont.getView().setExitToMain(false);
 			this.menuClose = false;
 			frame.revalidate();
 			frame.repaint();
-			System.out.println("Creating new frame");
-			frame = new JFrame();
-			this.frame.setSize(screenSize.width, screenSize.height); 
-			this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-			this.frame.setUndecorated(true);
-			this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			this.frame.setResizable(false);
-			g1cont = new Game1Controller(this.frame);
-			g2cont = new Game2Controller(this.frame);
-			g3cont = new Game3Controller(true, this.frame);
+			this.restartMain();
 			runMainMenu();
 		}
 		else if (g3cont.getView().isExitGame()) {
