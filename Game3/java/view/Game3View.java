@@ -270,7 +270,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 			graphicMap.put(AnimGraphics.EXIT_GAME_1, exitGame_1);
 			graphicMap.put(AnimGraphics.RETURN_MAIN_0, returnMain_0);
 			graphicMap.put(AnimGraphics.RETURN_MAIN_1, returnMain_1);
-		
+	 
 		}
 			catch(IOException e) {
 	    		e.printStackTrace();
@@ -372,8 +372,6 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		}
 		@Override
 		public void paint(Graphics g) {
-			//g.setColor(Color.GREEN);
-			//g.fillOval(hurricane.getLocation().getX(), hurricane.getLocation().getY(), hurricane.getWidth(), hurricane.getHeight());
 			g.drawImage(graphicMap.get(AnimGraphics.HURRICANE_ANGRY), hurricane.getLocation().getX(), hurricane.getLocation().getY(), this);
 		}
 	}
@@ -450,6 +448,7 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 			t.start();
 		}
 		
+	
 		@Override
 		public void paint(Graphics g) {
 			if(wave.isDeleteWave()) {
@@ -501,11 +500,8 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 	public class ShoreLine extends JComponent {
 		@Override
 		public void paint(Graphics g) {
-			//g.setColor(Color.BLUE);
-			
 			g.drawImage(graphicMap.get(AnimGraphics.SHORE), 0, 0, this);
 			frame.revalidate();
-			//g.fillRect(0, 0, frameMap.get(Frames.SHORE).getWidth(), frameMap.get(Frames.SHORE).getHeight());
 		}
 	}
 	
@@ -570,8 +566,6 @@ public class Game3View extends JPanel implements KeyListener, MouseListener {
 		public void paint(Graphics g) {
 			drawArrow(g);
 			if(gridBlock.getConcrPU().getIsActive()) {
-				//g.setColor(Color.RED);
-				//g.fillRect((int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), (int) gridBlock.getConcrPU().getBounds().getWidth(), (int) gridBlock.getConcrPU().getBounds().getHeight());
 				if(gridBlock.getConcrPU().isPickedUp()){
 					g.drawImage(graphicMap.get(AnimGraphics.CONCRETE_WALL),(int)gridBlock.getConcrPU().getBounds().getX(), (int)gridBlock.getConcrPU().getBounds().getY(), this);
 					int potentialX = controller.getAnimal().getLocX() + controller.getAnimal().getSpeedX();
