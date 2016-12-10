@@ -1,7 +1,7 @@
 package models;
 
 
-public class BarModel extends BarModelAbstract {
+public class BarModel extends BarModelCommon {
 	
 	/**
 	 * constructor for the bar model that updates the max level of the bar

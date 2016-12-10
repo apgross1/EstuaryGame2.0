@@ -389,7 +389,7 @@ public class Game1Tests {
 	}
 	@Test
 	public void testisEmpty(){
-		models.BarModelAbstract bar = new models.BarModel();
+		models.BarModelCommon bar = new models.BarModel();
 		bar.setStatus(100);
 		assertTrue("should be false", bar.isEmpty() == false);
 		bar.setStatus(0);

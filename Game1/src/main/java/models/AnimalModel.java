@@ -3,7 +3,7 @@ package models;
 import java.awt.Dimension;
 import enums.Direction;
 
-public class AnimalModel extends AnimalModelAbstract {
+public class AnimalModel extends AnimalModelCommon {
 	
 	private int height = 0;
 	private int width = 0;

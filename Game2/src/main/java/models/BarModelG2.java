@@ -1,6 +1,6 @@
 package models;
 
-public class BarModelG2 extends BarModelAbstract{
+public class BarModelG2 extends BarModelCommon{
 	private int status;
 	private int maxLevel;
 	private int width;

@@ -11,7 +11,7 @@ import Enums.Frames;
  * @author Andrew
  *
  */
-public class AnimalModelG3 extends AnimalModelAbstract{
+public class AnimalModelG3 extends AnimalModelCommon{
 	private int graphicOnDeck;
 	private int height;
 	private int width;

@@ -45,9 +45,6 @@ import controller.Game2Controller;
 import controller.Game3Controller;
 
 public class MainRun extends JPanel implements MouseListener, KeyListener {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	static boolean gameStarted = false;

@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 import enums.Direction;
 
-public class AnimalModelG2 extends AnimalModelAbstract {
+public class AnimalModelG2 extends AnimalModelCommon {
 
 	private int velocity;
 	private boolean isDead;
